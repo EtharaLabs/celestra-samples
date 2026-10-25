@@ -60,14 +60,16 @@ Each bundle directory is a complete Harbor task: `task.toml` is the runner manif
 ## Cite
 
 ```bibtex
-@misc{celestrasamples,
-  title = {celestra: samples}
+@misc{celestra2026,
+  title = {celestra: Hard Harbor-Format Terminal Tasks Beyond Single-Repository Bug Fixing},
+  author = {Ethara.AI},
+  year = {2026}
 }
 ```
 
 ## License
 
-See the license of the repository that publishes this lane.
+Released under the MIT License; see [LICENSE](LICENSE). Upstream sources keep their own licenses.
 
 ## Contact
 

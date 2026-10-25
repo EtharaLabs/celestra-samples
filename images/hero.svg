@@ -1,1 +1,110 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="720" height="240" viewBox="0 0 720 240"><rect width="720" height="240" fill="#845EF7"/><text x="360" y="135" font-family="sans-serif" font-size="56" fill="#FFFFFF" text-anchor="middle">celestra</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="480" viewBox="0 0 1200 480" role="img" aria-labelledby="t d">
+  <title id="t">celestra</title>
+  <desc id="d">An indigo-robed star-cartographer goddess raises an astrolabe and draws constellation lines between glowing repository-stars above a sea of code, attended by a memory keeper, a smith, an assayer, a sentinel, and a conductor.</desc>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#05071a"/>
+      <stop offset="0.55" stop-color="#14104a"/>
+      <stop offset="1" stop-color="#2a1a6e"/>
+    </linearGradient>
+    <radialGradient id="halo" cx="0.5" cy="0.38" r="0.5">
+      <stop offset="0" stop-color="#ffe9a8" stop-opacity="0.85"/>
+      <stop offset="0.35" stop-color="#b48cff" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#14104a" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="robe" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3b2ba8"/>
+      <stop offset="0.6" stop-color="#21185f"/>
+      <stop offset="1" stop-color="#0d0a2e"/>
+    </linearGradient>
+    <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0e2a4a"/>
+      <stop offset="1" stop-color="#03101e"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff2c2"/>
+      <stop offset="1" stop-color="#c79a2e"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="480" fill="url(#sky)"/>
+  <g fill="#ffffff" opacity="0.55">
+    <circle cx="60" cy="40" r="1"/><circle cx="140" cy="90" r="0.8"/><circle cx="230" cy="30" r="1.2"/>
+    <circle cx="330" cy="70" r="0.7"/><circle cx="460" cy="24" r="1"/><circle cx="760" cy="36" r="0.9"/>
+    <circle cx="880" cy="80" r="1.1"/><circle cx="990" cy="28" r="0.8"/><circle cx="1110" cy="64" r="1"/>
+    <circle cx="1160" cy="130" r="0.7"/><circle cx="40" cy="160" r="0.8"/><circle cx="1060" cy="170" r="0.9"/>
+  </g>
+  <ellipse cx="600" cy="190" rx="430" ry="230" fill="url(#halo)"/>
+
+  <g stroke="#9fd4ff" stroke-width="1.4" opacity="0.8" fill="none" filter="url(#glow)">
+    <polyline points="250,120 360,80 470,140 600,60 730,140 840,80 950,120"/>
+    <polyline points="360,80 330,190"/>
+    <polyline points="840,80 870,190"/>
+  </g>
+  <g filter="url(#glow)">
+    <circle cx="250" cy="120" r="6" fill="#ffe08a"/><circle cx="360" cy="80" r="7" fill="#9fd4ff"/>
+    <circle cx="470" cy="140" r="5" fill="#ffe08a"/><circle cx="600" cy="60" r="9" fill="#ffffff"/>
+    <circle cx="730" cy="140" r="5" fill="#ffe08a"/><circle cx="840" cy="80" r="7" fill="#9fd4ff"/>
+    <circle cx="950" cy="120" r="6" fill="#ffe08a"/><circle cx="330" cy="190" r="4" fill="#c7b3ff"/>
+    <circle cx="870" cy="190" r="4" fill="#c7b3ff"/>
+  </g>
+
+  <path d="M0 380 Q150 360 300 380 T600 380 T900 380 T1200 380 V480 H0 Z" fill="url(#sea)"/>
+  <g font-family="monospace" font-size="11" fill="#4fb6e8" opacity="0.45">
+    <text x="30" y="410">def resolve(issue): ...</text>
+    <text x="250" y="436">import upstream as dep</text>
+    <text x="520" y="414">pip install pkg==2.1</text>
+    <text x="760" y="440">git apply fix.diff</text>
+    <text x="980" y="412">pytest tests/ -q</text>
+    <text x="120" y="462">class Spec: ...</text>
+    <text x="640" y="466">migrate(api_v1, api_v2)</text>
+  </g>
+
+  <g>
+    <path d="M600 150 C560 200 540 290 520 380 L680 380 C660 290 640 200 600 150 Z" fill="url(#robe)"/>
+    <path d="M600 160 C585 220 575 300 570 380" stroke="#5a48d6" stroke-width="2" fill="none" opacity="0.6"/>
+    <path d="M600 160 C615 220 625 300 630 380" stroke="#120d3a" stroke-width="2" fill="none" opacity="0.6"/>
+    <path d="M580 132 C578 108 622 108 620 132 C632 160 618 190 600 196 C582 190 568 160 580 132 Z" fill="#1b1240" opacity="0.9"/>
+    <circle cx="600" cy="138" r="18" fill="#efdcc4"/>
+    <path d="M586 118 L592 104 L600 114 L608 104 L614 118" fill="url(#gold)"/>
+    <path d="M612 176 C640 150 660 120 676 96" stroke="url(#robe)" stroke-width="12" stroke-linecap="round" fill="none"/>
+    <g transform="translate(686 82)" filter="url(#glow)">
+      <circle r="26" fill="none" stroke="url(#gold)" stroke-width="4"/>
+      <circle r="17" fill="none" stroke="#ffe08a" stroke-width="1.5"/>
+      <line x1="-26" y1="0" x2="26" y2="0" stroke="#ffe08a" stroke-width="1.5"/>
+      <line x1="0" y1="-26" x2="0" y2="26" stroke="#ffe08a" stroke-width="1.5"/>
+      <circle r="3" fill="#ffffff"/>
+    </g>
+    <path d="M684 58 L600 60" stroke="#ffe8a8" stroke-width="1" opacity="0.7" stroke-dasharray="4 4"/>
+  </g>
+
+  <g opacity="0.92">
+    <g transform="translate(170 300)">
+      <path d="M0 80 L14 0 L28 80 Z" fill="#2c3d7a"/><circle cx="14" cy="-8" r="9" fill="#d9c3ad"/>
+      <rect x="-14" y="30" width="20" height="26" rx="2" fill="#c7b3ff" opacity="0.8"/>
+    </g>
+    <g transform="translate(330 310)">
+      <path d="M0 70 L12 0 L24 70 Z" fill="#4a2a2a"/><circle cx="12" cy="-8" r="8" fill="#cfb099"/>
+      <rect x="22" y="40" width="24" height="10" fill="#7a7a86"/><circle cx="34" cy="38" r="5" fill="#ff8a3d" filter="url(#glow)"/>
+    </g>
+    <g transform="translate(850 310)">
+      <path d="M0 70 L12 0 L24 70 Z" fill="#5a3a12"/><circle cx="12" cy="-8" r="8" fill="#d6b79c"/>
+      <path d="M-14 46 L4 46 L0 62 L-10 62 Z" fill="#ff6a2a" filter="url(#glow)"/>
+    </g>
+    <g transform="translate(1000 296)">
+      <path d="M0 84 L14 0 L28 84 Z" fill="#1f3a3a"/><circle cx="14" cy="-8" r="9" fill="#cdb39a"/>
+      <rect x="30" y="-20" width="4" height="100" fill="#9fd4ff"/>
+    </g>
+    <g transform="translate(1100 316)">
+      <path d="M0 64 L11 0 L22 64 Z" fill="#3a2a5a"/><circle cx="11" cy="-7" r="7" fill="#d4bca4"/>
+      <line x1="20" y1="10" x2="44" y2="-14" stroke="#ffe08a" stroke-width="2"/>
+    </g>
+  </g>
+
+  <text x="60" y="230" font-family="Georgia, serif" font-size="64" fill="#fff6dc" filter="url(#glow)">celestra</text>
+  <text x="62" y="264" font-family="Georgia, serif" font-size="18" fill="#c7b3ff">Charting hard tasks beyond the single repository.</text>
+</svg>
