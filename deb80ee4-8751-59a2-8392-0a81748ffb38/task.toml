@@ -1,0 +1,59 @@
+schema_version = "1.4"
+artifacts = [{ source = "/app/pypsa", destination = "workspace", exclude = [".git", "__pycache__"] }]
+
+[task]
+name = "celestra/pypsa-linopy-v1-snapshots"
+version = "1.0.0"
+description = "Make PyPSA's multi-period optimisation work under linopy's v1 arithmetic semantics, which forbid a MultiIndex dimension coordinate, by building models over a flat snapshot dimension through the model builders, expressions, statistics, and transport delays."
+authors = [{ name = "mumukshu.panchal", email = "mumukshu.panchal@ethara.ai" }]
+keywords = ["pypsa", "linopy", "optimization", "energy-systems", "depmigrate", "python"]
+
+[metadata]
+null_floor = 0.0
+discrimination_weight = 0.5
+platforms = ["linux/amd64", "linux/arm64"]
+
+[verifier]
+timeout_sec = 3600
+network_mode = "allowlist"
+allowed_hosts = ["api.anthropic.com"]
+environment_mode = "separate"
+# test.sh starts as root only to make the submission readable, then grades as uid 10001.
+user = "root"
+
+[verifier.env]
+ANTHROPIC_API_KEY = "${ANTHROPIC_API_KEY:-}"
+CLAUDE_CODE_OAUTH_TOKEN = "${CLAUDE_CODE_OAUTH_TOKEN:-}"
+
+[verifier.environment]
+network_mode = "allowlist"
+allowed_hosts = ["api.anthropic.com"]
+build_timeout_sec = 1800
+cpus = 2
+memory_mb = 4096
+storage_mb = 10240
+gpus = 0
+
+[agent]
+timeout_sec = 10800
+network_mode = "no-network"
+user = "10001"
+
+[environment]
+network_mode = "no-network"
+build_timeout_sec = 1800
+cpus = 2
+memory_mb = 4096
+storage_mb = 10240
+gpus = 0
+
+[upstream_provenance]
+origin = "original"
+provenance_date = "2026-07-21"
+source_kind = "public_repository"
+
+[upstream_provenance.source]
+canonical_repo = "https://github.com/PyPSA/PyPSA"
+fork_ancestry_digest = "sha256:484d26cbda7ad03f699710fb177b1f1dd0b7fda90626d42912e916c2c61e9098"
+base_commit = "6d1da8049b3346969bc8f2b97f7835dc0b7c6fbe"
+event_timestamp = "2026-07-21T08:57:16Z"
