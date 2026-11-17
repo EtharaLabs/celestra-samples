@@ -1,0 +1,8 @@
+{
+ "case": "jsm-cov-w2",
+ "id": "JSM-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "`solve_model` always reconstructs the callback snapshots as a plain `pd.Index` with `tupleize_cols=False`. When the model was built with a MultiIndex snapshot representation (for example, with the `\"multiindex\"` option under legacy linopy semantics), this converts its snapshots to flat tuple labels instead of preserving the model\u2019s representation.\nNO"
+}

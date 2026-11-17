@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JTR-cov",
+ "trial": 10,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The inner function selects `sns` from the flow variable, but `n.snapshot_weightings.generators.loc[sns]` retains the network\u2019s MultiIndex even when `sns` is a flat tuple-labelled index. Only the DataFrame efficiency is explicitly converted with `_to_model` there; converting weights later in one aggregation path does not ensure the stated representation for the inner function in every case.\nNO"
+}

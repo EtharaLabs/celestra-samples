@@ -1,0 +1,8 @@
+{
+ "case": "unchanged-solve-model",
+ "id": "JAD-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not change `_as_dynamic` to construct static-attribute frames on a fixed snapshot representation. The added flattening in `array.py` is conditional on network state set by `model_snapshots`, which resolves `optimization.model_snapshot_index`, rather than unconditionally imposing one layout.\nNO"
+}

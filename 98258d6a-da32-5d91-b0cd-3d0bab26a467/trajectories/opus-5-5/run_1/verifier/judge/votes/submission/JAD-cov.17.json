@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JAD-cov",
+ "trial": 17,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not change `_as_dynamic` or introduce a fixed snapshot representation for its static-attribute frames. The added conversion in `array.py` is conditional on `uses_flat_snapshots(self.n)`, with model-building context set from the resolved `optimization.model_snapshot_index` option, rather than forcing one representation regardless of the selection.\n\nNO"
+}

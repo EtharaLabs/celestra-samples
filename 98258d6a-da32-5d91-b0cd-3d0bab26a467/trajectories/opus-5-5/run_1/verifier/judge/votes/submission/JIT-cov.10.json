@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JIT-cov",
+ "trial": 10,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not change `optimize_transmission_expansion_iteratively` or `pypsa/optimization/abstract.py`, and shows no new coercion of the snapshots passed by that routine to an iteration\u2019s optimisation. The model-building changes instead select flat or MultiIndex coordinates according to `optimization.model_snapshot_index`.\nNO"
+}

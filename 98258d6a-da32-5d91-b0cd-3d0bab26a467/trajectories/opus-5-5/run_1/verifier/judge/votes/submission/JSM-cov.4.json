@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JSM-cov",
+ "trial": 4,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "`solve_model` still derives the callback snapshots from `n.snapshots`, rather than the model\u2019s stored snapshots. For example, if a model is built with a single-level snapshot index and the network\u2019s snapshots are subsequently changed to a MultiIndex, `_model_snapshot_context` disables flattening and `_to_model` passes that MultiIndex unchanged to the callback, despite the model having been built with a single-level index.\nNO"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "jit-leg-w2",
+ "id": "JIT-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The diff changes a call in `optimize_transmission_expansion_iteratively` from `n.optimize(snapshots, **kwargs)` to `n.optimize(None, **kwargs)`. For a request selecting a proper subset of the network\u2019s snapshots, the affected solve therefore uses all network snapshots instead of that subset; legacy semantics with `\"auto\"` or `\"multiindex\"` does not prevent this change.\nYES"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JCM-cov",
+ "trial": 11,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "`create_model` computes `flat` but never converts `sns` itself: it continues passing the original MultiIndex from `as_index` to the variable and constraint builders, including both loss-constraint branches. Only the model parameter and component data accessed within the context are flattened, so the snapshots passed to builders do not satisfy the required representation when `\"flat\"` is selected (including `\"auto\"` under v1 semantics).\nNO"
+}

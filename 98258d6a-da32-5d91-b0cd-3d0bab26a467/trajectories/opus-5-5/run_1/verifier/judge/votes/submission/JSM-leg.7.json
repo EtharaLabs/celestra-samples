@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JSM-leg",
+ "trial": 7,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "Under legacy semantics, the default `\"auto\"` and explicit `\"multiindex\"` keep snapshots unflattened, so `_to_model(n, n.snapshots)` returns the network\u2019s full snapshot index. If `create_model` was called with only a subset of snapshots, `solve_model` therefore passes `extra_functionality` the full network index rather than the snapshots the model was built over.\nYES"
+}

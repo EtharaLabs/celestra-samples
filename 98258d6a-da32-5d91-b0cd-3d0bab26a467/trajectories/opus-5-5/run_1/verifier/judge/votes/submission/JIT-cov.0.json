@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JIT-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not modify `optimization/abstract.py` or the iterative routine\u2019s handling of snapshots passed to optimisation. The changes in `optimize.py` select the model\u2019s snapshot representation using `optimization.model_snapshot_index`, rather than forcing the iterative routine\u2019s inputs into a fixed representation.\nNO"
+}

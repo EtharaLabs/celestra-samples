@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JIC-leg",
+ "trial": 7,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not modify `pypsa/statistics/expressions.py` or its installed-capex calculation. The shared statistics changes merely replace `obj.loc[names]` with an equivalent `_select_names` helper; the differing override belongs to optimization expressions, not the statistics calculation. Under legacy semantics, default/`auto` and `multiindex` also retain the MultiIndex representation, so these changes do not alter the specified period-weighted installed capex.\n\nNO"
+}

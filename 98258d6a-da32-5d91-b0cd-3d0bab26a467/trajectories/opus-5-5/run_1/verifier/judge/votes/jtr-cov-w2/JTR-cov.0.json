@@ -1,0 +1,8 @@
+{
+ "case": "jtr-cov-w2",
+ "id": "JTR-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The transmission method overwrites the window\u2019s correctly represented weighting coordinates with `.assign_coords(snapshot=self._n.snapshots)`. This restores network MultiIndex labels even for flat builds, and can cause a length mismatch when the model uses only a subset of network snapshots; thus the weights are not reliably selected at the flow variable\u2019s own labels in the required representation.\nNO"
+}

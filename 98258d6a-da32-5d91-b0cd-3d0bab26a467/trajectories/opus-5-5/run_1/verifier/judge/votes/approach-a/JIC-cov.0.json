@@ -1,0 +1,8 @@
+{
+ "case": "approach-a",
+ "id": "JIC-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not modify `pypsa/statistics/expressions.py` or its `installed_capex` implementation. The explicit conversion to a fixed MultiIndex representation for investment-period cost weighting occurs in `pypsa/optimization/optimize.py`, not in `installed_capex`; the diff provides no corresponding change to that statistic\u2019s weighting.\nNO"
+}

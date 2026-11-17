@@ -1,0 +1,8 @@
+{
+ "case": "unchanged-solve-model",
+ "id": "JAD-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The new block in `_as_dynamic` unconditionally converts a flat, tuple-valued snapshot index into a MultiIndex using the network\u2019s snapshot level names. For an input DataArray with such snapshot labels, this changes the resulting dynamic frame\u2019s index compared with the base implementation, independently of legacy semantics or the snapshot-layout option.\nYES"
+}

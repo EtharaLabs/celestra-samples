@@ -1,0 +1,8 @@
+{
+ "case": "oracle",
+ "id": "JFX-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The new `_from_xarray` calls `window.recompose(da)` whenever a live model window exists, even under legacy semantics with `\"auto\"` or `\"multiindex\"`. `recompose` does not check `is_flat`: an input with a non-MultiIndex `snapshot` dimension and auxiliary `period` and `timestep` coordinates is converted to a snapshot MultiIndex, changing the index of the returned result compared with the original conversion.\nYES"
+}

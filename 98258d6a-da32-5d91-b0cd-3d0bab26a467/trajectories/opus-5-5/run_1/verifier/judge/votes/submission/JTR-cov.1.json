@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JTR-cov",
+ "trial": 1,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The transmission function converts dynamic efficiency with `_to_model`, but obtains weights directly from `n.snapshot_weightings.generators.loc[sns]` without converting them. For investment-period networks using flat snapshots, that selection still returns MultiIndex-indexed weights, so the inner function does not take both inputs in the required representation.\nNO"
+}

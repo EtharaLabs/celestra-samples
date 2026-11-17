@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JFX-leg",
+ "trial": 7,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The new call to `unflatten_snapshots(da)` in `_from_xarray` is unconditional and does not check linopy semantics or the snapshot-index option. For an array with a nonempty, flat, tuple-valued `snapshot` index, it replaces that index with a `MultiIndex` named `period` and `timestep`, changing the returned index representation compared with the base implementation even under legacy semantics with `\"auto\"` or `\"multiindex\"`.\n\nYES"
+}

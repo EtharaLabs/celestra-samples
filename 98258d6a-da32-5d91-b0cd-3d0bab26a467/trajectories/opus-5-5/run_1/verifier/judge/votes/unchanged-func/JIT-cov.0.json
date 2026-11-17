@@ -1,0 +1,8 @@
+{
+ "case": "unchanged-func",
+ "id": "JIT-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not modify `pypsa/optimization/abstract.py` or its iterative optimisation function. The added conversion in `create_model` uses `model_snapshots`, which respects the selected `optimization.model_snapshot_index` rather than unconditionally imposing a fixed representation on snapshots passed by an iteration.\nNO"
+}

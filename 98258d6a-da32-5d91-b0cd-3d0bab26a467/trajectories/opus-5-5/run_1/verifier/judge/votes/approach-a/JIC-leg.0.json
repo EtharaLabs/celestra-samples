@@ -1,0 +1,8 @@
+{
+ "case": "approach-a",
+ "id": "JIC-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not modify `pypsa/statistics/expressions.py`; its capex-expression changes are in the separate optimization accessor. The only change to shared statistics code normalizes time-series mean weights by period, not installed-capex period weighting, and preserves the existing grouping for ordinary multi-period snapshot indexes. Thus the diff does not establish the stated change in reported installed capex.\nNO"
+}

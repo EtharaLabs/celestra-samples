@@ -1,0 +1,8 @@
+{
+ "case": "jit-cov-w2",
+ "id": "JIT-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The modified iteration call explicitly constructs a flat `pd.Index(..., tupleize_cols=False, name=\"snapshot\")` whenever linopy uses v1 semantics. For a network with MultiIndex snapshots and `optimization.model_snapshot_index=\"flat\"` (or `\"auto\"` under v1), this forces the snapshots passed to optimisation into flat tuple labels rather than passing the original MultiIndex, which the representation-selection code accepts and converts itself.\nYES"
+}

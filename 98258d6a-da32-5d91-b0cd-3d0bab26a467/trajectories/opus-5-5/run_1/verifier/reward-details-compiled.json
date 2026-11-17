@@ -1,0 +1,162 @@
+{
+  "reward": 0.7234,
+  "compiled": {
+    "score": 0.7234,
+    "details": {
+      "reward": {
+        "kind": "group",
+        "score": 0.7234,
+        "aggregation": "weighted-mean",
+        "components": [
+          {
+            "name": "test_output",
+            "weight": 1.0,
+            "detail": {
+              "score": 0.7234,
+              "criteria": [
+                {
+                  "name": "G1",
+                  "value": 0.9246,
+                  "raw": 0.9246231155778895,
+                  "weight": 5.0,
+                  "description": "rubric_item"
+                },
+                {
+                  "name": "R1",
+                  "value": 0.9246,
+                  "raw": 0.9246231155778895,
+                  "weight": 5.0,
+                  "description": "rubric_item"
+                },
+                {
+                  "name": "M1",
+                  "value": 1.0,
+                  "raw": 1.0,
+                  "weight": 5.0,
+                  "description": "rubric_item"
+                },
+                {
+                  "name": "M2",
+                  "value": 1.0,
+                  "raw": 1.0,
+                  "weight": 5.0,
+                  "description": "rubric_item"
+                },
+                {
+                  "name": "E1",
+                  "value": 1.0,
+                  "raw": 1.0,
+                  "weight": 3.0,
+                  "description": "rubric_item"
+                },
+                {
+                  "name": "S1",
+                  "value": 1.0,
+                  "raw": 1.0,
+                  "weight": 3.0,
+                  "description": "rubric_item"
+                },
+                {
+                  "name": "PW",
+                  "value": 1.0,
+                  "raw": 1.0,
+                  "weight": 3.0,
+                  "description": "rubric_item"
+                },
+                {
+                  "name": "UC",
+                  "value": 1.0,
+                  "raw": 1.0,
+                  "weight": 3.0,
+                  "description": "rubric_item"
+                },
+                {
+                  "name": "TD",
+                  "value": 1.0,
+                  "raw": 1.0,
+                  "weight": 3.0,
+                  "description": "rubric_item"
+                },
+                {
+                  "name": "AG",
+                  "value": 0.0,
+                  "raw": 0.0,
+                  "weight": 3.0,
+                  "description": "rubric_item"
+                },
+                {
+                  "name": "O1",
+                  "value": 1.0,
+                  "raw": 1.0,
+                  "weight": 3.0,
+                  "description": "rubric_item"
+                },
+                {
+                  "name": "O2",
+                  "value": 0.0,
+                  "raw": 0.0,
+                  "weight": 3.0,
+                  "description": "rubric_item"
+                },
+                {
+                  "name": "CR",
+                  "value": 0.0,
+                  "raw": 0.0,
+                  "weight": 3.0,
+                  "description": "rubric_item"
+                },
+                {
+                  "name": "K1",
+                  "value": 0.0,
+                  "raw": 0.0,
+                  "weight": 5.0,
+                  "description": "rubric_item"
+                },
+                {
+                  "name": "U1",
+                  "value": 1.0,
+                  "raw": 1.0,
+                  "weight": 3.0,
+                  "description": "rubric_item"
+                },
+                {
+                  "name": "U2",
+                  "value": 0.0,
+                  "raw": 0.0,
+                  "weight": 3.0,
+                  "description": "rubric_item"
+                },
+                {
+                  "name": "B1",
+                  "value": 1.0,
+                  "raw": 1.0,
+                  "weight": 3.0,
+                  "description": "rubric_item"
+                },
+                {
+                  "name": "P1",
+                  "value": 0.9246,
+                  "raw": 0.9246231155778895,
+                  "weight": 3.0,
+                  "description": "rubric_item"
+                },
+                {
+                  "name": "A1",
+                  "value": 1.0,
+                  "raw": 1.0,
+                  "weight": 1.0,
+                  "description": "rubric_item"
+                }
+              ],
+              "kind": "programmatic"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "judged": {
+    "status": "requested",
+    "request": "/logs/verifier/judge-request.json"
+  }
+}

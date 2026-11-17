@@ -1,0 +1,8 @@
+{
+ "case": "oracle",
+ "id": "JSL-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not modify `define_secant_loss_constraints`. Under legacy semantics, both `\"auto\"` and `\"multiindex\"` preserve the existing snapshot index, and the new array-flattening step is a no-op, so the diff provides no change to the secant loss constraints built from the supplied snapshots.\nNO"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "jic-leg-w1",
+ "id": "JIC-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The change directly replaces multiplication by investment-period objective weights with division in `installed_capex`. For a multi-period network with nonzero installed capex and objective weights other than one, this changes the reported values, independently of snapshot-index representation or linopy semantics.\nYES"
+}

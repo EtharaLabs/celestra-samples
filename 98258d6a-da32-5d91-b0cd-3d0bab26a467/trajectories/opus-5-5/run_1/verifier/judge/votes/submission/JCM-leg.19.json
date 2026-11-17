@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JCM-leg",
+ "trial": 19,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "Under legacy semantics, the default `\"auto\"` resolves to `\"multiindex\"`, so `flat` is false (as it also is with explicit `\"multiindex\"`). `create_model` still obtains `sns` through the unchanged `as_index` call and passes that same, unmodified index to the variable and constraint builders; the new context does not flatten component data when `flat` is false.\n\nNO"
+}

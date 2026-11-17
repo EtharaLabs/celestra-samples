@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JIC-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not modify `installed_capex` in `pypsa/statistics/expressions.py`. The shared component-array changes flatten snapshots only when the network\u2019s flat-snapshot context is active, and model construction sets that context from the selected option; they do not force a fixed representation for `installed_capex` investment-period weighting.\nNO"
+}

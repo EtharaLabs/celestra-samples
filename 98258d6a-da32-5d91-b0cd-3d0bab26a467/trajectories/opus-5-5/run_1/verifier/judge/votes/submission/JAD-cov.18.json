@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JAD-cov",
+ "trial": 18,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not change `_as_dynamic` to construct static-attribute frames on a fixed snapshot representation. Instead, it conditionally flattens the resulting array when `uses_flat_snapshots(self.n)` is true, with that context set from the resolved `optimization.model_snapshot_index` option during model construction.\nNO"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JTR-cov",
+ "trial": 11,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The transmission inner function converts a time-dependent efficiency with `_to_model`, but leaves snapshot weights as `n.snapshot_weightings.generators.loc[sns]`. Selecting a pandas MultiIndex series using flat tuple labels does not flatten its index, so the weights are not consistently in the flow variable\u2019s flat representation; the later conversion in the `\"sum\"` aggregation path does not cover every aggregation.\nNO"
+}

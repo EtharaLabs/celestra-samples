@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JIT-leg",
+ "trial": 15,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not modify `pypsa/optimization/abstract.py` or the snapshot arguments passed by `optimize_transmission_expansion_iteratively`. Under legacy semantics, default/`\"auto\"` resolves to `\"multiindex\"`, so the new flattening machinery does not change those snapshots; the other changes affect model construction and handling, not the iteration\u2019s snapshot selection.\nNO"
+}

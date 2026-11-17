@@ -1,0 +1,8 @@
+{
+ "case": "approach-a",
+ "id": "JTR-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The transmission inner function changes `idx` from an index named after the component to one named `\"name\"`. This affects the dimension labels of the selected pandas efficiency data when multiplied by the operational variable: the old component-named dimension can broadcast against the variable\u2019s `\"name\"` dimension, whereas the new labels align branch by branch. For multiple branches with differing efficiencies, this can change the expression\u2019s value even under legacy semantics with the default or `\"multiindex\"` layout.\nYES"
+}

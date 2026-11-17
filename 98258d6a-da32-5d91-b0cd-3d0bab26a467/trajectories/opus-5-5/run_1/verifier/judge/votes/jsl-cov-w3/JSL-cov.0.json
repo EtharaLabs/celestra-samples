@@ -1,0 +1,8 @@
+{
+ "case": "jsl-cov-w3",
+ "id": "JSL-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The change replaces `c.da.active.sel(snapshot=sns, ...)` with `c.da.active.sel(snapshot=n.snapshots, ...)` in the secant-loss constraints, fixing that lookup to the network\u2019s snapshot index rather than the supplied snapshots. With multi-period snapshots and `optimization.model_snapshot_index = 'flat'`, the supplied `sns` and component arrays use flat tuple labels, while `n.snapshots` retains its MultiIndex representation.\nYES"
+}

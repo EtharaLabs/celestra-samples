@@ -1,0 +1,8 @@
+{
+ "case": "unchanged-solve-model",
+ "id": "JIC-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not modify `pypsa/statistics/expressions.py` or its `installed_capex` calculation. Under legacy semantics, default/`\"auto\"` resolves to `\"multiindex\"`, so snapshot flattening is inactive; the shared statistics change only normalizes mean time weights by the same period grouping, not installed-capex period weights. The changes to the separate optimization-expression accessor therefore do not establish the stated difference.\nNO"
+}

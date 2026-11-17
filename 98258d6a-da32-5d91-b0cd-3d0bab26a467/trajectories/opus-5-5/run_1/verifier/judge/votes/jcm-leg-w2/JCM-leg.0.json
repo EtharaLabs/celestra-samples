@@ -1,0 +1,8 @@
+{
+ "case": "jcm-leg-w2",
+ "id": "JCM-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The secant-loss constraint call in `create_model` now receives `n.snapshots` instead of `sns`. For a build using a proper subset of the network\u2019s snapshots and secant transmission losses, this hands that constraint builder the full snapshot index, whereas base_commit handed it the selected subset, even under legacy semantics with the default option.\nYES"
+}

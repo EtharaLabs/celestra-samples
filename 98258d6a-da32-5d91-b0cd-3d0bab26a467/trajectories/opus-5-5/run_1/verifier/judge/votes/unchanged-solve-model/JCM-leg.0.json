@@ -1,0 +1,8 @@
+{
+ "case": "unchanged-solve-model",
+ "id": "JCM-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "Under legacy semantics, the default `\"auto\"` resolves to `\"multiindex\"`, and explicit `\"multiindex\"` does likewise. In either case, `model_snapshots(n, sns)` returns `sns` unchanged, so the added call in `create_model` does not change the snapshots passed to variable and constraint builders; changes inside those builders do not establish the criterion.\nNO"
+}

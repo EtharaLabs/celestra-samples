@@ -1,0 +1,8 @@
+{
+ "case": "jit-cov-w3",
+ "id": "JIT-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The change in `abstract.py` unconditionally wraps the iteration\u2019s snapshots in `pd.Index(..., tupleize_cols=False, name=\"snapshot\")`, turning a MultiIndex into a flat index of tuples. For a multi-period network with `optimization.model_snapshot_index=\"multiindex\"`, this forces a fixed flat representation instead of passing through the accepted MultiIndex, regardless of the selected option.\nYES"
+}

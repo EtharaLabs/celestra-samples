@@ -1,0 +1,8 @@
+{
+ "case": "approach-a",
+ "id": "JIT-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not modify `optimize_transmission_expansion_iteratively` or `pypsa/optimization/abstract.py`. The added conversion in model creation follows `optimization.model_snapshot_index`, flattening MultiIndex snapshots only when the resolved layout is `\"flat\"`, rather than imposing a fixed representation on an iteration\u2019s optimisation input.\nNO"
+}

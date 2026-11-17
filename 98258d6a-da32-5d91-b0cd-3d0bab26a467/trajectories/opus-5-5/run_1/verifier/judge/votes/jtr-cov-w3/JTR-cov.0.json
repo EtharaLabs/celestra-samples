@@ -1,0 +1,8 @@
+{
+ "case": "jtr-cov-w3",
+ "id": "JTR-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The transmission inner function unconditionally rebuilds `sns` as a flat tuple Index using `tupleize_cols=False`, even when the flow variable has a MultiIndex under `\"multiindex\"` or legacy `\"auto\"`. It then passes that flattened index to `_port_coefficients`, so efficiency selection does not consistently use the flow variable\u2019s own snapshot-index representation, as required.\nNO"
+}

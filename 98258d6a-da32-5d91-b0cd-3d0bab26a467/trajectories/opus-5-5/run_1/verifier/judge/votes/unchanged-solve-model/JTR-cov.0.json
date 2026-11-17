@@ -1,0 +1,8 @@
+{
+ "case": "unchanged-solve-model",
+ "id": "JTR-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The transmission function gets `sns` from the flow variable\u2019s own snapshot index and uses `model_view` for both dynamic port efficiency and generator snapshot weightings. That helper selects the corresponding network rows and relabels them as flat tuples when needed, while preserving MultiIndex labels otherwise; model creation resolves the option and `\"auto\"` semantics accordingly.\nYES"
+}

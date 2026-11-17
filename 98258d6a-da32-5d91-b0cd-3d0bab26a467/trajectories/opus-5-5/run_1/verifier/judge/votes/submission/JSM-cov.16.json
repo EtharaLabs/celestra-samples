@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JSM-cov",
+ "trial": 16,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "`solve_model` still obtains callback snapshots from `n.snapshots`, rather than from the model\u2019s stored snapshots. If a model is built with flat tuple-labelled snapshots and the network\u2019s snapshots are subsequently replaced with a simple datetime index, `_to_model` leaves that index unchanged, so `extra_functionality` receives a different representation from the one used to build the model.\n\nNO"
+}

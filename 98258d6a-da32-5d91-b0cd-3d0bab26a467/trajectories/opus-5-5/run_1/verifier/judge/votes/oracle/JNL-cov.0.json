@@ -1,0 +1,8 @@
+{
+ "case": "oracle",
+ "id": "JNL-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not modify `optimize_and_run_non_linear_powerflow` in `pypsa/optimization/abstract.py`. The new conversion in `create_model` uses `SnapshotWindow.build` and `optimization.model_snapshot_index` to select the representation, rather than forcing a fixed representation for that function\u2019s optimisation snapshots.\nNO"
+}

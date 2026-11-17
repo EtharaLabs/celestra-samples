@@ -1,0 +1,8 @@
+{
+ "case": "unchanged-func",
+ "id": "JTR-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "Under legacy semantics, both \u201cauto\u201d and \u201cmultiindex\u201d preserve the existing snapshot layout. The transmission inner function only replaces weight selection with `model_view(...)`, which is equivalent to the original `.loc[sns]` for that layout; branch operational-variable retrieval and time aggregation likewise retain their values. The new branch-diagonal handling occurs outside the inner function.\n\nNO"
+}

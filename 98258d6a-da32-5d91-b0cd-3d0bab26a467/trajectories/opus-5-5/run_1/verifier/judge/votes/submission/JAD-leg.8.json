@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JAD-leg",
+ "trial": 8,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The new unconditional `unflatten_snapshots(da)` converts a flat, tuple-labelled snapshot index into a `(period, timestep)` MultiIndex before dynamic-frame conversion. Such an input therefore produces a differently indexed dynamic frame than before, and this conversion is not gated by linopy semantics or `optimization.model_snapshot_index`.\nYES"
+}

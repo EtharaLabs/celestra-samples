@@ -1,0 +1,8 @@
+{
+ "case": "unchanged-create-model",
+ "id": "JIT-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not modify `optimize_transmission_expansion_iteratively` or add any iteration-specific coercion of its snapshot arguments. The new model-building wrapper selects the layout according to `optimization.model_snapshot_index`, and `as_index` now preserves flat tuple indexes rather than forcing them into a MultiIndex.\nNO"
+}

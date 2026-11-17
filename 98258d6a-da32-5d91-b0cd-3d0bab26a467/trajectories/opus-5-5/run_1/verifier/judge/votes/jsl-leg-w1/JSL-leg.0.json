@@ -1,0 +1,8 @@
+{
+ "case": "jsl-leg-w1",
+ "id": "JSL-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The diff changes the secant breakpoint target from `(s_nom_max * s_max_pu).where(lossy, 0)` to `s_nom_max.where(lossy, 0)`. For a lossy branch with non-unit `s_max_pu`, this changes the breakpoints and thus the secant loss constraints, independently of snapshot-index representation or linopy semantics.\nYES"
+}

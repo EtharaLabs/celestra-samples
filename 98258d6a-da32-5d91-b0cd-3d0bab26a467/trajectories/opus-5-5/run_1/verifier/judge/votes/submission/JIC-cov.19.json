@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JIC-cov",
+ "trial": 19,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not modify `pypsa/statistics/expressions.py` or add a fixed snapshot conversion to its `installed_capex` investment-period weighting. The new snapshot contexts and representation handling apply to optimization code; the changes in `statistics/abstract.py` merely delegate name selection to a helper that retains the existing `.loc[names]` behavior.\n\nNO"
+}

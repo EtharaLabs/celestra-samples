@@ -1,0 +1,8 @@
+{
+ "case": "jcm-cov-w1",
+ "id": "JCM-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "`create_model` constructs a `SnapshotWindow` but never replaces `sns` with `window.model_index`. Consequently, for multi-period networks with `\"flat\"` (or `\"auto\"` under v1 semantics), it still assigns the original MultiIndex to `n.model.parameters` and passes it to the unchanged builder calls, violating the criterion.\nNO"
+}

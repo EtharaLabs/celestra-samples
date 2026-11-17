@@ -1,0 +1,8 @@
+{
+ "case": "unchanged-func",
+ "id": "JAD-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not change `_as_dynamic`\u2019s construction of dynamic frames for static attributes. The added array conversion is conditional on `flattening(self.n_save)`, whose flag is set by `model_snapshots` according to the option\u2019s resolved layout, rather than imposing a fixed representation.\n\nNO"
+}

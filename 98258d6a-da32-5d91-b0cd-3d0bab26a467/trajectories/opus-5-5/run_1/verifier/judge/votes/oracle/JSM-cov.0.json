@@ -1,0 +1,8 @@
+{
+ "case": "oracle",
+ "id": "JSM-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "`solve_model` passes `self._window.model_index`, but that window is stored on the network, not tied to the particular model being solved. Replacing an existing model with one built using a different snapshot representation leaves the old window in place, so the callback receives the old representation; there is no check or reconstruction from the current model.\nNO"
+}

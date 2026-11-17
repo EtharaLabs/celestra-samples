@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JFX-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The change unconditionally calls `unflatten_snapshots(da)` at the start of `_from_xarray`, without checking semantics or `optimization.model_snapshot_index`. For an array with a flat, object-valued `snapshot` index of `(period, timestep)` tuples, this replaces that index with a MultiIndex (and adds level coordinates), changing its conversion result compared with the base implementation even under legacy semantics with `\"auto\"` or `\"multiindex\"`.\nYES"
+}

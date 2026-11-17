@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JIT-leg",
+ "trial": 18,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not modify `optimize_transmission_expansion_iteratively` or its snapshot arguments. Under legacy semantics, the default/`\"auto\"` resolves to `\"multiindex\"`, which preserves the existing snapshot representation; the optimization entry point also retains the same `as_index` normalization. The other changes affect model construction and results, not which snapshots the iterative routine passes to an iteration\u2019s optimization.\nNO"
+}

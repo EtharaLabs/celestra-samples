@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JCM-cov",
+ "trial": 17,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "`create_model` computes a `flat` flag and flattens the snapshots stored in `n.model.parameters`, but it never converts `sns` itself. For networks with MultiIndex snapshots, all variable and constraint builders\u2014including the transmission-loss builders\u2014still receive the original MultiIndex even when `\"flat\"` or `\"auto\"` under v1 semantics selects flat tuple labels; the context manager only changes component-data representation.\nNO"
+}

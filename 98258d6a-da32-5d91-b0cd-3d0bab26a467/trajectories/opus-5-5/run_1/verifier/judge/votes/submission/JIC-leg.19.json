@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JIC-leg",
+ "trial": 19,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not modify `pypsa/statistics/expressions.py`, and the shared statistics filtering changes merely replace `.loc[names]` with a helper that performs the same selection. Under legacy semantics with the default, `\"auto\"`, or `\"multiindex\"` setting, the snapshot representation also remains unchanged, so there is no demonstrated change to period-weighted `installed_capex`.\nNO"
+}

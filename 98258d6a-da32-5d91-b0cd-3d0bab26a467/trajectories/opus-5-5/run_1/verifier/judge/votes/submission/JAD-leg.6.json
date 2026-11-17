@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JAD-leg",
+ "trial": 6,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not change `_as_dynamic`\u2019s dynamic-frame construction. The added flattening is conditional on a flat-snapshot context, which is not enabled under legacy semantics with the default, `\"auto\"`, or `\"multiindex\"` setting; the unconditional unflattening is in `_from_xarray`, not `_as_dynamic`.\nNO"
+}

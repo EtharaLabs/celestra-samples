@@ -1,0 +1,8 @@
+{
+ "case": "unchanged-func",
+ "id": "JIC-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "Under legacy semantics, both the default `\"auto\"` setting and `\"multiindex\"` retain the existing MultiIndex layout. The changes in `statistics/expressions.py` only wrap dynamic port-efficiency data in `as_evaluated`, which leaves it unchanged outside flat-model evaluation; they do not change installed-capex calculations or investment-period weighting. Changes to the optimization expression accessor do not alter the statistics accessor\u2019s installed capex.\n\nNO"
+}

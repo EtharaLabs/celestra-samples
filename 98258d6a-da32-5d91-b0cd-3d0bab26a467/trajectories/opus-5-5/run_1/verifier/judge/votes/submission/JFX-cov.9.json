@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JFX-cov",
+ "trial": 9,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The change adds an unconditional `da = unflatten_snapshots(da)` at the start of `_from_xarray`. For a snapshot-indexed array with flat tuple labels and `optimization.model_snapshot_index=\"flat\"`, this reconstructs a `(period, timestep)` MultiIndex without consulting the option, imposing a fixed representation instead of the selected flat one.\nYES"
+}

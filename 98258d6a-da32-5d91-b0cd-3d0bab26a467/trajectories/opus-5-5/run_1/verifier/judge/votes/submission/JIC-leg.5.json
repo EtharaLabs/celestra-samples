@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JIC-leg",
+ "trial": 5,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "Under legacy semantics, both `\"auto\"` and `\"multiindex\"` retain MultiIndex snapshots, so the new flattening behavior does not apply. The diff does not modify `pypsa/statistics/expressions.py`, and the shared statistics filtering changes merely replace `.loc[...]` with an equivalent helper; they do not change installed-capex values or period weights.\n\nNO"
+}

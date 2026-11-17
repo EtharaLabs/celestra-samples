@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JAD-leg",
+ "trial": 16,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The change adds an unconditional `unflatten_snapshots(da)` call to `_as_dynamic`, independent of optimization semantics or the snapshot-index option. For input with a flat, object-valued `snapshot` index containing `(period, timestep)` tuples, this converts the index into a MultiIndex before the dynamic frame is built, whereas the base implementation preserves the flat index.\nYES"
+}

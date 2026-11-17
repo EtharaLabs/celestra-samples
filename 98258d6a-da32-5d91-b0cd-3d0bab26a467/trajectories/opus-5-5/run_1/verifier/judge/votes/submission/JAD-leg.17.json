@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JAD-leg",
+ "trial": 17,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The change unconditionally applies `unflatten_snapshots(da)` before building the dynamic frame, independently of linopy semantics or the snapshot-index option. For a DataArray whose `snapshot` index contains `(period, timestep)` tuples as flat object labels, this now restores a named MultiIndex, whereas the base code leaves that index flat, producing a different dynamic frame.\nYES"
+}

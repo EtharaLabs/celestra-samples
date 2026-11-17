@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JAD-leg",
+ "trial": 2,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not change `_as_dynamic` or its dynamic-frame construction logic. The array changes restore flat snapshots in `_from_xarray` and conditionally flatten returned arrays; under legacy semantics, the default/`\"auto\"` and `\"multiindex\"` settings do not enable that flattening.\nNO"
+}

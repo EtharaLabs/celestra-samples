@@ -1,0 +1,8 @@
+{
+ "case": "jcm-cov-w3",
+ "id": "JCM-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "`create_model` hard-codes `SnapshotWindow.build(n, sns, \"flat\")` rather than reading `optimization.model_snapshot_index`. Thus, for multi-period snapshots, it passes flat tuple labels to builders and model parameters even when `\"multiindex\"` is selected or `\"auto\"` is used under legacy semantics, violating the criterion.\nNO"
+}

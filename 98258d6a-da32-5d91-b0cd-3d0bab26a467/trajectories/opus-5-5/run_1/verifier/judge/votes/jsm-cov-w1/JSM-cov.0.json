@@ -1,0 +1,8 @@
+{
+ "case": "jsm-cov-w1",
+ "id": "JSM-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The change updates the callback in `__call__` to use `self._window.model_index`, but leaves `solve_model` unchanged, still passing network snapshots to `extra_functionality`. For a multi-period model built with flat snapshot labels, those network snapshots are a MultiIndex, so the direct `create_model` \u2192 `solve_model` path violates the criterion.\nNO"
+}

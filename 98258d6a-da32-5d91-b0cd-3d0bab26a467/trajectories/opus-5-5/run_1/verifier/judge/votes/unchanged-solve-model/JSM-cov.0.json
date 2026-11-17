@@ -1,0 +1,8 @@
+{
+ "case": "unchanged-solve-model",
+ "id": "JSM-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The decorator only adapts calls through the replacement method; `functools.wraps` also exposes the unchanged original as `OptimizationAccessor.solve_model.__wrapped__`. Calling that method directly bypasses the adaptation, so a model built with flat tuple snapshots can still pass the network\u2019s MultiIndex snapshots to `extra_functionality`. Thus the requirement does not hold for every call path.\nNO"
+}

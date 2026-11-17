@@ -1,0 +1,8 @@
+{
+ "case": "oracle",
+ "id": "JAD-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not change `_as_dynamic`\u2019s frame-building logic. The added conversion in `_as_xarray` is a no-op under legacy semantics with the default, `\"auto\"`, or `\"multiindex\"` setting, because the snapshot window is not flat; the other array conversion change is in `_from_xarray`, not `_as_dynamic`.\n\nNO"
+}

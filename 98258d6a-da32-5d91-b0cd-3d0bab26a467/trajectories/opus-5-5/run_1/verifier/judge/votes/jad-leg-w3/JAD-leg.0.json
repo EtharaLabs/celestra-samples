@@ -1,0 +1,8 @@
+{
+ "case": "jad-leg-w3",
+ "id": "JAD-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "In `_as_dynamic`, the non-MultiIndex column branch now sets `res.columns.name = \"component\"` instead of `\"name\"`. Thus, for an ordinary non-stochastic component, the returned dynamic frame has different column-axis metadata for the same input, independently of linopy semantics or the snapshot-index option.\nYES"
+}

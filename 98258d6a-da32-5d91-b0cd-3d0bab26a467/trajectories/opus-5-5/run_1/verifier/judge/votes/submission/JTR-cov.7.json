@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JTR-cov",
+ "trial": 7,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The inner `func` converts time-dependent port efficiencies with `_to_model`, but leaves snapshot weightings as `n.snapshot_weightings.generators.loc[sns]`. For flat tuple-labelled snapshots, that selection retains the weightings\u2019 original MultiIndex; conversion later in one aggregation path does not make the inner function consistently take both inputs in the selected representation.\nNO"
+}

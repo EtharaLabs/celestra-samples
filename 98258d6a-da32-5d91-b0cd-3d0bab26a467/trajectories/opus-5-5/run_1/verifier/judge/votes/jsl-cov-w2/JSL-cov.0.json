@@ -1,0 +1,8 @@
+{
+ "case": "jsl-cov-w2",
+ "id": "JSL-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The change replaces `snapshot=sns` in the secant-loss active-data lookup with `pd.Index(list(sns), tupleize_cols=False, name=\"snapshot\")`, forcing a flat tuple index. For a multi-period network using `optimization.model_snapshot_index=\"multiindex\"` under legacy linopy semantics, `sns` remains a MultiIndex, so this lookup uses a fixed representation rather than the representation supplied.\nYES"
+}

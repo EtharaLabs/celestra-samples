@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JTR-cov",
+ "trial": 12,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The transmission function converts dynamic port efficiency with `_to_model`, but obtains weights using only `n.snapshot_weightings.generators.loc[sns]`. For flat tuple snapshot labels, that pandas selection retains the weighting\u2019s MultiIndex rather than converting it to the flow variable\u2019s flat index; conversion later in the aggregation code is limited to the `\"sum\"` path. Thus the required behavior does not hold for every case.\nNO"
+}

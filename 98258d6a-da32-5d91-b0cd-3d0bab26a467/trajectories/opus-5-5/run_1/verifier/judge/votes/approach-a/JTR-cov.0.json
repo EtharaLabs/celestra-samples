@@ -1,0 +1,8 @@
+{
+ "case": "approach-a",
+ "id": "JTR-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The transmission function obtains `sns` from the flow variable\u2019s own snapshot index and uses `model_view` for both time-dependent port efficiency and generator snapshot weightings. That helper selects the corresponding network snapshots and preserves MultiIndex labels or relabels them as flat tuples, matching the layout chosen by the option and linopy semantics.\nYES"
+}

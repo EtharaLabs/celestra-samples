@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JIC-leg",
+ "trial": 4,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "`pypsa/statistics/expressions.py` is unchanged, and the shared statistics filtering changes simply replace `obj.loc[names]` with a helper that performs the same selection. The capex and period-weighting changes elsewhere affect optimization expressions and objectives, not the period-weighted installed capex reported by the statistics implementation.\nNO"
+}

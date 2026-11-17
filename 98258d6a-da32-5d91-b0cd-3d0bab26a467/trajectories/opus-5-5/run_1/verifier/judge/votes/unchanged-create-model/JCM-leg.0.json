@@ -1,0 +1,8 @@
+{
+ "case": "unchanged-create-model",
+ "id": "JCM-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "Under legacy semantics, `model_snapshots` itself preserves the index, but the new tuple-index branch in `as_index` changes normalization regardless of the selected layout. For a network with tuple-valued timesteps, an input tuple index can denote valid timesteps under the old expansion logic while also matching full snapshot labels; the new branch interprets it as full labels instead. Thus the builders can receive different snapshots even with `\"auto\"` or `\"multiindex\"`.\nYES"
+}

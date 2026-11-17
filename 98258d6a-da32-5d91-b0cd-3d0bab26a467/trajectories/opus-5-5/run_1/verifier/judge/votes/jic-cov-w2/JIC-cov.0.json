@@ -1,0 +1,8 @@
+{
+ "case": "jic-cov-w2",
+ "id": "JIC-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The installed_capex weighting condition now checks whether the model snapshots are a `pd.MultiIndex`, rather than whether the network has investment periods. For a multi-period network with `optimization.model_snapshot_index = \"flat\"`, this condition is false and investment-period weighting is skipped, tying weighting to the fixed MultiIndex representation instead of supporting the selected representation.\nYES"
+}

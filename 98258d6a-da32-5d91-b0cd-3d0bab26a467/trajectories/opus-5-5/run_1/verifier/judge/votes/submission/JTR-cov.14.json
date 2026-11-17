@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JTR-cov",
+ "trial": 14,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The transmission inner `func` converts dynamic port efficiency with `_to_model`, but obtains weights directly from `n.snapshot_weightings.generators.loc[sns]` without converting them. For investment-period networks, that selection retains a MultiIndex even when the flow variable has flat tuple labels; conversion in a later aggregation path does not satisfy the stated requirement for the inner function.\nNO"
+}

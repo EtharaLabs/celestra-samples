@@ -1,0 +1,8 @@
+{
+ "case": "jad-leg-w2",
+ "id": "JAD-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "In `_as_dynamic`, the static-to-dynamic frame now uses `np.zeros((len(sns), len(diff)))` instead of repeating `static_values` across snapshots. Thus, for an attribute with a nonzero static value and no corresponding dynamic column, the constructed frame contains zeros rather than that static value, independently of linopy semantics or the snapshot-index option.\nYES"
+}

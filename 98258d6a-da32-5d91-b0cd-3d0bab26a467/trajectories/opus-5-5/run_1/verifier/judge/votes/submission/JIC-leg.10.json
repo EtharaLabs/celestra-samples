@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JIC-leg",
+ "trial": 10,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "Under legacy semantics, both `\"auto\"` and `\"multiindex\"` retain the existing MultiIndex representation. The diff does not change `pypsa/statistics/expressions.py`, and the shared statistics filtering changes merely replace `obj.loc[names]` with a helper performing that same selection; they do not change installed-capex calculation or period weighting.\nNO"
+}

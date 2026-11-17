@@ -1,0 +1,8 @@
+{
+ "case": "oracle",
+ "id": "JCM-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The conversion to `window.model_index` is not preserved on every path: the transmission-loss variable-building path reselects `sns` using `as_index(n, snapshots, \"snapshots\")`, restoring the network\u2019s MultiIndex. Consequently, a flat build can pass MultiIndex snapshots to builders even though `n.model.parameters` received flat tuple labels.\nNO"
+}

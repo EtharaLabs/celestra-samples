@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JSM-leg",
+ "trial": 10,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "Under legacy semantics, both `\"auto\"` and `\"multiindex\"` select the non-flat representation, so `_to_model(n, n.snapshots)` returns `n.snapshots` unchanged. Thus `solve_model` passes exactly what it passed before this change; any mismatch when the model was built over a subset already existed and is not caused by the submitted change.\nNO"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JCM-leg",
+ "trial": 4,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "`create_model` still derives `sns` using the unchanged `as_index(n, snapshots, \"snapshots\")` and passes that same `sns` to the variable and constraint builders. Under legacy semantics, both the default `\"auto\"` and explicit `\"multiindex\"` resolve to non-flat behavior, so the added context does not change snapshot representation.\nNO"
+}

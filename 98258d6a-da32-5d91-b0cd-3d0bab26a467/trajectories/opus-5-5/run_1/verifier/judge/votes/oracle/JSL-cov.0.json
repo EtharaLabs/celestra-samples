@@ -1,0 +1,8 @@
+{
+ "case": "oracle",
+ "id": "JSL-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not modify `define_secant_loss_constraints` or introduce a fixed snapshot representation for its line-data reads. The new component-array conversion instead follows the live model\u2019s `SnapshotWindow`, whose representation is selected using `optimization.model_snapshot_index`, rather than forcing one representation independently of the supplied snapshots.\n\nNO"
+}

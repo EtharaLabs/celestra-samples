@@ -1,0 +1,8 @@
+{
+ "case": "jcm-leg-w1",
+ "id": "JCM-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "Under legacy semantics, the new snapshot-window mapping preserves the snapshot index for the default, `\"auto\"`, and `\"multiindex\"` options. However, `create_model` now passes `sns[1:]` to `define_secant_loss_constraints` instead of `sns`, so a network using secant transmission-loss constraints with multiple snapshots receives a different snapshot set than before.\nYES"
+}

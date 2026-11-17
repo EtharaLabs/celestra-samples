@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JAD-leg",
+ "trial": 7,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "Under legacy semantics, both the default `\"auto\"` setting and `\"multiindex\"` select the MultiIndex representation, so the new conditional flattening is inactive. The added unflattening restores flat tuple-labelled xarray inputs to snapshot MultiIndexes; the diff does not show a change to how `_as_dynamic` constructs the dynamic frame for the same component and snapshots in the specified mode.\nNO"
+}

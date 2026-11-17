@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JSL-leg",
+ "trial": 7,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "Under legacy semantics, both `\"auto\"` and `\"multiindex\"` preserve the original snapshot representation, and the secant-loss builder is still called with the same `sns`. The diff does not modify `define_secant_loss_constraints` or show any change to its snapshot-dependent construction in that mode; changes to other constraint builders do not establish the stated difference.\nNO"
+}

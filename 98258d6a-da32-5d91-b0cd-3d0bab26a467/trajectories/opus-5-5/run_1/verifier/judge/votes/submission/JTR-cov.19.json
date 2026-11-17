@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JTR-cov",
+ "trial": 19,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The transmission inner function still obtains weights with `n.snapshot_weightings.generators.loc[sns]`, which retains the network\u2019s MultiIndex even when the flow variable uses flat tuple labels. Although efficiency is converted with `_to_model` and one aggregation path converts weights later, the inner function does not consistently take both inputs in the selected snapshot representation.\nNO"
+}

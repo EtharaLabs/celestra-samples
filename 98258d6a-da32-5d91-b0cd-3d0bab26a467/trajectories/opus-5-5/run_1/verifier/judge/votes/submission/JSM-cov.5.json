@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JSM-cov",
+ "trial": 5,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "`solve_model` still takes callback snapshots from `n.snapshots`, not from the model\u2019s stored snapshots, and `_to_model` only converts in the flattening direction. If a model is built with MultiIndex snapshots and the network\u2019s snapshots are subsequently replaced with a single-level index, the callback receives that single-level index even though the model retains its MultiIndex representation. Thus the guarantee does not hold for every network and call path.\nNO"
+}

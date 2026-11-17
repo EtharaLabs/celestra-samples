@@ -1,0 +1,8 @@
+{
+ "case": "jsm-cov-w3",
+ "id": "JSM-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The criterion fails for multi-period networks built with the flat snapshot representation. In `solve_model`, when `n.has_periods` is true, the change explicitly converts `self._window.model_index` into a `pd.MultiIndex` before passing it to `extra_functionality`, even though the model was built with a flat tuple index.\nNO"
+}

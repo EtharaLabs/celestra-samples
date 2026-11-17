@@ -1,0 +1,8 @@
+{
+ "case": "oracle",
+ "id": "JAD-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not change `_as_dynamic` to hard-code a snapshot representation for static attributes. The added conversion in `array.py` applies to the xarray result via `window.flatten`, which only flattens when the model\u2019s `SnapshotWindow` selects the flat representation according to the option.\n\nNO"
+}

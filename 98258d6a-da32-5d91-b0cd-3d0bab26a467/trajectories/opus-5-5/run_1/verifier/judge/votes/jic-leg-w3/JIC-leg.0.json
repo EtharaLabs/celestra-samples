@@ -1,0 +1,8 @@
+{
+ "case": "jic-leg-w3",
+ "id": "JIC-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "YES: `installed_capex` replaces multiplication by each period\u2019s objective weighting (`df.multiply(weights, level=\"period\")`) with multiplication by the mean weighting (`df * weights.mean()`). For a multi-period network with unequal objective weightings and nonzero installed capex, this changes the reported period-weighted values, independently of the snapshot-index representation or linopy semantics.\nYES"
+}

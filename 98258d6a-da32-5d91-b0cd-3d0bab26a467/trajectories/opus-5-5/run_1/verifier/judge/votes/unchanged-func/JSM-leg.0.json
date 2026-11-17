@@ -1,0 +1,8 @@
+{
+ "case": "unchanged-func",
+ "id": "JSM-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "Under legacy semantics, `\"auto\"` resolves to `\"multiindex\"`, so `model_snapshots` preserves the network\u2019s snapshot labels. `solve_model` now passes `built_snapshots(n)`, which reads the snapshots recorded when the model was built, preserving their MultiIndex labels and any selected subset rather than passing all network snapshots.\nNO"
+}

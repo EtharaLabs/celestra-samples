@@ -1,0 +1,8 @@
+{
+ "case": "jsl-leg-w3",
+ "id": "JSL-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The diff directly changes the secant loss constraints from `lhs >= offset` to `lhs <= offset` for both signs in `define_secant_loss_constraints`. This reverses the inequality for active branches at the supplied snapshots, independently of snapshot representation or linopy semantics, so it also changes constraints under legacy semantics with the specified option settings.\nYES"
+}

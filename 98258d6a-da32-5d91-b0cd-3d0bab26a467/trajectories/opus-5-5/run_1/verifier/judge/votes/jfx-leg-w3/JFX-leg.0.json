@@ -1,0 +1,8 @@
+{
+ "case": "jfx-leg-w3",
+ "id": "JFX-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The change unconditionally replaces `return da.to_pandas()` with `return da.to_pandas().T` in _from_xarray\u2019s two-dimensional auxiliary-dimension branch containing `snapshot` (for example, `snapshot` and `cycle`). For a nonsymmetric array reaching that branch, the returned DataFrame differs from the base result; this change is independent of linopy semantics or the snapshot-index option.\n\nYES"
+}

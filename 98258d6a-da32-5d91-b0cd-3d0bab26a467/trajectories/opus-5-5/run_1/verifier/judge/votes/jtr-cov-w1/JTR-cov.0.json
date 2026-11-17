@@ -1,0 +1,8 @@
+{
+ "case": "jtr-cov-w1",
+ "id": "JTR-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The transmission inner function computes `sns` from the flow variable but passes `n.snapshots` to `_port_coefficients` instead. Consequently, time-varying efficiencies are selected over the full network horizon rather than the variable\u2019s own snapshot labels, which can also differ in representation for flat builds. Although weightings are restricted during aggregation, the efficiency selection does not satisfy the criterion.\nNO"
+}
