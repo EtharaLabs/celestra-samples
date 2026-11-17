@@ -1,0 +1,166 @@
+# GENERATED SECTION. DO NOT HAND-EDIT.
+
+[[criterion]]
+id = "J-SHARE"
+description = "In Lib/fontTools/ttLib/tables/otConverters.py or otTables.py, the change adds, for classic mort, a separate copy of AATStateTable, AATState, RearrangementMorphAction, ContextualMorphAction, LigatureMorphAction, InsertionMorphAction or the state-table TTX code of STXHeader.xmlWrite and STXHeader.xmlRead, instead of reusing the one extended morx uses."
+type = "binary"
+weight = 3
+negate = true
+
+[criterion.annotations]
+mode = "judged"
+type = "ABSENCE"
+obligation = "deliverable.instruction"
+dimension = "craft"
+evidence = ["/logs/verifier/submission.diff, carried as the solver output in /logs/verifier/judge-request.json"]
+residue = "A property of how the code is organised, not of any table's bytes, so no test decides it. Judged from the diff."
+
+[[criterion]]
+id = "J-TRIM-LO"
+description = "In Lib/fontTools/ttLib/tables/otConverters.py, where newTable(\"mort\").decompile reads a classic contextual glyph substitution subtable, for every such subtable the decoder never takes a glyph's replacement from a word that lies before the subtable's substitution table, for negative and positive entry offsets alike."
+type = "binary"
+weight = 3
+negate = false
+
+[criterion.annotations]
+mode = "judged"
+type = "EFFECT"
+obligation = "deliverable.instruction"
+dimension = "coverage"
+evidence = ["/logs/verifier/submission.diff, carried as the solver output in /logs/verifier/judge-request.json"]
+residue = "Universal over every classic or extended table a font can carry; a finite test refutes instances but cannot decide the claim. Judged from the diff."
+
+[[criterion]]
+id = "J-TRIM-HI"
+description = "In Lib/fontTools/ttLib/tables/otConverters.py, where newTable(\"mort\").decompile reads a classic contextual glyph substitution subtable, for every such subtable the decoder takes a glyph's replacement only from a word that ends at or before the end of the subtable."
+type = "binary"
+weight = 3
+negate = false
+
+[criterion.annotations]
+mode = "judged"
+type = "EFFECT"
+obligation = "deliverable.instruction"
+dimension = "coverage"
+evidence = ["/logs/verifier/submission.diff, carried as the solver output in /logs/verifier/judge-request.json"]
+residue = "Universal over every classic or extended table a font can carry; a finite test refutes instances but cannot decide the claim. Judged from the diff."
+
+[[criterion]]
+id = "J-TRIM-IN"
+description = "In Lib/fontTools/ttLib/tables/otConverters.py, where newTable(\"mort\").decompile reads a classic contextual glyph substitution subtable, for every such subtable the decoder takes the replacement of every glyph whose word lies inside both the substitution table and the subtable, for negative and positive entry offsets alike."
+type = "binary"
+weight = 3
+negate = false
+
+[criterion.annotations]
+mode = "judged"
+type = "EFFECT"
+obligation = "deliverable.instruction"
+dimension = "coverage"
+evidence = ["/logs/verifier/submission.diff, carried as the solver output in /logs/verifier/judge-request.json"]
+residue = "Universal over every classic or extended table a font can carry; a finite test refutes instances but cannot decide the claim. Judged from the diff."
+
+[[criterion]]
+id = "J-MORX-DEC"
+description = "For some extended morx table, the change makes newTable(\"morx\").decompile, through Lib/fontTools/ttLib/tables/otConverters.py, decode different objects from the same bytes than base_commit does."
+type = "binary"
+weight = 3
+negate = true
+
+[criterion.annotations]
+mode = "judged"
+type = "INVARIANT"
+obligation = "deliverable.instruction"
+dimension = "constraints"
+evidence = ["/logs/verifier/submission.diff, carried as the solver output in /logs/verifier/judge-request.json"]
+residue = "Universal over every classic or extended table a font can carry; a finite test refutes instances but cannot decide the claim. Judged from the diff."
+
+[[criterion]]
+id = "J-MORX-ENC"
+description = "For some extended morx table, the change makes the morx table's compile, through Lib/fontTools/ttLib/tables/otConverters.py, write different bytes for the same objects than base_commit does."
+type = "binary"
+weight = 3
+negate = true
+
+[criterion.annotations]
+mode = "judged"
+type = "INVARIANT"
+obligation = "deliverable.instruction"
+dimension = "constraints"
+evidence = ["/logs/verifier/submission.diff, carried as the solver output in /logs/verifier/judge-request.json"]
+residue = "Universal over every classic or extended table a font can carry; a finite test refutes instances but cannot decide the claim. Judged from the diff."
+
+[[criterion]]
+id = "J-MAL-CLS"
+description = "For some classic mort state table whose glyph-class count is zero, the change lets newTable(\"mort\").decompile, through Lib/fontTools/ttLib/tables/otConverters.py, return a table for it instead of raising an exception."
+type = "binary"
+weight = 3
+negate = true
+
+[criterion.annotations]
+mode = "judged"
+type = "ABSENCE"
+obligation = "deliverable.instruction"
+dimension = "robustness"
+evidence = ["/logs/verifier/submission.diff, carried as the solver output in /logs/verifier/judge-request.json"]
+residue = "Universal over every classic or extended table a font can carry; a finite test refutes instances but cannot decide the claim. Judged from the diff."
+
+[[criterion]]
+id = "J-MAL-STATE"
+description = "For some classic mort state table whose state array starts after its entry table, the change lets newTable(\"mort\").decompile, through Lib/fontTools/ttLib/tables/otConverters.py, return a table for it instead of raising an exception."
+type = "binary"
+weight = 3
+negate = true
+
+[criterion.annotations]
+mode = "judged"
+type = "ABSENCE"
+obligation = "deliverable.instruction"
+dimension = "robustness"
+evidence = ["/logs/verifier/submission.diff, carried as the solver output in /logs/verifier/judge-request.json"]
+residue = "Universal over every classic or extended table a font can carry; a finite test refutes instances but cannot decide the claim. Judged from the diff."
+
+[[criterion]]
+id = "J-MAL-LIGORD"
+description = "For some classic mort state table that is a ligature subtable whose component table starts after its ligature table, the change lets newTable(\"mort\").decompile, through Lib/fontTools/ttLib/tables/otConverters.py, return a table for it instead of raising an exception."
+type = "binary"
+weight = 3
+negate = true
+
+[criterion.annotations]
+mode = "judged"
+type = "ABSENCE"
+obligation = "deliverable.instruction"
+dimension = "robustness"
+evidence = ["/logs/verifier/submission.diff, carried as the solver output in /logs/verifier/judge-request.json"]
+residue = "Universal over every classic or extended table a font can carry; a finite test refutes instances but cannot decide the claim. Judged from the diff."
+
+[[criterion]]
+id = "J-MAL-LIGLEN"
+description = "For some classic mort state table that is a ligature subtable whose component table has an odd length in bytes, the change lets newTable(\"mort\").decompile, through Lib/fontTools/ttLib/tables/otConverters.py, return a table for it instead of raising an exception."
+type = "binary"
+weight = 3
+negate = true
+
+[criterion.annotations]
+mode = "judged"
+type = "ABSENCE"
+obligation = "deliverable.instruction"
+dimension = "robustness"
+evidence = ["/logs/verifier/submission.diff, carried as the solver output in /logs/verifier/judge-request.json"]
+residue = "Universal over every classic or extended table a font can carry; a finite test refutes instances but cannot decide the claim. Judged from the diff."
+
+[[criterion]]
+id = "J-MAL-LIGVAL"
+description = "For some classic mort state table that is a ligature subtable whose component table holds an odd value, the change lets newTable(\"mort\").decompile, through Lib/fontTools/ttLib/tables/otConverters.py, return a table for it instead of raising an exception."
+type = "binary"
+weight = 3
+negate = true
+
+[criterion.annotations]
+mode = "judged"
+type = "ABSENCE"
+obligation = "deliverable.instruction"
+dimension = "robustness"
+evidence = ["/logs/verifier/submission.diff, carried as the solver output in /logs/verifier/judge-request.json"]
+residue = "Universal over every classic or extended table a font can carry; a finite test refutes instances but cannot decide the claim. Judged from the diff."

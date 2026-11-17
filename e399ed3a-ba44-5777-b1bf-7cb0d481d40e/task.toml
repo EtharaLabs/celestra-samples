@@ -1,0 +1,55 @@
+schema_version = "1.4"
+# score.py writes a weighted-mean score in [0, 1], not a pass/fail bit.
+reward_type = "bounded_continuous"
+artifacts = [{ source = "/app/fonttools", destination = "workspace", exclude = [".git", "__pycache__"] }]
+
+[task]
+name = "ethara/e399ed3a-ba44-5777-b1bf-7cb0d481d40e"
+version = "1.0.0"
+description = "Make fontTools decompile, dump to TTX, read from TTX and compile classic AAT mort tables with rearrangement, contextual, ligature and insertion subtables, in the classic encoding and the morx object model, leaving morx and non-contextual mort unchanged."
+authors = [{ name = "mumukshu.panchal", email = "mumukshu.panchal@ethara.ai" }]
+keywords = ["fonttools", "aat", "mort", "morx", "opentype", "binary-format", "crossrepo", "python"]
+
+[metadata]
+null_floor = 0.0
+discrimination_weight = 0.5
+platforms = ["linux/amd64", "linux/arm64"]
+
+[verifier]
+timeout_sec = 1800
+network_mode = "no-network"
+environment_mode = "separate"
+# test.sh starts as root only to make the submission readable, then grades as uid 10001.
+user = "root"
+
+[verifier.environment]
+network_mode = "no-network"
+build_timeout_sec = 1800
+cpus = 2
+memory_mb = 4096
+storage_mb = 10240
+gpus = 0
+
+[agent]
+timeout_sec = 10800
+network_mode = "no-network"
+user = "10001"
+
+[environment]
+network_mode = "no-network"
+build_timeout_sec = 1800
+cpus = 4
+memory_mb = 4096
+storage_mb = 10240
+gpus = 0
+
+[upstream_provenance]
+origin = "original"
+provenance_date = "2026-08-24"
+source_kind = "public_repository"
+
+[upstream_provenance.source]
+canonical_repo = "https://github.com/fonttools/fonttools"
+fork_ancestry_digest = "sha256:bdeda273cfb85d5c4dc034fd82fa9277a25e01b8f8c5a85f41485162b2f8b3b2"
+base_commit = "984a5cf614f4b05f0cdd57fc5b5628fd81518805"
+event_timestamp = "2026-08-24T20:58:59Z"

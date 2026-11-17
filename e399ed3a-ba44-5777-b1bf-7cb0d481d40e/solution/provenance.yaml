@@ -1,0 +1,226 @@
+# FORGE-CANARY-BEGIN
+# FORGE-CANARY-SLOT-1: 73b5715e3a3344b92f9e8336f4466bd8ea9e8a52bd72a07f25b54164643168c5
+# FORGE-CANARY-SLOT-2: f3d6e91b1bf5449e55e818ea65d8802713e91d1859883c9d1062ba55d21d07ff
+# FORGE-CANARY-SLOT-3: db1ec1e4ec9a89b9f5415674d13a4384f5ca4c30fda6338fe39352e1cce639bb
+# FORGE-CANARY-END
+# GENERATED SECTION. DO NOT HAND-EDIT.
+ancestry_attestation_digest: attestation-unavailable
+ancestry_attestation_signer: attestation-unavailable
+assets:
+- decoys: none
+  fidelity_flags:
+  - unmodified-upstream
+  - commit-pinned
+  id: source-repository
+  licence_chain:
+  - MIT, LICENSE at the base commit, sha256:6787208f83f659ccbc2223b2fde952ffa6f7e8aca62f1a8a2bf5bc51bb1b2383
+  - LICENSE.external at the base commit, sha256:94a83aaee0729a0f302d34acc4acecbd9d58366f262429075fe557e4a54b2e69,
+    for bundled third-party parts
+  licence_status: verified
+  modality: source code (Python package and test suite)
+  payload: https://github.com/fonttools/fonttools at 984a5cf614f4b05f0cdd57fc5b5628fd81518805, cloned
+    into /app/fonttools
+  source_recipe: git checkout of the base commit inside the pinned git image; fix commit and post-base
+    history unreachable
+- decoys: none
+  fidelity_flags:
+  - unmodified-upstream
+  - commit-pinned
+  id: upstream-mort-test
+  licence_chain:
+  - MIT, Tests/ttLib/tables/_m_o_r_t_test.py of fonttools/fonttools at e7e00f1b16aef6ede850206df3c100ccde27b2d3
+    (LICENSE at the base commit, sha256:6787208f83f659ccbc2223b2fde952ffa6f7e8aca62f1a8a2bf5bc51bb1b2383)
+  - Unicode-3.0, fixture font TestAATMorx.ttf (sha256:ea32f2dc35ba518185fdcad5fcb629f18ee2b976dca05365956a294216555674)
+    and TestMORXFourtyone.ttf (sha256:9fdcca5f5d0939e7d8619e47b69c28b3d0579a04de26a8fbe80f4390b9dc8013)
+    under fonts/ of unicode-org/text-rendering-tests at 26cfb96d094befc3c8b08228577bf400b04b83a1; LICENSE
+    there sha256:a6d2fdb1fae59e91800d9a5df25857f9a276fe7e02e58af864af5c325d2951c3, Copyright 2016-2024
+    Unicode, Inc.
+  - Apache-2.0, HarfBuzz's vendored copy of the same suite, test/shape/data/text-rendering-tests/ of harfbuzz/harfbuzz
+    at f6b7a4cb7216b900229f0a11110784d5ff9cf796; COPYING there sha256:d24039e4d22c9bc72096f6174374539d92a3d6e1163938546ec59179fe095e6f
+    (Copyright 2016 Unicode Inc.), README there sha256:5fa0fff1b8395c527950a58ddf77795b8b489db5004813abd012ff65ae7ba5e6
+    names the automatic import from unicode-org/text-rendering-tests; its fonts/TestMORXFourtyone.ttf
+    is byte-identical (sha256:9fdcca5f...8013) to the Unicode copy, so both fixtures trace to one source
+  - MORT_NONCONTEXTUAL_DATA is fontTools' adaptation of the Apple mort example, already in fontTools under
+    MIT at the base commit; the trimmed contextual fixtures are fontTools-authored
+  licence_status: verified
+  modality: test module (sealed, verifier only)
+  notices:
+  - condition: 'Unicode-3.0: the copyright and permission notice appears with all copies, or in associated
+      Documentation'
+    licence: Unicode-3.0
+    met_by: option (b); the full notice is carried in solution/NOTICE and below in solution/provenance.yaml,
+      the bundle documentation shipped beside tests/; tests/ is unchanged
+    notice: |
+      UNICODE LICENSE V3
+
+      COPYRIGHT AND PERMISSION NOTICE
+
+      Copyright © 2016-2024 Unicode, Inc.
+
+      NOTICE TO USER: Carefully read the following legal agreement. BY
+      DOWNLOADING, INSTALLING, COPYING OR OTHERWISE USING DATA FILES, AND/OR
+      SOFTWARE, YOU UNEQUIVOCALLY ACCEPT, AND AGREE TO BE BOUND BY, ALL OF THE
+      TERMS AND CONDITIONS OF THIS AGREEMENT. IF YOU DO NOT AGREE, DO NOT
+      DOWNLOAD, INSTALL, COPY, DISTRIBUTE OR USE THE DATA FILES OR SOFTWARE.
+
+      Permission is hereby granted, free of charge, to any person obtaining a
+      copy of data files and any associated documentation (the "Data Files") or
+      software and any associated documentation (the "Software") to deal in the
+      Data Files or Software without restriction, including without limitation
+      the rights to use, copy, modify, merge, publish, distribute, and/or sell
+      copies of the Data Files or Software, and to permit persons to whom the
+      Data Files or Software are furnished to do so, provided that either (a)
+      this copyright and permission notice appear with all copies of the Data
+      Files or Software, or (b) this copyright and permission notice appear in
+      associated Documentation.
+
+      THE DATA FILES AND SOFTWARE ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY
+      KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+      MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT OF
+      THIRD PARTY RIGHTS.
+
+      IN NO EVENT SHALL THE COPYRIGHT HOLDER OR HOLDERS INCLUDED IN THIS NOTICE
+      BE LIABLE FOR ANY CLAIM, OR ANY SPECIAL INDIRECT OR CONSEQUENTIAL DAMAGES,
+      OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
+      WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION,
+      ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THE DATA
+      FILES OR SOFTWARE.
+
+      Except as contained in this notice, the name of a copyright holder shall
+      not be used in advertising or otherwise to promote the sale, use or other
+      dealings in these Data Files or Software without prior written
+      authorization of the copyright holder.
+
+      SPDX-License-Identifier: Unicode-3.0
+  - condition: 'Apache-2.0 section 4: keep the copyright notice, state changes in modified files, and
+      give recipients a copy of the License'
+    licence: Apache-2.0
+    met_by: the copyright notice below is kept here and in solution/NOTICE, beside the fontTools MIT notice;
+      the upstream test keeps its in-file change notes ("Converted from HarfBuzz's TestMORXFourtyone.ttf",
+      "Paired with TestAATMorx.ttf in unicode-org/text-rendering-tests"); the bundle carries no copy of
+      the Apache-2.0 text and relies on the Unicode-3.0 grant from the same copyright holder for byte-identical
+      fonts
+    notice: |
+      Copyright 2016 Unicode Inc. All rights reserved.
+
+      Licensed under the Apache License, Version 2.0 (the “License”);
+      you may not use this file except in compliance with the License.
+      You may obtain a copy of the License at
+
+           http://www.apache.org/licenses/LICENSE-2.0
+
+      Unless required by applicable law or agreed to in writing, software
+      distributed under the License is distributed on an “AS IS” BASIS,
+      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+      See the License for the specific language governing permissions and
+      limitations under the License.
+  payload: tests/graded/_m_o_r_t_test.py
+  payload_sha256: 9022bbc7f013f32d310f63e783030e98c4194d5e36c01e6e100ef3587cc318a8
+  source_recipe: verbatim copy of the upstream file at the merge commit; MORT_ALL_TYPES_DATA is paired
+    with TestAATMorx.ttf and MORT_LIGATURE_REBASE_DATA is converted from TestMORXFourtyone.ttf, per the
+    file's own comments
+- decoys: none
+  fidelity_flags:
+  - derived
+  id: verifier-mort-fixtures
+  licence_chain:
+  - MIT, derived from the upstream fixtures above by recompiling them with the reference implementation
+    under shifted glyph orders and edited substitutions
+  - Unicode-3.0, fixture font TestAATMorx.ttf (sha256:ea32f2dc35ba518185fdcad5fcb629f18ee2b976dca05365956a294216555674)
+    and TestMORXFourtyone.ttf (sha256:9fdcca5f5d0939e7d8619e47b69c28b3d0579a04de26a8fbe80f4390b9dc8013)
+    under fonts/ of unicode-org/text-rendering-tests at 26cfb96d094befc3c8b08228577bf400b04b83a1; LICENSE
+    there sha256:a6d2fdb1fae59e91800d9a5df25857f9a276fe7e02e58af864af5c325d2951c3, Copyright 2016-2024
+    Unicode, Inc.
+  - Apache-2.0, HarfBuzz's vendored copy of the same suite, test/shape/data/text-rendering-tests/ of harfbuzz/harfbuzz
+    at f6b7a4cb7216b900229f0a11110784d5ff9cf796; COPYING there sha256:d24039e4d22c9bc72096f6174374539d92a3d6e1163938546ec59179fe095e6f
+    (Copyright 2016 Unicode Inc.), README there sha256:5fa0fff1b8395c527950a58ddf77795b8b489db5004813abd012ff65ae7ba5e6
+    names the automatic import from unicode-org/text-rendering-tests; its fonts/TestMORXFourtyone.ttf
+    is byte-identical (sha256:9fdcca5f...8013) to the Unicode copy, so both fixtures trace to one source
+  licence_status: verified
+  modality: test module (sealed, verifier only)
+  notices:
+  - met_by: the Unicode-3.0 and Apache-2.0 notices recorded on asset upstream-mort-test cover these derived
+      bytes, with the same documentation placement
+  payload: tests/graded/_m_o_r_t_extra_test.py
+  payload_sha256: 78faf7ee67524315d8978ed979e2aa97e86f03df34234291e87392b7130c1f88
+  source_recipe: generated by the reference fontTools at e7e00f1b; expected values are the reference decode
+    of the reference compile
+base_commit: 984a5cf614f4b05f0cdd57fc5b5628fd81518805
+canonical_repo: https://github.com/fonttools/fonttools
+changed_source:
+- Lib/fontTools/ttLib/tables/otConverters.py
+- Lib/fontTools/ttLib/tables/otData.py
+- Lib/fontTools/ttLib/tables/otTables.py
+event_attestation_digest: attestation-unavailable
+event_attestation_signer: attestation-unavailable
+fork_ancestry_snapshot: sha256:bdeda273cfb85d5c4dc034fd82fa9277a25e01b8f8c5a85f41485162b2f8b3b2
+licence: MIT, verified in-tree at base commit 984a5cf614f4 (LICENSE sha256:6787208f83f659ccbc2223b2fde952ffa6f7e8aca62f1a8a2bf5bc51bb1b2383)
+origin: original
+pr_base_sha: 8dffa85c77cd957d23f1ccaf77e4bc8755374207
+provenance_date: '2026-08-24'
+reference_solution_commit: e7e00f1b16aef6ede850206df3c100ccde27b2d3
+screening:
+  applicability:
+    derived_reason: source_kind public_repository with a repository identity and a task-generating event
+    value: applies
+  atoms:
+    empty_submission:
+      holds: true
+      result_digest: sha256:84bd916a25de3c9f9a9013be63e4fab0c7c0a8781d696e128e0e8942d7ca7cfa
+    exclusion_matching:
+      holds: true
+      result_digest: sha256:ae99d603af689a17ed830a1b8e238ca3c21a7505318f074ef060717996f03068
+    freeze_holdout:
+      holds: true
+      result_digest: sha256:e443eb792bbe94e37327ea71b7212cb129e82a4ca31e7de67442455aafa95c0f
+    near_duplicate:
+      holds: true
+      result_digest: sha256:f6dcb4634f445af685ec4bd2b311f9ed380975c9d96bd24b5f28471f55f357d2
+    sanitization:
+      holds: true
+      result_digest: sha256:4a563f723042a72694db1c84a0e2c3b4f4f83eca6b58b2d8cb00bd5fe2f269de
+  bounded_claim: only the named methods screened the named inputs; every ENGRAM screening root is unresolved,
+    so the screen is screening-unverified and caps at HOLD:PILOT_REQUIRED
+  empty_submission:
+    fail_to_pass: 24
+    fail_to_pass_resolved: 0
+    pass_to_pass_passed: 1423
+    reward: 0.0
+  expires_at: '2027-02-12T07:05:00Z'
+  instruments:
+    harbor: 0.24.0
+    rewardkit: 0.2.1
+    trinity: 0f4b53775c7fc9e5be751c73c6a11c1cbf857bf1
+    verifier_pytest: 9.1.1
+  interval_days: 90
+  measured_at: '2026-11-14T07:05:00Z'
+  methods:
+    empty_submission: 'the verifier over the unmodified base on @nexus: reward 0.0, 0 of 24 fail-to-pass
+      resolved, 1423 of 1423 pass-to-pass passed'
+    exclusion_matching: repository identity and the base and fix commit ids against the 500 rows of touchstones/beyondswe.jsonl
+    freeze_holdout: PR opening date 2026-08-24 (created_at from the retained GitHub API response, never
+      a commit timestamp) against the BeyondSWE freeze 2026-02-18
+    near_duplicate: 8-gram NFKC lowercase alphanumeric containment at 0.10 of instruction.md against problem
+      statements and of the reference diff against patches
+    sanitization: history, remote, thread, fix and closure-identity absence over every layer, configuration,
+      manifest and attestation of the held environment index, instruction.md, task.toml network policy
+      and image environment
+  sanitization_closure:
+    bundle_members:
+    - instruction.md
+    - task.toml
+    index: sha256:b302363f166ab3c2dc55c3a23ead4d5783dcbfdb9ff281ebf9ebd08a62a3fae2
+    network: agent and environment no-network
+    platform_manifests:
+      linux/amd64: sha256:f326b911d93ccdbfc3f0f3e3b55c4ae761025b0c69a68854aecc4becc7431f8c
+      linux/arm64: sha256:5b7539636b4e3875b8ba341341b1cd77ffe063b29ed314d4e49d21c49db1afd0
+  status: measured
+screening_roots: 'unresolved: FORGE_VIEW publishes no screening roots'
+source_kind: public_repository
+task_generating_event:
+  kind: pull_request
+  timestamp: '2026-08-24T20:58:59Z'
+  url: https://github.com/fonttools/fonttools/pull/4158
+upstream_lift: none
+binding:
+  canonical_bundle_hash: 378233071b7e32485feff3963161a57f35a6b00e4e7b97804207acbba2a1f752

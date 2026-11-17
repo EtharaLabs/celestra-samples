@@ -1,0 +1,390 @@
+{
+ "artifact": "/app/fonttools",
+ "cheat_checks": {
+  "cheat-check: the submission planted no test-steering file": "steering",
+  "cheat-check: the test runner, its assertion helpers and its reports stayed unaltered": "runner"
+ },
+ "collect": [
+  "Tests/ttLib"
+ ],
+ "graded_files": [
+  {
+   "path": "Tests/ttLib/tables/_m_o_r_t_test.py",
+   "sealed": "_m_o_r_t_test.py"
+  },
+  {
+   "path": "Tests/ttLib/tables/_m_o_r_t_extra_test.py",
+   "sealed": "_m_o_r_t_extra_test.py"
+  },
+  {
+   "path": "Lib/fontTools/misc/testTools.py",
+   "pristine": true
+  }
+ ],
+ "judged": {
+  "compiled": {
+   "C-ALL": 5,
+   "C-BIN": 5,
+   "C-EXTRA": 3,
+   "C-LIG": 3,
+   "C-MORX": 3,
+   "C-NC": 3,
+   "C-TRIM": 3,
+   "C-XML": 5,
+   "K1": 5,
+   "R1": 5
+  },
+  "controls": {
+   "J-MAL-CLS": [
+    {
+     "case": "oracle",
+     "label": "NO"
+    },
+    {
+     "case": "alternate",
+     "label": "NO"
+    },
+    {
+     "case": "jmalcls-w1",
+     "label": "YES"
+    },
+    {
+     "case": "jmalcls-w2",
+     "label": "YES"
+    },
+    {
+     "case": "jmalcls-w3",
+     "label": "YES"
+    }
+   ],
+   "J-MAL-LIGLEN": [
+    {
+     "case": "oracle",
+     "label": "NO"
+    },
+    {
+     "case": "alternate",
+     "label": "NO"
+    },
+    {
+     "case": "jmalliglen-w1",
+     "label": "YES"
+    },
+    {
+     "case": "jmalliglen-w2",
+     "label": "YES"
+    },
+    {
+     "case": "jmalliglen-w3",
+     "label": "YES"
+    }
+   ],
+   "J-MAL-LIGORD": [
+    {
+     "case": "oracle",
+     "label": "NO"
+    },
+    {
+     "case": "alternate",
+     "label": "NO"
+    },
+    {
+     "case": "jmalligord-w1",
+     "label": "YES"
+    },
+    {
+     "case": "jmalligord-w2",
+     "label": "YES"
+    },
+    {
+     "case": "jmalligord-w3",
+     "label": "YES"
+    }
+   ],
+   "J-MAL-LIGVAL": [
+    {
+     "case": "oracle",
+     "label": "NO"
+    },
+    {
+     "case": "alternate",
+     "label": "NO"
+    },
+    {
+     "case": "jmalligval-w1",
+     "label": "YES"
+    },
+    {
+     "case": "jmalligval-w2",
+     "label": "YES"
+    },
+    {
+     "case": "jmalligval-w3",
+     "label": "YES"
+    }
+   ],
+   "J-MAL-STATE": [
+    {
+     "case": "oracle",
+     "label": "NO"
+    },
+    {
+     "case": "alternate",
+     "label": "NO"
+    },
+    {
+     "case": "jmalstate-w1",
+     "label": "YES"
+    },
+    {
+     "case": "jmalstate-w2",
+     "label": "YES"
+    },
+    {
+     "case": "jmalstate-w3",
+     "label": "YES"
+    }
+   ],
+   "J-MORX-DEC": [
+    {
+     "case": "oracle",
+     "label": "NO"
+    },
+    {
+     "case": "alternate",
+     "label": "NO"
+    },
+    {
+     "case": "jmorxdec-w1",
+     "label": "YES"
+    },
+    {
+     "case": "jmorxdec-w2",
+     "label": "YES"
+    },
+    {
+     "case": "jmorxdec-w3",
+     "label": "YES"
+    }
+   ],
+   "J-MORX-ENC": [
+    {
+     "case": "oracle",
+     "label": "NO"
+    },
+    {
+     "case": "alternate",
+     "label": "NO"
+    },
+    {
+     "case": "jmorxenc-w1",
+     "label": "YES"
+    },
+    {
+     "case": "jmorxenc-w2",
+     "label": "YES"
+    },
+    {
+     "case": "jmorxenc-w3",
+     "label": "YES"
+    }
+   ],
+   "J-SHARE": [
+    {
+     "case": "oracle",
+     "label": "NO"
+    },
+    {
+     "case": "alternate",
+     "label": "NO"
+    },
+    {
+     "case": "jshare-w1",
+     "label": "YES"
+    },
+    {
+     "case": "jshare-w2",
+     "label": "YES"
+    },
+    {
+     "case": "jshare-w3",
+     "label": "YES"
+    }
+   ],
+   "J-TRIM-HI": [
+    {
+     "case": "oracle",
+     "label": "YES"
+    },
+    {
+     "case": "alternate",
+     "label": "YES"
+    },
+    {
+     "case": "jtrimhi-w1",
+     "label": "NO"
+    },
+    {
+     "case": "jtrimhi-w2",
+     "label": "NO"
+    },
+    {
+     "case": "jtrimhi-w3",
+     "label": "NO"
+    }
+   ],
+   "J-TRIM-IN": [
+    {
+     "case": "oracle",
+     "label": "YES"
+    },
+    {
+     "case": "alternate",
+     "label": "YES"
+    },
+    {
+     "case": "jtrimin-w1",
+     "label": "NO"
+    },
+    {
+     "case": "jtrimin-w2",
+     "label": "NO"
+    },
+    {
+     "case": "jtrimin-w3",
+     "label": "NO"
+    }
+   ],
+   "J-TRIM-LO": [
+    {
+     "case": "oracle",
+     "label": "YES"
+    },
+    {
+     "case": "alternate",
+     "label": "YES"
+    },
+    {
+     "case": "jtrimlo-w1",
+     "label": "NO"
+    },
+    {
+     "case": "jtrimlo-w2",
+     "label": "NO"
+    },
+    {
+     "case": "jtrimlo-w3",
+     "label": "NO"
+    }
+   ]
+  },
+  "items": [
+   {
+    "criterion": "In Lib/fontTools/ttLib/tables/otConverters.py or otTables.py, the change adds, for classic mort, a separate copy of AATStateTable, AATState, RearrangementMorphAction, ContextualMorphAction, LigatureMorphAction, InsertionMorphAction or the state-table TTX code of STXHeader.xmlWrite and STXHeader.xmlRead, instead of reusing the one extended morx uses.",
+    "id": "J-SHARE",
+    "negate": true,
+    "weight": 3
+   },
+   {
+    "criterion": "In Lib/fontTools/ttLib/tables/otConverters.py, where newTable(\"mort\").decompile reads a classic contextual glyph substitution subtable, for every such subtable the decoder never takes a glyph's replacement from a word that lies before the subtable's substitution table, for negative and positive entry offsets alike.",
+    "id": "J-TRIM-LO",
+    "negate": false,
+    "weight": 3
+   },
+   {
+    "criterion": "In Lib/fontTools/ttLib/tables/otConverters.py, where newTable(\"mort\").decompile reads a classic contextual glyph substitution subtable, for every such subtable the decoder takes a glyph's replacement only from a word that ends at or before the end of the subtable.",
+    "id": "J-TRIM-HI",
+    "negate": false,
+    "weight": 3
+   },
+   {
+    "criterion": "In Lib/fontTools/ttLib/tables/otConverters.py, where newTable(\"mort\").decompile reads a classic contextual glyph substitution subtable, for every such subtable the decoder takes the replacement of every glyph whose word lies inside both the substitution table and the subtable, for negative and positive entry offsets alike.",
+    "id": "J-TRIM-IN",
+    "negate": false,
+    "weight": 3
+   },
+   {
+    "criterion": "For some extended morx table, the change makes newTable(\"morx\").decompile, through Lib/fontTools/ttLib/tables/otConverters.py, decode different objects from the same bytes than base_commit does.",
+    "id": "J-MORX-DEC",
+    "negate": true,
+    "weight": 3
+   },
+   {
+    "criterion": "For some extended morx table, the change makes the morx table's compile, through Lib/fontTools/ttLib/tables/otConverters.py, write different bytes for the same objects than base_commit does.",
+    "id": "J-MORX-ENC",
+    "negate": true,
+    "weight": 3
+   },
+   {
+    "criterion": "For some classic mort state table whose glyph-class count is zero, the change lets newTable(\"mort\").decompile, through Lib/fontTools/ttLib/tables/otConverters.py, return a table for it instead of raising an exception.",
+    "id": "J-MAL-CLS",
+    "negate": true,
+    "weight": 3
+   },
+   {
+    "criterion": "For some classic mort state table whose state array starts after its entry table, the change lets newTable(\"mort\").decompile, through Lib/fontTools/ttLib/tables/otConverters.py, return a table for it instead of raising an exception.",
+    "id": "J-MAL-STATE",
+    "negate": true,
+    "weight": 3
+   },
+   {
+    "criterion": "For some classic mort state table that is a ligature subtable whose component table starts after its ligature table, the change lets newTable(\"mort\").decompile, through Lib/fontTools/ttLib/tables/otConverters.py, return a table for it instead of raising an exception.",
+    "id": "J-MAL-LIGORD",
+    "negate": true,
+    "weight": 3
+   },
+   {
+    "criterion": "For some classic mort state table that is a ligature subtable whose component table has an odd length in bytes, the change lets newTable(\"mort\").decompile, through Lib/fontTools/ttLib/tables/otConverters.py, return a table for it instead of raising an exception.",
+    "id": "J-MAL-LIGLEN",
+    "negate": true,
+    "weight": 3
+   },
+   {
+    "criterion": "For some classic mort state table that is a ligature subtable whose component table holds an odd value, the change lets newTable(\"mort\").decompile, through Lib/fontTools/ttLib/tables/otConverters.py, return a table for it instead of raising an exception.",
+    "id": "J-MAL-LIGVAL",
+    "negate": true,
+    "weight": 3
+   }
+  ],
+  "pinned": {
+   "model": "gpt-6.1-sol",
+   "passLabel": "YES",
+   "provider": "openai",
+   "seed": "f1869f88d4dcf0132947a0400c51184270c3173f121bf63209a9c40213a4476d",
+   "temperature": 0,
+   "trials": 20
+  }
+ },
+ "package_src": "Lib/fontTools",
+ "runner_guard": {
+  "helper_file": "Lib/fontTools/misc/testTools.py",
+  "helpers": [
+   "fontTools.misc.testTools.getXML",
+   "fontTools.misc.testTools.parseXML",
+   "fontTools.misc.testTools.FakeFont",
+   "fontTools.misc.testTools.FakeFont.__init__",
+   "fontTools.misc.testTools.FakeFont.getGlyphID",
+   "fontTools.misc.testTools.FakeFont.getGlyphIDMany",
+   "fontTools.misc.testTools.FakeFont.getGlyphName",
+   "fontTools.misc.testTools.FakeFont.getGlyphNameMany",
+   "fontTools.misc.testTools.FakeFont.getGlyphOrder",
+   "fontTools.misc.testTools.FakeFont.getReverseGlyphMap"
+  ],
+  "runner": [
+   "unittest.case.TestCase.assertEqual",
+   "unittest.case.TestCase.assertTrue",
+   "unittest.case.TestCase.assertIn",
+   "unittest.case.TestCase.assertIs",
+   "unittest.case.TestCase.assertRaises",
+   "unittest.case.TestCase._baseAssertEqual",
+   "unittest.case.TestCase.run",
+   "_pytest.runner.call_and_report",
+   "_pytest.runner.CallInfo.from_call",
+   "_pytest.reports.TestReport.from_item_and_call",
+   "_pytest.python.Function.runtest",
+   "_pytest.unittest.TestCaseFunction.runtest",
+   "_pytest.terminal.TerminalReporter.pytest_runtest_logreport"
+  ]
+ },
+ "timeout_sec": 1200
+}

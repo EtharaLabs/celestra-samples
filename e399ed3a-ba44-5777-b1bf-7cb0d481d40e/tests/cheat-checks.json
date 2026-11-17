@@ -1,0 +1,7 @@
+{
+ "schema": "trinity.cheat-checks/v1",
+ "ids": [
+  "cheat-check: the submission planted no test-steering file",
+  "cheat-check: the test runner, its assertion helpers and its reports stayed unaltered"
+ ]
+}
