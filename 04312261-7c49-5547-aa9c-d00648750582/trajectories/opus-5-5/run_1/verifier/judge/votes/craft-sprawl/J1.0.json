@@ -1,0 +1,8 @@
+{
+ "case": "craft-sprawl",
+ "id": "J1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission mostly follows the reference\u2019s coherent scope and helper reuse: it shares the segment integration loop between `solve()` and `step()`, reuses consistent-initialisation and sensitivity-restart helpers, and confines the functional changes to discontinuities and sensitivities.\n\nHowever, it additionally introduces `_restart_state_sensitivities_by_loop` in `base_solver.py`. This method duplicates `_restart_state_sensitivities`: both select the final state\u2019s sensitivity columns by name, reshape them, and horizontally concatenate them. The added loop-based version has no call sites in the submitted change, while all restart paths use the original helper. It is therefore dead code and duplicated logic, directly violating the criterion\u2019s explicit requirement to add neither.\n\nFAIL"
+}

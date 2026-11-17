@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J3",
+ "trial": 15,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission does not preserve the required failure behaviour.\n\n- **Invalid Modulo periods can silently continue.** `Modulo._t_discon` takes `abs(period)` and returns no discontinuities for zero or non-finite periods. The constant-period path in `_set_up_events` similarly sets `num_events = 0` for zero or non-finite periods. Thus zero and NaN periods are treated as having no resets, and negative periods are normalised instead of rejected with `pybamm.SolverError`. Infinite positive periods alone are legitimately reset-free.\n- **Failed sensitivity consistency calculations fall back to existing values.** `_consistent_algebraic_sensitivities` returns the original `y0S` for incompatible sizes, mismatched Jacobian counts, caught linear-solve failures, or non-finite results. This explicitly continues with unchanged sensitivities when the restart calculation cannot be handled, rather than raising the solver\u2019s error.\n\nThe submission does raise `SolverError` for time/state-dependent Modulo periods and missing named state sensitivities, but those checks do not offset the silent fallback paths above.\n\nFAIL"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "misdoc",
+ "id": "J4",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission does not meet the criterion because two added docstrings directly contradict the sensitivity-handling code in `base_solver.py`:\n\n- `_restart_state_sensitivities` claims to return sensitivities at the **initial** state, selected by column position, and says `sensitivity_names` is ignored. In fact, it reads `solution.last_state._all_sensitivities` and selects sensitivities **by name**, in the order specified by `sensitivity_names`.\n- `_set_sens_initial_conditions_from` claims sensitivities are copied unchanged with the reference subtracted, and that reference and scale never depend on inputs. The implementation explicitly differentiates both reference and scale with respect to the sensitivity inputs and applies the chain rule for `(var - reference) / scale`. It subtracts the reference\u2019s derivative, not the reference itself.\n\nThe descriptions of per-input segment restarts, Modulo expansion, and error conditions otherwise align with the implementation, but these sensitivity docstrings are materially inaccurate.\n\nFAIL"
+}

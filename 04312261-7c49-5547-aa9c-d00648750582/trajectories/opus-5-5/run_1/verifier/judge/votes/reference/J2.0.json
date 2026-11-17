@@ -1,0 +1,8 @@
+{
+ "case": "reference",
+ "id": "J2",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets the criterion. Its restart behavior is derived from general solver state and event semantics:\n\n- `_integrate_segments` tracks an arbitrary number of input sets, restarting only those that reach the segment\u2019s final time. Each restart uses that input set\u2019s final state and requested state sensitivities, followed by consistent initialization.\n- Discontinuity times are evaluated from model expressions and the supplied inputs. Modulo resets are generated from the actual integration window and period, rather than a fixed event count or particular `t_eval` length.\n- Sensitivities are selected by the requested input names, not hard-coded names or column positions. Cross-model restarts use forward-mode differentiation of the state mapper or the general derivative of the variable scaling and reference transformation.\n- Segment interpolation times are selected from segment boundaries and the requested interpolation times.\n\nThere are no branches targeting particular test models, parameter sets, input names, numbers of input sets, or time-array lengths. The checks and solver-specific branches reflect general API and numerical semantics rather than graded-test special cases.\n\nPASS"
+}
