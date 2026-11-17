@@ -1,0 +1,2555 @@
+--- /dev/null
++++ b/pypsa/_linopy_compat.py
+@@ -0,0 +1,87 @@
++# SPDX-FileCopyrightText: PyPSA Contributors
++#
++# SPDX-License-Identifier: MIT
++
++"""Version probes for linopy's v1 arithmetic semantics.
++
++linopy's v1 semantics forbid a `pd.MultiIndex` as a dimension coordinate. Under
++v1, PyPSA therefore builds multi-period models over a flat `snapshot` dim (see
++`pypsa.optimization.window`). This module detects what the installed linopy
++supports and resolves the snapshot representation against it; delete it once v1
++is linopy's default and PyPSA requires that release.
++"""
++
++from __future__ import annotations
++
++import inspect
++import warnings
++from contextlib import contextmanager
++from typing import TYPE_CHECKING
++
++import pandas as pd
++from linopy import Model
++from linopy import options as linopy_options
++
++if TYPE_CHECKING:
++    from collections.abc import Iterator
++
++try:
++    from linopy.config import LinopySemanticsWarning
++except ImportError:  # linopy without the v1 semantics option
++    LinopySemanticsWarning = None
++
++# Ragged piecewise curves are stored densely. Only linopy with v1 semantics lets
++# the absent slots be declared. Older releases infer them from NaN padding.
++SUPPORTS_BREAKPOINT_MASK = (
++    "mask" in inspect.signature(Model.add_piecewise_formulation).parameters
++)
++
++
++def linopy_uses_v1() -> bool:
++    """Whether linopy's v1 arithmetic semantics are active."""
++    try:
++        return linopy_options["semantics"] == "v1"
++    except KeyError:
++        return False
++
++
++def use_flat_snapshot_index(sns: pd.Index, option: str) -> bool:
++    """Whether a model built over `sns` labels `snapshot` with flat tuples.
++
++    Resolves the `pypsa.options.optimization.model_snapshot_index` option
++    against linopy's active semantics.
++    """
++    if option not in ("auto", "flat", "multiindex"):
++        msg = (
++            f"Invalid snapshot representation '{option}'. Choose 'auto', "
++            "'flat' or 'multiindex'."
++        )
++        raise ValueError(msg)
++    if not isinstance(sns, pd.MultiIndex):
++        return False
++    if option == "auto":
++        return linopy_uses_v1()
++    if option == "multiindex" and linopy_uses_v1():
++        msg = (
++            "linopy's v1 semantics forbids a MultiIndex snapshot dimension. "
++            "Build with pypsa.options.optimization.model_snapshot_index "
++            "= 'flat' (or 'auto') instead."
++        )
++        raise ValueError(msg)
++    return option == "flat"
++
++
++@contextmanager
++def suppress_semantics_warnings() -> Iterator[None]:
++    """Silence linopy's legacy-to-v1 divergence notices for the wrapped block.
++
++    PyPSA builds identical models under both semantics, but on legacy linopy the
++    build trips a deprecation notice per operation. A no-op under v1 and on
++    linopy without the semantics option.
++    """
++    if LinopySemanticsWarning is None or linopy_uses_v1():
++        yield
++        return
++    with warnings.catch_warnings():
++        warnings.filterwarnings("ignore", category=LinopySemanticsWarning)
++        yield
+--- a/pypsa/_options.py
++++ b/pypsa/_options.py
+@@ -485,6 +485,16 @@
+     "Values within this tolerance of the boundary are not flagged as inconsistent. "
+     "Set to 0 to disable tolerance and flag any violation.",
+ )
++# Optimization category
++options._add_option(
++    "optimization.model_snapshot_index",
++    "auto",
++    "Snapshot dimension of multi-period models: 'multiindex' keeps the "
++    "(period, timestep) MultiIndex, 'flat' uses tuple labels "
++    "with period/timestep auxiliary coordinates, 'auto' picks by linopy's active "
++    "semantics ('flat' under v1, else 'multiindex'). Applies to newly built "
++    "models only.",
++)
+ # Warnings category
+ options._add_option(
+     "warnings.components_store_iter",
+--- a/pypsa/components/_types/mixin/multiports.py
++++ b/pypsa/components/_types/mixin/multiports.py
+@@ -135,9 +135,10 @@
+     @staticmethod
+     def get_delay_source_indexer(
+         snapshots: pd.Index,
+-        weightings: pd.Series,
++        weightings: pd.Series | np.ndarray,
+         delay: int,
+         is_cyclic: bool,
++        periods: np.ndarray | None = None,
+     ) -> tuple[np.ndarray, np.ndarray]:
+         """Get per-snapshot source positions for component delays.
+ 
+@@ -147,22 +148,26 @@
+         starts. In cyclic mode, source times wrap around the horizon. In
+         non-cyclic mode, targets without a valid source are marked invalid.
+ 
+-        For multi-investment period snapshots (MultiIndex), delays are applied
+-        independently per period since investment periods are not temporally
+-        adjacent.
++        Delays are applied independently per investment period, since investment
++        periods are not temporally adjacent. The periods are taken from
++        `periods` if given, and otherwise from a `snapshots` MultiIndex.
+ 
+         Parameters
+         ----------
+         snapshots : pd.Index
+             Snapshot index of the optimization horizon.
+-        weightings : pd.Series
++        weightings : pd.Series or np.ndarray
+             Generator snapshot weightings (`n.snapshot_weightings.generators`),
+-            defining the duration of each snapshot in time units.
++            defining the duration of each snapshot in time units. A `Series` is
++            aligned to `snapshots`; an array is taken in order.
+         delay : int
+             Delivery delay in the same time units as `weightings`.
+         is_cyclic : bool
+             If True, delayed times wrap around the horizon. If False,
+             snapshots without a valid source are marked invalid.
++        periods : np.ndarray, optional
++            Investment period of each snapshot, for horizons whose `snapshots`
++            do not carry them. Snapshots of a period must be contiguous.
+ 
+         Returns
+         -------
+@@ -195,17 +200,20 @@
+         if delay <= 0:
+             return np.arange(n_snapshots, dtype=int), np.ones(n_snapshots, dtype=bool)
+ 
+-        if isinstance(snapshots, pd.MultiIndex):
+-            src = np.empty(n_snapshots, dtype=int)
+-            valid = np.empty(n_snapshots, dtype=bool)
+-            offset = 0
+-            for period in snapshots.unique("period"):
+-                w = weightings[snapshots.get_loc(period)].to_numpy().astype(float)
+-                p_src, p_valid = _Multiport._delay_positions(w, delay, is_cyclic)
+-                src[offset : offset + len(w)] = p_src + offset
+-                valid[offset : offset + len(w)] = p_valid
+-                offset += len(w)
+-            return src, valid
+-
+-        w = weightings.reindex(snapshots).astype(float).to_numpy()
+-        return _Multiport._delay_positions(w, delay, is_cyclic)
++        if isinstance(weightings, pd.Series):
++            weightings = weightings.reindex(snapshots)
++        w = np.asarray(weightings, dtype=float)
++
++        if periods is None and isinstance(snapshots, pd.MultiIndex):
++            periods = snapshots.get_level_values("period").to_numpy()
++        if periods is None:
++            return _Multiport._delay_positions(w, delay, is_cyclic)
++
++        breaks = np.flatnonzero(periods[1:] != periods[:-1]) + 1
++        src = np.empty(n_snapshots, dtype=int)
++        valid = np.empty(n_snapshots, dtype=bool)
++        for block in np.split(np.arange(n_snapshots), breaks):
++            p_src, p_valid = _Multiport._delay_positions(w[block], delay, is_cyclic)
++            src[block] = p_src + block[0]
++            valid[block] = p_valid
++        return src, valid
+--- a/pypsa/components/array.py
++++ b/pypsa/components/array.py
+@@ -18,7 +18,11 @@
+ import xarray as xr
+ 
+ from pypsa._options import options
+-from pypsa.common import UnexpectedError, as_index, list_as_string
++from pypsa.common import (
++    UnexpectedError,
++    as_index,
++    list_as_string,
++)
+ from pypsa.components.abstract import _ComponentsABC
+ from pypsa.guards import _assert_xarray_integrity
+ 
+@@ -56,6 +60,12 @@
+     If name or scenarios (if stochastic) are missing, they will be expanded to cover them
+ 
+     """
++    # Restore the snapshot MultiIndex from a flat build's tuple labels once
++    # here, rather than at every caller.
++    window = c.n_save._snapshot_window
++    if window is not None:
++        da = window.recompose(da)
++
+     # Add missing dimensions if needed
+     if "name" not in da.dims:
+         da = da.expand_dims(name=c.names)
+@@ -142,7 +152,7 @@
+         component = self._get_component()
+         try:
+             return component._as_xarray(attr=attr)
+-        except AttributeError as e:
++        except (AttributeError, KeyError) as e:
+             msg = f"'{component.__class__.__name__}' components has no attribute '{attr}'."
+             raise AttributeError(msg) from e
+ 
+@@ -311,6 +321,8 @@
+             else:
+                 res = static_to_dynamic
+ 
++        if self.n_save.has_periods:
++            res.index = pd.MultiIndex.from_tuples(list(res.index), names=["period", "timestep"])
+         res.index.name = sns.name
+         if self.has_scenarios:
+             res.columns.names = static.index.names
+@@ -369,4 +381,8 @@
+         if options.debug.runtime_verification:
+             _assert_xarray_integrity(self, res)
+ 
++        window = self.n_save._snapshot_window
++        if window is not None:
++            res = window.flatten(res)
++
+         return res
+--- a/pypsa/network/abstract.py
++++ b/pypsa/network/abstract.py
+@@ -17,9 +17,11 @@
+     from collections.abc import Callable
+     from typing import Any
+ 
++    import linopy
+     import pandas as pd
+ 
+     from pypsa.components.store import ComponentsStore
++    from pypsa.optimization.window import SnapshotWindow
+ 
+ 
+ class _NetworkABC(ABC):
+@@ -67,6 +69,15 @@
+     calculate_dependent_values: Callable
+ 
+     passive_branches: pd.DataFrame
++
++    # Optimization
++    _model: linopy.Model | None
++    _optimize_window: SnapshotWindow | None
++
++    @property
++    def _snapshot_window(self) -> SnapshotWindow | None:
++        """Snapshot window of the live model build, if any."""
++        return self._optimize_window if self._model is not None else None
+ 
+     @property
+     @abstractmethod
+--- a/pypsa/networks.py
++++ b/pypsa/networks.py
+@@ -54,6 +54,7 @@
+ )
+ from pypsa.network.transform import NetworkTransformMixin
+ from pypsa.optimization.optimize import OptimizationAccessor
++from pypsa.optimization.window import SnapshotWindow
+ from pypsa.plot.accessor import PlotAccessor
+ from pypsa.plot.maps import explore
+ from pypsa.statistics.expressions import StatisticsAccessor
+@@ -91,6 +92,7 @@
+     _multi_invest: int
+     _linearized_uc: int
+     _committable_big_m: float | None
++    _optimize_window: SnapshotWindow | None
+     iteration: int
+ 
+     # ----------------
+@@ -162,6 +164,7 @@
+         self._objective_constant: float | None = None
+         self._multi_invest: int = 0
+         self._committable_big_m: float | None = None
++        self._optimize_window: SnapshotWindow | None = None
+ 
+         # Initialize accessors
+         self.optimize: OptimizationAccessor = OptimizationAccessor(self)
+@@ -532,6 +535,7 @@
+             PlotAccessor,
+             AbstractStatisticsAccessor,
+             linopy.Model,
++            SnapshotWindow,
+         ]
+         not_equal = False
+         if isinstance(other, self.__class__):
+--- a/pypsa/optimization/common.py
++++ b/pypsa/optimization/common.py
+@@ -2,42 +2,35 @@
+ #
+ # SPDX-License-Identifier: MIT
+ 
+-"""Use common methods for optimization problem definition with Linopy."""
++"""Use common methods for optimization problem definition with Linopy.
++
++Snapshot naming convention
++---------------------------
++- `sns`: snapshots the current model build is constructed over, in the model's
++  labelling (see `pypsa.optimization.window`).
++- `window`: the build's `SnapshotWindow`, which maps those labels back to the
++  network's.
++- `period_sns`: per-investment-period subset of `sns`, as yielded by
++  `window.iter_periods`.
++
++`snapshots` is reserved for the public API (`n.optimize(snapshots=...)`,
++`n.snapshots`); `"snapshot"` is the model dimension name.
++"""
+ 
+ from __future__ import annotations
+ 
+ from typing import TYPE_CHECKING
+ 
+ import pandas as pd
+-import xarray as xr
+ from deprecation import deprecated
+-from numpy import hstack, ravel, roll, zeros
++from numpy import hstack, ravel
+ 
+ from pypsa.constants import RE_PORTS
+ 
+ if TYPE_CHECKING:
+-    from linopy import Variable
++    import xarray as xr
+ 
+     from pypsa import Network
+-
+-
+-def _period_start_mask(sns: pd.Index) -> xr.DataArray:
+-    """Mark the first snapshot of each investment period."""
+-    is_start = zeros(len(sns), dtype=bool)
+-    is_start[0] = True
+-    if isinstance(sns, pd.MultiIndex) and "period" in sns.names:
+-        periods = sns.get_level_values("period").to_numpy()
+-        is_start[1:] = periods[1:] != periods[:-1]
+-    return xr.DataArray(is_start, coords=[sns])
+-
+-
+-def _roll_within_periods(v: Variable) -> Variable:
+-    """Cyclically roll ``v`` by one snapshot within each investment period."""
+-    sns = v.indexes["snapshot"]
+-    positions = pd.Series(range(len(sns)), index=sns)
+-    roll_index = positions.groupby(level="period").transform(lambda s: roll(s, 1))
+-    coords = xr.Coordinates.from_pandas_multiindex(sns, "snapshot")
+-    return v.isel(snapshot=roll_index.to_numpy()).assign_coords(coords)
+ 
+ 
+ @deprecated(
+--- a/pypsa/optimization/constraints.py
++++ b/pypsa/optimization/constraints.py
+@@ -26,17 +26,13 @@
+ )
+ from xarray import DataArray, where
+ 
+-from pypsa.common import as_index, expand_series
+ from pypsa.components._types.mixin.multiports import _Multiport
+ from pypsa.components.common import as_components
+ from pypsa.constants import PYPSA_DATA_DIR
+ from pypsa.descriptors import nominal_attrs
+-from pypsa.optimization.common import (
+-    _period_start_mask,
+-    _roll_within_periods,
+-    reindex,
+-)
++from pypsa.optimization.common import reindex
+ from pypsa.optimization.piecewise import PiecewiseOptions, define_piecewise
++from pypsa.optimization.window import snapshot_array
+ 
+ if TYPE_CHECKING:
+     from collections.abc import Iterator, Sequence
+@@ -192,7 +188,7 @@
+ 
+     """
+     c = as_components(n, component)
+-    sns = as_index(n, sns, "snapshots")
++    sns = n.optimize._window.subset(sns).model_index
+ 
+     ext_i = c.extendables.intersection(c.active_assets)
+     com_ext_i = c.committables.intersection(ext_i)
+@@ -295,7 +291,7 @@
+     status = n.model[f"{c.name}-status"]
+     start_up = n.model[f"{c.name}-start_up"]
+     shut_down = n.model[f"{c.name}-shut_down"]
+-    status_diff = status - status.shift(snapshot=1)
++    status_diff = status - status.to_linexpr().shift(snapshot=1).fillna(0)
+     p = n.model[f"{c.name}-p"].sel(name=com_i)
+     active = c.da.active.sel(name=com_i, snapshot=sns)
+ 
+@@ -314,8 +310,10 @@
+     min_up_time_set = c.da.min_up_time.sel(name=com_i)
+     min_down_time_set = c.da.min_down_time.sel(name=com_i)
+ 
+-    ramp_up_limit = nominal * c.da.ramp_limit_up.sel(name=com_i).fillna(1)
+-    ramp_down_limit = nominal * c.da.ramp_limit_down.sel(name=com_i).fillna(1)
++    ramp_up_limit = nominal * c.da.ramp_limit_up.sel(name=com_i, snapshot=sns).fillna(1)
++    ramp_down_limit = nominal * c.da.ramp_limit_down.sel(
++        name=com_i, snapshot=sns
++    ).fillna(1)
+     ramp_start_up = nominal * c.da.ramp_limit_start_up.sel(name=com_i).fillna(1)
+     ramp_shut_down = nominal * c.da.ramp_limit_shut_down.sel(name=com_i).fillna(1)
+     up_time_before_set = c.da.up_time_before.sel(name=com_i)
+@@ -324,8 +322,9 @@
+     initially_down = down_time_before_set.astype(bool)
+ 
+     # check if there are status calculated/fixed before given sns interval
+-    if sns[0] != n.snapshots[0]:
+-        start_i = n.snapshots.get_loc(sns[0])
++    window = n.optimize._window.subset(sns)
++    if window.start != n.snapshots[0]:
++        start_i = n.snapshots.get_loc(window.start)
+         prev_sns = n.snapshots[:start_i][::-1]
+         until_start_up = c.da.status.sel(name=com_i, snapshot=prev_sns)
+         ref = DataArray(range(1, len(prev_sns) + 1), dims="snapshot")
+@@ -553,7 +552,7 @@
+     # Convert xarray boolean to list of indices for DataFrame indexing
+     initially_up_indices = com_i[initially_up.values]
+     if not initially_up_indices.empty:
+-        rhs.loc[sns[0], initially_up_indices] = -1
++        rhs.iloc[0, rhs.columns.get_indexer(initially_up_indices)] = -1
+ 
+     lhs = start_up - status_diff
+     n.model.add_constraints(
+@@ -562,7 +561,7 @@
+ 
+     rhs = pd.DataFrame(0, sns, com_i)
+     if not initially_up_indices.empty:
+-        rhs.loc[sns[0], initially_up_indices] = 1
++        rhs.iloc[0, rhs.columns.get_indexer(initially_up_indices)] = 1
+ 
+     lhs = shut_down + status_diff
+     n.model.add_constraints(
+@@ -574,7 +573,7 @@
+     if not min_up_time_i.empty:
+         expr = []
+         for g in min_up_time_i:
+-            su = start_up.loc[:, g]
++            su = start_up.loc[:, [g]]
+             # Retrieve the minimum up time value for generator g and convert it to a scalar
+             up_time_value = min_up_time_set.sel(name=g).item()
+             expr.append(su.rolling(snapshot=up_time_value).sum())
+@@ -593,7 +592,7 @@
+     if not min_down_time_i.empty:
+         expr = []
+         for g in min_down_time_i:
+-            su = shut_down.loc[:, g]
++            su = shut_down.loc[:, [g]]
+             down_time_value = min_down_time_set.sel(
+                 {min_down_time_set.dims[0]: g}
+             ).item()
+@@ -747,7 +746,7 @@
+     if maint_i.empty:
+         return
+ 
+-    weightings = n.snapshot_weightings.generators.loc[sns].values
++    weightings = n.optimize._window.subset(sns).snapshot_weightings("generators").values
+     maintenance = n.model[f"{c.name}-maintenance"]
+     maintenance_start = n.model[f"{c.name}-maintenance_start"]
+     active = c.da.active.sel(name=maint_i, snapshot=sns)
+@@ -909,8 +908,11 @@
+     var_attr = "p"
+     nom_attr = c._operational_attrs["nom"]
+     hist_attr = "p0" if c.name in n.branch_components else "p"
+-    is_rolling_horizon = (sns[0] != n.snapshots[0]) & (not c.dynamic[hist_attr].empty)
+-    filter_first_sn = DataArray([1] + [0] * (len(sns) - 1), coords=[sns])
++    window = n.optimize._window.subset(sns)
++    is_rolling_horizon = (window.start != n.snapshots[0]) & (
++        not c.dynamic[hist_attr].empty
++    )
++    filter_first_sn = snapshot_array([1] + [0] * (len(sns) - 1), sns)
+ 
+     M = c.get_committable_big_m_values(
+         names=idx, committable_big_m=n._committable_big_m
+@@ -923,7 +925,7 @@
+     shut_down = m[f"{c.name}-shut_down"].sel(name=idx)
+ 
+     if is_rolling_horizon:
+-        start_i = n.snapshots.get_loc(sns[0]) - 1
++        start_i = n.snapshots.get_loc(window.start) - 1
+         p_init = c.da[hist_attr].isel(snapshot=start_i).sel(name=idx)
+         s_init = c.da.status.isel(snapshot=start_i).sel(name=idx).fillna(1)
+     else:
+@@ -931,8 +933,13 @@
+         p_init = c.da.p_init.sel(name=idx).where(initially_up, 0)
+         s_init = initially_up
+ 
+-    p_prev_ce = p.shift(snapshot=1) + p_init.fillna(0) * filter_first_sn
+-    status_prev_ce = status.shift(snapshot=1) + s_init.fillna(0) * filter_first_sn
++    p_prev_ce = (
++        p.to_linexpr().shift(snapshot=1).fillna(0) + p_init.fillna(0) * filter_first_sn
++    )
++    status_prev_ce = (
++        status.to_linexpr().shift(snapshot=1).fillna(0)
++        + s_init.fillna(0) * filter_first_sn
++    )
+ 
+     lhs_delta = p - p_prev_ce
+     mask = mask.sel(name=idx)
+@@ -1042,8 +1049,11 @@
+     limit_start = limit_start.fillna(1.0)
+     limit_shut = limit_shut.fillna(1.0)
+ 
+-    is_rolling_horizon = (sns[0] != n.snapshots[0]) & (not c.dynamic[hist_attr].empty)
+-    filter_first_sn = DataArray([1] + [0] * (len(sns) - 1), coords=[sns])
++    window = n.optimize._window.subset(sns)
++    is_rolling_horizon = (window.start != n.snapshots[0]) & (
++        not c.dynamic[hist_attr].empty
++    )
++    filter_first_sn = snapshot_array([1] + [0] * (len(sns) - 1), sns)
+ 
+     nom_mod_attr = c._operational_attrs["nom_mod"]
+     p_nom = c.da[nom_attr].sel(name=idx).where(~is_ext, 0)
+@@ -1055,16 +1065,16 @@
+         ext_main_names = idx[is_ext_main]
+         p_nom_ext_var = m[f"{c.name}-{nom_attr}"].sel(name=ext_main_names)
+ 
+-    status = DataArray(1, coords=[sns, idx])
++    status = DataArray(1, coords=[sns, idx], dims=["snapshot", "name"])
+     if is_com_fix.any():
+         com_main_names = idx[is_com_fix]
+         status = status.where(~is_com_fix, 0)
+         status = LinearExpression.from_constant(m, status)
+         status_var = m[f"{c.name}-status"].sel(name=com_main_names)
+-        status = (status + status_var).loc[:, status.indexes["name"]]
++        status = status.add(status_var, join="left")
+ 
+     if is_rolling_horizon:
+-        start_i = n.snapshots.get_loc(sns[0]) - 1
++        start_i = n.snapshots.get_loc(window.start) - 1
+         p_init = c.da[hist_attr].isel(snapshot=start_i).sel(name=idx)
+         s_init = (
+             c.da.status.isel(snapshot=start_i)
+@@ -1079,15 +1089,15 @@
+         mask.loc[{"snapshot": sns[0]}] = p_init.notnull()
+ 
+     # skip starts of periods except the first where p_init is used
+-    boundary = _period_start_mask(sns)
++    boundary = window.period_start_mask()
+     boundary[0] = False
+     mask = mask & ~boundary
+ 
+     p = m[f"{c.name}-{var_attr}"]
+-    p_prev = p.shift(snapshot=1) + p_init.fillna(0) * filter_first_sn
+-    status_shifted = status.shift(snapshot=1)
+-    if not is_com_fix.any():
+-        status_shifted = status_shifted.fillna(0)
++    p_prev = (
++        p.to_linexpr().shift(snapshot=1).fillna(0) + p_init.fillna(0) * filter_first_sn
++    )
++    status_shifted = status.shift(snapshot=1).fillna(0)
+     status_prev = status_shifted + s_init.fillna(0) * filter_first_sn
+ 
+     non_com_ext = ~is_com_ext
+@@ -1108,11 +1118,15 @@
+         sp_ext = (1 - filter_first_sn) + s_init_ext * filter_first_sn
+         if not isinstance(rhs, LinearExpression):
+             rhs = LinearExpression.from_constant(m, rhs)
+-        rhs = rhs + limit_up.sel(name=ext_main_names) * p_nom_ext_var * sp_ext
++        rhs = rhs.add(
++            limit_up.sel(name=ext_main_names) * p_nom_ext_var * sp_ext, join="left"
++        )
+         if is_com_fix.any():
+             ds_ext = filter_first_sn * (1 - s_init_ext)
+-            rhs = rhs + limit_start.sel(name=ext_main_names) * p_nom_ext_var * ds_ext
+-        # Adding a partial name expression sorts the name dim. This should be guarded more heavily in a future linopy release
++            rhs = rhs.add(
++                limit_start.sel(name=ext_main_names) * p_nom_ext_var * ds_ext,
++                join="left",
++            )
+         rhs = rhs.sel(name=idx)
+     mask_up = mask & ~no_up_limit & non_com_ext
+     m.add_constraints(lhs <= rhs, name=f"{c.name}-{attr}-ramp_limit_up", mask=mask_up)
+@@ -1124,11 +1138,13 @@
+     if p_nom_ext_var is not None:
+         if not isinstance(rhs, LinearExpression):
+             rhs = LinearExpression.from_constant(m, rhs)
+-        rhs = rhs - limit_down.sel(name=ext_main_names) * p_nom_ext_var
++        rhs = rhs.add(-limit_down.sel(name=ext_main_names) * p_nom_ext_var, join="left")
+         if is_com_fix.any():
+             ds_ext = filter_first_sn * (1 - s_init_ext)
+-            rhs = rhs + limit_shut.sel(name=ext_main_names) * p_nom_ext_var * ds_ext
+-        # Adding a partial name expression sorts the name dim. This should be guarded more heavily in a future linopy release
++            rhs = rhs.add(
++                limit_shut.sel(name=ext_main_names) * p_nom_ext_var * ds_ext,
++                join="left",
++            )
+         rhs = rhs.sel(name=idx)
+     mask_down = mask & ~no_down_limit & non_com_ext
+     m.add_constraints(
+@@ -1296,25 +1312,22 @@
+     LinearExpression
+ 
+     """
+-    sns_coords: xr.Coordinates | dict[str, Any]
+     comp_p = in_var.sel(name=names)
+     if delay <= 0:
+         return comp_p.to_linexpr()
+ 
+-    if isinstance(sns, pd.MultiIndex):
+-        sns_coords = xr.Coordinates.from_pandas_multiindex(sns, "snapshot")
+-    else:
+-        sns_coords = {"snapshot": sns}
++    window = n.optimize._window.subset(sns)
++    weightings = window.snapshot_weightings("generators")
+     src_snapshot_pos, valid = c.get_delay_source_indexer(
+         sns,
+-        n.snapshot_weightings.generators.loc[sns],
++        weightings.to_numpy(),
+         delay,
+         is_cyclic,
+-    )
+-    valid_mask = DataArray(valid.astype(float), dims=["snapshot"], coords=sns_coords)
+-    shifted_p = comp_p.isel(snapshot=src_snapshot_pos).assign_coords(sns_coords)
+-    var = shifted_p * valid_mask
+-    return var
++        window.period_of.to_numpy() if window.has_periods else None,
++    )
++    shifted_p = window.take(comp_p, src_snapshot_pos)
++    valid_mask = snapshot_array(valid.astype(float), window.model_index)
++    return window.drop_aux(shifted_p * valid_mask)
+ 
+ 
+ def define_nodal_balance_constraints(
+@@ -1406,10 +1419,11 @@
+         if c.static.empty:
+             continue
+ 
++        var = m[f"{c.name}-{attr}"]
+         if "sign" in c.static:
+-            sign = sign * c.da.sign
+-
+-        expr = sign * m[f"{c.name}-{attr}"]
++            sign = sign * c.da.sign.sel(name=var.indexes["name"].values)
++
++        expr = sign * var
+ 
+         cbuses = c._as_xarray(column)
+         cbuses = cbuses.sel(name=c.active_assets)
+@@ -1439,7 +1453,6 @@
+ 
+     for component in ("Process", "Link"):
+         c = n.c[component]
+-
+         for bus_col, coeff, names, port_suffix in _iter_balance_coeffs(c, sns):
+             var = m[f"{c.name}-p"]
+ 
+@@ -1610,11 +1623,10 @@
+     m = n.model
+     n.calculate_dependent_values()
+ 
++    window = n.optimize._window.subset(sns)
+     deg_to_rad = np.pi / 180.0
+-    periods = sns.unique("period") if n._multi_invest else [None]
+     lhs_parts = []
+-    for period in periods:
+-        snapshots = sns if period is None else sns[sns.get_loc(period)]
++    for period, snapshots in window.iter_periods():
+         C_weighted = n.cycle_matrix(investment_period=period, apply_weights=True)
+         if C_weighted.empty:
+             continue
+@@ -1622,10 +1634,9 @@
+         exprs = []
+         for c in C_weighted.index.unique("type"):
+             C_branch = DataArray(C_weighted.loc[c])
+-            flow = m[f"{c}-s"].sel(
+-                snapshot=snapshots,
+-                name=C_branch.indexes["name"].intersection(n.c[c].active_assets),
+-            )
++            active_names = C_branch.indexes["name"].intersection(n.c[c].active_assets)
++            C_branch = C_branch.sel(name=active_names)
++            flow = m[f"{c}-s"].sel(snapshot=snapshots, name=active_names)
+             exprs.append(flow @ C_branch * 1e5)
+         lhs_period = sum(exprs)
+ 
+@@ -1649,7 +1660,7 @@
+         lhs_parts.append(lhs_period)
+ 
+     if lhs_parts:
+-        lhs = merge(lhs_parts, dim="snapshot")
++        lhs = window.merge(lhs_parts)
+         con = lhs == 0
+         mask = con.rhs.notnull()
+         m.add_constraints(con, name="Kirchhoff-Voltage-Law", mask=mask)
+@@ -1991,6 +2002,7 @@
+ 
+     active = c.da.active.sel(snapshot=sns, name=fix.coords["name"].values)
+     mask = active & (~fix.isnull())
++    fix = fix.fillna(0)
+ 
+     if component == "StorageUnit" and attr == "p":
+         p_dispatch = n.model["StorageUnit-p_dispatch"]
+@@ -2051,19 +2063,14 @@
+     m = n.model
+     component = "StorageUnit"
+     dim = "snapshot"
++    window = n.optimize._window.subset(sns)
+     c = as_components(n, component)
+     active = c.da.active.sel(snapshot=sns, name=c.active_assets)
+ 
+     if c.static.empty:
+         return
+ 
+-    # elapsed hours
+-    elapsed_h = expand_series(n.snapshot_weightings.stores[sns], c.static.index)
+-    eh = DataArray(elapsed_h)
+-    try:
+-        eh = eh.unstack("dim_1")
+-    except ValueError:
+-        pass
++    eh = window.snapshot_weightings("stores")
+ 
+     eff_stand = (1 - c.da.standing_loss.sel(snapshot=sns, name=c.active_assets)) ** eh
+     eff_dispatch = c.da.efficiency_dispatch.sel(snapshot=sns, name=c.active_assets)
+@@ -2077,21 +2084,12 @@
+         (eff_store * eh, m[f"{component}-p_store"]),
+     ]
+ 
+-    if f"{component}-spill" in m.variables:
+-        lhs += [(-eh, m[f"{component}-spill"])]
+-
+     # We create a mask `include_previous_soc` which excludes the first snapshot
+     # for non-cyclic assets
+     noncyclic_b = ~c.da.cyclic_state_of_charge.sel(name=c.active_assets)
+     include_previous_soc = (active.cumsum(dim) != 1).where(noncyclic_b, True)
+ 
+-    previous_soc = (
+-        soc.where(active)
+-        .ffill(dim)
+-        .roll(snapshot=1)
+-        .ffill(dim)
+-        .where(include_previous_soc)
+-    )
++    previous_soc = soc.where(active).ffill(dim).roll(snapshot=1).ffill(dim)
+ 
+     # We add inflow and initial soc for noncyclic assets to rhs
+     soc_init = c.da.state_of_charge_initial.sel(name=c.active_assets)
+@@ -2108,7 +2106,7 @@
+         ) | c.da.state_of_charge_initial_per_period.sel(name=c.active_assets)
+ 
+         # We calculate the previous soc per period while cycling within a period
+-        previous_soc_pp = _roll_within_periods(soc)
++        previous_soc_pp = window.roll_within_periods(soc)
+ 
+         # We create a mask `include_previous_soc_pp` which determines when to include
+         # previous state of charge from within the period:
+@@ -2117,7 +2115,7 @@
+         #   * If CP=True AND IP=False: cycle to last snapshot of period (wrap)
+         #   * If IP=True: use initial value instead (no wrap, handled via rhs)
+         #   * If CP=True AND IP=True: CP takes precedence, wrap (IP ignored)
+-        within_period = ~_period_start_mask(sns)
++        within_period = ~window.period_start_mask()
+         include_previous_soc_pp = active & (
+             within_period
+             | c.da.cyclic_state_of_charge_per_period.sel(name=c.active_assets)
+@@ -2129,10 +2127,10 @@
+             if list(previous_soc_pp.dims) != expected_dims:
+                 previous_soc_pp = previous_soc_pp.transpose(*expected_dims)
+ 
+-        # We take values still to handle internal xarray multi-index difficulties
+-        previous_soc_pp = previous_soc_pp.where(include_previous_soc_pp.values)
+-
+-        # update the previous_soc variables and right hand side
++        # update the previous_soc variables and right hand side. The per-period
++        # inclusion is carried by the `include_previous_soc` coefficient (not by
++        # masking `previous_soc_pp` to NaN, which v1 reads as an absent term and
++        # would drop the period-start energy-balance row).
+         previous_soc = previous_soc.where(~per_period, previous_soc_pp)
+         include_previous_soc = include_previous_soc_pp.where(
+             per_period, include_previous_soc
+@@ -2176,7 +2174,13 @@
+                 affected,
+             )
+ 
+-    lhs += [(eff_stand, previous_soc)]
++    lhs += [(eff_stand * include_previous_soc, previous_soc)]
++
++    lhs = m.linexpr(*lhs)
++    if f"{component}-spill" in m.variables:
++        # Spill is masked for storage units without inflow; fill the resulting
++        # absent slots with 0 so those energy-balance rows are not dropped.
++        lhs = lhs - (eh * m[f"{component}-spill"]).fillna(0)
+ 
+     rhs = rhs.where(include_previous_soc, rhs - soc_init)
+ 
+@@ -2237,19 +2241,14 @@
+     m = n.model
+     component = "Store"
+     dim = "snapshot"
++    window = n.optimize._window.subset(sns)
+     c = as_components(n, component)
+     active = c.da.active.sel(snapshot=sns, name=c.active_assets)
+ 
+     if c.static.empty:
+         return
+ 
+-    # elapsed hours
+-    elapsed_h = expand_series(n.snapshot_weightings.stores[sns], c.active_assets)
+-    eh = DataArray(elapsed_h)
+-
+-    # Unstack in stochastic networks with MultiIndex snapshots
+-    if n.has_scenarios and "dim_1" in eh.dims:
+-        eh = eh.unstack("dim_1")
++    eh = window.snapshot_weightings("stores")
+ 
+     # standing efficiency
+     eff_stand = (1 - c.da.standing_loss.sel(snapshot=sns, name=c.active_assets)) ** eh
+@@ -2266,9 +2265,7 @@
+     include_previous_e = (active.cumsum(dim) != 1).where(noncyclic_b, True)
+ 
+     # Calculate previous energy state with proper handling of boundaries
+-    previous_e = (
+-        e.where(active).ffill(dim).roll(snapshot=1).ffill(dim).where(include_previous_e)
+-    )
++    previous_e = e.where(active).ffill(dim).roll(snapshot=1).ffill(dim)
+ 
+     # We add initial e for non-cyclic assets to rhs
+     e_init = c.da.e_initial.sel(name=c.active_assets)
+@@ -2284,7 +2281,7 @@
+         per_period = per_period.sel(name=c.active_assets)
+ 
+         # We calculate the previous e per period while cycling within a period
+-        previous_e_pp = _roll_within_periods(e)
++        previous_e_pp = window.roll_within_periods(e)
+ 
+         # We create a mask `include_previous_e_pp` which determines when to include
+         # previous energy from within the period:
+@@ -2293,15 +2290,14 @@
+         #   * If CP=True AND IP=False: cycle to last snapshot of period (wrap)
+         #   * If IP=True: use initial value instead (no wrap, handled via rhs)
+         #   * If CP=True AND IP=True: CP takes precedence, wrap (IP ignored)
+-        within_period = ~_period_start_mask(sns)
++        within_period = ~window.period_start_mask()
+         include_previous_e_pp = active & (
+             within_period | c.da.e_cyclic_per_period.sel(name=c.active_assets)
+         )
+ 
+-        # We take values still to handle internal xarray multi-index difficulties
+-        previous_e_pp = previous_e_pp.where(include_previous_e_pp.values)
+-
+-        # update previous_e variables and rhs
++        # Per-period inclusion is carried by the `include_previous_e` coefficient
++        # (not by masking `previous_e_pp` to NaN, which v1 reads as an absent term
++        # and would drop the period-start energy-balance row).
+         previous_e = previous_e.where(~per_period, previous_e_pp)
+         include_previous_e = include_previous_e_pp.where(per_period, include_previous_e)
+ 
+@@ -2342,7 +2338,7 @@
+             )
+ 
+     # Add the previous energy term with standing efficiency factor
+-    lhs += [(eff_stand, previous_e)]
++    lhs += [(eff_stand * include_previous_e, previous_e)]
+ 
+     # For snapshots where we don't include previous_e, we need to account for initial values
+     rhs = -e_init.where(~include_previous_e, 0)
+@@ -2595,7 +2591,7 @@
+ 
+ 
+ def define_total_supply_constraints(
+-    n: Network, sns: Sequence, component: str = "Generator"
++    n: Network, sns: pd.Index, component: str = "Generator"
+ ) -> None:
+     """Define energy sum constraints for generators.
+ 
+@@ -2620,7 +2616,7 @@
+     ----------
+     n : pypsa.Network
+         Network instance containing the model and component data
+-    sns : Sequence
++    sns : pd.Index
+         Set of snapshots for which to define the constraints
+     component : str, default "Generator"
+         Name of the network component to apply the constraints to
+@@ -2636,20 +2632,15 @@
+     e_sum_max values specified.
+ 
+     """
+-    sns_ = as_index(n, sns, "snapshots")
+     m = n.model
++    window = n.optimize._window.subset(sns)
++    sns_ = window.model_index
+     c = as_components(n, component)
+ 
+     if c.static.empty:
+         return
+ 
+-    # elapsed hours
+-    eh = DataArray(
+-        expand_series(n.snapshot_weightings.generators[sns_], c.static.index)
+-    )
+-    # Unstack in stochastic networks with MultiIndex snapshots
+-    if n.has_scenarios:
+-        eh = eh.unstack("dim_1")
++    eh = window.snapshot_weightings("generators")
+ 
+     def _extract_names(index: pd.Index) -> pd.Index:
+         """Extract name level from MultiIndex or return as-is."""
+@@ -2665,8 +2656,7 @@
+         names = _extract_names(e_sum_min_i)
+         e_sum_min = c.da.e_sum_min.sel(name=names)
+         p = m[f"{c.name}-p"].sel(name=names, snapshot=sns_)
+-        eh_selected = eh.sel(name=names)
+-        energy = (p * eh_selected).sum(dim="snapshot")
++        energy = (p * eh).sum(dim="snapshot")
+         m.add_constraints(energy, ">=", e_sum_min, name=f"{c.name}-e_sum_min")
+ 
+     # maximum energy production constraints
+@@ -2675,6 +2665,5 @@
+         names = _extract_names(e_sum_max_i)
+         e_sum_max = c.da.e_sum_max.sel(name=names)
+         p = m[f"{c.name}-p"].sel(name=names, snapshot=sns_)
+-        eh_selected = eh.sel(name=names)
+-        energy = (p * eh_selected).sum(dim="snapshot")
++        energy = (p * eh).sum(dim="snapshot")
+         m.add_constraints(energy, "<=", e_sum_max, name=f"{c.name}-e_sum_max")
+--- a/pypsa/optimization/expressions.py
++++ b/pypsa/optimization/expressions.py
+@@ -15,10 +15,11 @@
+ import pandas as pd
+ from linopy import LinearExpression, Variable
+ from packaging import version
+-from xarray import DataArray
+-
++
++from pypsa._linopy_compat import suppress_semantics_warnings
+ from pypsa.common import deprecated_kwargs, pass_none_if_keyerror
+ from pypsa.components._types.mixin.multiports import _Multiport
++from pypsa.optimization.window import apply_period_weighting
+ from pypsa.statistics import (
+     get_transmission_branches,
+     port_efficiency,
+@@ -27,6 +28,8 @@
+ 
+ if TYPE_CHECKING:
+     from collections.abc import Callable, Collection, Sequence
++
++    from xarray import DataArray
+ 
+     from pypsa import Network, NetworkCollection
+     from pypsa.components.components import PortsLike
+@@ -45,6 +48,105 @@
+     if USE_EMPTY_PROPERTY:
+         return expr.empty
+     return expr.empty()
++
++
++def _port_coefficients(n: Network, c: str, port: str, sns: pd.Index) -> DataArray:
++    """Port efficiencies of `c` as an array, restricted to `sns` if time-varying."""
++    efficiency = port_efficiency(n, c, port=port, dynamic=True, as_xarray=True)
++    if "snapshot" in efficiency.dims:
++        return efficiency.sel(snapshot=sns)
++    return efficiency
++
++
++def _normalized_weights(weights: DataArray) -> DataArray:
++    """Scale `weights` to sum to one, per investment period if the snapshots carry one."""
++    if "period" not in weights.coords:
++        return weights / weights.sum()
++    totals = weights.groupby("period").sum().to_series()
++    return apply_period_weighting(weights, 1 / totals)
++
++
++def _require_sum_agg(agg: Callable | str) -> None:
++    """Reject any aggregation method other than plain summation."""
++    if agg != "sum":
++        msg = f"Aggregation method {agg} not supported."
++        raise ValueError(msg)
++
++
++def _group_key_coords(expr: LinearExpression) -> list[str]:
++    """Grouping-key coordinates carried along a flat `group` dimension."""
++    return [
++        k for k in expr.coords if k != "group" and expr.coords[k].dims == ("group",)
++    ]
++
++
++def _flatten_group(expr: LinearExpression) -> LinearExpression:
++    """Flatten a stacked `group` index onto a flat one keyed by auxiliary coordinates."""
++    if isinstance(expr.indexes.get("group"), pd.MultiIndex):
++        return expr.reset_index("group")
++    return expr
++
++
++def _regroup(expr: LinearExpression, keys: list[str]) -> LinearExpression:
++    """Sum a grouped expression over the subset `keys` of its grouping keys."""
++    return _flatten_group(expr.groupby(keys).sum(observed=True))
++
++
++def _restack_flat_groups(expr: Any) -> Any:
++    """Give a flat-`group` expression the public stacked group index.
++
++    The grouping keys ride as auxiliary coordinates on a flat `group` dim
++    throughout the pipeline; restack them on exit so the public return shape
++    carries the keys themselves.
++    """
++    if not isinstance(expr, LinearExpression) or "group" not in expr.dims:
++        return expr
++    keys = _group_key_coords(expr)
++    if not keys:
++        return expr
++    indexed = expr.set_index(group=keys)
++    return indexed.rename(group=keys[0]) if len(keys) == 1 else indexed
++
++
++def _capacity_expression(
++    n: Network, component: str, include_non_extendable: bool = True
++) -> LinearExpression | None:
++    """Nominal capacity of `component` as an expression, or `None` if it has none.
++
++    Combines the extendable capacity variables with the fixed capacities of the
++    non-extendable assets.
++    """
++    m = n.model
++    c = n.c[component]
++    nom_attr = c._operational_attrs["nom"]
++    var_name = f"{component}-{nom_attr}"
++    fixed_capacity = (
++        c.static.loc[c.fixed, nom_attr]
++        if include_non_extendable
++        else pd.Series(dtype=float)
++    )
++    if var_name in m.variables:
++        return m.variables[var_name].to_linexpr().add(fixed_capacity, join="outer")
++    if fixed_capacity.empty:
++        return None
++    return LinearExpression.from_constant(m, fixed_capacity)
++
++
++def _split_piecewise(
++    expr: Variable | LinearExpression, m: ln.Model, c: Any, attr: str
++) -> tuple[Any, Variable | None]:
++    """Split the names handled by the `attr` piecewise curve out of `expr`."""
++    if not c.has_piecewise(attr):
++        return expr, None
++    aux = m.variables[c._piecewise_aux_var(attr)]
++    return expr.drop_sel(name=aux.coords["name"]), aux
++
++
++def _add_optional(
++    expr: LinearExpression, other: Variable | LinearExpression | None
++) -> LinearExpression:
++    """Outer-add `other` to `expr`, passing `expr` through if there is nothing to add."""
++    return expr if other is None else expr.add(other, join="outer")
+ 
+ 
+ def _direct_piecewise(
+@@ -74,6 +176,8 @@
+     The results are aggregated by the given groupby function.
+     """
+ 
++    _n: Network
++
+     def _get_grouping(
+         self,
+         n: Network | NetworkCollection,
+@@ -101,21 +205,53 @@
+         return obj.indexes["name"]
+ 
+     def _concat_periods(self, exprs: dict[str, LinearExpression], c: str) -> Any:
+-        return ln.merge(list(exprs.values()), dim=c)
++        periods = self._n.investment_periods
++        res = ln.merge(list(exprs.values()), dim=periods.name)
++        return res.assign_coords({periods.name: periods})
++
++    def _aggregate_timeseries(
++        self,
++        expr: LinearExpression,
++        weights: DataArray,
++        agg: str | Callable | bool = "sum",
++    ) -> LinearExpression:
++        """Weight `expr` over the snapshots it spans and aggregate them.
++
++        Overrides the pandas-side implementation: the weights arrive as an array on
++        the model's snapshot labels, so both the restriction to `expr`'s snapshots
++        and the per-period mean normalization run on the `period` coordinate,
++        which the snapshots carry under either representation.
++        """
++        if not agg:
++            return expr
++        if agg is True:
++            agg = "sum"
++        weights = weights.sel(snapshot=expr.indexes["snapshot"])
++        if agg == "mean":
++            weights = _normalized_weights(weights)
++            agg = "sum"
++        return self._aggregate_with_weights(expr, weights, agg)
+ 
+     def _aggregate_with_weights(
+         self,
+         expr: LinearExpression,
+-        weights: pd.Series,
++        weights: DataArray,
+         agg: str | Callable,
+     ) -> LinearExpression:
+         """Apply weights to a time series."""
+-        if agg == "sum":
+-            if isinstance(weights.index, pd.MultiIndex):
+-                return expr.multiply(weights, axis=0).groupby(level=0).sum().T
++        _require_sum_agg(agg)
++        if "period" not in expr.coords:
+             return expr @ weights
+-        msg = f"Aggregation method {agg} not supported."
+-        raise ValueError(msg)
++        return expr.mul(weights, join="left").groupby("period").sum()
++
++    def _aggregate_components(self, *args: Any, **kwargs: Any) -> Any:
++        # Expressions built from masked model variables leave absent slots, the
++        # legacy groupby yields a stacked `group` MultiIndex (flattened right
++        # after), and cross-component merges drop a conflicting aux coord; all are
++        # handled identically here under legacy and v1, so silence the notices.
++        with suppress_semantics_warnings():
++            res = super()._aggregate_components(*args, **kwargs)
++        return _restack_flat_groups(res)
+ 
+     def _aggregate_components_skip_iteration(self, vals: Any) -> bool:
+         return vals is None or (not np.prod(vals.shape) and (vals.const == 0).all())
+@@ -126,31 +262,36 @@
+         grouping: pd.DataFrame,
+         agg: Callable | str,
+         c: str,
+-    ) -> pd.DataFrame:
+-        grouping = grouping.reindex(vals.indexes["name"])
+-        return vals.groupby(grouping).sum()
++    ) -> LinearExpression:
++        return _flatten_group(
++            vals.groupby(grouping.reindex(vals.indexes["name"])).sum()
++        )
+ 
+     def _aggregate_components_concat_values(
+         self, exprs: list[LinearExpression], agg: Callable | str
+     ) -> LinearExpression:
+-        res = ln.merge(exprs, join="outer")
+-        if not (index := res.indexes[res.dims[0]]).is_unique:
+-            if agg != "sum":
+-                msg = f"Aggregation method {agg} not supported."
+-                raise ValueError(msg)
+-            non_unique_groups = pd.DataFrame(list(index), columns=index.names)
+-            res = res.groupby(non_unique_groups).sum()
+-        return res
++        if "group" in exprs[0].dims and len(exprs) > 1:
++            # concatenate the ports and sum entries sharing a key tuple
++            _require_sum_agg(agg)
++            merged = ln.merge(exprs, dim="group")
++            return _regroup(merged, _group_key_coords(merged))
++        return ln.merge(exprs, join="outer")
+ 
+     def _aggregate_components_concat_data(
+         self, res: dict[str, LinearExpression], is_one_component: bool
+     ) -> LinearExpression:
+         if res == {}:
+             return LinearExpression.from_constant(self._n.model, 0)
++        first = next(iter(res.values()))
++        if "group" in first.dims:
++            if is_one_component:
++                keys = [k for k in _group_key_coords(first) if k != "component"]
++                return _regroup(first, keys) if keys else first
++            return ln.merge(list(res.values()), dim="group")
++        # groupby=False: no `group` dim, concatenate disjoint asset names
+         if is_one_component:
+-            first_key = next(iter(res))
+-            return res[first_key].loc[first_key]
+-        return ln.merge(list(res.values()), dim="group")
++            return first
++        return ln.merge(list(res.values()), dim="name")
+ 
+     def _apply_option_kwargs(
+         self,
+@@ -166,14 +307,11 @@
+     def _aggregate_across_components(
+         self, expr: LinearExpression, agg: Callable | str
+     ) -> LinearExpression:
+-        if agg != "sum":
+-            msg = f"Aggregation method {agg} not supported."
+-            raise ValueError(msg)
++        _require_sum_agg(agg)
+         if check_if_empty(expr):
+             return expr
+-        group = expr.indexes["group"].to_frame().drop(columns="component").squeeze()
+-        group.index = pd.Index(expr.indexes["group"], name="group")
+-        return expr.groupby(group).sum()
++        keys = [k for k in _group_key_coords(expr) if k != "component"]
++        return _regroup(expr, keys) if keys else expr
+ 
+     def _get_operational_variable(self, c: str) -> Variable | LinearExpression:
+         # TODO: move function to better place to avoid circular imports
+@@ -182,9 +320,9 @@
+         m = self._n.model
+ 
+         if c == "Load":
+-            return LinearExpression.from_constant(
+-                m, self._n.get_switchable_as_dense(c, "p_set")
+-            )
++            window = self._n.optimize._window
++            p_set = self._n.c[c].da.p_set.sel(snapshot=window.model_index)
++            return LinearExpression.from_constant(m, p_set)
+         attr = lookup.query("not nominal and not handle_separately").loc[c].index
+         if c == "StorageUnit":
+             return m.variables[f"{c}-p_dispatch"] - m.variables[f"{c}-p_store"]
+@@ -223,38 +361,18 @@
+ 
+         @pass_none_if_keyerror
+         def func(n: Network, component: str, port: str) -> pd.Series | None:
+-            m = n.model
+             c = n.c[component]
+-            nom_attr = c._operational_attrs["nom"]
+-            var_name = f"{component}-{nom_attr}"
+-
+-            # Get non-extendable capacity using component's fixed property
+-            non_ext_capacity = (
+-                c.static.loc[c.fixed, nom_attr]
+-                if include_non_extendable
+-                else pd.Series(dtype=float)
+-            )
+-
+-            # Build capacity expression handling both extendable and non-extendable
+-            if var_name in m.variables:
+-                capacity = m.variables[var_name] + non_ext_capacity
+-            elif not non_ext_capacity.empty:
+-                capacity = LinearExpression.from_constant(m, non_ext_capacity)
+-            else:
++            capacity = _capacity_expression(n, component, include_non_extendable)
++            if capacity is None:
+                 return None
++
++            capacity, add_capex = _split_piecewise(capacity, n.model, c, cost_attribute)
+ 
+             if cost_attribute == "capital_cost":
+                 costs = c.capital_cost[capacity.indexes["name"]]
+             else:
+                 costs = c.static[cost_attribute][capacity.indexes["name"]]
+-
+-            if c.has_piecewise(cost_attribute):
+-                add_capex = m.variables[c._piecewise_aux_var(cost_attribute)]
+-                capacity = capacity.drop_sel(name=add_capex.coords["name"])
+-            else:
+-                add_capex = 0
+-
+-            return capacity * costs + add_capex
++            return _add_optional(capacity * costs, add_capex)
+ 
+         return self._aggregate_components(
+             func,
+@@ -305,24 +423,9 @@
+ 
+         @pass_none_if_keyerror
+         def func(n: Network, component: str, port: str) -> pd.Series | None:
+-            m = n.model
+             c = n.c[component]
+-            nom_attr = c._operational_attrs["nom"]
+-            var_name = f"{component}-{nom_attr}"
+-
+-            # Get non-extendable capacity using component's fixed property
+-            non_ext_capacity = (
+-                c.static.loc[c.fixed, nom_attr]
+-                if include_non_extendable
+-                else pd.Series(dtype=float)
+-            )
+-
+-            # Build capacity expression handling both extendable and non-extendable
+-            if var_name in m.variables:
+-                capacity = m.variables[var_name] + non_ext_capacity
+-            elif not non_ext_capacity.empty:
+-                capacity = LinearExpression.from_constant(m, non_ext_capacity)
+-            else:
++            capacity = _capacity_expression(n, component, include_non_extendable)
++            if capacity is None:
+                 return None
+ 
+             efficiency = port_efficiency(n, component, port=port)[
+@@ -385,6 +488,7 @@
+         from pypsa.optimization.optimize import lookup  # noqa: PLC0415
+ 
+         at_port = resolve_at_port(at_port, bus_carrier)
++        weights = self._n.optimize._window.snapshot_weightings("objective")
+ 
+         @pass_none_if_keyerror
+         def func(n: Network, c: str, port: str) -> pd.Series | None:
+@@ -395,16 +499,10 @@
+             var = n.model.variables[f"{c}-{var}"]
+             sns = var.indexes["snapshot"]
+ 
+-            c_obj = n.c[c]
+-            if c_obj.has_piecewise(attr):
+-                add_opex = n.model.variables[c_obj._piecewise_aux_var(attr)]
+-                var = var.drop_sel(name=add_opex.coords["name"])
+-            else:
+-                add_opex = 0
+-
+-            opex = var * n.get_switchable_as_dense(c, attr).loc[sns] + add_opex
+-
+-            weights = n.snapshot_weightings.objective.loc[sns]
++            var, add_opex = _split_piecewise(var, n.model, n.c[c], attr)
++
++            cost = n.c[c].da[attr].sel(snapshot=sns, name=var.indexes["name"])
++            opex = _add_optional(var * cost, add_opex)
+             return self._aggregate_timeseries(opex, weights, agg=groupby_time)
+ 
+         return self._aggregate_components(
+@@ -462,17 +560,15 @@
+             components = self._n.branch_components
+ 
+         transmission_branches = get_transmission_branches(self._n, bus_carrier)
++        weights = self._n.optimize._window.snapshot_weightings("generators")
+ 
+         @pass_none_if_keyerror
+         def func(n: Network, c: str, port: str) -> pd.Series:
+             var = self._get_operational_variable(c)
+             sns = var.indexes["snapshot"]
+-            idx = transmission_branches.get_loc_level(c)[1].rename(c)
+-            efficiency = port_efficiency(n, c, port=port, dynamic=True)
+-            if isinstance(efficiency, pd.DataFrame):
+-                efficiency = efficiency.loc[sns]
+-            p = var.loc[:, idx] * efficiency[idx]
+-            weights = n.snapshot_weightings.generators.loc[sns]
++            idx = transmission_branches.get_loc_level(c)[1].rename("name")
++            efficiency = _port_coefficients(n, c, port, sns)
++            p = var.loc[:, idx] * efficiency.sel(name=idx)
+             return self._aggregate_timeseries(p, weights, agg=groupby_time)
+ 
+         return self._aggregate_components(
+@@ -552,27 +648,23 @@
+                 "To separate bus carriers set `bus_carrier` or use `bus_carrier` in the groupby argument."
+             )
+ 
++        weights = self._n.optimize._window.snapshot_weightings("generators")
++
+         @pass_none_if_keyerror
+         def func(n: Network, component: str, port: str) -> pd.Series:
+             c = n.c[component]
+             var = self._get_operational_variable(component)
+             sns = var.indexes["snapshot"]
+             # negative branch contributions are considered by the efficiency
+-            dynamic_efficiency = port_efficiency(n, component, port=port, dynamic=True)
+-            if isinstance(dynamic_efficiency, pd.DataFrame):
+-                dynamic_efficiency = dynamic_efficiency.loc[sns]
+             sign = n.c[component].static.get("sign", 1.0)
+-            weights = n.snapshot_weightings.generators.loc[sns]
+-            coeffs = DataArray(dynamic_efficiency * sign)
+-
+-            pw_var = 0
++            coeffs = _port_coefficients(n, component, port, sns) * sign
++
++            pw_var = None
+             if isinstance(c, _Multiport) and c.has_piecewise(
+                 y_attr := c._port_coefficient_attr(port)
+             ):
+                 pw = sign * n.model.variables[c._piecewise_aux_var(y_attr)]
+                 names = pw.coords["name"].values
+-                # pandas 3 returns read-only views, so copy before writing
+-                coeffs = coeffs.copy()
+                 coeffs.loc[{"name": names}] = 0
+                 pw_var = _direct_piecewise(c, y_attr, sign, pw, names, direction)
+ 
+@@ -592,8 +684,11 @@
+                 msg = f"Got unexpected argument direction={direction}. Must be 'supply', 'withdrawal' or 'both'."
+                 raise ValueError(msg)
+ 
+-            expr = expr + pw_var
+-            return self._aggregate_timeseries(expr, weights, agg=groupby_time)
++            if pw_var is not None:
++                expr = expr.fillna(0)
++            return self._aggregate_timeseries(
++                _add_optional(expr, pw_var), weights, agg=groupby_time
++            )
+ 
+         return self._aggregate_components(
+             func,
+@@ -734,35 +829,24 @@
+ 
+         """
+         at_port = resolve_at_port(at_port, bus_carrier)
++        weights = self._n.optimize._window.snapshot_weightings("generators")
+ 
+         @pass_none_if_keyerror
+         def func(n: Network, component: str, port: str) -> pd.Series:
+-            m = n.model
+             c = n.c[component]
+-            nom_attr = c._operational_attrs["nom"]
+-            var_name = f"{component}-{nom_attr}"
+-
+-            # Get non-extendable capacity using component's fixed property
+-            non_ext_capacity = c.static.loc[c.fixed, nom_attr]
+-
+-            # Build capacity expression handling both extendable and non-extendable
+-            if var_name in m.variables:
+-                capacity = m.variables[var_name] + non_ext_capacity
+-            elif not non_ext_capacity.empty:
+-                capacity = LinearExpression.from_constant(m, non_ext_capacity)
+-            else:
++            if "p_max_pu" not in c.static.columns:
++                return None
++            capacity = _capacity_expression(n, component)
++            if capacity is None:
+                 return None
+ 
+             idx = capacity.indexes["name"]
+             operation = self._get_operational_variable(component).loc[:, idx]
+             sns = operation.indexes["snapshot"]
+-            p_max_pu = DataArray(
+-                n.get_switchable_as_dense(component, "p_max_pu")[idx]
+-            ).loc[sns]
++            p_max_pu = c.da.p_max_pu.sel(snapshot=sns, name=idx)
+             # the following needs to be fixed in linopy, right now constants cannot be used for broadcasting
+             # TODO curtailment = capacity * p_max_pu - operation
+             curtailment = (capacity - operation / p_max_pu) * p_max_pu
+-            weights = n.snapshot_weightings.generators.loc[sns]
+             return self._aggregate_timeseries(curtailment, weights, agg=groupby_time)
+ 
+         return self._aggregate_components(
+@@ -814,11 +898,11 @@
+         """
+         at_port = resolve_at_port(at_port, bus_carrier)
+ 
++        weights = self._n.optimize._window.snapshot_weightings("generators")
++
+         @pass_none_if_keyerror
+         def func(n: Network, c: str, port: str) -> pd.Series:
+             operation = self._get_operational_variable(c)
+-            sns = operation.indexes["snapshot"]
+-            weights = n.snapshot_weightings.generators.loc[sns]
+             return self._aggregate_timeseries(operation, weights, agg=groupby_time)
+ 
+         return self._aggregate_components(
+--- a/pypsa/optimization/global_constraints.py
++++ b/pypsa/optimization/global_constraints.py
+@@ -11,13 +11,14 @@
+ import warnings
+ from typing import TYPE_CHECKING
+ 
++import numpy as np
+ import pandas as pd
+ from linopy import merge
+-from numpy import isnan
+ from xarray import DataArray
+ 
+ from pypsa.descriptors import nominal_attrs
+ from pypsa.optimization.piecewise import define_piecewise
++from pypsa.optimization.window import apply_period_weighting
+ 
+ if TYPE_CHECKING:
+     from collections.abc import Sequence
+@@ -25,6 +26,25 @@
+     from pypsa import Network
+     from pypsa.optimization.piecewise import PiecewiseOptions
+ logger = logging.getLogger(__name__)
++
++
++def _period_last_storage_weightings(
++    snapshots: pd.Index, period_of: pd.Index, period_weighting: pd.Series
++) -> tuple[pd.Index, pd.Series]:
++    """Last snapshot of each investment period and its storage weighting.
++
++    `period_of` gives the period of every entry in `snapshots`; take the last
++    snapshot per period and weight it by `period_weighting`.
++    """
++    periods = period_of.to_numpy()
++    last = np.flatnonzero(np.append(periods[1:] != periods[:-1], True))
++    period_last_sns = pd.Index(
++        list(snapshots[last]), tupleize_cols=False, name="snapshot"
++    )
++    storage_weightings = pd.Series(
++        period_weighting.loc[periods[last]].to_numpy(), index=period_last_sns
++    )
++    return period_last_sns, storage_weightings
+ 
+ 
+ def define_tech_capacity_expansion_limit(n: Network, sns: Sequence) -> None:
+@@ -50,7 +70,7 @@
+     for (carrier, sense, period), glcs_group in glcs.groupby(
+         ["carrier_attribute", "sense", "investment_period"]
+     ):
+-        period = None if isnan(period) else int(period)
++        period = None if np.isnan(period) else int(period)
+         sign = "=" if sense == "==" else sense
+         busdim = f"Bus-{carrier}-{period}"
+         lhs_per_bus_list = []
+@@ -108,21 +128,25 @@
+         Set of snapshots to which the constraint should be applied.
+ 
+     """
++    cols = n.c.buses.static.columns[n.c.buses.static.columns.str.startswith("nom_")]
++    if cols.empty:
++        return
++
+     m = n.model
+-    cols = n.c.buses.static.columns[n.c.buses.static.columns.str.startswith("nom_")]
++    warnings.warn(
++        "Nominal constraints per bus carrier are deprecated and will be removed in the future. "
++        "Use global constraint of type 'define_tech_capacity_expansion_limit' instead."
++        "Deprecated in PyPSA 1.0 and will be removed in PyPSA 2.0.",
++        DeprecationWarning,
++        stacklevel=2,
++    )
+     buses = n.c.buses.static.index[n.c.buses.static[cols].notnull().any(axis=1)]
+-
+-    if not cols.empty:
+-        warnings.warn(
+-            "Nominal constraints per bus carrier are deprecated and will be removed in the future. "
+-            "Use global constraint of type 'define_tech_capacity_expansion_limit' instead."
+-            "Deprecated in PyPSA 1.0 and will be removed in PyPSA 2.0.",
+-            DeprecationWarning,
+-            stacklevel=2,
+-        )
+     if n.has_scenarios and not buses.empty:
+         msg = "Nominal constraints per bus carrier are not implemented for stochastic networks."
+         raise NotImplementedError(msg)
++
++    multi_invest = isinstance(n.snapshots, pd.MultiIndex)
++    periods = n.optimize._window.subset(sns).periods if multi_invest else pd.Index([])
+ 
+     for col in cols:
+         msg = (
+@@ -141,12 +165,10 @@
+         if remainder in n.c.carriers.static.index:
+             carrier = remainder
+             period = None
+-        elif isinstance(n.snapshots, pd.MultiIndex):
++        elif multi_invest:
+             carrier, period = remainder.rsplit("_", 1)
+             period = int(period)
+-            if carrier not in n.c.carriers.static.index or period not in sns.unique(
+-                "period"
+-            ):
++            if carrier not in n.c.carriers.static.index or period not in periods:
+                 logger.warning(msg)
+                 continue
+         else:
+@@ -198,7 +220,7 @@
+         return
+ 
+     m = n.model
+-    periods = sns.unique("period")
++    periods = n.optimize._window.periods
+ 
+     # Handle stochastic optimization: find strictest (minimum) growth limit across scenarios
+     if n.has_scenarios:
+@@ -291,17 +313,19 @@
+ 
+     """
+     m = n.model
+-    weightings = n.snapshot_weightings.loc[sns]
+     glcs = n.c.global_constraints.static.query('type == "primary_energy"')
+-
++    if glcs.empty:
++        return
++
++    window = n.optimize._window.subset(sns)
++    weight = window.snapshot_weightings("generators")
+     if n._multi_invest:
+-        period_weighting = n.investment_period_weightings.years[sns.unique("period")]
+-        weightings = weightings.mul(period_weighting, level=0, axis=0)
+-        period_last_sns = pd.MultiIndex.from_frame(
+-            sns.to_frame(index=False).groupby("period").timestep.last().reset_index()
+-        )
+-        storage_weightings = (
+-            pd.Series(1, n.snapshots).mul(period_weighting).loc[period_last_sns]
++        period_of = window.period_of
++        periods = window.periods
++        period_weighting = n.investment_period_weightings.years[periods]
++        weight = apply_period_weighting(weight, period_weighting)
++        period_last_sns, storage_weightings = _period_last_storage_weightings(
++            sns, period_of, period_weighting
+         )
+ 
+     unique_names = glcs.index.unique("name")
+@@ -346,10 +370,10 @@
+         for scenario in scenarios:
+             glc = glc_group.loc[scenario]
+ 
+-            if isnan(glc.investment_period):
+-                sns_sel = slice(None)
+-            elif glc.investment_period in sns.unique("period"):
+-                sns_sel = sns.get_loc(glc.investment_period)
++            if np.isnan(glc.investment_period):
++                period_sns = sns
++            elif glc.investment_period in periods:
++                period_sns = sns[period_of == glc.investment_period]
+             else:
+                 continue
+ 
+@@ -372,8 +396,7 @@
+ 
+             if not gens.empty:
+                 gens = gens.loc[scenario]
+-
+-                p = m[var_name].sel(name=gens.index, snapshot=sns[sns_sel])
++                p = m[var_name].sel(name=gens.index, snapshot=period_sns)
+ 
+                 if n.has_scenarios:
+                     p = p.sel(scenario=scenario, drop=True)
+@@ -386,22 +409,26 @@
+                     )
+                     if not pw_names.empty:
+                         pw_var = primary_energy_pw_var.sel(
+-                            name=pw_names, snapshot=sns[sns_sel]
+-                        )
+-                        to_sum.append(pw_var)
++                            name=pw_names, snapshot=period_sns
++                        )
++                        to_sum.append(pw_var.to_linexpr())
+                         linear_names = linear_names.difference(pw_names)
+ 
+                 if not linear_names.empty:
+-                    efficiency = (
+-                        n.c.generators._as_dynamic("efficiency")
+-                        .loc[:, scenario]
+-                        .loc[sns[sns_sel], linear_names]
++                    efficiency = n.c.generators.da.efficiency.sel(
++                        name=linear_names, snapshot=period_sns
+                     )
++                    if n.has_scenarios:
++                        efficiency = efficiency.sel(scenario=scenario, drop=True)
+                     to_sum.append(p.sel(name=linear_names) / efficiency)
++                dispatch = to_sum[0]
++                for term in to_sum[1:]:
++                    dispatch = dispatch.add(term, join="outer")
++                emission_rate = gens.carrier.map(emissions).reindex(
++                    dispatch.indexes["name"]
++                )
+                 expr = (
+-                    sum(to_sum)
+-                    * weightings.generators[sns_sel]
+-                    * gens.carrier.map(emissions)
++                    dispatch * weight.sel(snapshot=period_sns) * emission_rate
+                 ).sum()
+                 lhs.append(expr)
+ 
+@@ -413,7 +440,7 @@
+                 sus = sus.loc[scenario]
+                 em_pu = sus.carrier.map(emissions)
+                 soc = m["StorageUnit-state_of_charge"].sel(
+-                    name=sus.index, snapshot=sns[sns_sel]
++                    name=sus.index, snapshot=period_sns
+                 )
+ 
+                 if n._multi_invest:
+@@ -466,7 +493,7 @@
+             if not stores.empty:
+                 stores = stores.loc[scenario]
+                 em_pu = stores.carrier.map(emissions)
+-                e = m["Store-e"].sel(name=stores.index, snapshot=sns[sns_sel])
++                e = m["Store-e"].sel(name=stores.index, snapshot=period_sns)
+ 
+                 if n._multi_invest:
+                     stores_continuous = stores.query("not e_initial_per_period")
+@@ -547,9 +574,15 @@
+ 
+     """
+     m = n.model
+-    weightings = n.snapshot_weightings.loc[sns]
+     glcs = n.c.global_constraints.static.query('type == "operational_limit"')
+-
++    if glcs.empty:
++        return
++
++    window = n.optimize._window.subset(sns)
++    weight = window.snapshot_weightings("generators")
++    if n._multi_invest:
++        period_of = window.period_of
++        periods = window.periods
+     unique_names = glcs.index.unique("name")
+ 
+     for name in unique_names:
+@@ -564,31 +597,24 @@
+         for scenario in scenarios:
+             glc = glc_group.loc[scenario]
+ 
+-            if isnan(glc.investment_period):
+-                sns_sel = slice(None)
+-            elif glc.investment_period in sns.unique("period"):
+-                sns_sel = sns.get_loc(glc.investment_period)
++            if np.isnan(glc.investment_period):
++                in_period = None
++            elif glc.investment_period in periods:
++                in_period = period_of == glc.investment_period
+             else:
+                 continue
++            period_sns = sns if in_period is None else sns[in_period]
+ 
+             # Filter weightings and calculate period-specific values
+-            weightings_filtered = weightings.loc[sns[sns_sel]]
++            w = weight.sel(snapshot=period_sns)
+             if n._multi_invest:
++                sel_period_of = period_of if in_period is None else period_of[in_period]
+                 period_weighting = n.investment_period_weightings.years[
+-                    sns[sns_sel].unique("period")
++                    sel_period_of.unique()
+                 ]
+-                weightings_filtered = weightings_filtered.mul(
+-                    period_weighting, level=0, axis=0
+-                )
+-                period_last_sns = pd.MultiIndex.from_frame(
+-                    sns[sns_sel]
+-                    .to_frame(index=False)
+-                    .groupby("period")
+-                    .timestep.last()
+-                    .reset_index()
+-                )
+-                storage_weightings = (
+-                    pd.Series(1, n.snapshots).mul(period_weighting).loc[period_last_sns]
++                w = apply_period_weighting(w, period_weighting)
++                period_last_sns, storage_weightings = _period_last_storage_weightings(
++                    period_sns, sel_period_of, period_weighting
+                 )
+ 
+             lhs = []
+@@ -599,15 +625,10 @@
+             )
+             if not gens.empty:
+                 gens = gens.loc[scenario]
+-                p = m["Generator-p"].sel(name=gens.index, snapshot=sns[sns_sel])
++                p = m["Generator-p"].sel(name=gens.index, snapshot=period_sns)
+                 if n.has_scenarios:
+                     p = p.sel(scenario=scenario, drop=True)
+ 
+-                w = DataArray(
+-                    weightings_filtered.generators.values,
+-                    coords={"snapshot": weightings_filtered.index},
+-                    dims=["snapshot"],
+-                )
+                 expr = (p * w).sum()
+                 lhs.append(expr)
+ 
+@@ -618,7 +639,7 @@
+             if not sus.empty:
+                 sus = sus.loc[scenario]
+                 soc = m["StorageUnit-state_of_charge"].sel(
+-                    name=sus.index, snapshot=sns[sns_sel]
++                    name=sus.index, snapshot=period_sns
+                 )
+ 
+                 if n._multi_invest:
+@@ -667,7 +688,7 @@
+             )
+             if not stores.empty:
+                 stores = stores.loc[scenario]
+-                e = m["Store-e"].sel(name=stores.index, snapshot=sns[sns_sel])
++                e = m["Store-e"].sel(name=stores.index, snapshot=period_sns)
+ 
+                 if n._multi_invest:
+                     stores_continuous = stores.query("not e_initial_per_period")
+@@ -781,10 +802,11 @@
+             period = glc.investment_period
+ 
+             # Determine periods for active asset filtering
+-            if not isnan(period):
++            window = n.optimize._window.subset(sns)
++            if not np.isnan(period):
+                 period_filter = period
+-            elif isinstance(sns, pd.MultiIndex):
+-                period_filter = list(sns.unique("period"))
++            elif window.has_periods:
++                period_filter = list(window.periods)
+             else:
+                 period_filter = None
+ 
+@@ -858,9 +880,12 @@
+     glcs = n.c.global_constraints.static.query(
+         "type == 'transmission_expansion_cost_limit'"
+     )
+-
++    if glcs.empty:
++        return
++
++    window = n.optimize._window.subset(sns)
+     if n._multi_invest:
+-        periods = sns.unique("period")
++        periods = window.periods
+         period_weighting = n.investment_period_weightings.objective[periods]
+ 
+     def substr(s: str) -> str:
+@@ -875,11 +900,11 @@
+         period = glc.investment_period
+ 
+         # Determine periods for active asset filtering and cost weighting
+-        if not isnan(period):
++        if not np.isnan(period):
+             period_filter = period
+             weights = 1
+-        elif isinstance(sns, pd.MultiIndex):
+-            period_filter = list(sns.unique("period"))
++        elif window.has_periods:
++            period_filter = list(window.periods)
+             weights = None  # computed per component below
+         else:
+             period_filter = None
+--- a/pypsa/optimization/optimize.py
++++ b/pypsa/optimization/optimize.py
+@@ -17,8 +17,12 @@
+ from linopy.constants import BREAKPOINT_DIM, LP_PIECE_DIM, PWL_LINK_DIM, SEGMENT_DIM
+ from linopy.solvers import available_solvers
+ 
++from pypsa._linopy_compat import suppress_semantics_warnings
+ from pypsa._options import options
+-from pypsa.common import UnexpectedError, as_index
++from pypsa.common import (
++    UnexpectedError,
++    as_index,
++)
+ from pypsa.components.array import _from_xarray
+ from pypsa.components.common import as_components
+ from pypsa.consistency import check_big_m_exceeded, check_no_modular_committables
+@@ -74,6 +78,7 @@
+     define_start_up_variables,
+     define_status_variables,
+ )
++from pypsa.optimization.window import SnapshotWindow, apply_period_weighting
+ 
+ if TYPE_CHECKING:
+     from collections.abc import Callable, Sequence
+@@ -188,16 +193,17 @@
+     - For a stochastic problem, scenario probabilities are applied as weightings to all cost (includes *both* investment terms).
+ 
+     """
+-    weighted_cost: xr.DataArray | int
++    weighted_cost: xr.DataArray
+     m = n.model
+     # Separate lists to distinguish CAPEX and OPEX terms
+     capex_terms = []
+     opex_terms = []
+     is_quadratic = False
+ 
++    window = n.optimize._window.subset(sns)
+     if n._multi_invest:
+-        periods = sns.unique("period")
+-        period_weighting = n.investment_period_weightings.objective[periods]
++        period_weighting = n.investment_period_weightings.objective[window.periods]
++        period_weight = xr.DataArray(period_weighting)
+ 
+     # constant for already done investment
+     if include_objective_constant:
+@@ -219,14 +225,11 @@
+             nominal = c.da[attr].sel(name=ext_i)
+ 
+             if n._multi_invest:
+-                weighted_cost = 0
+-                for period in periods:
+-                    active = c.da.active.sel(period=period, name=ext_i).any(
+-                        dim="timestep"
+-                    )
+-                    weighted_cost += (
+-                        active * periodic_cost * period_weighting.loc[period]
+-                    )
++                active_by_period = (
++                    c.da.active.sel(name=ext_i).groupby("period").any("snapshot")
++                )
++                active_weight = (active_by_period * period_weight).sum("period")
++                weighted_cost = active_weight * periodic_cost
+             else:
+                 active = c.da.active.sel(name=ext_i).any(dim="snapshot")
+                 weighted_cost = active * periodic_cost
+@@ -239,7 +242,8 @@
+         if n.has_scenarios and isinstance(constant, xr.DataArray):
+             # For stochastic networks, weight constant by scenario probabilities
+             weighted_constant = sum(
+-                constant.sel(scenario=s) * n.scenario_weightings.loc[s, "weight"]
++                constant.sel(scenario=s, drop=True)
++                * n.scenario_weightings.loc[s, "weight"]
+                 for s in n.scenarios
+             )
+             n._objective_constant = float(weighted_constant)
+@@ -256,12 +260,9 @@
+         n._objective_constant = 0.0
+ 
+     # Weightings
+-    weighting = n.snapshot_weightings.objective
++    weight = window.snapshot_weightings("objective")
+     if n._multi_invest:
+-        weighting = weighting.mul(period_weighting, level=0).loc[sns]
+-    else:
+-        weighting = weighting.loc[sns]
+-    weight = xr.DataArray(weighting.values, coords={"snapshot": sns}, dims=["snapshot"])
++        weight = apply_period_weighting(weight, period_weighting)
+ 
+     # marginal costs, marginal storage cost, and spill cost
+ 
+@@ -306,9 +307,7 @@
+             if var_name not in m.variables and cost_type == "spill_cost":
+                 continue
+ 
+-            cost = (
+-                c.da[cost_type].where(c.da.active).sel(snapshot=sns, name=active_names)
+-            )
++            cost = c.da[cost_type].sel(snapshot=sns, name=active_names)
+             if cost.size > 0 and not (cost == 0).all():
+                 operation = m[var_name].sel(snapshot=sns, name=active_names)
+                 opex_terms.append(
+@@ -361,14 +360,13 @@
+         if ext_i.empty:
+             continue
+ 
++        active_ext = c.da.active.sel(name=ext_i)
+         if n._multi_invest:
+             sum_dim = ["name", "period"]
+-            cost_weight = (
+-                c.da.active.to_series().groupby(sum_dim).any() * period_weighting
+-            ).to_xarray()
++            cost_weight = active_ext.groupby("period").any("snapshot") * period_weight
+         else:
+             sum_dim = ["name"]
+-            cost_weight = c.da.active.sel(name=ext_i).any(dim="snapshot")
++            cost_weight = active_ext.any(dim="snapshot")
+ 
+         y_attr = "capital_cost"
+         pw_attr = c._piecewise_schema(y_attr)
+@@ -401,7 +399,8 @@
+                     )
+                     raise ValueError(msg)
+                 ext_i = ext_i.difference(pw_names)
+-                capex_terms.append((piecewise_var * cost_weight).sum(dim=sum_dim))
++                pw_weight = cost_weight.sel(name=pw_names)
++                capex_terms.append((piecewise_var * pw_weight).sum(dim=sum_dim))
+ 
+         periodic_cost = c.periodized_cost.sel(name=ext_i)
+         # Linear capital cost for non-piecewise components
+@@ -409,9 +408,8 @@
+             periodic_cost.size > 0 and not (periodic_cost == 0).all()
+         ):
+             caps_lin = m[f"{c.name}-{attr}"].sel(name=ext_i)
+-            capex_terms.append(
+-                (caps_lin * cost_weight * periodic_cost).sum(dim=sum_dim)
+-            )
++            lin_weight = cost_weight.sel(name=ext_i)
++            capex_terms.append((caps_lin * lin_weight * periodic_cost).sum(dim=sum_dim))
+ 
+     # unit commitment
+     keys = ["start_up", "shut_down"]  # noqa: F841
+@@ -438,18 +436,20 @@
+         raise ValueError(msg)
+ 
+     # Build expected CAPEX and expected OPEX (scenario-weighted if stochastic)
+-    def _expected(exprs: list) -> Any:
++    def _combine(exprs: list) -> Any:
+         if not exprs:
+             return 0
+-        if n.has_scenarios:
+-            terms = []
+-            for s, p in n.scenario_weightings["weight"].items():
+-                selected = [e.sel(scenario=s) for e in exprs]
+-                # If quadratic terms exist, avoid merge (which is linear-only) and sum instead
+-                merged = sum(selected) if is_quadratic else merge(selected)
+-                terms.append(merged * p)
+-            return sum(terms) if is_quadratic else merge(terms)
++        # If quadratic terms exist, avoid merge (which is linear-only) and sum instead
+         return sum(exprs) if is_quadratic else merge(exprs)
++
++    def _combine_scenario(exprs: list, s: Any) -> Any:
++        return _combine([e.sel(scenario=s, drop=True) for e in exprs])
++
++    def _expected(exprs: list) -> Any:
++        if not exprs or not n.has_scenarios:
++            return _combine(exprs)
++        weights = n.scenario_weightings["weight"]
++        return _combine([_combine_scenario(exprs, s) * p for s, p in weights.items()])
+ 
+     expected_capex = _expected(capex_terms)
+     expected_opex = _expected(opex_terms)
+@@ -474,14 +474,7 @@
+             raise ValueError(msg_q)
+ 
+         # Create per-scenario OPEX expressions to use in constraints
+-        scen_opex_exprs: dict[Any, Any] = {}
+-        for s in n.scenarios:
+-            scen_selected = [e.sel(scenario=s) for e in opex_terms]
+-            scen_opex_exprs[s] = (
+-                (sum(scen_selected) if is_quadratic else merge(scen_selected))
+-                if scen_selected
+-                else 0
+-            )
++        scen_opex_exprs = {s: _combine_scenario(opex_terms, s) for s in n.scenarios}
+ 
+         # Retrieve CVaR auxiliary variables
+         a = m["CVaR-a"]
+@@ -489,13 +482,13 @@
+         cvar = m["CVaR"]
+ 
+         for s in n.scenarios:
+-            lhs = a.sel(scenario=s) - scen_opex_exprs[s] + theta
++            lhs = a.sel(scenario=s, drop=True) - scen_opex_exprs[s] + theta
+             m.add_constraints(lhs, ">=", 0, name=f"CVaR-excess-{s}")
+ 
+         inv_tail = 1.0 / (1.0 - alpha)
+         weighted_a = None
+         for s, p in n.scenario_weightings["weight"].items():
+-            term = a.sel(scenario=s) * float(p)
++            term = a.sel(scenario=s, drop=True) * float(p)
+             weighted_a = term if weighted_a is None else weighted_a + term
+         if weighted_a is None:  # mypy type guard
+             msg = "No scenarios found in scenario_weightings"
+@@ -522,6 +515,19 @@
+         """Initialize the optimization accessor."""
+         self._n = n
+         self.expressions = StatisticExpressionsAccessor(self._n)
++
++    @property
++    def _window(self) -> SnapshotWindow:
++        """Snapshot window of the live model build.
++
++        Maps between `n.snapshots` and the labels of the model's `snapshot`
++        dimension. Available from `create_model` onwards.
++        """
++        window = self._n._snapshot_window
++        if window is None:
++            msg = "No model has been built yet; call `n.optimize.create_model` first."
++            raise AttributeError(msg)
++        return window
+ 
+     def __call__(
+         self,
+@@ -642,7 +648,6 @@
+         )
+ 
+         n = self._n
+-        sns = as_index(n, snapshots, "snapshots")
+         n._multi_invest = int(multi_investment_periods)
+         n._linearized_uc = linearized_unit_commitment
+ 
+@@ -650,7 +655,7 @@
+             strict=["unknown_buses", "maintenance", "phase_shift_bounds"]
+         )
+         m = n.optimize.create_model(
+-            sns,
++            snapshots,
+             multi_investment_periods,
+             transmission_losses,
+             linearized_unit_commitment,
+@@ -662,7 +667,7 @@
+             **model_kwargs,
+         )
+         if extra_functionality:
+-            extra_functionality(n, sns)
++            extra_functionality(n, self._window.model_index)
+         if log_to_console is not None:
+             kwargs["log_to_console"] = log_to_console
+         status, condition = m.solve(
+@@ -685,6 +690,7 @@
+ 
+         return status, condition
+ 
++    @suppress_semantics_warnings()
+     def create_model(
+         self,
+         snapshots: Sequence | None = None,
+@@ -782,7 +788,11 @@
+                 meshed_thresholds = [meshed_threshold]
+ 
+         kwargs.setdefault("force_dim_names", True)
++        window = SnapshotWindow.build(n, sns, options.optimization.model_snapshot_index)
++        n._optimize_window = window
++        sns = window.model_index
+         n._model = Model(**kwargs)
++
+         n.model.parameters = n.model.parameters.assign(snapshots=sns)
+ 
+         # Define variables
+@@ -981,7 +991,7 @@
+ 
+         n = self._n
+         if extra_functionality:
+-            extra_functionality(n, n.snapshots)
++            extra_functionality(n, self._window.model_index)
+         m = n.model
+         if log_to_console is not None:
+             kwargs["log_to_console"] = log_to_console
+@@ -1006,7 +1016,7 @@
+         """Map solution to network components."""
+         n = self._n
+         m = n.model
+-        sns = n.model.parameters.snapshots.to_index()
++        sns = self._window.network_index
+ 
+         if not n.c.transformers.empty:
+             setpoint = n.get_switchable_as_dense("Transformer", "phase_shift", sns)
+@@ -1235,18 +1245,16 @@
+         power injection per bus and snapshot, voltage angle.
+         """
+         n = self._n
+-        sns = n.model.parameters.snapshots.to_index()
++        sns = self._window.network_index
+ 
+         check_big_m_exceeded(n)
+ 
+         # correct prices with objective weightings
++        objective = n.snapshot_weightings.objective
+         if n._multi_invest:
+             period_weighting = n.investment_period_weightings.objective
+-            weightings = n.snapshot_weightings.objective.mul(
+-                period_weighting, level=0, axis=0
+-            ).loc[sns]
+-        else:
+-            weightings = n.snapshot_weightings.objective.loc[sns]
++            objective = objective.mul(period_weighting, level=0, axis=0)
++        weightings = objective.loc[sns]
+ 
+         n.c.buses.dynamic.marginal_price.loc[sns] = (
+             n.c.buses.dynamic.marginal_price.loc[sns].divide(weightings, axis=0)
+--- a/pypsa/optimization/piecewise.py
++++ b/pypsa/optimization/piecewise.py
+@@ -16,6 +16,10 @@
+ from linopy import Model, Slopes, Variable, breakpoints
+ from linopy.constants import BREAKPOINT_DIM, PWL_METHOD, EvolvingAPIWarning
+ 
++from pypsa._linopy_compat import (
++    SUPPORTS_BREAKPOINT_MASK,
++    suppress_semantics_warnings,
++)
+ from pypsa.descriptors import nominal_attrs
+ 
+ if TYPE_CHECKING:
+@@ -132,7 +136,7 @@
+             c.name,
+         )
+         return None
+-    x_breakpoints, y_breakpoints = _get_breakpoints(
++    x_breakpoints, y_breakpoints, valid = _get_breakpoints(
+         c, pw_attr, pw_names, cumulative_attr, invert_attr
+     )
+ 
+@@ -168,13 +172,20 @@
+             if masked.all():
+                 active = None
+             else:
+-                active = status.to_linexpr().reindex(name=names).where(~masked, 1)
+-
++                # `.where(..., 1)` resolves the absent slots to always-active, so
++                # legacy and v1 agree; silence linopy's notice about them.
++                with suppress_semantics_warnings():
++                    active = status.to_linexpr().reindex(name=names).where(~masked, 1)
++
++        mask_kwargs = (
++            {"mask": valid.sel(name=names)} if SUPPORTS_BREAKPOINT_MASK else {}
++        )
+         with warnings.catch_warnings():
+             warnings.filterwarnings("ignore", category=EvolvingAPIWarning)
+             m.add_piecewise_formulation(
+                 (y_var.sel(name=names), y_breakpoints.sel(name=names), opt_sign),
+                 (x_var.sel(name=names), x_breakpoints.sel(name=names)),
++                **mask_kwargs,
+                 method=opt_method,
+                 name=aux,
+                 active=active,
+@@ -219,8 +230,12 @@
+     pw_names: pd.Index,
+     cumulative_attr: bool,
+     invert_attr: bool,
+-) -> tuple[xr.DataArray, xr.DataArray]:
+-    """Convert piecewise data to linopy breakpoints for piecewise constraint."""
++) -> tuple[xr.DataArray, xr.DataArray, xr.DataArray]:
++    """Convert piecewise data to linopy breakpoints and their validity mask.
++
++    Ragged curves are stored densely; the mask declares which slots hold a real
++    breakpoint, which linopy requires rather than inferring it from NaN padding.
++    """
+     piecewise_df = c.piecewise[pw_attr][pw_names]
+     piecewise_attrs = c._piecewise_schema(pw_attr)
+ 
+@@ -266,7 +281,7 @@
+             y_breakpoints = breakpoints(
+                 (y_da * x_da).fillna(0).where(valid_breakpoints)
+             )
+-    return x_breakpoints, y_breakpoints
++    return x_breakpoints, y_breakpoints, valid_breakpoints
+ 
+ 
+ def _create_y_var(
+--- a/pypsa/optimization/variables.py
++++ b/pypsa/optimization/variables.py
+@@ -436,9 +436,9 @@
+     if names.empty:
+         return
+ 
+-    active = c.da.active.sel(name=names, snapshot=sns)
+-    lower = c.da["phase_shift_min"].sel(name=names).broadcast_like(active)
+-    upper = c.da["phase_shift_max"].sel(name=names).broadcast_like(active)
++    grid = xr.ones_like(c.da.active.sel(name=names, snapshot=sns))
++    lower = c.da["phase_shift_min"].sel(name=names) * grid
++    upper = c.da["phase_shift_max"].sel(name=names) * grid
+     n.model.add_variables(lower, upper, name="Transformer-phase_shift")
+ 
+ 
+--- /dev/null
++++ b/pypsa/optimization/window.py
+@@ -0,0 +1,285 @@
++# SPDX-FileCopyrightText: PyPSA Contributors
++#
++# SPDX-License-Identifier: MIT
++
++"""Snapshot window of a single optimization model build.
++
++linopy's v1 convention forbids a `MultiIndex` dimension coordinate, so
++multi-period models are built over a flat `snapshot` dim labelled by the
++`(period, timestep)` tuples of `n.snapshots`, with the levels attached as
++auxiliary coordinates. `SnapshotWindow` carries both labellings of the build's
++snapshots and every operation bridging them. Outside the flat path the two
++labellings coincide and all operations degenerate to identity, so call sites
++never branch on the representation.
++"""
++
++from __future__ import annotations
++
++import functools
++import logging
++from typing import TYPE_CHECKING, Any
++
++import numpy as np
++import pandas as pd
++import xarray as xr
++from linopy import merge
++
++from pypsa._linopy_compat import use_flat_snapshot_index
++
++if TYPE_CHECKING:
++    from collections.abc import Iterator
++
++    from linopy import LinearExpression, Variable
++
++    from pypsa import Network
++
++logger = logging.getLogger(__name__)
++
++SNAPSHOT_LEVELS = ("period", "timestep")
++
++
++@functools.cache
++def _notify_multiindex_snapshot_kept() -> None:
++    """One-shot notice that the multi-period `snapshot` stays a MultiIndex.
++
++    Under legacy linopy the MultiIndex is kept first-class (unchanged `n.model`),
++    which linopy flags per variable/constraint as deprecated; suppress that spam
++    and inform once. The flat tuple representation can be opted into explicitly.
++    """
++    logger.info(
++        "Building the multi-period model over a MultiIndex `snapshot`. Opt into "
++        "the flat representation via "
++        "`pypsa.options.optimization.model_snapshot_index = 'flat'`."
++    )
++
++
++def _snapshot_is_multiindex(obj: Any) -> bool:
++    """Whether `obj` carries a `snapshot` MultiIndex."""
++    return isinstance(obj.indexes.get("snapshot"), pd.MultiIndex)
++
++
++def _level_coords(mi: pd.MultiIndex) -> dict[str, tuple[str, Any]]:
++    """Auxiliary `snapshot` coords holding the level values of `mi`."""
++    return {
++        name: ("snapshot", mi.get_level_values(name).to_numpy()) for name in mi.names
++    }
++
++
++def tuple_snapshot_index(mi: pd.MultiIndex) -> pd.Index:
++    """Flat index holding the MultiIndex's `(period, timestep)` tuples."""
++    return mi.to_flat_index().rename("snapshot")
++
++
++def apply_period_weighting(weight: xr.DataArray, weighting: pd.Series) -> xr.DataArray:
++    """Multiply `weight` by the investment-period weighting of its snapshots."""
++    period_of = weight.coords["period"].to_numpy()
++    return weight * weighting.reindex(period_of).to_numpy()
++
++
++def snapshot_array(values: Any, index: pd.Index) -> xr.DataArray:
++    """Array over a `snapshot` dim labelled by `index`.
++
++    Names the dim explicitly. Inferring it from the pandas object is
++    unreliable: the snapshots MultiIndex only carries its "snapshot" label as
++    an ad-hoc scalar name, which pandas 3 drops on any derived index.
++    """
++    return xr.DataArray(values, coords=[index], dims="snapshot")
++
++
++class SnapshotWindow:
++    """Snapshots of one model build, in the network's and in linopy's labelling.
++
++    Created once per model build and kept on the network for as long as that
++    model lives. Internal. User code sees the model's snapshot labels only
++    through the `sns` argument of `extra_functionality` and the `c.da`
++    accessors.
++
++    Parameters
++    ----------
++    n : pypsa.Network
++        Network the model is built for.
++    network_index : pandas.Index
++        Build snapshots as the network indexes them (a `pandas.MultiIndex` for
++        multi-period networks).
++    model_index : pandas.Index
++        Labels of the model's `snapshot` dimension, position-aligned with
++        `network_index`. Equal to `network_index` unless the build is flat.
++
++    """
++
++    def __init__(
++        self, n: Network, network_index: pd.Index, model_index: pd.Index
++    ) -> None:
++        """Initialize the window from both snapshot labellings."""
++        self._n = n
++        self.network_index = network_index
++        self.model_index = model_index
++
++    @classmethod
++    def build(cls, n: Network, sns: pd.Index, representation: str) -> SnapshotWindow:
++        """Create the window for a model built over `sns`."""
++        if use_flat_snapshot_index(sns, representation):
++            return cls(n, sns, tuple_snapshot_index(sns))
++        if isinstance(sns, pd.MultiIndex):
++            _notify_multiindex_snapshot_kept()
++        return cls(n, sns, sns)
++
++    def subset(self, sns: pd.Index) -> SnapshotWindow:
++        """Window restricted to `sns`, given in the model's labelling."""
++        if sns.equals(self.model_index):
++            return self
++        positions = self.model_index.get_indexer(sns)
++        if (positions < 0).any():
++            outside = sns[positions < 0].tolist()
++            msg = f"Snapshots outside the model's build window: {outside}"
++            raise KeyError(msg)
++        return SnapshotWindow(
++            self._n,
++            self.network_index.take(positions),
++            self.model_index.take(positions),
++        )
++
++    @property
++    def is_flat(self) -> bool:
++        """Whether the model's `snapshot` dim carries flat tuple labels."""
++        return self.has_periods and not isinstance(self.model_index, pd.MultiIndex)
++
++    @property
++    def has_periods(self) -> bool:
++        """Whether the window is resolved by investment period."""
++        return isinstance(self.network_index, pd.MultiIndex)
++
++    @property
++    def periods(self) -> pd.Index:
++        """Investment periods covered by the window."""
++        return self.network_index.unique("period")
++
++    @property
++    def period_of(self) -> pd.Index:
++        """Investment period of each snapshot of the window."""
++        return self.network_index.get_level_values("period")
++
++    @property
++    def start(self) -> Any:
++        """First snapshot of the window, in the network's labelling."""
++        return self.network_index[0]
++
++    def iter_periods(self) -> Iterator[tuple[Any, pd.Index]]:
++        """Yield `(period, snapshots)` pairs for per-period constraint building.
++
++        Yields a single `(None, model_index)` pair unless the model was built
++        with `multi_investment_periods=True`.
++        """
++        if not self._n._multi_invest:
++            yield None, self.model_index
++            return
++        period_of = self.period_of
++        for period in self.periods:
++            yield period, self.model_index[period_of == period]
++
++    def period_start_mask(self) -> xr.DataArray:
++        """Mark the first snapshot of each investment period within the window."""
++        is_start = np.zeros(len(self.model_index), dtype=bool)
++        is_start[0] = True
++        if self.has_periods:
++            periods = self.period_of.to_numpy()
++            is_start[1:] = periods[1:] != periods[:-1]
++        return snapshot_array(is_start, self.model_index)
++
++    def take(self, v: Variable, positions: Any) -> Variable:
++        """Positionally select snapshots from `v`, keeping the window's labels.
++
++        For shifts and rolls: the result carries the window's own snapshot
++        coordinates, staying aligned with the un-shifted variable.
++        """
++        if not v.indexes["snapshot"].equals(self.model_index):
++            v = v.sel(snapshot=self.model_index)
++        keep = {c: v.coords[c] for c in ("snapshot", *SNAPSHOT_LEVELS) if c in v.coords}
++        return v.isel(snapshot=positions).assign_coords(keep)
++
++    def roll_within_periods(self, v: Variable) -> Variable:
++        """Cyclically roll `v` by one snapshot within each investment period."""
++        n_sns = len(self.model_index)
++        starts = np.flatnonzero(self.period_start_mask().to_numpy())
++        positions = np.arange(n_sns) - 1
++        positions[starts] = np.append(starts[1:], n_sns) - 1
++        return self.take(v, positions)
++
++    def merge(self, exprs: list[LinearExpression]) -> LinearExpression:
++        """Outer-merge expressions on `snapshot`, preserving the flat aux coords.
++
++        The aux coords must be dropped before the strict outer merge — differing
++        periods on collided labels read as a conflict — and re-derived afterwards.
++        """
++        merged = merge([self.drop_aux(e) for e in exprs], dim="snapshot", join="outer")
++        return self._attach_aux(merged)
++
++    def _attach_aux(self, obj: Any) -> Any:
++        """Re-derive the aux coords of a flat `snapshot` dim from its tuple labels.
++
++        A no-op outside a multi-period flat build.
++        """
++        if not self.has_periods or "snapshot" not in obj.dims:
++            return obj
++        if _snapshot_is_multiindex(obj):
++            return obj
++        idx = obj.indexes["snapshot"]
++        if idx.equals(self.model_index):
++            return obj.assign_coords(_level_coords(self.network_index))
++        mi = pd.MultiIndex.from_tuples(list(idx), names=SNAPSHOT_LEVELS)
++        return obj.assign_coords(_level_coords(mi))
++
++    def drop_aux(self, obj: Any) -> Any:
++        """Drop the flat-snapshot `period`/`timestep` aux coords.
++
++        Needed where the snapshot labels are rewritten (a positional shift, a
++        merge over collided labels): the coords still describe the source
++        snapshots and contradict their own dimension, which v1 rejects. A no-op
++        while `snapshot` is a live MultiIndex.
++        """
++        if "snapshot" in obj.dims and _snapshot_is_multiindex(obj):
++            return obj
++        return obj.drop_vars(list(SNAPSHOT_LEVELS), errors="ignore")
++
++    def flatten(self, obj: xr.DataArray) -> xr.DataArray:
++        """Put an `n.snapshots`-indexed array on the model's flat labels.
++
++        Relabels without restricting to the window, mirroring the non-flat path
++        where arrays keep all of `n.snapshots`: rolling-horizon code reads
++        history from before the window. A no-op unless the build is flat.
++        """
++        if not self.is_flat or not _snapshot_is_multiindex(obj):
++            return obj
++        return obj.reset_index("snapshot", drop=True).assign_coords(self._flat_coords)
++
++    @functools.cached_property
++    def _flat_coords(self) -> dict[str, Any]:
++        """Flat `snapshot` labels and aux coords of all of `n.snapshots`."""
++        snapshots = self._n.snapshots
++        labels = tuple_snapshot_index(snapshots).values
++        return {"snapshot": labels, **_level_coords(snapshots)}
++
++    def snapshot_weightings(self, col: str) -> xr.DataArray:
++        """Snapshot-weighting column of the window's snapshots, read live."""
++        series = self._n.snapshot_weightings[col].loc[self.network_index]
++        return self._attach_aux(snapshot_array(series.to_numpy(), self.model_index))
++
++    @functools.cached_property
++    def _network_coords(self) -> xr.Coordinates:
++        """Window snapshots as a ready-made MultiIndex coordinate set."""
++        return xr.Coordinates.from_pandas_multiindex(self.network_index, "snapshot")
++
++    def recompose(self, obj: xr.DataArray) -> xr.DataArray:
++        """Put a model-labelled array back on the network's snapshots.
++
++        Inverse of `flatten`, for results handed back to the pandas side. A
++        no-op unless both level coords are present.
++        """
++        if "snapshot" not in obj.dims or _snapshot_is_multiindex(obj):
++            return obj
++        if not all(lvl in obj.coords for lvl in SNAPSHOT_LEVELS):
++            return obj
++        if obj.indexes["snapshot"].equals(self.model_index):
++            obj = self.drop_aux(obj).drop_vars("snapshot")
++            return obj.assign_coords(self._network_coords)
++        return obj.set_index(snapshot=list(SNAPSHOT_LEVELS))
+--- a/pypsa/statistics/abstract.py
++++ b/pypsa/statistics/abstract.py
+@@ -252,7 +252,9 @@
+         self, n: Network | NetworkCollection, c: str, obj: Any
+     ) -> Any:
+         """For static values iterate over periods and concat values."""
+-        if isinstance(obj, pd.DataFrame) or "snapshot" in getattr(obj, "dims", []):
++        if isinstance(obj, pd.DataFrame):
++            return obj
++        if {"snapshot", "period"} & set(getattr(obj, "dims", ())):
+             return obj
+         idx = self._get_component_index(obj, c)
+ 
+--- a/pypsa/statistics/expressions.py
++++ b/pypsa/statistics/expressions.py
+@@ -13,6 +13,7 @@
+ 
+ import numpy as np
+ import pandas as pd
++import xarray as xr
+ from pandas.api.types import is_list_like
+ 
+ from pypsa._options import options
+@@ -71,31 +72,29 @@
+     c_name: str,
+     port: int | str = 0,
+     dynamic: bool = False,
+-) -> pd.Series | pd.DataFrame:
++    as_xarray: bool = False,
++) -> pd.Series | pd.DataFrame | xr.DataArray:
+     """Get the efficiency of a component at a specific port."""
+     c = n.c[c_name]
+     port = c._as_port(port)
+ 
+     ones = pd.Series(1, index=c.static.index)
+     if c.name in n.one_port_components:
+-        return ones
++        res = ones
+     elif c.name in n.passive_branch_components:
+-        return -ones if port == 0 else ones
+-    elif c.name == "Link":
+-        if port == 0:
+-            return -ones
++        res = -ones if port == 0 else ones
++    elif c.name == "Link" and port == 0:
++        res = -ones
++    elif c.name in ("Link", "Process"):
+         key = c._port_coefficient_attr(port)
+         if dynamic and key in c.static:
+-            return n.get_switchable_as_dense(c.name, key)
+-        return c.static.get(key, ones)
+-    elif c.name == "Process":
+-        key = c._port_coefficient_attr(port)
+-        if dynamic and key in c.static:
+-            return n.get_switchable_as_dense(c.name, key)
+-        return c.static.get(key, ones)
++            return c.da[key] if as_xarray else n.get_switchable_as_dense(c.name, key)
++        res = c.static.get(key, ones)
+     else:
+         msg = f"port_efficiency has not been implemented for: {c.name}"
+         raise NotImplementedError(msg)
++
++    return xr.DataArray(res) if as_xarray else res
+ 
+ 
+ def get_transmission_branches(

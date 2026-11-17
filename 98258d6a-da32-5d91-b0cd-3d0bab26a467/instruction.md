@@ -1,0 +1,14 @@
+# Multi-period optimisation fails under linopy's v1 semantics
+
+The repository at `/app/pypsa` is PyPSA, installed in editable mode with its dependencies, including linopy 0.10.0 and the HiGHS solver. There is no network access; the example networks that `pypsa.examples` loads are already in the local cache. The environment sets `LINOPY_SEMANTICS=v1`, which the test suite reads to switch linopy to its v1 semantics.
+
+With linopy's v1 semantics active, a network with investment periods, whose snapshots are a `(period, timestep)` MultiIndex, can no longer be built or optimised. On any network, single-period ones included, the optimisation expressions (`n.optimize.expressions`) and the statistics of a solved model fail, as do piecewise costs, unit commitment, and links with transport delays across investment periods or scenarios. The legacy semantics keep working.
+
+Every network, single-period or multi-period, should build, solve, and report under v1 with the same results as under the legacy semantics, and everything that fails above should work under v1. The optimisation expressions, evaluated at the solution, should agree with `n.statistics` of the solved model, including over a subset of snapshots, with `groupby=False`, and for transmission. Add an option, `pypsa.options.optimization.model_snapshot_index`, that decides how a newly built model labels the snapshots of a multi-period network:
+- `"multiindex"` keeps the MultiIndex.
+- `"flat"` uses a single `snapshot` dimension whose labels are the `(period, timestep)` tuples, followed by `period` and `timestep` coordinates in that order.
+- `"auto"`, the default, means `"flat"` while linopy's v1 semantics are active and `"multiindex"` otherwise.
+
+Any other value raises `ValueError` when a model is built. A model uses its representation consistently, including for the snapshot-indexed component data it reads and for the snapshots it passes to an `extra_functionality` callback.
+
+Fix this in the library source under `/app/pypsa/pypsa`, keeping every other behaviour of PyPSA unchanged. That includes existing names and messages such as the solve condition `optimal` and `p_nom_opt`; the components `Generator`, `StorageUnit`, and `Process`; the term labels `Generator-p`, `Link-p_nom`, and `piecewise`; the `expansion_limit` global constraint; the statistics `capacity` and `energy_balance` with their groupings by `bus_carrier`, `country`, and `scenario`, including carriers such as `rural heat`; the piecewise names `y_var_` and `y_static` with its `_static` suffix; and the log messages "Skipping piecewise constraint." and "does not align". Your work is graded from the final contents of `/app/pypsa/pypsa` only, against tests that are not in this environment. Changes elsewhere in the repository, including to its tests and configuration, are not graded.

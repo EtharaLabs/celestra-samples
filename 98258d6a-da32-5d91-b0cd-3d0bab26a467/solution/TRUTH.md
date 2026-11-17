@@ -1,0 +1,2293 @@
+<!-- FORGE-CANARY-BEGIN -->
+<!-- FORGE-CANARY-SLOT-1: f94076ca8efe30d5e4af245543fb3efd115f2d528229485bc897a69557d521f4 -->
+<!-- FORGE-CANARY-SLOT-2: 26b023205864d44caec3dc84ba0e4a45d4418c06b0e343505292ef1297aa1608 -->
+<!-- FORGE-CANARY-SLOT-3: f3db6ec8b8efbe4ef39e05bd38c4453edb19f42188f0d618d79880975d10f07c -->
+<!-- FORGE-CANARY-END -->
+
+<!-- GENERATED SECTION. DO NOT HAND-EDIT. -->
+
+# Ground truth: celestra/pypsa-linopy-v1-snapshots
+
+Repository PyPSA/PyPSA at base commit 6d1da8049b3346969bc8f2b97f7835dc0b7c6fbe.
+
+## Golden path
+
+- S1: Build multi-period models over a flat snapshot dimension labelled by (period, timestep) tuples, with period and timestep auxiliary coordinates, whenever linopy's v1 semantics are active or optimization.model_snapshot_index is 'flat'; keep the MultiIndex under legacy semantics or 'multiindex', and reject other option values. Establishes: multi-period optimisation builds and solves under linopy v1 with the same results
+  - checker: test/test_lopf_multiinvest.py::test_bug_1360_storage_units
+  - checker: test/test_lopf_multiinvest.py::test_bug_1360_stores
+  - checker: test/test_lopf_multiinvest.py::test_extra_functionality_receives_the_build_snapshots[auto]
+  - checker: test/test_lopf_multiinvest.py::test_extra_functionality_receives_the_build_snapshots[flat]
+  - checker: test/test_lopf_multiinvest.py::test_flat_labels_are_the_snapshot_tuples
+  - checker: test/test_lopf_multiinvest.py::test_global_constraint_bus_tech_limit
+  - checker: test/test_lopf_multiinvest.py::test_global_constraint_primary_energy_storage
+  - checker: test/test_lopf_multiinvest.py::test_global_constraint_primary_energy_storage_stochastic
+  - checker: test/test_lopf_multiinvest.py::test_global_constraint_primary_energy_store
+  - checker: test/test_lopf_multiinvest.py::test_global_constraint_transmission_cost_limit
+  - checker: test/test_lopf_multiinvest.py::test_global_constraint_transmission_expansion_limit
+  - checker: test/test_lopf_multiinvest.py::test_max_growth_constraint
+  - checker: test/test_lopf_multiinvest.py::test_max_relative_growth_constraint
+  - checker: test/test_lopf_multiinvest.py::test_model_snapshot_index_default_follows_semantics
+  - checker: test/test_lopf_multiinvest.py::test_model_snapshot_index_flat
+  - checker: test/test_lopf_multiinvest.py::test_model_snapshot_index_flat_da_accessor_stable
+  - checker: test/test_lopf_multiinvest.py::test_model_snapshot_index_flat_same_results
+  - checker: test/test_lopf_multiinvest.py::test_model_snapshot_index_invalid_option
+  - checker: test/test_lopf_multiinvest.py::test_nominal_constraint_bus_carrier_expansion_limit
+  - checker: test/test_lopf_multiinvest.py::test_operational_limit_with_investment_period_storage
+  - checker: test/test_lopf_multiinvest.py::test_optimize_later_period_uses_its_own_data
+  - checker: test/test_lopf_multiinvest.py::test_ramp_limit_resets_per_period
+  - checker: test/test_lopf_multiinvest.py::test_simple_network
+  - checker: test/test_lopf_multiinvest.py::test_simple_network_snapshot_subset
+  - checker: test/test_lopf_multiinvest.py::test_simple_network_storage_cyclic
+  - checker: test/test_lopf_multiinvest.py::test_simple_network_storage_cyclic_per_period
+  - checker: test/test_lopf_multiinvest.py::test_simple_network_storage_noncyclic
+  - checker: test/test_lopf_multiinvest.py::test_simple_network_storage_noncyclic_per_period
+  - checker: test/test_lopf_multiinvest.py::test_simple_network_store_cyclic
+  - checker: test/test_lopf_multiinvest.py::test_simple_network_store_cyclic_per_period
+  - checker: test/test_lopf_multiinvest.py::test_simple_network_store_noncyclic
+  - checker: test/test_lopf_multiinvest.py::test_simple_network_store_noncyclic_per_period
+  - checker: test/test_lopf_multiinvest.py::test_storage_unit_primary_energy_and_operational_limit_constraint_with_per_period
+  - checker: test/test_lopf_multiinvest.py::test_storage_unit_primary_energy_and_operational_limit_constraint_without_per_period
+  - checker: test/test_lopf_multiinvest.py::test_storageunit_cp_only_wraps_per_period
+  - checker: test/test_lopf_multiinvest.py::test_storageunit_ip_only_resets_per_period
+  - checker: test/test_lopf_multiinvest.py::test_store_primary_energy_and_operational_limit_constraint_with_per_period
+  - checker: test/test_lopf_multiinvest.py::test_store_primary_energy_and_operational_limit_constraint_without_per_period
+  - checker: test/test_lopf_multiinvest.py::test_tiny_with_build_year
+  - checker: test/test_lopf_multiinvest.py::test_tiny_with_default
+- S2: Carry the flat snapshot representation through the optimization expressions, so that each expression's solution matches the corresponding statistic for single- and multi-period networks, time aggregations, groupings, filters, and snapshot subsets. Establishes: optimization expressions agree with statistics under v1
+  - checker: test/test_optimization_expressions.py::TestExpressionsWithPiecewise::test_capex_schema_without_data_is_linear
+  - checker: test/test_optimization_expressions.py::TestExpressionsWithPiecewise::test_expressions_capex
+  - checker: test/test_optimization_expressions.py::TestExpressionsWithPiecewise::test_expressions_supply_withdrawal
+  - checker: test/test_optimization_expressions.py::TestExpressionsWithPiecewise::test_supply_minus_withdrawal_equals_energy_balance
+  - checker: test/test_optimization_expressions.py::TestExpressionsWithPiecewise::test_supply_withdrawal_with_negative_piecewise_port
+  - checker: test/test_optimization_expressions.py::test_concrete_at_port
+  - checker: test/test_optimization_expressions.py::test_expression_capacity_all_filtered[False]
+  - checker: test/test_optimization_expressions.py::test_expression_capacity_all_filtered[True]
+  - checker: test/test_optimization_expressions.py::test_expressions_capacity[False]
+  - checker: test/test_optimization_expressions.py::test_expressions_capacity[carrier]
+  - checker: test/test_optimization_expressions.py::test_expressions_capacity[groupby2]
+  - checker: test/test_optimization_expressions.py::test_expressions_capacity[groupby3]
+  - checker: test/test_optimization_expressions.py::test_expressions_capacity[groupby4]
+  - checker: test/test_optimization_expressions.py::test_expressions_capacity[groupby5]
+  - checker: test/test_optimization_expressions.py::test_expressions_capacity[multi_grouper]
+  - checker: test/test_optimization_expressions.py::test_expressions_capacity_other_options[kwargs0]
+  - checker: test/test_optimization_expressions.py::test_expressions_capacity_other_options[kwargs1]
+  - checker: test/test_optimization_expressions.py::test_expressions_capacity_other_options[kwargs2]
+  - checker: test/test_optimization_expressions.py::test_expressions_capacity_other_options[kwargs3]
+  - checker: test/test_optimization_expressions.py::test_expressions_capacity_other_options[kwargs4]
+  - checker: test/test_optimization_expressions.py::test_expressions_capacity_other_options[kwargs5]
+  - checker: test/test_optimization_expressions.py::test_expressions_capex
+  - checker: test/test_optimization_expressions.py::test_expressions_capex_overnight_cost
+  - checker: test/test_optimization_expressions.py::test_expressions_curtailment
+  - checker: test/test_optimization_expressions.py::test_expressions_energy_balance[False-None]
+  - checker: test/test_optimization_expressions.py::test_expressions_energy_balance[False-mean]
+  - checker: test/test_optimization_expressions.py::test_expressions_energy_balance[False-sum]
+  - checker: test/test_optimization_expressions.py::test_expressions_energy_balance[groupby2-None]
+  - checker: test/test_optimization_expressions.py::test_expressions_energy_balance[groupby2-mean]
+  - checker: test/test_optimization_expressions.py::test_expressions_energy_balance[groupby2-sum]
+  - checker: test/test_optimization_expressions.py::test_expressions_energy_balance[groupby3-None]
+  - checker: test/test_optimization_expressions.py::test_expressions_energy_balance[groupby3-mean]
+  - checker: test/test_optimization_expressions.py::test_expressions_energy_balance[groupby3-sum]
+  - checker: test/test_optimization_expressions.py::test_expressions_energy_balance[groupby4-None]
+  - checker: test/test_optimization_expressions.py::test_expressions_energy_balance[groupby4-mean]
+  - checker: test/test_optimization_expressions.py::test_expressions_energy_balance[groupby4-sum]
+  - checker: test/test_optimization_expressions.py::test_expressions_energy_balance[groupby5-None]
+  - checker: test/test_optimization_expressions.py::test_expressions_energy_balance[groupby5-mean]
+  - checker: test/test_optimization_expressions.py::test_expressions_energy_balance[groupby5-sum]
+  - checker: test/test_optimization_expressions.py::test_expressions_energy_balance_other_options[kwargs0]
+  - checker: test/test_optimization_expressions.py::test_expressions_energy_balance_other_options[kwargs3]
+  - checker: test/test_optimization_expressions.py::test_expressions_energy_balance_other_options[kwargs4]
+  - checker: test/test_optimization_expressions.py::test_expressions_energy_balance_with_snapshot_subset[False-None]
+  - checker: test/test_optimization_expressions.py::test_expressions_energy_balance_with_snapshot_subset[False-mean]
+  - checker: test/test_optimization_expressions.py::test_expressions_energy_balance_with_snapshot_subset[False-sum]
+  - checker: test/test_optimization_expressions.py::test_expressions_energy_balance_with_snapshot_subset[carrier-None]
+  - checker: test/test_optimization_expressions.py::test_expressions_energy_balance_with_snapshot_subset[groupby2-None]
+  - checker: test/test_optimization_expressions.py::test_expressions_energy_balance_with_snapshot_subset[groupby2-mean]
+  - checker: test/test_optimization_expressions.py::test_expressions_energy_balance_with_snapshot_subset[groupby2-sum]
+  - checker: test/test_optimization_expressions.py::test_expressions_energy_balance_with_snapshot_subset[groupby3-None]
+  - checker: test/test_optimization_expressions.py::test_expressions_energy_balance_with_snapshot_subset[groupby3-mean]
+  - checker: test/test_optimization_expressions.py::test_expressions_energy_balance_with_snapshot_subset[groupby3-sum]
+  - checker: test/test_optimization_expressions.py::test_expressions_energy_balance_with_snapshot_subset[groupby4-None]
+  - checker: test/test_optimization_expressions.py::test_expressions_energy_balance_with_snapshot_subset[groupby4-mean]
+  - checker: test/test_optimization_expressions.py::test_expressions_energy_balance_with_snapshot_subset[groupby4-sum]
+  - checker: test/test_optimization_expressions.py::test_expressions_energy_balance_with_snapshot_subset[groupby5-None]
+  - checker: test/test_optimization_expressions.py::test_expressions_energy_balance_with_snapshot_subset[groupby5-mean]
+  - checker: test/test_optimization_expressions.py::test_expressions_energy_balance_with_snapshot_subset[groupby5-sum]
+  - checker: test/test_optimization_expressions.py::test_expressions_energy_balance_with_snapshot_subset[multi_grouper-None]
+  - checker: test/test_optimization_expressions.py::test_expressions_storage_unit_supply_withdrawal
+  - checker: test/test_optimization_expressions.py::test_expressions_supply
+  - checker: test/test_optimization_expressions.py::test_expressions_withdrawal
+  - checker: test/test_optimization_expressions.py::test_multi_period_supply_withdrawal_energy_balance
+  - checker: test/test_optimization_expressions.py::test_other_dynamic_expressions_with_snapshot_subset
+  - checker: test/test_optimization_expressions_equivalence.py::test_expression_solution_matches_statistics[capacity]
+  - checker: test/test_optimization_expressions_equivalence.py::test_expression_solution_matches_statistics[capex]
+  - checker: test/test_optimization_expressions_equivalence.py::test_expression_solution_matches_statistics[curtailment]
+  - checker: test/test_optimization_expressions_equivalence.py::test_expression_solution_matches_statistics[energy_balance]
+  - checker: test/test_optimization_expressions_equivalence.py::test_expression_solution_matches_statistics[opex]
+  - checker: test/test_optimization_expressions_equivalence.py::test_expression_solution_matches_statistics[supply]
+  - checker: test/test_optimization_expressions_equivalence.py::test_expression_solution_matches_statistics[transmission]
+  - checker: test/test_optimization_expressions_equivalence.py::test_expression_solution_matches_statistics[withdrawal]
+  - checker: test/test_optimization_expressions_equivalence.py::test_filters_match_statistics[capacity-{'bus_carrier': 'AC'}]
+  - checker: test/test_optimization_expressions_equivalence.py::test_filters_match_statistics[capacity-{'carrier': 'AC'}]
+  - checker: test/test_optimization_expressions_equivalence.py::test_filters_match_statistics[capacity-{'nice_names': True}]
+  - checker: test/test_optimization_expressions_equivalence.py::test_filters_match_statistics[energy_balance-{'bus_carrier': 'AC'}]
+  - checker: test/test_optimization_expressions_equivalence.py::test_filters_match_statistics[energy_balance-{'carrier': 'AC'}]
+  - checker: test/test_optimization_expressions_equivalence.py::test_filters_match_statistics[energy_balance-{'nice_names': True}]
+  - checker: test/test_optimization_expressions_equivalence.py::test_filters_match_statistics[opex-{'bus_carrier': 'AC'}]
+  - checker: test/test_optimization_expressions_equivalence.py::test_filters_match_statistics[opex-{'nice_names': True}]
+  - checker: test/test_optimization_expressions_equivalence.py::test_grouping_matches_statistics[<bound method Groupers.carrier of Grouper container with the following groupers: bus, bus_carrier, carrier, country, location, name, unit>-capacity]
+  - checker: test/test_optimization_expressions_equivalence.py::test_grouping_matches_statistics[<bound method Groupers.carrier of Grouper container with the following groupers: bus, bus_carrier, carrier, country, location, name, unit>-energy_balance]
+  - checker: test/test_optimization_expressions_equivalence.py::test_grouping_matches_statistics[<bound method Groupers.carrier of Grouper container with the following groupers: bus, bus_carrier, carrier, country, location, name, unit>-opex]
+  - checker: test/test_optimization_expressions_equivalence.py::test_grouping_matches_statistics[False-capacity]
+  - checker: test/test_optimization_expressions_equivalence.py::test_grouping_matches_statistics[False-energy_balance]
+  - checker: test/test_optimization_expressions_equivalence.py::test_grouping_matches_statistics[False-opex]
+  - checker: test/test_optimization_expressions_equivalence.py::test_grouping_matches_statistics[['carrier', 'bus_carrier']-capacity]
+  - checker: test/test_optimization_expressions_equivalence.py::test_grouping_matches_statistics[['carrier', 'bus_carrier']-energy_balance]
+  - checker: test/test_optimization_expressions_equivalence.py::test_grouping_matches_statistics[['carrier', 'bus_carrier']-opex]
+  - checker: test/test_optimization_expressions_equivalence.py::test_grouping_matches_statistics[['name', 'bus', 'carrier']-capacity]
+  - checker: test/test_optimization_expressions_equivalence.py::test_grouping_matches_statistics[['name', 'bus', 'carrier']-energy_balance]
+  - checker: test/test_optimization_expressions_equivalence.py::test_grouping_matches_statistics[['name', 'bus', 'carrier']-opex]
+  - checker: test/test_optimization_expressions_equivalence.py::test_grouping_matches_statistics[[<bound method Groupers.bus of Grouper container with the following groupers: bus, bus_carrier, carrier, country, location, name, unit>, <bound method Groupers.carrier of Grouper container with the following groupers: bus, bus_carrier, carrier, country, location, name, unit>]-capacity]
+  - checker: test/test_optimization_expressions_equivalence.py::test_grouping_matches_statistics[[<bound method Groupers.bus of Grouper container with the following groupers: bus, bus_carrier, carrier, country, location, name, unit>, <bound method Groupers.carrier of Grouper container with the following groupers: bus, bus_carrier, carrier, country, location, name, unit>]-energy_balance]
+  - checker: test/test_optimization_expressions_equivalence.py::test_grouping_matches_statistics[[<bound method Groupers.bus of Grouper container with the following groupers: bus, bus_carrier, carrier, country, location, name, unit>, <bound method Groupers.carrier of Grouper container with the following groupers: bus, bus_carrier, carrier, country, location, name, unit>]-opex]
+  - checker: test/test_optimization_expressions_equivalence.py::test_multi_period_matches_statistics[capacity]
+  - checker: test/test_optimization_expressions_equivalence.py::test_multi_period_matches_statistics[capex]
+  - checker: test/test_optimization_expressions_equivalence.py::test_multi_period_matches_statistics[curtailment]
+  - checker: test/test_optimization_expressions_equivalence.py::test_multi_period_matches_statistics[energy_balance]
+  - checker: test/test_optimization_expressions_equivalence.py::test_multi_period_matches_statistics[opex]
+  - checker: test/test_optimization_expressions_equivalence.py::test_multi_period_matches_statistics[supply]
+  - checker: test/test_optimization_expressions_equivalence.py::test_multi_period_matches_statistics[transmission]
+  - checker: test/test_optimization_expressions_equivalence.py::test_multi_period_matches_statistics[withdrawal]
+  - checker: test/test_optimization_expressions_equivalence.py::test_multi_period_time_aggregation_matches_statistics[mean-curtailment]
+  - checker: test/test_optimization_expressions_equivalence.py::test_multi_period_time_aggregation_matches_statistics[mean-energy_balance]
+  - checker: test/test_optimization_expressions_equivalence.py::test_multi_period_time_aggregation_matches_statistics[mean-opex]
+  - checker: test/test_optimization_expressions_equivalence.py::test_multi_period_time_aggregation_matches_statistics[mean-supply]
+  - checker: test/test_optimization_expressions_equivalence.py::test_multi_period_time_aggregation_matches_statistics[mean-transmission]
+  - checker: test/test_optimization_expressions_equivalence.py::test_multi_period_time_aggregation_matches_statistics[mean-withdrawal]
+  - checker: test/test_optimization_expressions_equivalence.py::test_multi_period_time_aggregation_matches_statistics[sum-curtailment]
+  - checker: test/test_optimization_expressions_equivalence.py::test_multi_period_time_aggregation_matches_statistics[sum-energy_balance]
+  - checker: test/test_optimization_expressions_equivalence.py::test_multi_period_time_aggregation_matches_statistics[sum-opex]
+  - checker: test/test_optimization_expressions_equivalence.py::test_multi_period_time_aggregation_matches_statistics[sum-supply]
+  - checker: test/test_optimization_expressions_equivalence.py::test_multi_period_time_aggregation_matches_statistics[sum-transmission]
+  - checker: test/test_optimization_expressions_equivalence.py::test_multi_period_time_aggregation_matches_statistics[sum-withdrawal]
+  - checker: test/test_optimization_expressions_equivalence.py::test_snapshot_subset_matches_statistics[capacity]
+  - checker: test/test_optimization_expressions_equivalence.py::test_snapshot_subset_matches_statistics[capex]
+  - checker: test/test_optimization_expressions_equivalence.py::test_snapshot_subset_matches_statistics[energy_balance]
+  - checker: test/test_optimization_expressions_equivalence.py::test_snapshot_subset_matches_statistics[opex]
+  - checker: test/test_optimization_expressions_equivalence.py::test_snapshot_subset_matches_statistics[supply]
+  - checker: test/test_optimization_expressions_equivalence.py::test_snapshot_subset_matches_statistics[transmission]
+  - checker: test/test_optimization_expressions_equivalence.py::test_snapshot_subset_matches_statistics[withdrawal]
+  - checker: test/test_optimization_expressions_equivalence.py::test_time_aggregation_matches_statistics[False-curtailment]
+  - checker: test/test_optimization_expressions_equivalence.py::test_time_aggregation_matches_statistics[False-energy_balance]
+  - checker: test/test_optimization_expressions_equivalence.py::test_time_aggregation_matches_statistics[False-opex]
+  - checker: test/test_optimization_expressions_equivalence.py::test_time_aggregation_matches_statistics[False-supply]
+  - checker: test/test_optimization_expressions_equivalence.py::test_time_aggregation_matches_statistics[False-transmission]
+  - checker: test/test_optimization_expressions_equivalence.py::test_time_aggregation_matches_statistics[False-withdrawal]
+  - checker: test/test_optimization_expressions_equivalence.py::test_time_aggregation_matches_statistics[mean-curtailment]
+  - checker: test/test_optimization_expressions_equivalence.py::test_time_aggregation_matches_statistics[mean-energy_balance]
+  - checker: test/test_optimization_expressions_equivalence.py::test_time_aggregation_matches_statistics[mean-opex]
+  - checker: test/test_optimization_expressions_equivalence.py::test_time_aggregation_matches_statistics[mean-supply]
+  - checker: test/test_optimization_expressions_equivalence.py::test_time_aggregation_matches_statistics[mean-transmission]
+  - checker: test/test_optimization_expressions_equivalence.py::test_time_aggregation_matches_statistics[mean-withdrawal]
+  - checker: test/test_optimization_expressions_equivalence.py::test_time_aggregation_matches_statistics[sum-curtailment]
+  - checker: test/test_optimization_expressions_equivalence.py::test_time_aggregation_matches_statistics[sum-energy_balance]
+  - checker: test/test_optimization_expressions_equivalence.py::test_time_aggregation_matches_statistics[sum-opex]
+  - checker: test/test_optimization_expressions_equivalence.py::test_time_aggregation_matches_statistics[sum-supply]
+  - checker: test/test_optimization_expressions_equivalence.py::test_time_aggregation_matches_statistics[sum-transmission]
+  - checker: test/test_optimization_expressions_equivalence.py::test_time_aggregation_matches_statistics[sum-withdrawal]
+- S3: Make the statistics module read flat-snapshot models, including multi-investment cost, capex, and energy-balance statistics. Establishes: statistics work on models built under v1
+  - checker: test/test_statistics.py::TestMultiInvest::test_capex_active_assets_filtering
+  - checker: test/test_statistics.py::TestMultiInvest::test_capex_structure
+  - checker: test/test_statistics.py::TestMultiInvest::test_capex_weighted
+  - checker: test/test_statistics.py::TestMultiInvest::test_opex_matches_marginal_cost
+  - checker: test/test_statistics.py::TestMultiInvest::test_opex_structure
+  - checker: test/test_statistics.py::TestMultiInvest::test_system_cost_consistent_with_objective
+  - checker: test/test_statistics.py::TestMultiInvest::test_system_cost_equals_capex_plus_opex
+  - checker: test/test_statistics.py::TestStatisticsWithPiecewise::test_stats_capex
+  - checker: test/test_statistics.py::TestStatisticsWithPiecewise::test_stats_energy_balance
+  - checker: test/test_statistics.py::TestStatisticsWithPiecewise::test_stats_opex
+  - checker: test/test_statistics.py::TestStatisticsWithPiecewise::test_stats_withdrawal_supply
+  - checker: test/test_statistics.py::test_opex
+- S4: Compute transport-delay source snapshots per investment period on the flat snapshot dimension, for cyclic and non-cyclic delays and with scenarios. Establishes: delayed links respect period boundaries under v1
+  - checker: test/test_transport_delay.py::test_delay_multi_invest_cyclic[Link]
+  - checker: test/test_transport_delay.py::test_delay_multi_invest_cyclic[Process]
+  - checker: test/test_transport_delay.py::test_delay_with_scenarios[Link]
+  - checker: test/test_transport_delay.py::test_delay_with_scenarios[Process]
+  - checker: test/test_transport_delay.py::test_link_delay_multi_invest_non_cyclic
+  - checker: test/test_transport_delay.py::test_link_delay_with_scenarios_multiport
+  - checker: test/test_transport_delay.py::test_link_delay_with_scenarios_non_delayed_regression
+- S5: Keep every other component, optimization, statistics, piecewise, and transport-delay behaviour unchanged. Establishes: no regression in the existing behaviour
+  - checker: test/test_components_array.py::test_as_xarray_dynamic
+  - checker: test/test_components_array.py::test_as_xarray_dynamic_with_periods
+  - checker: test/test_components_array.py::test_as_xarray_dynamic_with_scenarios
+  - checker: test/test_components_array.py::test_as_xarray_scenario_dim_order
+  - checker: test/test_components_array.py::test_as_xarray_static
+  - checker: test/test_components_array.py::test_as_xarray_static_with_periods
+  - checker: test/test_components_array.py::test_as_xarray_static_with_scenarios
+  - checker: test/test_components_array.py::test_da_accessor_not_iterable
+  - checker: test/test_components_array.py::test_ds_property_consistency
+  - checker: test/test_components_array.py::test_from_xarray[ac_dc_network]
+  - checker: test/test_components_array.py::test_from_xarray[ac_dc_periods]
+  - checker: test/test_components_array.py::test_from_xarray[ac_dc_solved]
+  - checker: test/test_components_array.py::test_from_xarray[ac_dc_stochastic]
+  - checker: test/test_lopf_multiinvest.py::test_active_assets
+  - checker: test/test_lopf_multiinvest.py::test_investment_period_values
+  - checker: test/test_lopf_multiinvest.py::test_single_to_multi_level_snapshots
+  - checker: test/test_lopf_multiinvest.py::test_tiny_infeasible
+  - checker: test/test_optimization_expressions.py::test_capacity_non_extendable_generators
+  - checker: test/test_optimization_expressions.py::test_capex_non_extendable_generators
+  - checker: test/test_optimization_expressions.py::test_curtailment_non_extendable_generators
+  - checker: test/test_optimization_expressions.py::test_expressions_energy_balance[carrier-None]
+  - checker: test/test_optimization_expressions.py::test_expressions_energy_balance[carrier-mean]
+  - checker: test/test_optimization_expressions.py::test_expressions_energy_balance[carrier-sum]
+  - checker: test/test_optimization_expressions.py::test_expressions_energy_balance[multi_grouper-None]
+  - checker: test/test_optimization_expressions.py::test_expressions_energy_balance[multi_grouper-mean]
+  - checker: test/test_optimization_expressions.py::test_expressions_energy_balance[multi_grouper-sum]
+  - checker: test/test_optimization_expressions.py::test_expressions_energy_balance_other_options[kwargs1]
+  - checker: test/test_optimization_expressions.py::test_expressions_energy_balance_other_options[kwargs2]
+  - checker: test/test_optimization_expressions.py::test_expressions_energy_balance_with_snapshot_subset[carrier-mean]
+  - checker: test/test_optimization_expressions.py::test_expressions_energy_balance_with_snapshot_subset[carrier-sum]
+  - checker: test/test_optimization_expressions.py::test_expressions_energy_balance_with_snapshot_subset[multi_grouper-mean]
+  - checker: test/test_optimization_expressions.py::test_expressions_energy_balance_with_snapshot_subset[multi_grouper-sum]
+  - checker: test/test_optimization_expressions.py::test_expressions_operation
+  - checker: test/test_optimization_expressions.py::test_expressions_opex
+  - checker: test/test_optimization_expressions.py::test_expressions_transmission
+  - checker: test/test_optimization_expressions_equivalence.py::test_filters_match_statistics[opex-{'carrier': 'AC'}]
+  - checker: test/test_optimization_expressions_equivalence.py::test_operation_matches_dispatch
+  - checker: test/test_optimization_piecewise.py::TestCreateYVar::test_y_var_dims_dynamic
+  - checker: test/test_optimization_piecewise.py::TestCreateYVar::test_y_var_dims_static
+  - checker: test/test_optimization_piecewise.py::TestCreateYVar::test_y_var_lb[y_var_dynamic]
+  - checker: test/test_optimization_piecewise.py::TestCreateYVar::test_y_var_lb[y_var_static]
+  - checker: test/test_optimization_piecewise.py::TestCreateYVar::test_y_var_name[y_var_dynamic]
+  - checker: test/test_optimization_piecewise.py::TestCreateYVar::test_y_var_name[y_var_static]
+  - checker: test/test_optimization_piecewise.py::TestDefinePiecewise::test_named_option_string_all_as_options[gen2-active_names0-gen2]
+  - checker: test/test_optimization_piecewise.py::TestDefinePiecewise::test_named_option_string_all_as_options[name1-active_names1-gen1]
+  - checker: test/test_optimization_piecewise.py::TestDefinePiecewise::test_named_option_string_all_as_options[name2-active_names2-gen1]
+  - checker: test/test_optimization_piecewise.py::TestDefinePiecewise::test_named_option_string_all_as_options[name3-active_names3-gen0_..._gen3]
+  - checker: test/test_optimization_piecewise.py::TestDefinePiecewise::test_named_option_string_all_as_options[name4-active_names4-gen1_gen3]
+  - checker: test/test_optimization_piecewise.py::TestDefinePiecewise::test_named_option_string_some_as_options[gen0-active_names0-gen0]
+  - checker: test/test_optimization_piecewise.py::TestDefinePiecewise::test_named_option_string_some_as_options[name1-active_names1-gen1_gen2]
+  - checker: test/test_optimization_piecewise.py::TestDefinePiecewise::test_named_option_string_some_as_options[name2-active_names2-gen1_gen2_gen3]
+  - checker: test/test_optimization_piecewise.py::TestDefinePiecewise::test_named_then_named_option[names0]
+  - checker: test/test_optimization_piecewise.py::TestDefinePiecewise::test_named_then_named_option[names1]
+  - checker: test/test_optimization_piecewise.py::TestDefinePiecewise::test_provide_y_var
+  - checker: test/test_optimization_piecewise.py::TestDefinePiecewise::test_pw_names_empty_no_active[capital_cost-pw_names0]
+  - checker: test/test_optimization_piecewise.py::TestDefinePiecewise::test_pw_names_empty_no_active[capital_cost-pw_names1]
+  - checker: test/test_optimization_piecewise.py::TestDefinePiecewise::test_pw_names_empty_no_active[marginal_cost-pw_names0]
+  - checker: test/test_optimization_piecewise.py::TestDefinePiecewise::test_pw_names_empty_no_active[marginal_cost-pw_names1]
+  - checker: test/test_optimization_piecewise.py::TestDefinePiecewise::test_pw_names_empty_no_pw[efficiency]
+  - checker: test/test_optimization_piecewise.py::TestDefinePiecewise::test_pw_names_empty_no_pw[foo]
+  - checker: test/test_optimization_piecewise.py::TestDefinePiecewise::test_unnamed_option
+  - checker: test/test_optimization_piecewise.py::TestDefinePiecewise::test_unnamed_then_named_option[names0]
+  - checker: test/test_optimization_piecewise.py::TestDefinePiecewise::test_unnamed_then_named_option[names1]
+  - checker: test/test_optimization_piecewise.py::TestDefinePiecewise::test_use_status
+  - checker: test/test_optimization_piecewise.py::TestDefinePiecewise::test_use_status_no_active
+  - checker: test/test_optimization_piecewise.py::TestGetBreakpoints::test_allow_extendables_x[False-False]
+  - checker: test/test_optimization_piecewise.py::TestGetBreakpoints::test_allow_extendables_x[False-True]
+  - checker: test/test_optimization_piecewise.py::TestGetBreakpoints::test_allow_extendables_x[True-False]
+  - checker: test/test_optimization_piecewise.py::TestGetBreakpoints::test_allow_extendables_x[True-True]
+  - checker: test/test_optimization_piecewise.py::TestGetBreakpoints::test_cumulative_attr
+  - checker: test/test_optimization_piecewise.py::TestGetBreakpoints::test_invert_attr
+  - checker: test/test_optimization_piecewise.py::TestGetBreakpoints::test_invert_cumulative_attr
+  - checker: test/test_optimization_piecewise.py::TestGetBreakpoints::test_not_allow_extendables_extendable
+  - checker: test/test_optimization_piecewise.py::TestGetBreakpoints::test_not_allow_extendables_missing_nom[0.0]
+  - checker: test/test_optimization_piecewise.py::TestGetBreakpoints::test_not_allow_extendables_missing_nom[inf]
+  - checker: test/test_optimization_piecewise.py::TestGetBreakpoints::test_not_allow_extendables_missing_nom[nan]
+  - checker: test/test_optimization_piecewise.py::TestGetBreakpoints::test_not_allow_extendables_x[False-False]
+  - checker: test/test_optimization_piecewise.py::TestGetBreakpoints::test_not_allow_extendables_x[False-True]
+  - checker: test/test_optimization_piecewise.py::TestGetBreakpoints::test_not_allow_extendables_x[True-False]
+  - checker: test/test_optimization_piecewise.py::TestGetBreakpoints::test_not_allow_extendables_x[True-True]
+  - checker: test/test_optimization_piecewise.py::TestGetBreakpoints::test_not_cumulative_attr
+  - checker: test/test_optimization_piecewise.py::TestGetPiecewiseNames::test_all_nan_columns_dropped
+  - checker: test/test_optimization_piecewise.py::TestGetPiecewiseNames::test_intersects_with_active_names
+  - checker: test/test_optimization_piecewise.py::TestGetPiecewiseNames::test_missing_attribute_returns_empty
+  - checker: test/test_optimization_piecewise.py::TestGetPiecewiseNames::test_result_is_named_name_index[empty]
+  - checker: test/test_optimization_piecewise.py::TestGetPiecewiseNames::test_result_is_named_name_index[populated]
+  - checker: test/test_optimization_piecewise.py::TestToDa::test_to_da
+  - checker: test/test_statistics.py::TestGetOperation::test_get_operation[Generator-p]
+  - checker: test/test_statistics.py::TestGetOperation::test_get_operation[Line-p0]
+  - checker: test/test_statistics.py::TestGetOperation::test_get_operation[Link-p0]
+  - checker: test/test_statistics.py::TestGetOperation::test_get_operation[Store-e]
+  - checker: test/test_statistics.py::TestGetOperation::test_get_operation_multi_port
+  - checker: test/test_statistics.py::TestMarketValue::test_bus_carrier_additivity
+  - checker: test/test_statistics.py::TestMarketValue::test_generator
+  - checker: test/test_statistics.py::TestMarketValue::test_grouped_branches_is_finite
+  - checker: test/test_statistics.py::TestMarketValue::test_multiport
+  - checker: test/test_statistics.py::TestMarketValue::test_with_bus_carrier[AC-p0-elec]
+  - checker: test/test_statistics.py::TestMarketValue::test_with_bus_carrier[H2-p1-h2]
+  - checker: test/test_statistics.py::TestMarketValue::test_with_bus_carrier[heat-p2-heat]
+  - checker: test/test_statistics.py::TestMarketValue::test_withdrawing_load_sign
+  - checker: test/test_statistics.py::TestPortEfficiency::test_dynamic_link_port_values[Link-1]
+  - checker: test/test_statistics.py::TestPortEfficiency::test_dynamic_link_port_values[Link-2]
+  - checker: test/test_statistics.py::TestPortEfficiency::test_dynamic_link_port_values[Process-1]
+  - checker: test/test_statistics.py::TestPortEfficiency::test_dynamic_link_port_values[Process-2]
+  - checker: test/test_statistics.py::TestPortEfficiency::test_mixed_link_port0_always_minus_one[Link]
+  - checker: test/test_statistics.py::TestPortEfficiency::test_mixed_link_port0_always_minus_one[Process]
+  - checker: test/test_statistics.py::TestPortEfficiency::test_mixed_link_port1_static[Link-False]
+  - checker: test/test_statistics.py::TestPortEfficiency::test_mixed_link_port1_static[Link-True]
+  - checker: test/test_statistics.py::TestPortEfficiency::test_mixed_link_port1_static[Process-False]
+  - checker: test/test_statistics.py::TestPortEfficiency::test_mixed_link_port1_static[Process-True]
+  - checker: test/test_statistics.py::TestPortEfficiency::test_mixed_link_port2_dynamic_request[Link]
+  - checker: test/test_statistics.py::TestPortEfficiency::test_mixed_link_port2_dynamic_request[Process]
+  - checker: test/test_statistics.py::TestPortEfficiency::test_mixed_link_port2_static_request[Link]
+  - checker: test/test_statistics.py::TestPortEfficiency::test_mixed_link_port2_static_request[Process]
+  - checker: test/test_statistics.py::TestPortEfficiency::test_mixed_link_port3_dynamic_dynamic[Link]
+  - checker: test/test_statistics.py::TestPortEfficiency::test_mixed_link_port3_dynamic_dynamic[Process]
+  - checker: test/test_statistics.py::TestPortEfficiency::test_mixed_link_port3_static_request[Link]
+  - checker: test/test_statistics.py::TestPortEfficiency::test_mixed_link_port3_static_request[Process]
+  - checker: test/test_statistics.py::TestPortEfficiency::test_one_port_returns_ones
+  - checker: test/test_statistics.py::TestPortEfficiency::test_passive_branch_port0_returns_minus_ones
+  - checker: test/test_statistics.py::TestPortEfficiency::test_passive_branch_port1_returns_ones
+  - checker: test/test_statistics.py::TestPortEfficiency::test_piecewise_link_returns_static_fallback[Link]
+  - checker: test/test_statistics.py::TestPortEfficiency::test_piecewise_link_returns_static_fallback[Process]
+  - checker: test/test_statistics.py::TestPortEfficiency::test_static_link_port0_returns_minus_ones[Link]
+  - checker: test/test_statistics.py::TestPortEfficiency::test_static_link_port0_returns_minus_ones[Process]
+  - checker: test/test_statistics.py::TestPortEfficiency::test_static_link_port1_returns_efficiency[Link]
+  - checker: test/test_statistics.py::TestPortEfficiency::test_static_link_port1_returns_efficiency[Process]
+  - checker: test/test_statistics.py::TestPortEfficiency::test_static_link_port2_returns_efficiency2[Link]
+  - checker: test/test_statistics.py::TestPortEfficiency::test_static_link_port2_returns_efficiency2[Process]
+  - checker: test/test_statistics.py::TestStatisticsWithPiecewise::test_stats_capex_process
+  - checker: test/test_statistics.py::TestStatisticsWithPiecewise::test_stats_opex_process
+  - checker: test/test_statistics.py::test_1144
+  - checker: test/test_statistics.py::test_aggregate_across_components
+  - checker: test/test_statistics.py::test_all_methods[capacity_factor]
+  - checker: test/test_statistics.py::test_all_methods[capex]
+  - checker: test/test_statistics.py::test_all_methods[curtailment]
+  - checker: test/test_statistics.py::test_all_methods[energy_balance]
+  - checker: test/test_statistics.py::test_all_methods[expanded_capacity]
+  - checker: test/test_statistics.py::test_all_methods[expanded_capex]
+  - checker: test/test_statistics.py::test_all_methods[installed_capacity]
+  - checker: test/test_statistics.py::test_all_methods[installed_capex]
+  - checker: test/test_statistics.py::test_all_methods[market_value]
+  - checker: test/test_statistics.py::test_all_methods[opex]
+  - checker: test/test_statistics.py::test_all_methods[optimal_capacity]
+  - checker: test/test_statistics.py::test_all_methods[prices]
+  - checker: test/test_statistics.py::test_all_methods[revenue]
+  - checker: test/test_statistics.py::test_all_methods[supply]
+  - checker: test/test_statistics.py::test_all_methods[system_cost]
+  - checker: test/test_statistics.py::test_all_methods[transmission]
+  - checker: test/test_statistics.py::test_all_methods[withdrawal]
+  - checker: test/test_statistics.py::test_bus_carrier_searches_all_ports[capex]
+  - checker: test/test_statistics.py::test_bus_carrier_searches_all_ports[installed_capacity]
+  - checker: test/test_statistics.py::test_bus_carrier_searches_all_ports[optimal_capacity]
+  - checker: test/test_statistics.py::test_bus_carrier_selection
+  - checker: test/test_statistics.py::test_bus_carrier_selection_with_list
+  - checker: test/test_statistics.py::test_carrier_selection
+  - checker: test/test_statistics.py::test_default_solved
+  - checker: test/test_statistics.py::test_drop_zero
+  - checker: test/test_statistics.py::test_energy_balance_bus_carrier_filter[bus_carrier1]
+  - checker: test/test_statistics.py::test_energy_balance_bus_carrier_filter[bus_carrier2]
+  - checker: test/test_statistics.py::test_energy_balance_bus_carrier_filter[rural heat]
+  - checker: test/test_statistics.py::test_energy_balance_bus_carrier_nice_name_filter
+  - checker: test/test_statistics.py::test_energy_balance_carrier_nice_name_filter
+  - checker: test/test_statistics.py::test_grouping_by_keys_solved[carrier0]
+  - checker: test/test_statistics.py::test_grouping_by_keys_solved[carrier1]
+  - checker: test/test_statistics.py::test_grouping_by_keys_solved[groupby2]
+  - checker: test/test_statistics.py::test_grouping_by_keys_solved[groupby3]
+  - checker: test/test_statistics.py::test_grouping_by_keys_solved[groupby4]
+  - checker: test/test_statistics.py::test_grouping_by_keys_solved[groupby5]
+  - checker: test/test_statistics.py::test_grouping_by_keys_unsolved[carrier0]
+  - checker: test/test_statistics.py::test_grouping_by_keys_unsolved[carrier1]
+  - checker: test/test_statistics.py::test_grouping_by_keys_unsolved[groupby2]
+  - checker: test/test_statistics.py::test_grouping_by_keys_unsolved[groupby3]
+  - checker: test/test_statistics.py::test_grouping_by_keys_with_specific_column_solved
+  - checker: test/test_statistics.py::test_grouping_by_new_registered_key
+  - checker: test/test_statistics.py::test_inactive_exclusion_in_static
+  - checker: test/test_statistics.py::test_installed_capex_honours_cost_attribute
+  - checker: test/test_statistics.py::test_multiindexed
+  - checker: test/test_statistics.py::test_multiindexed_aggregate_across_components
+  - checker: test/test_statistics.py::test_net_and_gross_revenue
+  - checker: test/test_statistics.py::test_no_grouping
+  - checker: test/test_statistics.py::test_no_time_aggregation
+  - checker: test/test_statistics.py::test_prices
+  - checker: test/test_statistics.py::test_single_component
+  - checker: test/test_statistics.py::test_statistics_groupby_time_true
+  - checker: test/test_statistics.py::test_stats_alias
+  - checker: test/test_statistics.py::test_storage_capacity
+  - checker: test/test_statistics.py::test_supply_withdrawal
+  - checker: test/test_statistics.py::test_system_cost
+  - checker: test/test_statistics.py::test_system_cost_groupby_time_false_deprecated
+  - checker: test/test_statistics.py::test_system_cost_includes_fom
+  - checker: test/test_statistics.py::test_transmission_carriers
+  - checker: test/test_statistics.py::test_zero_profit_rule_branches
+  - checker: test/test_transport_delay.py::test_consistency_delay_exceeds_horizon[Link]
+  - checker: test/test_transport_delay.py::test_consistency_delay_exceeds_horizon[Process]
+  - checker: test/test_transport_delay.py::test_consistency_delay_exceeds_period_horizon
+  - checker: test/test_transport_delay.py::test_consistency_negative_delay[Link]
+  - checker: test/test_transport_delay.py::test_consistency_negative_delay[Process]
+  - checker: test/test_transport_delay.py::test_delay_cyclic[Link]
+  - checker: test/test_transport_delay.py::test_delay_cyclic[Process]
+  - checker: test/test_transport_delay.py::test_delay_extendable[Link]
+  - checker: test/test_transport_delay.py::test_delay_extendable[Process]
+  - checker: test/test_transport_delay.py::test_delay_mixed_delayed_and_non_delayed[Link]
+  - checker: test/test_transport_delay.py::test_delay_mixed_delayed_and_non_delayed[Process]
+  - checker: test/test_transport_delay.py::test_delay_non_cyclic[Link]
+  - checker: test/test_transport_delay.py::test_delay_non_cyclic[Process]
+  - checker: test/test_transport_delay.py::test_delay_non_uniform_weightings[Link]
+  - checker: test/test_transport_delay.py::test_delay_non_uniform_weightings[Process]
+  - checker: test/test_transport_delay.py::test_delay_positions_raises_on_zero_total_weight
+  - checker: test/test_transport_delay.py::test_delay_rounding_warning_fires
+  - checker: test/test_transport_delay.py::test_delay_rounding_warning_silent
+  - checker: test/test_transport_delay.py::test_get_delay_source_indexer_empty_snapshots
+  - checker: test/test_transport_delay.py::test_get_delay_source_indexer_multi_invest
+  - checker: test/test_transport_delay.py::test_get_delay_source_indexer_multi_invest_non_cyclic
+  - checker: test/test_transport_delay.py::test_link_delay_equal_to_horizon
+  - checker: test/test_transport_delay.py::test_link_delay_uses_generator_snapshot_weightings_non_cyclic
+  - checker: test/test_transport_delay.py::test_link_delay_zero_unchanged
+  - checker: test/test_transport_delay.py::test_multiport_different_delays[Link]
+  - checker: test/test_transport_delay.py::test_multiport_different_delays[Process]
+  - checker: test/test_transport_delay.py::test_process_delay_cyclic_delay0_false
+  - checker: test/test_transport_delay.py::test_process_delay_on_input_bus
+- S6: Meet each stated requirement on behaviour: every network reaches the base's legacy optimum under v1 with a solution feasible and optimal in the base legacy model, the option selects and every model part carries one snapshot representation, the flat layout carries period then timestep coordinates, and the expressions agree with the statistics at the solution. Establishes: the stated requirements hold on fixed networks the verifier owns
+  - checker: test/test_forge_requirements.py::test_m2_objective_equals_legacy_optimum[storage_cyclic_per_period]
+  - checker: test/test_forge_requirements.py::test_m2_objective_equals_legacy_optimum[ramp_and_limits]
+  - checker: test/test_forge_requirements.py::test_m2_objective_equals_legacy_optimum[meshed_two_periods]
+  - checker: test/test_forge_requirements.py::test_m2_objective_equals_legacy_optimum[commitment_two_windows]
+  - checker: test/test_forge_requirements.py::test_m2_objective_equals_legacy_optimum[commitment_linear_periods]
+  - checker: test/test_forge_requirements.py::test_m2_objective_equals_legacy_optimum[commitment_modular_periods]
+  - checker: test/test_forge_requirements.py::test_m2_objective_equals_legacy_optimum[limits_periods]
+  - checker: test/test_forge_requirements.py::test_m2_objective_equals_legacy_optimum[losses_periods]
+  - checker: test/test_forge_requirements.py::test_m2_objective_equals_legacy_optimum[grid_periods]
+  - checker: test/test_forge_requirements.py::test_m2_objective_equals_legacy_optimum[storage_single_period]
+  - checker: test/test_forge_requirements.py::test_m2_objective_equals_legacy_optimum[ramp_single_period]
+  - checker: test/test_forge_requirements.py::test_m2_objective_equals_legacy_optimum[commitment_single_period]
+  - checker: test/test_forge_requirements.py::test_m2_objective_equals_legacy_optimum[commitment_linear_single]
+  - checker: test/test_forge_requirements.py::test_m2_objective_equals_legacy_optimum[commitment_modular_single]
+  - checker: test/test_forge_requirements.py::test_m2_objective_equals_legacy_optimum[limits_single_period]
+  - checker: test/test_forge_requirements.py::test_m2_objective_equals_legacy_optimum[grid_single_period]
+  - checker: test/test_forge_requirements.py::test_m2_objective_equals_legacy_optimum[commitment_rolling_horizon]
+  - checker: test/test_forge_requirements.py::test_m2_solution_optimal_in_legacy_model[storage_cyclic_per_period]
+  - checker: test/test_forge_requirements.py::test_m2_solution_optimal_in_legacy_model[ramp_and_limits]
+  - checker: test/test_forge_requirements.py::test_m2_solution_optimal_in_legacy_model[meshed_two_periods]
+  - checker: test/test_forge_requirements.py::test_m2_solution_optimal_in_legacy_model[commitment_two_windows]
+  - checker: test/test_forge_requirements.py::test_m2_solution_optimal_in_legacy_model[commitment_linear_periods]
+  - checker: test/test_forge_requirements.py::test_m2_solution_optimal_in_legacy_model[commitment_modular_periods]
+  - checker: test/test_forge_requirements.py::test_m2_solution_optimal_in_legacy_model[limits_periods]
+  - checker: test/test_forge_requirements.py::test_m2_solution_optimal_in_legacy_model[losses_periods]
+  - checker: test/test_forge_requirements.py::test_m2_solution_optimal_in_legacy_model[grid_periods]
+  - checker: test/test_forge_requirements.py::test_m2_solution_optimal_in_legacy_model[storage_single_period]
+  - checker: test/test_forge_requirements.py::test_m2_solution_optimal_in_legacy_model[ramp_single_period]
+  - checker: test/test_forge_requirements.py::test_m2_solution_optimal_in_legacy_model[commitment_single_period]
+  - checker: test/test_forge_requirements.py::test_m2_solution_optimal_in_legacy_model[commitment_linear_single]
+  - checker: test/test_forge_requirements.py::test_m2_solution_optimal_in_legacy_model[commitment_modular_single]
+  - checker: test/test_forge_requirements.py::test_m2_solution_optimal_in_legacy_model[limits_single_period]
+  - checker: test/test_forge_requirements.py::test_m2_solution_optimal_in_legacy_model[grid_single_period]
+  - checker: test/test_forge_requirements.py::test_m2_solution_optimal_in_legacy_model[commitment_rolling_horizon]
+  - checker: test/test_forge_requirements.py::test_o1_option_selects_representation[v1-default]
+  - checker: test/test_forge_requirements.py::test_o1_option_selects_representation[v1-auto]
+  - checker: test/test_forge_requirements.py::test_o1_option_selects_representation[v1-flat]
+  - checker: test/test_forge_requirements.py::test_o1_option_selects_representation[legacy-default]
+  - checker: test/test_forge_requirements.py::test_o1_option_selects_representation[legacy-auto]
+  - checker: test/test_forge_requirements.py::test_o1_option_selects_representation[legacy-flat]
+  - checker: test/test_forge_requirements.py::test_o1_option_selects_representation[legacy-multiindex]
+  - checker: test/test_forge_requirements.py::test_cr_model_uses_one_representation[v1-default]
+  - checker: test/test_forge_requirements.py::test_cr_model_uses_one_representation[v1-auto]
+  - checker: test/test_forge_requirements.py::test_cr_model_uses_one_representation[v1-flat]
+  - checker: test/test_forge_requirements.py::test_cr_model_uses_one_representation[legacy-default]
+  - checker: test/test_forge_requirements.py::test_cr_model_uses_one_representation[legacy-auto]
+  - checker: test/test_forge_requirements.py::test_cr_model_uses_one_representation[legacy-flat]
+  - checker: test/test_forge_requirements.py::test_cr_model_uses_one_representation[legacy-multiindex]
+  - checker: test/test_forge_requirements.py::test_o2_flat_layout_period_then_timestep[v1-default]
+  - checker: test/test_forge_requirements.py::test_o2_flat_layout_period_then_timestep[v1-flat]
+  - checker: test/test_forge_requirements.py::test_o2_flat_layout_period_then_timestep[legacy-flat]
+  - checker: test/test_forge_requirements.py::test_b1_invalid_value_raises_on_single_period_build
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|capacity|filter=bus_carrier=AC]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|capacity|filter=carrier=AC]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|capacity|filter=nice_names]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|capacity|groupby=bus+carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|capacity|groupby=carrier+bus_carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|capacity|groupby=carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|capacity|groupby=default|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|capacity|groupby=name+bus+carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|capacity|groupby=none|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|capex|filter=bus_carrier=AC]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|capex|filter=carrier=AC]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|capex|filter=nice_names]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|capex|groupby=bus+carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|capex|groupby=carrier+bus_carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|capex|groupby=carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|capex|groupby=default|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|capex|groupby=name+bus+carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|capex|groupby=none|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|curtailment|filter=carrier=AC]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|curtailment|filter=nice_names]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|curtailment|groupby=bus+carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|curtailment|groupby=bus+carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|curtailment|groupby=bus+carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|curtailment|groupby=carrier+bus_carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|curtailment|groupby=carrier+bus_carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|curtailment|groupby=carrier+bus_carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|curtailment|groupby=carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|curtailment|groupby=carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|curtailment|groupby=carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|curtailment|groupby=default|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|curtailment|groupby=default|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|curtailment|groupby=default|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|curtailment|groupby=name+bus+carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|curtailment|groupby=name+bus+carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|curtailment|groupby=name+bus+carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|curtailment|groupby=none|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|curtailment|groupby=none|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|curtailment|groupby=none|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|energy_balance|filter=nice_names]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|energy_balance|groupby=bus+carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|energy_balance|groupby=bus+carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|energy_balance|groupby=bus+carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|energy_balance|groupby=carrier+bus_carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|energy_balance|groupby=carrier+bus_carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|energy_balance|groupby=carrier+bus_carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|energy_balance|groupby=carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|energy_balance|groupby=carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|energy_balance|groupby=carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|energy_balance|groupby=default|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|energy_balance|groupby=default|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|energy_balance|groupby=default|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|energy_balance|groupby=name+bus+carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|energy_balance|groupby=name+bus+carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|energy_balance|groupby=name+bus+carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|energy_balance|groupby=none|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|energy_balance|groupby=none|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|energy_balance|groupby=none|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|opex|filter=carrier=AC]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|opex|filter=nice_names]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|opex|groupby=bus+carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|opex|groupby=bus+carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|opex|groupby=bus+carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|opex|groupby=carrier+bus_carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|opex|groupby=carrier+bus_carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|opex|groupby=carrier+bus_carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|opex|groupby=carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|opex|groupby=carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|opex|groupby=carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|opex|groupby=default|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|opex|groupby=default|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|opex|groupby=default|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|opex|groupby=name+bus+carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|opex|groupby=name+bus+carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|opex|groupby=name+bus+carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|opex|groupby=none|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|opex|groupby=none|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|opex|groupby=none|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|supply|filter=carrier=AC]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|supply|filter=nice_names]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|supply|groupby=bus+carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|supply|groupby=bus+carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|supply|groupby=bus+carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|supply|groupby=carrier+bus_carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|supply|groupby=carrier+bus_carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|supply|groupby=carrier+bus_carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|supply|groupby=carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|supply|groupby=carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|supply|groupby=carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|supply|groupby=default|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|supply|groupby=default|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|supply|groupby=default|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|supply|groupby=name+bus+carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|supply|groupby=name+bus+carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|supply|groupby=name+bus+carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|supply|groupby=none|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|supply|groupby=none|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|supply|groupby=none|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|transmission|filter=nice_names]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|transmission|groupby=bus+carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|transmission|groupby=bus+carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|transmission|groupby=bus+carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|transmission|groupby=carrier+bus_carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|transmission|groupby=carrier+bus_carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|transmission|groupby=carrier+bus_carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|transmission|groupby=carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|transmission|groupby=carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|transmission|groupby=carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|transmission|groupby=default|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|transmission|groupby=default|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|transmission|groupby=default|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|transmission|groupby=name+bus+carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|transmission|groupby=name+bus+carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|transmission|groupby=name+bus+carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|transmission|groupby=none|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|transmission|groupby=none|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|transmission|groupby=none|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|withdrawal|filter=carrier=AC]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|withdrawal|filter=nice_names]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|withdrawal|groupby=bus+carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|withdrawal|groupby=bus+carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|withdrawal|groupby=bus+carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|withdrawal|groupby=carrier+bus_carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|withdrawal|groupby=carrier+bus_carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|withdrawal|groupby=carrier+bus_carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|withdrawal|groupby=carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|withdrawal|groupby=carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|withdrawal|groupby=carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|withdrawal|groupby=default|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|withdrawal|groupby=default|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|withdrawal|groupby=default|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|withdrawal|groupby=name+bus+carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|withdrawal|groupby=name+bus+carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|withdrawal|groupby=name+bus+carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|withdrawal|groupby=none|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|withdrawal|groupby=none|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|withdrawal|groupby=none|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|capacity|filter=bus_carrier=AC]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|capacity|filter=carrier=AC]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|capacity|filter=nice_names]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|capacity|groupby=bus+carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|capacity|groupby=carrier+bus_carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|capacity|groupby=carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|capacity|groupby=default|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|capacity|groupby=name+bus+carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|capacity|groupby=none|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|capex|filter=bus_carrier=AC]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|capex|filter=carrier=AC]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|capex|filter=nice_names]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|capex|groupby=bus+carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|capex|groupby=carrier+bus_carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|capex|groupby=carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|capex|groupby=default|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|capex|groupby=name+bus+carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|capex|groupby=none|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|filter=bus_carrier=AC]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|filter=carrier=AC]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|filter=nice_names]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|groupby=bus+carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|groupby=bus+carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|groupby=bus+carrier|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|groupby=bus+carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|groupby=carrier+bus_carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|groupby=carrier+bus_carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|groupby=carrier+bus_carrier|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|groupby=carrier+bus_carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|groupby=carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|groupby=carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|groupby=carrier|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|groupby=carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|groupby=default|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|groupby=default|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|groupby=default|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|groupby=default|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|groupby=name+bus+carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|groupby=name+bus+carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|groupby=name+bus+carrier|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|groupby=name+bus+carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|groupby=none|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|groupby=none|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|groupby=none|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|groupby=none|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|filter=bus_carrier=AC]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|filter=carrier=AC]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|filter=nice_names]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|groupby=bus+carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|groupby=bus+carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|groupby=bus+carrier|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|groupby=bus+carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|groupby=carrier+bus_carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|groupby=carrier+bus_carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|groupby=carrier+bus_carrier|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|groupby=carrier+bus_carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|groupby=carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|groupby=carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|groupby=carrier|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|groupby=carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|groupby=default|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|groupby=default|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|groupby=default|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|groupby=default|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|groupby=name+bus+carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|groupby=name+bus+carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|groupby=name+bus+carrier|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|groupby=name+bus+carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|groupby=none|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|groupby=none|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|groupby=none|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|groupby=none|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|filter=bus_carrier=AC]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|filter=nice_names]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|groupby=bus+carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|groupby=bus+carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|groupby=bus+carrier|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|groupby=bus+carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|groupby=carrier+bus_carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|groupby=carrier+bus_carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|groupby=carrier+bus_carrier|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|groupby=carrier+bus_carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|groupby=carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|groupby=carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|groupby=carrier|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|groupby=carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|groupby=default|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|groupby=default|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|groupby=default|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|groupby=default|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|groupby=name+bus+carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|groupby=name+bus+carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|groupby=name+bus+carrier|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|groupby=name+bus+carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|groupby=none|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|groupby=none|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|groupby=none|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|groupby=none|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|filter=bus_carrier=AC]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|filter=nice_names]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|groupby=bus+carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|groupby=bus+carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|groupby=bus+carrier|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|groupby=bus+carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|groupby=carrier+bus_carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|groupby=carrier+bus_carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|groupby=carrier+bus_carrier|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|groupby=carrier+bus_carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|groupby=carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|groupby=carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|groupby=carrier|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|groupby=carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|groupby=default|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|groupby=default|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|groupby=default|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|groupby=default|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|groupby=name+bus+carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|groupby=name+bus+carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|groupby=name+bus+carrier|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|groupby=name+bus+carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|groupby=none|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|groupby=none|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|groupby=none|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|groupby=none|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|filter=carrier=AC]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|filter=nice_names]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|groupby=bus+carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|groupby=bus+carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|groupby=bus+carrier|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|groupby=bus+carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|groupby=carrier+bus_carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|groupby=carrier+bus_carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|groupby=carrier+bus_carrier|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|groupby=carrier+bus_carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|groupby=carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|groupby=carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|groupby=carrier|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|groupby=carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|groupby=default|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|groupby=default|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|groupby=default|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|groupby=default|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|groupby=name+bus+carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|groupby=name+bus+carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|groupby=name+bus+carrier|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|groupby=name+bus+carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|groupby=none|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|groupby=none|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|groupby=none|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|groupby=none|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|filter=bus_carrier=AC]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|filter=nice_names]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|groupby=bus+carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|groupby=bus+carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|groupby=bus+carrier|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|groupby=bus+carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|groupby=carrier+bus_carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|groupby=carrier+bus_carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|groupby=carrier+bus_carrier|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|groupby=carrier+bus_carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|groupby=carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|groupby=carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|groupby=carrier|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|groupby=carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|groupby=default|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|groupby=default|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|groupby=default|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|groupby=default|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|groupby=name+bus+carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|groupby=name+bus+carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|groupby=name+bus+carrier|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|groupby=name+bus+carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|groupby=none|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|groupby=none|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|groupby=none|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|groupby=none|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|capacity|filter=bus_carrier=AC]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|capacity|filter=carrier=AC]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|capacity|filter=nice_names]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|capacity|groupby=bus+carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|capacity|groupby=carrier+bus_carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|capacity|groupby=carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|capacity|groupby=default|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|capacity|groupby=name+bus+carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|capacity|groupby=none|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|capex|filter=bus_carrier=AC]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|capex|filter=carrier=AC]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|capex|filter=nice_names]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|capex|groupby=bus+carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|capex|groupby=carrier+bus_carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|capex|groupby=carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|capex|groupby=default|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|capex|groupby=name+bus+carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|capex|groupby=none|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|energy_balance|filter=bus_carrier=AC]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|energy_balance|filter=carrier=AC]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|energy_balance|filter=nice_names]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|energy_balance|groupby=bus+carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|energy_balance|groupby=bus+carrier|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|energy_balance|groupby=bus+carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|energy_balance|groupby=carrier+bus_carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|energy_balance|groupby=carrier+bus_carrier|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|energy_balance|groupby=carrier+bus_carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|energy_balance|groupby=carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|energy_balance|groupby=carrier|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|energy_balance|groupby=carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|energy_balance|groupby=default|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|energy_balance|groupby=default|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|energy_balance|groupby=default|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|energy_balance|groupby=name+bus+carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|energy_balance|groupby=name+bus+carrier|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|energy_balance|groupby=name+bus+carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|energy_balance|groupby=none|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|energy_balance|groupby=none|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|energy_balance|groupby=none|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|opex|filter=bus_carrier=AC]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|opex|filter=nice_names]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|opex|groupby=bus+carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|opex|groupby=bus+carrier|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|opex|groupby=bus+carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|opex|groupby=carrier+bus_carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|opex|groupby=carrier+bus_carrier|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|opex|groupby=carrier+bus_carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|opex|groupby=carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|opex|groupby=carrier|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|opex|groupby=carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|opex|groupby=default|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|opex|groupby=default|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|opex|groupby=default|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|opex|groupby=name+bus+carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|opex|groupby=name+bus+carrier|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|opex|groupby=name+bus+carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|opex|groupby=none|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|opex|groupby=none|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|opex|groupby=none|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|supply|filter=bus_carrier=AC]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|supply|filter=nice_names]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|supply|groupby=bus+carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|supply|groupby=bus+carrier|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|supply|groupby=bus+carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|supply|groupby=carrier+bus_carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|supply|groupby=carrier+bus_carrier|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|supply|groupby=carrier+bus_carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|supply|groupby=carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|supply|groupby=carrier|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|supply|groupby=carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|supply|groupby=default|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|supply|groupby=default|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|supply|groupby=default|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|supply|groupby=name+bus+carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|supply|groupby=name+bus+carrier|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|supply|groupby=name+bus+carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|supply|groupby=none|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|supply|groupby=none|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|supply|groupby=none|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|transmission|filter=carrier=AC]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|transmission|filter=nice_names]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|transmission|groupby=bus+carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|transmission|groupby=bus+carrier|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|transmission|groupby=bus+carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|transmission|groupby=carrier+bus_carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|transmission|groupby=carrier+bus_carrier|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|transmission|groupby=carrier+bus_carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|transmission|groupby=carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|transmission|groupby=carrier|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|transmission|groupby=carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|transmission|groupby=default|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|transmission|groupby=default|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|transmission|groupby=default|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|transmission|groupby=name+bus+carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|transmission|groupby=name+bus+carrier|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|transmission|groupby=name+bus+carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|transmission|groupby=none|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|transmission|groupby=none|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|transmission|groupby=none|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|withdrawal|filter=bus_carrier=AC]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|withdrawal|filter=nice_names]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|withdrawal|groupby=bus+carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|withdrawal|groupby=bus+carrier|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|withdrawal|groupby=bus+carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|withdrawal|groupby=carrier+bus_carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|withdrawal|groupby=carrier+bus_carrier|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|withdrawal|groupby=carrier+bus_carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|withdrawal|groupby=carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|withdrawal|groupby=carrier|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|withdrawal|groupby=carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|withdrawal|groupby=default|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|withdrawal|groupby=default|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|withdrawal|groupby=default|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|withdrawal|groupby=name+bus+carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|withdrawal|groupby=name+bus+carrier|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|withdrawal|groupby=name+bus+carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|withdrawal|groupby=none|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|withdrawal|groupby=none|time=none]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|withdrawal|groupby=none|time=sum]
+  - checker: test/test_forge_requirements.py::test_cr_instance_uses_one_representation[secant-v1-default]
+  - checker: test/test_forge_requirements.py::test_cr_instance_uses_one_representation[secant-v1-auto]
+  - checker: test/test_forge_requirements.py::test_cr_instance_uses_one_representation[secant-v1-flat]
+  - checker: test/test_forge_requirements.py::test_cr_instance_uses_one_representation[secant-legacy-auto]
+  - checker: test/test_forge_requirements.py::test_cr_instance_uses_one_representation[secant-legacy-flat]
+  - checker: test/test_forge_requirements.py::test_cr_instance_uses_one_representation[secant-legacy-multiindex]
+  - checker: test/test_forge_requirements.py::test_cr_instance_uses_one_representation[nonlinear-v1-default]
+  - checker: test/test_forge_requirements.py::test_cr_instance_uses_one_representation[nonlinear-v1-auto]
+  - checker: test/test_forge_requirements.py::test_cr_instance_uses_one_representation[nonlinear-v1-flat]
+  - checker: test/test_forge_requirements.py::test_cr_instance_uses_one_representation[nonlinear-legacy-auto]
+  - checker: test/test_forge_requirements.py::test_cr_instance_uses_one_representation[nonlinear-legacy-flat]
+  - checker: test/test_forge_requirements.py::test_cr_instance_uses_one_representation[nonlinear-legacy-multiindex]
+  - checker: test/test_forge_requirements.py::test_cr_instance_uses_one_representation[iterative-v1-default]
+  - checker: test/test_forge_requirements.py::test_cr_instance_uses_one_representation[iterative-v1-auto]
+  - checker: test/test_forge_requirements.py::test_cr_instance_uses_one_representation[iterative-v1-flat]
+  - checker: test/test_forge_requirements.py::test_cr_instance_uses_one_representation[iterative-legacy-auto]
+  - checker: test/test_forge_requirements.py::test_cr_instance_uses_one_representation[iterative-legacy-flat]
+  - checker: test/test_forge_requirements.py::test_cr_instance_uses_one_representation[iterative-legacy-multiindex]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[dynamic|transmission|groupby=bus+carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[dynamic|transmission|groupby=bus+carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[dynamic|transmission|groupby=bus+carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[dynamic|transmission|groupby=carrier+bus_carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[dynamic|transmission|groupby=carrier+bus_carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[dynamic|transmission|groupby=carrier+bus_carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[dynamic|transmission|groupby=carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[dynamic|transmission|groupby=carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[dynamic|transmission|groupby=carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[dynamic|transmission|groupby=default|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[dynamic|transmission|groupby=default|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[dynamic|transmission|groupby=default|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[dynamic|transmission|groupby=name+bus+carrier|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[dynamic|transmission|groupby=name+bus+carrier|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[dynamic|transmission|groupby=name+bus+carrier|time=sum]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[dynamic|transmission|groupby=none|time=default]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[dynamic|transmission|groupby=none|time=mean]
+  - checker: test/test_forge_requirements.py::test_ag_expression_matches_statistics[dynamic|transmission|groupby=none|time=sum]
+- S7: Keep what the statement keeps unchanged: a single-period network under v1, and any network under legacy semantics, builds the model the base builds under legacy semantics, and no public base_commit function or method loses compatibility. Establishes: no stated invariant is broken
+  - checker: test/test_forge_requirements.py::test_u1_single_period_v1_model_matches_legacy[storage_single_period]
+  - checker: test/test_forge_requirements.py::test_u1_single_period_v1_model_matches_legacy[ramp_single_period]
+  - checker: test/test_forge_requirements.py::test_u1_single_period_v1_model_matches_legacy[meshed_single_period]
+  - checker: test/test_forge_requirements.py::test_u1_single_period_v1_model_matches_legacy[commitment_single_period]
+  - checker: test/test_forge_requirements.py::test_u1_single_period_v1_model_matches_legacy[commitment_linear_single]
+  - checker: test/test_forge_requirements.py::test_u1_single_period_v1_model_matches_legacy[commitment_modular_single]
+  - checker: test/test_forge_requirements.py::test_u1_single_period_v1_model_matches_legacy[limits_single_period]
+  - checker: test/test_forge_requirements.py::test_u1_single_period_v1_model_matches_legacy[losses_single_period]
+  - checker: test/test_forge_requirements.py::test_u1_single_period_v1_model_matches_legacy[grid_single_period]
+  - checker: test/test_forge_requirements.py::test_u1_single_period_v1_model_matches_legacy[commitment_rolling_horizon]
+  - checker: test/test_forge_requirements.py::test_u1_single_period_v1_model_matches_legacy[meshed_security_constrained]
+  - checker: test/test_forge_requirements.py::test_u1_legacy_model_unchanged[storage_cyclic_per_period]
+  - checker: test/test_forge_requirements.py::test_u1_legacy_model_unchanged[ramp_and_limits]
+  - checker: test/test_forge_requirements.py::test_u1_legacy_model_unchanged[meshed_two_periods]
+  - checker: test/test_forge_requirements.py::test_u1_legacy_model_unchanged[commitment_two_windows]
+  - checker: test/test_forge_requirements.py::test_u1_legacy_model_unchanged[commitment_linear_periods]
+  - checker: test/test_forge_requirements.py::test_u1_legacy_model_unchanged[commitment_modular_periods]
+  - checker: test/test_forge_requirements.py::test_u1_legacy_model_unchanged[limits_periods]
+  - checker: test/test_forge_requirements.py::test_u1_legacy_model_unchanged[losses_periods]
+  - checker: test/test_forge_requirements.py::test_u1_legacy_model_unchanged[grid_periods]
+  - checker: test/test_forge_requirements.py::test_u1_legacy_model_unchanged[storage_single_period]
+  - checker: test/test_forge_requirements.py::test_u1_legacy_model_unchanged[ramp_single_period]
+  - checker: test/test_forge_requirements.py::test_u1_legacy_model_unchanged[meshed_single_period]
+  - checker: test/test_forge_requirements.py::test_u1_legacy_model_unchanged[commitment_single_period]
+  - checker: test/test_forge_requirements.py::test_u1_legacy_model_unchanged[commitment_linear_single]
+  - checker: test/test_forge_requirements.py::test_u1_legacy_model_unchanged[commitment_modular_single]
+  - checker: test/test_forge_requirements.py::test_u1_legacy_model_unchanged[limits_single_period]
+  - checker: test/test_forge_requirements.py::test_u1_legacy_model_unchanged[losses_single_period]
+  - checker: test/test_forge_requirements.py::test_u1_legacy_model_unchanged[grid_single_period]
+  - checker: test/test_forge_requirements.py::test_u1_legacy_model_unchanged[commitment_rolling_horizon]
+  - checker: test/test_forge_requirements.py::test_u1_legacy_model_unchanged[meshed_security_constrained]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.clustering]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.clustering.spatial]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.clustering.temporal]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.collection]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.common]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.components]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.components.abstract]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.components.array]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.components.common]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.components.components]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.components.descriptors]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.components.index]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.components.legacy]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.components.store]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.components.transform]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.components.types]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.consistency]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.constants]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.costs]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.deprecations]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.descriptors]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.examples]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.geo]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.guards]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.network]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.network.abstract]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.network.components]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.network.descriptors]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.network.graph]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.network.index]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.network.io]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.network.power_flow]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.network.transform]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.networks]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.optimization]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.optimization.abstract]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.optimization.common]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.optimization.constraints]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.optimization.expressions]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.optimization.global_constraints]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.optimization.mga]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.optimization.optimize]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.optimization.piecewise]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.optimization.variables]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.plot]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.plot.accessor]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.plot.maps]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.plot.maps.common]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.plot.maps.interactive]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.plot.maps.static]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.plot.statistics]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.plot.statistics.base]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.plot.statistics.charts]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.plot.statistics.maps]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.plot.statistics.plotter]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.plot.statistics.schema]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.statistics]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.statistics.abstract]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.statistics.expressions]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.statistics.grouping]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.type_utils]
+  - checker: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.version]
+  - checker: test/test_forge_requirements.py::test_u1_v1_instance_matches_legacy[secant-single]
+  - checker: test/test_forge_requirements.py::test_u1_v1_instance_matches_legacy[data-single]
+  - checker: test/test_forge_requirements.py::test_u1_v1_instance_matches_legacy[data-periods]
+  - checker: test/test_forge_requirements.py::test_u1_v1_instance_matches_legacy[capex-periods]
+  - checker: test/test_forge_requirements.py::test_u1_legacy_instance_unchanged[capex-periods]
+  - checker: test/test_forge_requirements.py::test_u1_legacy_instance_unchanged[data-periods]
+  - checker: test/test_forge_requirements.py::test_u1_legacy_instance_unchanged[data-single]
+  - checker: test/test_forge_requirements.py::test_u1_legacy_instance_unchanged[secant-periods]
+  - checker: test/test_forge_requirements.py::test_u1_legacy_instance_unchanged[secant-single]
+  - checker: test/test_forge_requirements.py::test_cr_instance_uses_one_representation[secant-legacy-default]
+  - checker: test/test_forge_requirements.py::test_cr_instance_uses_one_representation[nonlinear-legacy-default]
+  - checker: test/test_forge_requirements.py::test_cr_instance_uses_one_representation[iterative-legacy-default]
+
+## Rejected routes
+
+- global-roll: Roll cyclic storage and store states over the whole flat snapshot dimension, so the last snapshot of one investment period feeds the first of the next.
+  - rejected by: test/test_lopf_multiinvest.py::test_simple_network_storage_cyclic_per_period
+  - rejected by: test/test_lopf_multiinvest.py::test_simple_network_storage_noncyclic_per_period
+  - rejected by: test/test_lopf_multiinvest.py::test_simple_network_store_cyclic_per_period
+  - rejected by: test/test_lopf_multiinvest.py::test_simple_network_store_noncyclic_per_period
+- unweighted-periods: Flatten the snapshots but drop the investment-period weighting, so per-period energy limits and the objective weigh every period alike.
+  - rejected by: test/test_lopf_multiinvest.py::test_storage_unit_primary_energy_and_operational_limit_constraint_with_per_period
+  - rejected by: test/test_lopf_multiinvest.py::test_store_primary_energy_and_operational_limit_constraint_with_per_period
+  - rejected by: test/test_optimization_expressions_equivalence.py::test_multi_period_time_aggregation_matches_statistics[mean-curtailment]
+  - rejected by: test/test_optimization_expressions_equivalence.py::test_multi_period_time_aggregation_matches_statistics[mean-energy_balance]
+  - rejected by: test/test_optimization_expressions_equivalence.py::test_multi_period_time_aggregation_matches_statistics[mean-opex]
+  - rejected by: test/test_optimization_expressions_equivalence.py::test_multi_period_time_aggregation_matches_statistics[mean-supply]
+  - rejected by: test/test_optimization_expressions_equivalence.py::test_multi_period_time_aggregation_matches_statistics[mean-transmission]
+  - rejected by: test/test_optimization_expressions_equivalence.py::test_multi_period_time_aggregation_matches_statistics[mean-withdrawal]
+  - rejected by: test/test_statistics.py::TestMultiInvest::test_system_cost_consistent_with_objective
+- single-start: Mark only the first snapshot of the flat dimension as a period start, so per-period resets of storage, ramps, and limits apply to the first period alone.
+  - rejected by: test/test_lopf_multiinvest.py::test_bug_1360_storage_units
+  - rejected by: test/test_lopf_multiinvest.py::test_bug_1360_stores
+  - rejected by: test/test_lopf_multiinvest.py::test_ramp_limit_resets_per_period
+  - rejected by: test/test_lopf_multiinvest.py::test_simple_network_storage_cyclic_per_period
+  - rejected by: test/test_lopf_multiinvest.py::test_simple_network_storage_noncyclic_per_period
+  - rejected by: test/test_lopf_multiinvest.py::test_simple_network_store_cyclic_per_period
+  - rejected by: test/test_lopf_multiinvest.py::test_simple_network_store_noncyclic_per_period
+  - rejected by: test/test_lopf_multiinvest.py::test_storage_unit_primary_energy_and_operational_limit_constraint_with_per_period
+  - rejected by: test/test_lopf_multiinvest.py::test_storageunit_ip_only_resets_per_period
+  - rejected by: test/test_lopf_multiinvest.py::test_store_primary_energy_and_operational_limit_constraint_with_per_period
+
+## Graded checkers
+
+- fail-to-pass: test/test_lopf_multiinvest.py::test_bug_1360_storage_units
+- fail-to-pass: test/test_lopf_multiinvest.py::test_bug_1360_stores
+- fail-to-pass: test/test_lopf_multiinvest.py::test_extra_functionality_receives_the_build_snapshots[auto]
+- fail-to-pass: test/test_lopf_multiinvest.py::test_extra_functionality_receives_the_build_snapshots[flat]
+- fail-to-pass: test/test_lopf_multiinvest.py::test_flat_labels_are_the_snapshot_tuples
+- fail-to-pass: test/test_lopf_multiinvest.py::test_global_constraint_bus_tech_limit
+- fail-to-pass: test/test_lopf_multiinvest.py::test_global_constraint_primary_energy_storage
+- fail-to-pass: test/test_lopf_multiinvest.py::test_global_constraint_primary_energy_storage_stochastic
+- fail-to-pass: test/test_lopf_multiinvest.py::test_global_constraint_primary_energy_store
+- fail-to-pass: test/test_lopf_multiinvest.py::test_global_constraint_transmission_cost_limit
+- fail-to-pass: test/test_lopf_multiinvest.py::test_global_constraint_transmission_expansion_limit
+- fail-to-pass: test/test_lopf_multiinvest.py::test_max_growth_constraint
+- fail-to-pass: test/test_lopf_multiinvest.py::test_max_relative_growth_constraint
+- fail-to-pass: test/test_lopf_multiinvest.py::test_model_snapshot_index_default_follows_semantics
+- fail-to-pass: test/test_lopf_multiinvest.py::test_model_snapshot_index_flat
+- fail-to-pass: test/test_lopf_multiinvest.py::test_model_snapshot_index_flat_da_accessor_stable
+- fail-to-pass: test/test_lopf_multiinvest.py::test_model_snapshot_index_flat_same_results
+- fail-to-pass: test/test_lopf_multiinvest.py::test_model_snapshot_index_invalid_option
+- fail-to-pass: test/test_lopf_multiinvest.py::test_nominal_constraint_bus_carrier_expansion_limit
+- fail-to-pass: test/test_lopf_multiinvest.py::test_operational_limit_with_investment_period_storage
+- fail-to-pass: test/test_lopf_multiinvest.py::test_optimize_later_period_uses_its_own_data
+- fail-to-pass: test/test_lopf_multiinvest.py::test_ramp_limit_resets_per_period
+- fail-to-pass: test/test_lopf_multiinvest.py::test_simple_network
+- fail-to-pass: test/test_lopf_multiinvest.py::test_simple_network_snapshot_subset
+- fail-to-pass: test/test_lopf_multiinvest.py::test_simple_network_storage_cyclic
+- fail-to-pass: test/test_lopf_multiinvest.py::test_simple_network_storage_cyclic_per_period
+- fail-to-pass: test/test_lopf_multiinvest.py::test_simple_network_storage_noncyclic
+- fail-to-pass: test/test_lopf_multiinvest.py::test_simple_network_storage_noncyclic_per_period
+- fail-to-pass: test/test_lopf_multiinvest.py::test_simple_network_store_cyclic
+- fail-to-pass: test/test_lopf_multiinvest.py::test_simple_network_store_cyclic_per_period
+- fail-to-pass: test/test_lopf_multiinvest.py::test_simple_network_store_noncyclic
+- fail-to-pass: test/test_lopf_multiinvest.py::test_simple_network_store_noncyclic_per_period
+- fail-to-pass: test/test_lopf_multiinvest.py::test_storage_unit_primary_energy_and_operational_limit_constraint_with_per_period
+- fail-to-pass: test/test_lopf_multiinvest.py::test_storage_unit_primary_energy_and_operational_limit_constraint_without_per_period
+- fail-to-pass: test/test_lopf_multiinvest.py::test_storageunit_cp_only_wraps_per_period
+- fail-to-pass: test/test_lopf_multiinvest.py::test_storageunit_ip_only_resets_per_period
+- fail-to-pass: test/test_lopf_multiinvest.py::test_store_primary_energy_and_operational_limit_constraint_with_per_period
+- fail-to-pass: test/test_lopf_multiinvest.py::test_store_primary_energy_and_operational_limit_constraint_without_per_period
+- fail-to-pass: test/test_lopf_multiinvest.py::test_tiny_with_build_year
+- fail-to-pass: test/test_lopf_multiinvest.py::test_tiny_with_default
+- fail-to-pass: test/test_optimization_expressions.py::TestExpressionsWithPiecewise::test_capex_schema_without_data_is_linear
+- fail-to-pass: test/test_optimization_expressions.py::TestExpressionsWithPiecewise::test_expressions_capex
+- fail-to-pass: test/test_optimization_expressions.py::TestExpressionsWithPiecewise::test_expressions_supply_withdrawal
+- fail-to-pass: test/test_optimization_expressions.py::TestExpressionsWithPiecewise::test_supply_minus_withdrawal_equals_energy_balance
+- fail-to-pass: test/test_optimization_expressions.py::TestExpressionsWithPiecewise::test_supply_withdrawal_with_negative_piecewise_port
+- fail-to-pass: test/test_optimization_expressions.py::test_concrete_at_port
+- fail-to-pass: test/test_optimization_expressions.py::test_expression_capacity_all_filtered[False]
+- fail-to-pass: test/test_optimization_expressions.py::test_expression_capacity_all_filtered[True]
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_capacity[False]
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_capacity[carrier]
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_capacity[groupby2]
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_capacity[groupby3]
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_capacity[groupby4]
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_capacity[groupby5]
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_capacity[multi_grouper]
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_capacity_other_options[kwargs0]
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_capacity_other_options[kwargs1]
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_capacity_other_options[kwargs2]
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_capacity_other_options[kwargs3]
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_capacity_other_options[kwargs4]
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_capacity_other_options[kwargs5]
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_capex
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_capex_overnight_cost
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_curtailment
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_energy_balance[False-None]
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_energy_balance[False-mean]
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_energy_balance[False-sum]
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_energy_balance[groupby2-None]
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_energy_balance[groupby2-mean]
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_energy_balance[groupby2-sum]
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_energy_balance[groupby3-None]
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_energy_balance[groupby3-mean]
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_energy_balance[groupby3-sum]
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_energy_balance[groupby4-None]
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_energy_balance[groupby4-mean]
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_energy_balance[groupby4-sum]
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_energy_balance[groupby5-None]
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_energy_balance[groupby5-mean]
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_energy_balance[groupby5-sum]
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_energy_balance_other_options[kwargs0]
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_energy_balance_other_options[kwargs3]
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_energy_balance_other_options[kwargs4]
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_energy_balance_with_snapshot_subset[False-None]
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_energy_balance_with_snapshot_subset[False-mean]
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_energy_balance_with_snapshot_subset[False-sum]
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_energy_balance_with_snapshot_subset[carrier-None]
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_energy_balance_with_snapshot_subset[groupby2-None]
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_energy_balance_with_snapshot_subset[groupby2-mean]
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_energy_balance_with_snapshot_subset[groupby2-sum]
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_energy_balance_with_snapshot_subset[groupby3-None]
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_energy_balance_with_snapshot_subset[groupby3-mean]
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_energy_balance_with_snapshot_subset[groupby3-sum]
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_energy_balance_with_snapshot_subset[groupby4-None]
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_energy_balance_with_snapshot_subset[groupby4-mean]
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_energy_balance_with_snapshot_subset[groupby4-sum]
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_energy_balance_with_snapshot_subset[groupby5-None]
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_energy_balance_with_snapshot_subset[groupby5-mean]
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_energy_balance_with_snapshot_subset[groupby5-sum]
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_energy_balance_with_snapshot_subset[multi_grouper-None]
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_storage_unit_supply_withdrawal
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_supply
+- fail-to-pass: test/test_optimization_expressions.py::test_expressions_withdrawal
+- fail-to-pass: test/test_optimization_expressions.py::test_multi_period_supply_withdrawal_energy_balance
+- fail-to-pass: test/test_optimization_expressions.py::test_other_dynamic_expressions_with_snapshot_subset
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_expression_solution_matches_statistics[capacity]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_expression_solution_matches_statistics[capex]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_expression_solution_matches_statistics[curtailment]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_expression_solution_matches_statistics[energy_balance]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_expression_solution_matches_statistics[opex]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_expression_solution_matches_statistics[supply]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_expression_solution_matches_statistics[transmission]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_expression_solution_matches_statistics[withdrawal]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_filters_match_statistics[capacity-{'bus_carrier': 'AC'}]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_filters_match_statistics[capacity-{'carrier': 'AC'}]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_filters_match_statistics[capacity-{'nice_names': True}]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_filters_match_statistics[energy_balance-{'bus_carrier': 'AC'}]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_filters_match_statistics[energy_balance-{'carrier': 'AC'}]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_filters_match_statistics[energy_balance-{'nice_names': True}]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_filters_match_statistics[opex-{'bus_carrier': 'AC'}]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_filters_match_statistics[opex-{'nice_names': True}]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_grouping_matches_statistics[<bound method Groupers.carrier of Grouper container with the following groupers: bus, bus_carrier, carrier, country, location, name, unit>-capacity]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_grouping_matches_statistics[<bound method Groupers.carrier of Grouper container with the following groupers: bus, bus_carrier, carrier, country, location, name, unit>-energy_balance]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_grouping_matches_statistics[<bound method Groupers.carrier of Grouper container with the following groupers: bus, bus_carrier, carrier, country, location, name, unit>-opex]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_grouping_matches_statistics[False-capacity]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_grouping_matches_statistics[False-energy_balance]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_grouping_matches_statistics[False-opex]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_grouping_matches_statistics[['carrier', 'bus_carrier']-capacity]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_grouping_matches_statistics[['carrier', 'bus_carrier']-energy_balance]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_grouping_matches_statistics[['carrier', 'bus_carrier']-opex]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_grouping_matches_statistics[['name', 'bus', 'carrier']-capacity]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_grouping_matches_statistics[['name', 'bus', 'carrier']-energy_balance]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_grouping_matches_statistics[['name', 'bus', 'carrier']-opex]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_grouping_matches_statistics[[<bound method Groupers.bus of Grouper container with the following groupers: bus, bus_carrier, carrier, country, location, name, unit>, <bound method Groupers.carrier of Grouper container with the following groupers: bus, bus_carrier, carrier, country, location, name, unit>]-capacity]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_grouping_matches_statistics[[<bound method Groupers.bus of Grouper container with the following groupers: bus, bus_carrier, carrier, country, location, name, unit>, <bound method Groupers.carrier of Grouper container with the following groupers: bus, bus_carrier, carrier, country, location, name, unit>]-energy_balance]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_grouping_matches_statistics[[<bound method Groupers.bus of Grouper container with the following groupers: bus, bus_carrier, carrier, country, location, name, unit>, <bound method Groupers.carrier of Grouper container with the following groupers: bus, bus_carrier, carrier, country, location, name, unit>]-opex]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_multi_period_matches_statistics[capacity]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_multi_period_matches_statistics[capex]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_multi_period_matches_statistics[curtailment]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_multi_period_matches_statistics[energy_balance]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_multi_period_matches_statistics[opex]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_multi_period_matches_statistics[supply]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_multi_period_matches_statistics[transmission]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_multi_period_matches_statistics[withdrawal]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_multi_period_time_aggregation_matches_statistics[mean-curtailment]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_multi_period_time_aggregation_matches_statistics[mean-energy_balance]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_multi_period_time_aggregation_matches_statistics[mean-opex]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_multi_period_time_aggregation_matches_statistics[mean-supply]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_multi_period_time_aggregation_matches_statistics[mean-transmission]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_multi_period_time_aggregation_matches_statistics[mean-withdrawal]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_multi_period_time_aggregation_matches_statistics[sum-curtailment]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_multi_period_time_aggregation_matches_statistics[sum-energy_balance]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_multi_period_time_aggregation_matches_statistics[sum-opex]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_multi_period_time_aggregation_matches_statistics[sum-supply]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_multi_period_time_aggregation_matches_statistics[sum-transmission]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_multi_period_time_aggregation_matches_statistics[sum-withdrawal]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_snapshot_subset_matches_statistics[capacity]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_snapshot_subset_matches_statistics[capex]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_snapshot_subset_matches_statistics[energy_balance]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_snapshot_subset_matches_statistics[opex]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_snapshot_subset_matches_statistics[supply]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_snapshot_subset_matches_statistics[transmission]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_snapshot_subset_matches_statistics[withdrawal]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_time_aggregation_matches_statistics[False-curtailment]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_time_aggregation_matches_statistics[False-energy_balance]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_time_aggregation_matches_statistics[False-opex]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_time_aggregation_matches_statistics[False-supply]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_time_aggregation_matches_statistics[False-transmission]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_time_aggregation_matches_statistics[False-withdrawal]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_time_aggregation_matches_statistics[mean-curtailment]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_time_aggregation_matches_statistics[mean-energy_balance]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_time_aggregation_matches_statistics[mean-opex]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_time_aggregation_matches_statistics[mean-supply]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_time_aggregation_matches_statistics[mean-transmission]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_time_aggregation_matches_statistics[mean-withdrawal]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_time_aggregation_matches_statistics[sum-curtailment]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_time_aggregation_matches_statistics[sum-energy_balance]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_time_aggregation_matches_statistics[sum-opex]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_time_aggregation_matches_statistics[sum-supply]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_time_aggregation_matches_statistics[sum-transmission]
+- fail-to-pass: test/test_optimization_expressions_equivalence.py::test_time_aggregation_matches_statistics[sum-withdrawal]
+- fail-to-pass: test/test_statistics.py::TestMultiInvest::test_capex_active_assets_filtering
+- fail-to-pass: test/test_statistics.py::TestMultiInvest::test_capex_structure
+- fail-to-pass: test/test_statistics.py::TestMultiInvest::test_capex_weighted
+- fail-to-pass: test/test_statistics.py::TestMultiInvest::test_opex_matches_marginal_cost
+- fail-to-pass: test/test_statistics.py::TestMultiInvest::test_opex_structure
+- fail-to-pass: test/test_statistics.py::TestMultiInvest::test_system_cost_consistent_with_objective
+- fail-to-pass: test/test_statistics.py::TestMultiInvest::test_system_cost_equals_capex_plus_opex
+- fail-to-pass: test/test_statistics.py::TestStatisticsWithPiecewise::test_stats_capex
+- fail-to-pass: test/test_statistics.py::TestStatisticsWithPiecewise::test_stats_energy_balance
+- fail-to-pass: test/test_statistics.py::TestStatisticsWithPiecewise::test_stats_opex
+- fail-to-pass: test/test_statistics.py::TestStatisticsWithPiecewise::test_stats_withdrawal_supply
+- fail-to-pass: test/test_statistics.py::test_opex
+- fail-to-pass: test/test_transport_delay.py::test_delay_multi_invest_cyclic[Link]
+- fail-to-pass: test/test_transport_delay.py::test_delay_multi_invest_cyclic[Process]
+- fail-to-pass: test/test_transport_delay.py::test_delay_with_scenarios[Link]
+- fail-to-pass: test/test_transport_delay.py::test_delay_with_scenarios[Process]
+- fail-to-pass: test/test_transport_delay.py::test_link_delay_multi_invest_non_cyclic
+- fail-to-pass: test/test_transport_delay.py::test_link_delay_with_scenarios_multiport
+- fail-to-pass: test/test_transport_delay.py::test_link_delay_with_scenarios_non_delayed_regression
+- fail-to-pass: test/test_forge_requirements.py::test_m2_objective_equals_legacy_optimum[storage_cyclic_per_period]
+- fail-to-pass: test/test_forge_requirements.py::test_m2_objective_equals_legacy_optimum[ramp_and_limits]
+- fail-to-pass: test/test_forge_requirements.py::test_m2_objective_equals_legacy_optimum[meshed_two_periods]
+- fail-to-pass: test/test_forge_requirements.py::test_m2_objective_equals_legacy_optimum[commitment_two_windows]
+- fail-to-pass: test/test_forge_requirements.py::test_m2_objective_equals_legacy_optimum[commitment_linear_periods]
+- fail-to-pass: test/test_forge_requirements.py::test_m2_objective_equals_legacy_optimum[commitment_modular_periods]
+- fail-to-pass: test/test_forge_requirements.py::test_m2_objective_equals_legacy_optimum[limits_periods]
+- fail-to-pass: test/test_forge_requirements.py::test_m2_objective_equals_legacy_optimum[losses_periods]
+- fail-to-pass: test/test_forge_requirements.py::test_m2_objective_equals_legacy_optimum[grid_periods]
+- fail-to-pass: test/test_forge_requirements.py::test_m2_objective_equals_legacy_optimum[storage_single_period]
+- fail-to-pass: test/test_forge_requirements.py::test_m2_objective_equals_legacy_optimum[ramp_single_period]
+- fail-to-pass: test/test_forge_requirements.py::test_m2_objective_equals_legacy_optimum[commitment_single_period]
+- fail-to-pass: test/test_forge_requirements.py::test_m2_objective_equals_legacy_optimum[commitment_linear_single]
+- fail-to-pass: test/test_forge_requirements.py::test_m2_objective_equals_legacy_optimum[commitment_modular_single]
+- fail-to-pass: test/test_forge_requirements.py::test_m2_objective_equals_legacy_optimum[limits_single_period]
+- fail-to-pass: test/test_forge_requirements.py::test_m2_objective_equals_legacy_optimum[grid_single_period]
+- fail-to-pass: test/test_forge_requirements.py::test_m2_objective_equals_legacy_optimum[commitment_rolling_horizon]
+- fail-to-pass: test/test_forge_requirements.py::test_m2_solution_optimal_in_legacy_model[storage_cyclic_per_period]
+- fail-to-pass: test/test_forge_requirements.py::test_m2_solution_optimal_in_legacy_model[ramp_and_limits]
+- fail-to-pass: test/test_forge_requirements.py::test_m2_solution_optimal_in_legacy_model[meshed_two_periods]
+- fail-to-pass: test/test_forge_requirements.py::test_m2_solution_optimal_in_legacy_model[commitment_two_windows]
+- fail-to-pass: test/test_forge_requirements.py::test_m2_solution_optimal_in_legacy_model[commitment_linear_periods]
+- fail-to-pass: test/test_forge_requirements.py::test_m2_solution_optimal_in_legacy_model[commitment_modular_periods]
+- fail-to-pass: test/test_forge_requirements.py::test_m2_solution_optimal_in_legacy_model[limits_periods]
+- fail-to-pass: test/test_forge_requirements.py::test_m2_solution_optimal_in_legacy_model[losses_periods]
+- fail-to-pass: test/test_forge_requirements.py::test_m2_solution_optimal_in_legacy_model[grid_periods]
+- fail-to-pass: test/test_forge_requirements.py::test_m2_solution_optimal_in_legacy_model[storage_single_period]
+- fail-to-pass: test/test_forge_requirements.py::test_m2_solution_optimal_in_legacy_model[ramp_single_period]
+- fail-to-pass: test/test_forge_requirements.py::test_m2_solution_optimal_in_legacy_model[commitment_single_period]
+- fail-to-pass: test/test_forge_requirements.py::test_m2_solution_optimal_in_legacy_model[commitment_linear_single]
+- fail-to-pass: test/test_forge_requirements.py::test_m2_solution_optimal_in_legacy_model[commitment_modular_single]
+- fail-to-pass: test/test_forge_requirements.py::test_m2_solution_optimal_in_legacy_model[limits_single_period]
+- fail-to-pass: test/test_forge_requirements.py::test_m2_solution_optimal_in_legacy_model[grid_single_period]
+- fail-to-pass: test/test_forge_requirements.py::test_m2_solution_optimal_in_legacy_model[commitment_rolling_horizon]
+- fail-to-pass: test/test_forge_requirements.py::test_o1_option_selects_representation[v1-default]
+- fail-to-pass: test/test_forge_requirements.py::test_o1_option_selects_representation[v1-auto]
+- fail-to-pass: test/test_forge_requirements.py::test_o1_option_selects_representation[v1-flat]
+- fail-to-pass: test/test_forge_requirements.py::test_o1_option_selects_representation[legacy-default]
+- fail-to-pass: test/test_forge_requirements.py::test_o1_option_selects_representation[legacy-auto]
+- fail-to-pass: test/test_forge_requirements.py::test_o1_option_selects_representation[legacy-flat]
+- fail-to-pass: test/test_forge_requirements.py::test_o1_option_selects_representation[legacy-multiindex]
+- fail-to-pass: test/test_forge_requirements.py::test_cr_model_uses_one_representation[v1-default]
+- fail-to-pass: test/test_forge_requirements.py::test_cr_model_uses_one_representation[v1-auto]
+- fail-to-pass: test/test_forge_requirements.py::test_cr_model_uses_one_representation[v1-flat]
+- fail-to-pass: test/test_forge_requirements.py::test_cr_model_uses_one_representation[legacy-default]
+- fail-to-pass: test/test_forge_requirements.py::test_cr_model_uses_one_representation[legacy-auto]
+- fail-to-pass: test/test_forge_requirements.py::test_cr_model_uses_one_representation[legacy-flat]
+- fail-to-pass: test/test_forge_requirements.py::test_cr_model_uses_one_representation[legacy-multiindex]
+- fail-to-pass: test/test_forge_requirements.py::test_o2_flat_layout_period_then_timestep[v1-default]
+- fail-to-pass: test/test_forge_requirements.py::test_o2_flat_layout_period_then_timestep[v1-flat]
+- fail-to-pass: test/test_forge_requirements.py::test_o2_flat_layout_period_then_timestep[legacy-flat]
+- fail-to-pass: test/test_forge_requirements.py::test_b1_invalid_value_raises_on_single_period_build
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|capacity|filter=bus_carrier=AC]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|capacity|filter=carrier=AC]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|capacity|filter=nice_names]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|capacity|groupby=bus+carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|capacity|groupby=carrier+bus_carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|capacity|groupby=carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|capacity|groupby=default|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|capacity|groupby=name+bus+carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|capacity|groupby=none|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|capex|filter=bus_carrier=AC]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|capex|filter=carrier=AC]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|capex|filter=nice_names]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|capex|groupby=bus+carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|capex|groupby=carrier+bus_carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|capex|groupby=carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|capex|groupby=default|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|capex|groupby=name+bus+carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|capex|groupby=none|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|curtailment|filter=carrier=AC]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|curtailment|filter=nice_names]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|curtailment|groupby=bus+carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|curtailment|groupby=bus+carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|curtailment|groupby=bus+carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|curtailment|groupby=carrier+bus_carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|curtailment|groupby=carrier+bus_carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|curtailment|groupby=carrier+bus_carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|curtailment|groupby=carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|curtailment|groupby=carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|curtailment|groupby=carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|curtailment|groupby=default|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|curtailment|groupby=default|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|curtailment|groupby=default|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|curtailment|groupby=name+bus+carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|curtailment|groupby=name+bus+carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|curtailment|groupby=name+bus+carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|curtailment|groupby=none|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|curtailment|groupby=none|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|curtailment|groupby=none|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|energy_balance|filter=nice_names]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|energy_balance|groupby=bus+carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|energy_balance|groupby=bus+carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|energy_balance|groupby=bus+carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|energy_balance|groupby=carrier+bus_carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|energy_balance|groupby=carrier+bus_carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|energy_balance|groupby=carrier+bus_carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|energy_balance|groupby=carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|energy_balance|groupby=carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|energy_balance|groupby=carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|energy_balance|groupby=default|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|energy_balance|groupby=default|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|energy_balance|groupby=default|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|energy_balance|groupby=name+bus+carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|energy_balance|groupby=name+bus+carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|energy_balance|groupby=name+bus+carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|energy_balance|groupby=none|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|energy_balance|groupby=none|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|energy_balance|groupby=none|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|opex|filter=carrier=AC]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|opex|filter=nice_names]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|opex|groupby=bus+carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|opex|groupby=bus+carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|opex|groupby=bus+carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|opex|groupby=carrier+bus_carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|opex|groupby=carrier+bus_carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|opex|groupby=carrier+bus_carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|opex|groupby=carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|opex|groupby=carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|opex|groupby=carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|opex|groupby=default|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|opex|groupby=default|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|opex|groupby=default|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|opex|groupby=name+bus+carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|opex|groupby=name+bus+carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|opex|groupby=name+bus+carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|opex|groupby=none|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|opex|groupby=none|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|opex|groupby=none|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|supply|filter=carrier=AC]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|supply|filter=nice_names]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|supply|groupby=bus+carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|supply|groupby=bus+carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|supply|groupby=bus+carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|supply|groupby=carrier+bus_carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|supply|groupby=carrier+bus_carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|supply|groupby=carrier+bus_carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|supply|groupby=carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|supply|groupby=carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|supply|groupby=carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|supply|groupby=default|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|supply|groupby=default|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|supply|groupby=default|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|supply|groupby=name+bus+carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|supply|groupby=name+bus+carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|supply|groupby=name+bus+carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|supply|groupby=none|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|supply|groupby=none|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|supply|groupby=none|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|transmission|filter=nice_names]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|transmission|groupby=bus+carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|transmission|groupby=bus+carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|transmission|groupby=bus+carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|transmission|groupby=carrier+bus_carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|transmission|groupby=carrier+bus_carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|transmission|groupby=carrier+bus_carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|transmission|groupby=carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|transmission|groupby=carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|transmission|groupby=carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|transmission|groupby=default|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|transmission|groupby=default|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|transmission|groupby=default|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|transmission|groupby=name+bus+carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|transmission|groupby=name+bus+carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|transmission|groupby=name+bus+carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|transmission|groupby=none|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|transmission|groupby=none|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|transmission|groupby=none|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|withdrawal|filter=carrier=AC]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|withdrawal|filter=nice_names]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|withdrawal|groupby=bus+carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|withdrawal|groupby=bus+carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|withdrawal|groupby=bus+carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|withdrawal|groupby=carrier+bus_carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|withdrawal|groupby=carrier+bus_carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|withdrawal|groupby=carrier+bus_carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|withdrawal|groupby=carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|withdrawal|groupby=carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|withdrawal|groupby=carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|withdrawal|groupby=default|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|withdrawal|groupby=default|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|withdrawal|groupby=default|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|withdrawal|groupby=name+bus+carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|withdrawal|groupby=name+bus+carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|withdrawal|groupby=name+bus+carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|withdrawal|groupby=none|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|withdrawal|groupby=none|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[multi|withdrawal|groupby=none|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|capacity|filter=bus_carrier=AC]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|capacity|filter=carrier=AC]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|capacity|filter=nice_names]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|capacity|groupby=bus+carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|capacity|groupby=carrier+bus_carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|capacity|groupby=carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|capacity|groupby=default|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|capacity|groupby=name+bus+carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|capacity|groupby=none|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|capex|filter=bus_carrier=AC]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|capex|filter=carrier=AC]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|capex|filter=nice_names]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|capex|groupby=bus+carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|capex|groupby=carrier+bus_carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|capex|groupby=carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|capex|groupby=default|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|capex|groupby=name+bus+carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|capex|groupby=none|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|filter=bus_carrier=AC]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|filter=carrier=AC]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|filter=nice_names]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|groupby=bus+carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|groupby=bus+carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|groupby=bus+carrier|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|groupby=bus+carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|groupby=carrier+bus_carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|groupby=carrier+bus_carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|groupby=carrier+bus_carrier|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|groupby=carrier+bus_carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|groupby=carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|groupby=carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|groupby=carrier|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|groupby=carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|groupby=default|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|groupby=default|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|groupby=default|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|groupby=default|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|groupby=name+bus+carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|groupby=name+bus+carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|groupby=name+bus+carrier|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|groupby=name+bus+carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|groupby=none|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|groupby=none|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|groupby=none|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|curtailment|groupby=none|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|filter=bus_carrier=AC]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|filter=carrier=AC]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|filter=nice_names]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|groupby=bus+carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|groupby=bus+carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|groupby=bus+carrier|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|groupby=bus+carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|groupby=carrier+bus_carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|groupby=carrier+bus_carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|groupby=carrier+bus_carrier|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|groupby=carrier+bus_carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|groupby=carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|groupby=carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|groupby=carrier|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|groupby=carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|groupby=default|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|groupby=default|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|groupby=default|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|groupby=default|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|groupby=name+bus+carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|groupby=name+bus+carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|groupby=name+bus+carrier|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|groupby=name+bus+carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|groupby=none|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|groupby=none|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|groupby=none|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|energy_balance|groupby=none|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|filter=bus_carrier=AC]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|filter=nice_names]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|groupby=bus+carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|groupby=bus+carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|groupby=bus+carrier|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|groupby=bus+carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|groupby=carrier+bus_carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|groupby=carrier+bus_carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|groupby=carrier+bus_carrier|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|groupby=carrier+bus_carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|groupby=carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|groupby=carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|groupby=carrier|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|groupby=carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|groupby=default|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|groupby=default|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|groupby=default|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|groupby=default|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|groupby=name+bus+carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|groupby=name+bus+carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|groupby=name+bus+carrier|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|groupby=name+bus+carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|groupby=none|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|groupby=none|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|groupby=none|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|opex|groupby=none|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|filter=bus_carrier=AC]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|filter=nice_names]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|groupby=bus+carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|groupby=bus+carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|groupby=bus+carrier|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|groupby=bus+carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|groupby=carrier+bus_carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|groupby=carrier+bus_carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|groupby=carrier+bus_carrier|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|groupby=carrier+bus_carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|groupby=carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|groupby=carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|groupby=carrier|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|groupby=carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|groupby=default|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|groupby=default|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|groupby=default|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|groupby=default|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|groupby=name+bus+carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|groupby=name+bus+carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|groupby=name+bus+carrier|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|groupby=name+bus+carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|groupby=none|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|groupby=none|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|groupby=none|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|supply|groupby=none|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|filter=carrier=AC]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|filter=nice_names]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|groupby=bus+carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|groupby=bus+carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|groupby=bus+carrier|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|groupby=bus+carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|groupby=carrier+bus_carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|groupby=carrier+bus_carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|groupby=carrier+bus_carrier|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|groupby=carrier+bus_carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|groupby=carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|groupby=carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|groupby=carrier|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|groupby=carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|groupby=default|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|groupby=default|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|groupby=default|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|groupby=default|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|groupby=name+bus+carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|groupby=name+bus+carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|groupby=name+bus+carrier|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|groupby=name+bus+carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|groupby=none|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|groupby=none|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|groupby=none|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|transmission|groupby=none|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|filter=bus_carrier=AC]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|filter=nice_names]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|groupby=bus+carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|groupby=bus+carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|groupby=bus+carrier|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|groupby=bus+carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|groupby=carrier+bus_carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|groupby=carrier+bus_carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|groupby=carrier+bus_carrier|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|groupby=carrier+bus_carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|groupby=carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|groupby=carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|groupby=carrier|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|groupby=carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|groupby=default|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|groupby=default|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|groupby=default|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|groupby=default|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|groupby=name+bus+carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|groupby=name+bus+carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|groupby=name+bus+carrier|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|groupby=name+bus+carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|groupby=none|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|groupby=none|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|groupby=none|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[single|withdrawal|groupby=none|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|capacity|filter=bus_carrier=AC]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|capacity|filter=carrier=AC]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|capacity|filter=nice_names]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|capacity|groupby=bus+carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|capacity|groupby=carrier+bus_carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|capacity|groupby=carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|capacity|groupby=default|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|capacity|groupby=name+bus+carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|capacity|groupby=none|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|capex|filter=bus_carrier=AC]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|capex|filter=carrier=AC]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|capex|filter=nice_names]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|capex|groupby=bus+carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|capex|groupby=carrier+bus_carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|capex|groupby=carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|capex|groupby=default|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|capex|groupby=name+bus+carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|capex|groupby=none|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|energy_balance|filter=bus_carrier=AC]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|energy_balance|filter=carrier=AC]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|energy_balance|filter=nice_names]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|energy_balance|groupby=bus+carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|energy_balance|groupby=bus+carrier|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|energy_balance|groupby=bus+carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|energy_balance|groupby=carrier+bus_carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|energy_balance|groupby=carrier+bus_carrier|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|energy_balance|groupby=carrier+bus_carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|energy_balance|groupby=carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|energy_balance|groupby=carrier|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|energy_balance|groupby=carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|energy_balance|groupby=default|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|energy_balance|groupby=default|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|energy_balance|groupby=default|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|energy_balance|groupby=name+bus+carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|energy_balance|groupby=name+bus+carrier|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|energy_balance|groupby=name+bus+carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|energy_balance|groupby=none|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|energy_balance|groupby=none|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|energy_balance|groupby=none|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|opex|filter=bus_carrier=AC]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|opex|filter=nice_names]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|opex|groupby=bus+carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|opex|groupby=bus+carrier|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|opex|groupby=bus+carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|opex|groupby=carrier+bus_carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|opex|groupby=carrier+bus_carrier|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|opex|groupby=carrier+bus_carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|opex|groupby=carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|opex|groupby=carrier|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|opex|groupby=carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|opex|groupby=default|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|opex|groupby=default|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|opex|groupby=default|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|opex|groupby=name+bus+carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|opex|groupby=name+bus+carrier|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|opex|groupby=name+bus+carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|opex|groupby=none|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|opex|groupby=none|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|opex|groupby=none|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|supply|filter=bus_carrier=AC]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|supply|filter=nice_names]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|supply|groupby=bus+carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|supply|groupby=bus+carrier|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|supply|groupby=bus+carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|supply|groupby=carrier+bus_carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|supply|groupby=carrier+bus_carrier|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|supply|groupby=carrier+bus_carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|supply|groupby=carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|supply|groupby=carrier|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|supply|groupby=carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|supply|groupby=default|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|supply|groupby=default|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|supply|groupby=default|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|supply|groupby=name+bus+carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|supply|groupby=name+bus+carrier|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|supply|groupby=name+bus+carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|supply|groupby=none|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|supply|groupby=none|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|supply|groupby=none|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|transmission|filter=carrier=AC]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|transmission|filter=nice_names]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|transmission|groupby=bus+carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|transmission|groupby=bus+carrier|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|transmission|groupby=bus+carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|transmission|groupby=carrier+bus_carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|transmission|groupby=carrier+bus_carrier|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|transmission|groupby=carrier+bus_carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|transmission|groupby=carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|transmission|groupby=carrier|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|transmission|groupby=carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|transmission|groupby=default|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|transmission|groupby=default|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|transmission|groupby=default|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|transmission|groupby=name+bus+carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|transmission|groupby=name+bus+carrier|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|transmission|groupby=name+bus+carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|transmission|groupby=none|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|transmission|groupby=none|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|transmission|groupby=none|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|withdrawal|filter=bus_carrier=AC]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|withdrawal|filter=nice_names]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|withdrawal|groupby=bus+carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|withdrawal|groupby=bus+carrier|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|withdrawal|groupby=bus+carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|withdrawal|groupby=carrier+bus_carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|withdrawal|groupby=carrier+bus_carrier|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|withdrawal|groupby=carrier+bus_carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|withdrawal|groupby=carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|withdrawal|groupby=carrier|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|withdrawal|groupby=carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|withdrawal|groupby=default|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|withdrawal|groupby=default|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|withdrawal|groupby=default|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|withdrawal|groupby=name+bus+carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|withdrawal|groupby=name+bus+carrier|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|withdrawal|groupby=name+bus+carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|withdrawal|groupby=none|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|withdrawal|groupby=none|time=none]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[subset|withdrawal|groupby=none|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_cr_instance_uses_one_representation[secant-v1-default]
+- fail-to-pass: test/test_forge_requirements.py::test_cr_instance_uses_one_representation[secant-v1-auto]
+- fail-to-pass: test/test_forge_requirements.py::test_cr_instance_uses_one_representation[secant-v1-flat]
+- fail-to-pass: test/test_forge_requirements.py::test_cr_instance_uses_one_representation[secant-legacy-auto]
+- fail-to-pass: test/test_forge_requirements.py::test_cr_instance_uses_one_representation[secant-legacy-flat]
+- fail-to-pass: test/test_forge_requirements.py::test_cr_instance_uses_one_representation[secant-legacy-multiindex]
+- fail-to-pass: test/test_forge_requirements.py::test_cr_instance_uses_one_representation[nonlinear-v1-default]
+- fail-to-pass: test/test_forge_requirements.py::test_cr_instance_uses_one_representation[nonlinear-v1-auto]
+- fail-to-pass: test/test_forge_requirements.py::test_cr_instance_uses_one_representation[nonlinear-v1-flat]
+- fail-to-pass: test/test_forge_requirements.py::test_cr_instance_uses_one_representation[nonlinear-legacy-auto]
+- fail-to-pass: test/test_forge_requirements.py::test_cr_instance_uses_one_representation[nonlinear-legacy-flat]
+- fail-to-pass: test/test_forge_requirements.py::test_cr_instance_uses_one_representation[nonlinear-legacy-multiindex]
+- fail-to-pass: test/test_forge_requirements.py::test_cr_instance_uses_one_representation[iterative-v1-default]
+- fail-to-pass: test/test_forge_requirements.py::test_cr_instance_uses_one_representation[iterative-v1-auto]
+- fail-to-pass: test/test_forge_requirements.py::test_cr_instance_uses_one_representation[iterative-v1-flat]
+- fail-to-pass: test/test_forge_requirements.py::test_cr_instance_uses_one_representation[iterative-legacy-auto]
+- fail-to-pass: test/test_forge_requirements.py::test_cr_instance_uses_one_representation[iterative-legacy-flat]
+- fail-to-pass: test/test_forge_requirements.py::test_cr_instance_uses_one_representation[iterative-legacy-multiindex]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[dynamic|transmission|groupby=bus+carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[dynamic|transmission|groupby=bus+carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[dynamic|transmission|groupby=bus+carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[dynamic|transmission|groupby=carrier+bus_carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[dynamic|transmission|groupby=carrier+bus_carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[dynamic|transmission|groupby=carrier+bus_carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[dynamic|transmission|groupby=carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[dynamic|transmission|groupby=carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[dynamic|transmission|groupby=carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[dynamic|transmission|groupby=default|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[dynamic|transmission|groupby=default|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[dynamic|transmission|groupby=default|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[dynamic|transmission|groupby=name+bus+carrier|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[dynamic|transmission|groupby=name+bus+carrier|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[dynamic|transmission|groupby=name+bus+carrier|time=sum]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[dynamic|transmission|groupby=none|time=default]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[dynamic|transmission|groupby=none|time=mean]
+- fail-to-pass: test/test_forge_requirements.py::test_ag_expression_matches_statistics[dynamic|transmission|groupby=none|time=sum]
+- pass-to-pass: test/test_components_array.py::test_as_xarray_dynamic
+- pass-to-pass: test/test_components_array.py::test_as_xarray_dynamic_with_periods
+- pass-to-pass: test/test_components_array.py::test_as_xarray_dynamic_with_scenarios
+- pass-to-pass: test/test_components_array.py::test_as_xarray_scenario_dim_order
+- pass-to-pass: test/test_components_array.py::test_as_xarray_static
+- pass-to-pass: test/test_components_array.py::test_as_xarray_static_with_periods
+- pass-to-pass: test/test_components_array.py::test_as_xarray_static_with_scenarios
+- pass-to-pass: test/test_components_array.py::test_da_accessor_not_iterable
+- pass-to-pass: test/test_components_array.py::test_ds_property_consistency
+- pass-to-pass: test/test_components_array.py::test_from_xarray[ac_dc_network]
+- pass-to-pass: test/test_components_array.py::test_from_xarray[ac_dc_periods]
+- pass-to-pass: test/test_components_array.py::test_from_xarray[ac_dc_solved]
+- pass-to-pass: test/test_components_array.py::test_from_xarray[ac_dc_stochastic]
+- pass-to-pass: test/test_lopf_multiinvest.py::test_active_assets
+- pass-to-pass: test/test_lopf_multiinvest.py::test_investment_period_values
+- pass-to-pass: test/test_lopf_multiinvest.py::test_single_to_multi_level_snapshots
+- pass-to-pass: test/test_lopf_multiinvest.py::test_tiny_infeasible
+- pass-to-pass: test/test_optimization_expressions.py::test_capacity_non_extendable_generators
+- pass-to-pass: test/test_optimization_expressions.py::test_capex_non_extendable_generators
+- pass-to-pass: test/test_optimization_expressions.py::test_curtailment_non_extendable_generators
+- pass-to-pass: test/test_optimization_expressions.py::test_expressions_energy_balance[carrier-None]
+- pass-to-pass: test/test_optimization_expressions.py::test_expressions_energy_balance[carrier-mean]
+- pass-to-pass: test/test_optimization_expressions.py::test_expressions_energy_balance[carrier-sum]
+- pass-to-pass: test/test_optimization_expressions.py::test_expressions_energy_balance[multi_grouper-None]
+- pass-to-pass: test/test_optimization_expressions.py::test_expressions_energy_balance[multi_grouper-mean]
+- pass-to-pass: test/test_optimization_expressions.py::test_expressions_energy_balance[multi_grouper-sum]
+- pass-to-pass: test/test_optimization_expressions.py::test_expressions_energy_balance_other_options[kwargs1]
+- pass-to-pass: test/test_optimization_expressions.py::test_expressions_energy_balance_other_options[kwargs2]
+- pass-to-pass: test/test_optimization_expressions.py::test_expressions_energy_balance_with_snapshot_subset[carrier-mean]
+- pass-to-pass: test/test_optimization_expressions.py::test_expressions_energy_balance_with_snapshot_subset[carrier-sum]
+- pass-to-pass: test/test_optimization_expressions.py::test_expressions_energy_balance_with_snapshot_subset[multi_grouper-mean]
+- pass-to-pass: test/test_optimization_expressions.py::test_expressions_energy_balance_with_snapshot_subset[multi_grouper-sum]
+- pass-to-pass: test/test_optimization_expressions.py::test_expressions_operation
+- pass-to-pass: test/test_optimization_expressions.py::test_expressions_opex
+- pass-to-pass: test/test_optimization_expressions.py::test_expressions_transmission
+- pass-to-pass: test/test_optimization_expressions_equivalence.py::test_filters_match_statistics[opex-{'carrier': 'AC'}]
+- pass-to-pass: test/test_optimization_expressions_equivalence.py::test_operation_matches_dispatch
+- pass-to-pass: test/test_optimization_piecewise.py::TestCreateYVar::test_y_var_dims_dynamic
+- pass-to-pass: test/test_optimization_piecewise.py::TestCreateYVar::test_y_var_dims_static
+- pass-to-pass: test/test_optimization_piecewise.py::TestCreateYVar::test_y_var_lb[y_var_dynamic]
+- pass-to-pass: test/test_optimization_piecewise.py::TestCreateYVar::test_y_var_lb[y_var_static]
+- pass-to-pass: test/test_optimization_piecewise.py::TestCreateYVar::test_y_var_name[y_var_dynamic]
+- pass-to-pass: test/test_optimization_piecewise.py::TestCreateYVar::test_y_var_name[y_var_static]
+- pass-to-pass: test/test_optimization_piecewise.py::TestDefinePiecewise::test_named_option_string_all_as_options[gen2-active_names0-gen2]
+- pass-to-pass: test/test_optimization_piecewise.py::TestDefinePiecewise::test_named_option_string_all_as_options[name1-active_names1-gen1]
+- pass-to-pass: test/test_optimization_piecewise.py::TestDefinePiecewise::test_named_option_string_all_as_options[name2-active_names2-gen1]
+- pass-to-pass: test/test_optimization_piecewise.py::TestDefinePiecewise::test_named_option_string_all_as_options[name3-active_names3-gen0_..._gen3]
+- pass-to-pass: test/test_optimization_piecewise.py::TestDefinePiecewise::test_named_option_string_all_as_options[name4-active_names4-gen1_gen3]
+- pass-to-pass: test/test_optimization_piecewise.py::TestDefinePiecewise::test_named_option_string_some_as_options[gen0-active_names0-gen0]
+- pass-to-pass: test/test_optimization_piecewise.py::TestDefinePiecewise::test_named_option_string_some_as_options[name1-active_names1-gen1_gen2]
+- pass-to-pass: test/test_optimization_piecewise.py::TestDefinePiecewise::test_named_option_string_some_as_options[name2-active_names2-gen1_gen2_gen3]
+- pass-to-pass: test/test_optimization_piecewise.py::TestDefinePiecewise::test_named_then_named_option[names0]
+- pass-to-pass: test/test_optimization_piecewise.py::TestDefinePiecewise::test_named_then_named_option[names1]
+- pass-to-pass: test/test_optimization_piecewise.py::TestDefinePiecewise::test_provide_y_var
+- pass-to-pass: test/test_optimization_piecewise.py::TestDefinePiecewise::test_pw_names_empty_no_active[capital_cost-pw_names0]
+- pass-to-pass: test/test_optimization_piecewise.py::TestDefinePiecewise::test_pw_names_empty_no_active[capital_cost-pw_names1]
+- pass-to-pass: test/test_optimization_piecewise.py::TestDefinePiecewise::test_pw_names_empty_no_active[marginal_cost-pw_names0]
+- pass-to-pass: test/test_optimization_piecewise.py::TestDefinePiecewise::test_pw_names_empty_no_active[marginal_cost-pw_names1]
+- pass-to-pass: test/test_optimization_piecewise.py::TestDefinePiecewise::test_pw_names_empty_no_pw[efficiency]
+- pass-to-pass: test/test_optimization_piecewise.py::TestDefinePiecewise::test_pw_names_empty_no_pw[foo]
+- pass-to-pass: test/test_optimization_piecewise.py::TestDefinePiecewise::test_unnamed_option
+- pass-to-pass: test/test_optimization_piecewise.py::TestDefinePiecewise::test_unnamed_then_named_option[names0]
+- pass-to-pass: test/test_optimization_piecewise.py::TestDefinePiecewise::test_unnamed_then_named_option[names1]
+- pass-to-pass: test/test_optimization_piecewise.py::TestDefinePiecewise::test_use_status
+- pass-to-pass: test/test_optimization_piecewise.py::TestDefinePiecewise::test_use_status_no_active
+- pass-to-pass: test/test_optimization_piecewise.py::TestGetBreakpoints::test_allow_extendables_x[False-False]
+- pass-to-pass: test/test_optimization_piecewise.py::TestGetBreakpoints::test_allow_extendables_x[False-True]
+- pass-to-pass: test/test_optimization_piecewise.py::TestGetBreakpoints::test_allow_extendables_x[True-False]
+- pass-to-pass: test/test_optimization_piecewise.py::TestGetBreakpoints::test_allow_extendables_x[True-True]
+- pass-to-pass: test/test_optimization_piecewise.py::TestGetBreakpoints::test_cumulative_attr
+- pass-to-pass: test/test_optimization_piecewise.py::TestGetBreakpoints::test_invert_attr
+- pass-to-pass: test/test_optimization_piecewise.py::TestGetBreakpoints::test_invert_cumulative_attr
+- pass-to-pass: test/test_optimization_piecewise.py::TestGetBreakpoints::test_not_allow_extendables_extendable
+- pass-to-pass: test/test_optimization_piecewise.py::TestGetBreakpoints::test_not_allow_extendables_missing_nom[0.0]
+- pass-to-pass: test/test_optimization_piecewise.py::TestGetBreakpoints::test_not_allow_extendables_missing_nom[inf]
+- pass-to-pass: test/test_optimization_piecewise.py::TestGetBreakpoints::test_not_allow_extendables_missing_nom[nan]
+- pass-to-pass: test/test_optimization_piecewise.py::TestGetBreakpoints::test_not_allow_extendables_x[False-False]
+- pass-to-pass: test/test_optimization_piecewise.py::TestGetBreakpoints::test_not_allow_extendables_x[False-True]
+- pass-to-pass: test/test_optimization_piecewise.py::TestGetBreakpoints::test_not_allow_extendables_x[True-False]
+- pass-to-pass: test/test_optimization_piecewise.py::TestGetBreakpoints::test_not_allow_extendables_x[True-True]
+- pass-to-pass: test/test_optimization_piecewise.py::TestGetBreakpoints::test_not_cumulative_attr
+- pass-to-pass: test/test_optimization_piecewise.py::TestGetPiecewiseNames::test_all_nan_columns_dropped
+- pass-to-pass: test/test_optimization_piecewise.py::TestGetPiecewiseNames::test_intersects_with_active_names
+- pass-to-pass: test/test_optimization_piecewise.py::TestGetPiecewiseNames::test_missing_attribute_returns_empty
+- pass-to-pass: test/test_optimization_piecewise.py::TestGetPiecewiseNames::test_result_is_named_name_index[empty]
+- pass-to-pass: test/test_optimization_piecewise.py::TestGetPiecewiseNames::test_result_is_named_name_index[populated]
+- pass-to-pass: test/test_optimization_piecewise.py::TestToDa::test_to_da
+- pass-to-pass: test/test_statistics.py::TestGetOperation::test_get_operation[Generator-p]
+- pass-to-pass: test/test_statistics.py::TestGetOperation::test_get_operation[Line-p0]
+- pass-to-pass: test/test_statistics.py::TestGetOperation::test_get_operation[Link-p0]
+- pass-to-pass: test/test_statistics.py::TestGetOperation::test_get_operation[Store-e]
+- pass-to-pass: test/test_statistics.py::TestGetOperation::test_get_operation_multi_port
+- pass-to-pass: test/test_statistics.py::TestMarketValue::test_bus_carrier_additivity
+- pass-to-pass: test/test_statistics.py::TestMarketValue::test_generator
+- pass-to-pass: test/test_statistics.py::TestMarketValue::test_grouped_branches_is_finite
+- pass-to-pass: test/test_statistics.py::TestMarketValue::test_multiport
+- pass-to-pass: test/test_statistics.py::TestMarketValue::test_with_bus_carrier[AC-p0-elec]
+- pass-to-pass: test/test_statistics.py::TestMarketValue::test_with_bus_carrier[H2-p1-h2]
+- pass-to-pass: test/test_statistics.py::TestMarketValue::test_with_bus_carrier[heat-p2-heat]
+- pass-to-pass: test/test_statistics.py::TestMarketValue::test_withdrawing_load_sign
+- pass-to-pass: test/test_statistics.py::TestPortEfficiency::test_dynamic_link_port_values[Link-1]
+- pass-to-pass: test/test_statistics.py::TestPortEfficiency::test_dynamic_link_port_values[Link-2]
+- pass-to-pass: test/test_statistics.py::TestPortEfficiency::test_dynamic_link_port_values[Process-1]
+- pass-to-pass: test/test_statistics.py::TestPortEfficiency::test_dynamic_link_port_values[Process-2]
+- pass-to-pass: test/test_statistics.py::TestPortEfficiency::test_mixed_link_port0_always_minus_one[Link]
+- pass-to-pass: test/test_statistics.py::TestPortEfficiency::test_mixed_link_port0_always_minus_one[Process]
+- pass-to-pass: test/test_statistics.py::TestPortEfficiency::test_mixed_link_port1_static[Link-False]
+- pass-to-pass: test/test_statistics.py::TestPortEfficiency::test_mixed_link_port1_static[Link-True]
+- pass-to-pass: test/test_statistics.py::TestPortEfficiency::test_mixed_link_port1_static[Process-False]
+- pass-to-pass: test/test_statistics.py::TestPortEfficiency::test_mixed_link_port1_static[Process-True]
+- pass-to-pass: test/test_statistics.py::TestPortEfficiency::test_mixed_link_port2_dynamic_request[Link]
+- pass-to-pass: test/test_statistics.py::TestPortEfficiency::test_mixed_link_port2_dynamic_request[Process]
+- pass-to-pass: test/test_statistics.py::TestPortEfficiency::test_mixed_link_port2_static_request[Link]
+- pass-to-pass: test/test_statistics.py::TestPortEfficiency::test_mixed_link_port2_static_request[Process]
+- pass-to-pass: test/test_statistics.py::TestPortEfficiency::test_mixed_link_port3_dynamic_dynamic[Link]
+- pass-to-pass: test/test_statistics.py::TestPortEfficiency::test_mixed_link_port3_dynamic_dynamic[Process]
+- pass-to-pass: test/test_statistics.py::TestPortEfficiency::test_mixed_link_port3_static_request[Link]
+- pass-to-pass: test/test_statistics.py::TestPortEfficiency::test_mixed_link_port3_static_request[Process]
+- pass-to-pass: test/test_statistics.py::TestPortEfficiency::test_one_port_returns_ones
+- pass-to-pass: test/test_statistics.py::TestPortEfficiency::test_passive_branch_port0_returns_minus_ones
+- pass-to-pass: test/test_statistics.py::TestPortEfficiency::test_passive_branch_port1_returns_ones
+- pass-to-pass: test/test_statistics.py::TestPortEfficiency::test_piecewise_link_returns_static_fallback[Link]
+- pass-to-pass: test/test_statistics.py::TestPortEfficiency::test_piecewise_link_returns_static_fallback[Process]
+- pass-to-pass: test/test_statistics.py::TestPortEfficiency::test_static_link_port0_returns_minus_ones[Link]
+- pass-to-pass: test/test_statistics.py::TestPortEfficiency::test_static_link_port0_returns_minus_ones[Process]
+- pass-to-pass: test/test_statistics.py::TestPortEfficiency::test_static_link_port1_returns_efficiency[Link]
+- pass-to-pass: test/test_statistics.py::TestPortEfficiency::test_static_link_port1_returns_efficiency[Process]
+- pass-to-pass: test/test_statistics.py::TestPortEfficiency::test_static_link_port2_returns_efficiency2[Link]
+- pass-to-pass: test/test_statistics.py::TestPortEfficiency::test_static_link_port2_returns_efficiency2[Process]
+- pass-to-pass: test/test_statistics.py::TestStatisticsWithPiecewise::test_stats_capex_process
+- pass-to-pass: test/test_statistics.py::TestStatisticsWithPiecewise::test_stats_opex_process
+- pass-to-pass: test/test_statistics.py::test_1144
+- pass-to-pass: test/test_statistics.py::test_aggregate_across_components
+- pass-to-pass: test/test_statistics.py::test_all_methods[capacity_factor]
+- pass-to-pass: test/test_statistics.py::test_all_methods[capex]
+- pass-to-pass: test/test_statistics.py::test_all_methods[curtailment]
+- pass-to-pass: test/test_statistics.py::test_all_methods[energy_balance]
+- pass-to-pass: test/test_statistics.py::test_all_methods[expanded_capacity]
+- pass-to-pass: test/test_statistics.py::test_all_methods[expanded_capex]
+- pass-to-pass: test/test_statistics.py::test_all_methods[installed_capacity]
+- pass-to-pass: test/test_statistics.py::test_all_methods[installed_capex]
+- pass-to-pass: test/test_statistics.py::test_all_methods[market_value]
+- pass-to-pass: test/test_statistics.py::test_all_methods[opex]
+- pass-to-pass: test/test_statistics.py::test_all_methods[optimal_capacity]
+- pass-to-pass: test/test_statistics.py::test_all_methods[prices]
+- pass-to-pass: test/test_statistics.py::test_all_methods[revenue]
+- pass-to-pass: test/test_statistics.py::test_all_methods[supply]
+- pass-to-pass: test/test_statistics.py::test_all_methods[system_cost]
+- pass-to-pass: test/test_statistics.py::test_all_methods[transmission]
+- pass-to-pass: test/test_statistics.py::test_all_methods[withdrawal]
+- pass-to-pass: test/test_statistics.py::test_bus_carrier_searches_all_ports[capex]
+- pass-to-pass: test/test_statistics.py::test_bus_carrier_searches_all_ports[installed_capacity]
+- pass-to-pass: test/test_statistics.py::test_bus_carrier_searches_all_ports[optimal_capacity]
+- pass-to-pass: test/test_statistics.py::test_bus_carrier_selection
+- pass-to-pass: test/test_statistics.py::test_bus_carrier_selection_with_list
+- pass-to-pass: test/test_statistics.py::test_carrier_selection
+- pass-to-pass: test/test_statistics.py::test_default_solved
+- pass-to-pass: test/test_statistics.py::test_drop_zero
+- pass-to-pass: test/test_statistics.py::test_energy_balance_bus_carrier_filter[bus_carrier1]
+- pass-to-pass: test/test_statistics.py::test_energy_balance_bus_carrier_filter[bus_carrier2]
+- pass-to-pass: test/test_statistics.py::test_energy_balance_bus_carrier_filter[rural heat]
+- pass-to-pass: test/test_statistics.py::test_energy_balance_bus_carrier_nice_name_filter
+- pass-to-pass: test/test_statistics.py::test_energy_balance_carrier_nice_name_filter
+- pass-to-pass: test/test_statistics.py::test_grouping_by_keys_solved[carrier0]
+- pass-to-pass: test/test_statistics.py::test_grouping_by_keys_solved[carrier1]
+- pass-to-pass: test/test_statistics.py::test_grouping_by_keys_solved[groupby2]
+- pass-to-pass: test/test_statistics.py::test_grouping_by_keys_solved[groupby3]
+- pass-to-pass: test/test_statistics.py::test_grouping_by_keys_solved[groupby4]
+- pass-to-pass: test/test_statistics.py::test_grouping_by_keys_solved[groupby5]
+- pass-to-pass: test/test_statistics.py::test_grouping_by_keys_unsolved[carrier0]
+- pass-to-pass: test/test_statistics.py::test_grouping_by_keys_unsolved[carrier1]
+- pass-to-pass: test/test_statistics.py::test_grouping_by_keys_unsolved[groupby2]
+- pass-to-pass: test/test_statistics.py::test_grouping_by_keys_unsolved[groupby3]
+- pass-to-pass: test/test_statistics.py::test_grouping_by_keys_with_specific_column_solved
+- pass-to-pass: test/test_statistics.py::test_grouping_by_new_registered_key
+- pass-to-pass: test/test_statistics.py::test_inactive_exclusion_in_static
+- pass-to-pass: test/test_statistics.py::test_installed_capex_honours_cost_attribute
+- pass-to-pass: test/test_statistics.py::test_multiindexed
+- pass-to-pass: test/test_statistics.py::test_multiindexed_aggregate_across_components
+- pass-to-pass: test/test_statistics.py::test_net_and_gross_revenue
+- pass-to-pass: test/test_statistics.py::test_no_grouping
+- pass-to-pass: test/test_statistics.py::test_no_time_aggregation
+- pass-to-pass: test/test_statistics.py::test_prices
+- pass-to-pass: test/test_statistics.py::test_single_component
+- pass-to-pass: test/test_statistics.py::test_statistics_groupby_time_true
+- pass-to-pass: test/test_statistics.py::test_stats_alias
+- pass-to-pass: test/test_statistics.py::test_storage_capacity
+- pass-to-pass: test/test_statistics.py::test_supply_withdrawal
+- pass-to-pass: test/test_statistics.py::test_system_cost
+- pass-to-pass: test/test_statistics.py::test_system_cost_groupby_time_false_deprecated
+- pass-to-pass: test/test_statistics.py::test_system_cost_includes_fom
+- pass-to-pass: test/test_statistics.py::test_transmission_carriers
+- pass-to-pass: test/test_statistics.py::test_zero_profit_rule_branches
+- pass-to-pass: test/test_transport_delay.py::test_consistency_delay_exceeds_horizon[Link]
+- pass-to-pass: test/test_transport_delay.py::test_consistency_delay_exceeds_horizon[Process]
+- pass-to-pass: test/test_transport_delay.py::test_consistency_delay_exceeds_period_horizon
+- pass-to-pass: test/test_transport_delay.py::test_consistency_negative_delay[Link]
+- pass-to-pass: test/test_transport_delay.py::test_consistency_negative_delay[Process]
+- pass-to-pass: test/test_transport_delay.py::test_delay_cyclic[Link]
+- pass-to-pass: test/test_transport_delay.py::test_delay_cyclic[Process]
+- pass-to-pass: test/test_transport_delay.py::test_delay_extendable[Link]
+- pass-to-pass: test/test_transport_delay.py::test_delay_extendable[Process]
+- pass-to-pass: test/test_transport_delay.py::test_delay_mixed_delayed_and_non_delayed[Link]
+- pass-to-pass: test/test_transport_delay.py::test_delay_mixed_delayed_and_non_delayed[Process]
+- pass-to-pass: test/test_transport_delay.py::test_delay_non_cyclic[Link]
+- pass-to-pass: test/test_transport_delay.py::test_delay_non_cyclic[Process]
+- pass-to-pass: test/test_transport_delay.py::test_delay_non_uniform_weightings[Link]
+- pass-to-pass: test/test_transport_delay.py::test_delay_non_uniform_weightings[Process]
+- pass-to-pass: test/test_transport_delay.py::test_delay_positions_raises_on_zero_total_weight
+- pass-to-pass: test/test_transport_delay.py::test_delay_rounding_warning_fires
+- pass-to-pass: test/test_transport_delay.py::test_delay_rounding_warning_silent
+- pass-to-pass: test/test_transport_delay.py::test_get_delay_source_indexer_empty_snapshots
+- pass-to-pass: test/test_transport_delay.py::test_get_delay_source_indexer_multi_invest
+- pass-to-pass: test/test_transport_delay.py::test_get_delay_source_indexer_multi_invest_non_cyclic
+- pass-to-pass: test/test_transport_delay.py::test_link_delay_equal_to_horizon
+- pass-to-pass: test/test_transport_delay.py::test_link_delay_uses_generator_snapshot_weightings_non_cyclic
+- pass-to-pass: test/test_transport_delay.py::test_link_delay_zero_unchanged
+- pass-to-pass: test/test_transport_delay.py::test_multiport_different_delays[Link]
+- pass-to-pass: test/test_transport_delay.py::test_multiport_different_delays[Process]
+- pass-to-pass: test/test_transport_delay.py::test_process_delay_cyclic_delay0_false
+- pass-to-pass: test/test_transport_delay.py::test_process_delay_on_input_bus
+- prohibition: test/test_forge_requirements.py::test_u1_single_period_v1_model_matches_legacy[storage_single_period]
+- prohibition: test/test_forge_requirements.py::test_u1_single_period_v1_model_matches_legacy[ramp_single_period]
+- prohibition: test/test_forge_requirements.py::test_u1_single_period_v1_model_matches_legacy[meshed_single_period]
+- prohibition: test/test_forge_requirements.py::test_u1_single_period_v1_model_matches_legacy[commitment_single_period]
+- prohibition: test/test_forge_requirements.py::test_u1_single_period_v1_model_matches_legacy[commitment_linear_single]
+- prohibition: test/test_forge_requirements.py::test_u1_single_period_v1_model_matches_legacy[commitment_modular_single]
+- prohibition: test/test_forge_requirements.py::test_u1_single_period_v1_model_matches_legacy[limits_single_period]
+- prohibition: test/test_forge_requirements.py::test_u1_single_period_v1_model_matches_legacy[losses_single_period]
+- prohibition: test/test_forge_requirements.py::test_u1_single_period_v1_model_matches_legacy[grid_single_period]
+- prohibition: test/test_forge_requirements.py::test_u1_single_period_v1_model_matches_legacy[commitment_rolling_horizon]
+- prohibition: test/test_forge_requirements.py::test_u1_single_period_v1_model_matches_legacy[meshed_security_constrained]
+- prohibition: test/test_forge_requirements.py::test_u1_legacy_model_unchanged[storage_cyclic_per_period]
+- prohibition: test/test_forge_requirements.py::test_u1_legacy_model_unchanged[ramp_and_limits]
+- prohibition: test/test_forge_requirements.py::test_u1_legacy_model_unchanged[meshed_two_periods]
+- prohibition: test/test_forge_requirements.py::test_u1_legacy_model_unchanged[commitment_two_windows]
+- prohibition: test/test_forge_requirements.py::test_u1_legacy_model_unchanged[commitment_linear_periods]
+- prohibition: test/test_forge_requirements.py::test_u1_legacy_model_unchanged[commitment_modular_periods]
+- prohibition: test/test_forge_requirements.py::test_u1_legacy_model_unchanged[limits_periods]
+- prohibition: test/test_forge_requirements.py::test_u1_legacy_model_unchanged[losses_periods]
+- prohibition: test/test_forge_requirements.py::test_u1_legacy_model_unchanged[grid_periods]
+- prohibition: test/test_forge_requirements.py::test_u1_legacy_model_unchanged[storage_single_period]
+- prohibition: test/test_forge_requirements.py::test_u1_legacy_model_unchanged[ramp_single_period]
+- prohibition: test/test_forge_requirements.py::test_u1_legacy_model_unchanged[meshed_single_period]
+- prohibition: test/test_forge_requirements.py::test_u1_legacy_model_unchanged[commitment_single_period]
+- prohibition: test/test_forge_requirements.py::test_u1_legacy_model_unchanged[commitment_linear_single]
+- prohibition: test/test_forge_requirements.py::test_u1_legacy_model_unchanged[commitment_modular_single]
+- prohibition: test/test_forge_requirements.py::test_u1_legacy_model_unchanged[limits_single_period]
+- prohibition: test/test_forge_requirements.py::test_u1_legacy_model_unchanged[losses_single_period]
+- prohibition: test/test_forge_requirements.py::test_u1_legacy_model_unchanged[grid_single_period]
+- prohibition: test/test_forge_requirements.py::test_u1_legacy_model_unchanged[commitment_rolling_horizon]
+- prohibition: test/test_forge_requirements.py::test_u1_legacy_model_unchanged[meshed_security_constrained]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.clustering]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.clustering.spatial]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.clustering.temporal]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.collection]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.common]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.components]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.components.abstract]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.components.array]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.components.common]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.components.components]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.components.descriptors]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.components.index]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.components.legacy]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.components.store]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.components.transform]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.components.types]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.consistency]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.constants]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.costs]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.deprecations]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.descriptors]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.examples]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.geo]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.guards]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.network]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.network.abstract]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.network.components]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.network.descriptors]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.network.graph]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.network.index]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.network.io]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.network.power_flow]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.network.transform]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.networks]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.optimization]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.optimization.abstract]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.optimization.common]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.optimization.constraints]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.optimization.expressions]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.optimization.global_constraints]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.optimization.mga]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.optimization.optimize]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.optimization.piecewise]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.optimization.variables]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.plot]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.plot.accessor]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.plot.maps]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.plot.maps.common]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.plot.maps.interactive]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.plot.maps.static]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.plot.statistics]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.plot.statistics.base]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.plot.statistics.charts]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.plot.statistics.maps]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.plot.statistics.plotter]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.plot.statistics.schema]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.statistics]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.statistics.abstract]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.statistics.expressions]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.statistics.grouping]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.type_utils]
+- prohibition: test/test_forge_requirements.py::test_u2_public_api_compatible[pypsa.version]
+- prohibition: test/test_forge_requirements.py::test_u1_v1_instance_matches_legacy[secant-single]
+- prohibition: test/test_forge_requirements.py::test_u1_v1_instance_matches_legacy[data-single]
+- prohibition: test/test_forge_requirements.py::test_u1_v1_instance_matches_legacy[data-periods]
+- prohibition: test/test_forge_requirements.py::test_u1_v1_instance_matches_legacy[capex-periods]
+- prohibition: test/test_forge_requirements.py::test_u1_legacy_instance_unchanged[capex-periods]
+- prohibition: test/test_forge_requirements.py::test_u1_legacy_instance_unchanged[data-periods]
+- prohibition: test/test_forge_requirements.py::test_u1_legacy_instance_unchanged[data-single]
+- prohibition: test/test_forge_requirements.py::test_u1_legacy_instance_unchanged[secant-periods]
+- prohibition: test/test_forge_requirements.py::test_u1_legacy_instance_unchanged[secant-single]
+- prohibition: test/test_forge_requirements.py::test_cr_instance_uses_one_representation[secant-legacy-default]
+- prohibition: test/test_forge_requirements.py::test_cr_instance_uses_one_representation[nonlinear-legacy-default]
+- prohibition: test/test_forge_requirements.py::test_cr_instance_uses_one_representation[iterative-legacy-default]
+- fixtures: sealed graded files forge_legacy.json, forge_api.json, written by `LINOPY_SEMANTICS=legacy python forge_support.py fixtures OUT_DIR, run in the verifier image over the unmodified base checkout` from the base checkout (the requirement checks compare with what the unmodified base builds under legacy semantics and with its public API; both were written once from the base checkout before any submission existed, byte-identical on two linux/arm64 hosts and under linux/amd64 emulation, and are sealed so grading never solves the base again)
+- deselected: test/test_optimization_expressions.py::TestExpressionsWithPiecewise::test_expressions_opex (Fails under the reference solution itself (piecewise opex expression disagrees with statistics under linopy v1, an upstream defect of PyPSA PR 1829) and errors at setup on the base commit, so it can witness neither the migration nor a regression; deselected from every run.)
+- deselected: test/test_optimization_expressions.py::TestExpressionsWithPiecewise::test_expressions_energy_balance (Fails under the reference solution itself (piecewise energy-balance expression disagrees with statistics under linopy v1, an upstream defect of PyPSA PR 1829) and errors at setup on the base commit, so it can witness neither the migration nor a regression; deselected from every run.)
+- deselected: test/test_statistics.py::TestPortEfficiency::test_dynamic_link_port1_return_type[Link-False-DataFrame] (The test passes an as_xarray keyword to port_efficiency, a parameter that does not exist at the base commit and that the instruction does not state; a solver could pass it only by inventing the exact keyword name, so it is deselected from every run (operator decision, eighth amendment).)
+- deselected: test/test_statistics.py::TestPortEfficiency::test_dynamic_link_port1_return_type[Link-True-DataArray] (The test passes an as_xarray keyword to port_efficiency, a parameter that does not exist at the base commit and that the instruction does not state; a solver could pass it only by inventing the exact keyword name, so it is deselected from every run (operator decision, eighth amendment).)
+- deselected: test/test_statistics.py::TestPortEfficiency::test_dynamic_link_port1_return_type[Process-False-DataFrame] (The test passes an as_xarray keyword to port_efficiency, a parameter that does not exist at the base commit and that the instruction does not state; a solver could pass it only by inventing the exact keyword name, so it is deselected from every run (operator decision, eighth amendment).)
+- deselected: test/test_statistics.py::TestPortEfficiency::test_dynamic_link_port1_return_type[Process-True-DataArray] (The test passes an as_xarray keyword to port_efficiency, a parameter that does not exist at the base commit and that the instruction does not state; a solver could pass it only by inventing the exact keyword name, so it is deselected from every run (operator decision, eighth amendment).)
+- option guard: linopy.options['semantics'] stays 'v1' for every read and write while a graded test runs (the instruction asks for multi-period optimisation to work under linopy's v1 semantics, which the verifier selects; a submission that switches linopy back to legacy semantics, even for one model build, sidesteps the migration rather than making it); a run that moves it is refused and scores 0.
+- option guard bindings: linopy.semantics.is_v1, linopy.config.V1_SEMANTICS, linopy.config.LEGACY_SEMANTICS, linopy.config.VALID_SEMANTICS keep their values for the whole run (these decide which semantics linopy applies without passing through the option, so replacing one is switching the semantics by another route; every other linopy function is left to the graded tests, because the instruction does not forbid wrapping or replacing one); a run that changes one is refused and scores 0.
+- runner integrity: _pytest.reports.BaseReport.passed, _pytest.reports.BaseReport.failed, _pytest.reports.BaseReport.skipped, _pytest.reports.TestReport.__init__, _pytest.reports.TestReport.from_item_and_call, _pytest.runner.CallInfo.from_call, _pytest.runner.call_and_report, _pytest.runner.runtestprotocol, _pytest.runner.pytest_runtest_protocol, _pytest.runner.pytest_runtest_setup, _pytest.runner.pytest_runtest_call, _pytest.runner.pytest_runtest_teardown, _pytest.runner.pytest_runtest_makereport, _pytest.runner.check_interactive_exception, _pytest.skipping.pytest_runtest_makereport, _pytest.python.Function.runtest, _pytest.python.pytest_pyfunc_call, _pytest.main.pytest_runtestloop, _pytest.main.Session.perform_collect, _pytest.terminal.TerminalReporter.pytest_runtest_logreport, _pytest.terminal.TerminalReporter.short_test_summary, _pytest.terminal.TerminalReporter.summary_stats, _pytest.terminal._get_line_with_reprcrash_message, _pytest.assertion.rewrite.AssertionRewritingHook.find_spec, _pytest.assertion.rewrite.AssertionRewritingHook.exec_module, _pytest.assertion.rewrite.rewrite_asserts, pluggy._hooks.HookCaller.__call__, pluggy._manager.PluginManager._hookexec, pluggy._callers._multicall, pytest.approx, _pytest.python_api.approx, _pytest.python_api.ApproxBase.__eq__, _pytest.python_api.ApproxScalar.__eq__, _pytest.python_api.ApproxMapping.__eq__, _pytest.python_api.ApproxSequenceLike.__eq__, _pytest.python_api.ApproxNumpy.__eq__, numpy.testing.assert_allclose, numpy.testing.assert_array_equal, numpy.testing.assert_array_almost_equal, numpy.testing.assert_almost_equal, numpy.testing._private.utils.assert_array_compare, pandas.testing.assert_frame_equal, pandas.testing.assert_series_equal, pandas.testing.assert_index_equal, pandas._testing.asserters.assert_almost_equal, pandas._testing.asserters.assert_extension_array_equal, pandas._libs.testing.assert_almost_equal, every builtin and the import machinery keep their identity and code for the whole run (these decide whether a graded test passes and how pytest reports it, or compare the values the graded tests assert on; the submission is imported into the process that runs the tests, so replacing one of them passes a test without solving it), and a test the log reports passed must be one the guard saw raise nothing; a run that breaks either is refused and scores 0.
+
+## Rubric
+
+- G1 (red_line.4, outcome, prohibition, weight 5, ABSENCE, compiled): Fewer than 10% of the sealed fail-to-pass nodes R1 counts (steps S1 to S4) pass against the submitted pypsa/, or none of the fail-to-pass nodes of steps S1 to S4 and S6 (718 nodes) passes; while either holds every item scores 0, so the empty submission and any submission that does no migration work score exactly 0. Above that gate G1, K1, U2 and P1 score in proportion to the R1 share, so credit for breaking nothing grows with the work done.
+- R1 (deliverable.instruction, outcome, weight 5, VALUE, compiled): Share of the 199 sealed upstream fail-to-pass nodes of steps S1 to S4 that pass against the submitted pypsa/ under linopy 0.10.0 v1 semantics.
+- M1 (deliverable.instruction, coverage, weight 5, EFFECT, compiled): Multi-period networks build and solve under v1, with per-period storage, ramp, growth, and global constraints (32 nodes).
+- M2 (deliverable.instruction, coverage, weight 5, EFFECT, compiled): Every network of the fixed set, single-period or multi-period, reaches under v1 the optimum the unmodified base reaches under legacy semantics, with a solution that, mapped to the MultiIndex, is feasible and optimal in the base's legacy model (35 nodes).
+- E1 (deliverable.instruction, coverage, weight 3, EFFECT, compiled): The optimisation expressions (n.optimize.expressions) build and evaluate under v1 on single-period networks, including snapshot subsets and at_port selections (58 nodes).
+- S1 (deliverable.instruction, coverage, weight 3, EFFECT, compiled): The statistics of a solved multi-period model work under v1: capex, opex, and system cost, weighted by period and consistent with the objective (7 nodes).
+- PW (deliverable.instruction, coverage, weight 3, EFFECT, compiled): Piecewise costs build, solve, and report under v1 in the expressions and statistics (9 nodes).
+- UC (deliverable.instruction, coverage, weight 3, EFFECT, compiled): Unit commitment builds, solves, and reports operational expenditure under v1 (1 nodes).
+- TD (deliverable.instruction, coverage, weight 3, EFFECT, compiled): Links with transport delays across investment periods or scenarios build and solve under v1 (7 nodes).
+- AG (deliverable.instruction, coverage, weight 3, EFFECT, compiled): The optimisation expressions, evaluated at the solution, agree with n.statistics of the solved model, including over a subset of snapshots, with groupby=False, and for transmission (526 nodes).
+- O1 (deliverable.instruction, coverage, weight 3, EFFECT, compiled): pypsa.options.optimization.model_snapshot_index defaults to auto, and multiindex, flat, and auto select the representation a newly built model gives its snapshots, auto meaning flat while v1 is active (8 nodes).
+- O2 (deliverable.instruction, coverage, weight 3, EFFECT, compiled): Under flat, a model's snapshot dimension is labelled by the (period, timestep) tuples and followed by period and timestep coordinates in that order (5 nodes).
+- CR (deliverable.instruction, coverage, weight 3, EFFECT, compiled): A model uses its representation consistently: its variables, constraints, parameters, the snapshot-indexed component data it reads, and the snapshots it passes to extra_functionality (28 nodes).
+- K1 (deliverable.instruction, constraints, prohibition, weight 5, INVARIANT, compiled): At least one of the 221 pass-to-pass graded nodes of step S5, the component, optimization, statistics, piecewise, and transport-delay behaviour that passes at base commit 6d1da8049b33, fails or errors against the submitted pypsa/.
+- U1 (deliverable.instruction, constraints, prohibition, weight 3, INVARIANT, compiled): A single-period network built under v1, or any network built under legacy semantics, gives a model that differs from the one the unmodified base builds under legacy semantics, as keyed sets of variables, bounds, constraints, coefficients, and objective terms, or reaches a different objective (43 nodes).
+- U2 (deliverable.instruction, constraints, prohibition, weight 3, INVARIANT, compiled): A public base_commit function or method is removed, or loses, renames, reorders, or re-defaults an existing parameter, or gains a parameter without a default (63 nodes).
+- B1 (deliverable.instruction, robustness, weight 3, EFFECT, compiled): test_model_snapshot_index_invalid_option passes: building a model with optimization.model_snapshot_index set to a value other than 'auto', 'flat', or 'multiindex' raises ValueError.
+- P1 (deliverable.instruction, process, prohibition, weight 3, ABSENCE, compiled): The submitted /app/pypsa/pypsa tree carries a conftest.py, sitecustomize.py, usercustomize.py, or .pth file, a file that would steer the graded test run and that the verifier drops from the overlay.
+- A1 (deliverable.instruction, craft, weight 1, VALUE, compiled): pypsa.options.describe() lists optimization.model_snapshot_index with a non-empty Description line, so the new option is documented in PyPSA's options registry.
+- JTR-cov (deliverable.instruction, coverage, weight 3, EFFECT, judged): In pypsa/optimization/expressions.py, for every network and every branch component, the transmission expression (the inner func of the transmission method) takes the port efficiency and the snapshot weighting at the flow variable's own snapshot labels, in the representation optimization.model_snapshot_index selects: the flat (period, timestep) tuple labels with "flat", or with "auto" while linopy's v1 semantics are active, and the MultiIndex with "multiindex", or with "auto" under the legacy semantics.
+  - residue: Universal over networks, inputs and call paths reaching this function; a finite test refutes instances but cannot decide the claim. Judged from the diff against the requirement that a model uses its representation consistently.
+- JTR-leg (deliverable.instruction, constraints, prohibition, weight 3, INVARIANT, judged): For some network and some branch component under legacy semantics with optimization.model_snapshot_index at its default, "auto" or "multiindex", the change makes the transmission expression (the inner func of the transmission method) in pypsa/optimization/expressions.py report a different value than base_commit reports for the same input.
+  - residue: Universal over networks, inputs and call paths reaching this function; a finite test refutes instances but cannot decide the claim. Judged from the diff as a semantic comparison with base_commit.
+- JSM-cov (deliverable.instruction, coverage, weight 3, EFFECT, judged): In pypsa/optimization/optimize.py, for every network and every call path into solve_model, the snapshots solve_model passes to extra_functionality are in the representation the model was built with.
+  - residue: Universal over networks, inputs and call paths reaching this function; a finite test refutes instances but cannot decide the claim. Judged from the diff against the requirement that a model uses its representation consistently.
+- JSM-leg (deliverable.instruction, constraints, prohibition, weight 3, INVARIANT, judged): For some network or call path under legacy semantics with optimization.model_snapshot_index at its default, "auto" or "multiindex", the change makes solve_model in pypsa/optimization/optimize.py pass extra_functionality anything other than the snapshots the model was built over, labelled as in the network's own snapshot index.
+  - residue: Universal over networks, inputs and call paths reaching this function; a finite test refutes instances but cannot decide the claim. Judged from the diff against the value the instruction requires: the build snapshots, labelled as in the network's own index. That value differs from base_commit, which passes n.snapshots even when a model is built over a subset.
+- JCM-cov (deliverable.instruction, coverage, weight 3, EFFECT, judged): In pypsa/optimization/optimize.py, for every network and every transmission_losses setting create_model accepts, the snapshots create_model selects and passes to the variable and constraint builders and to n.model.parameters are in the representation optimization.model_snapshot_index selects: the flat (period, timestep) tuple labels with "flat", or with "auto" while linopy's v1 semantics are active, and the MultiIndex with "multiindex", or with "auto" under the legacy semantics.
+  - residue: Universal over networks, inputs and call paths reaching this function; a finite test refutes instances but cannot decide the claim. Judged from the diff against the requirement that a model uses its representation consistently.
+- JCM-leg (deliverable.instruction, constraints, prohibition, weight 3, INVARIANT, judged): For some network and some input base_commit handles, under legacy semantics with optimization.model_snapshot_index at its default, "auto" or "multiindex", the change makes create_model in pypsa/optimization/optimize.py hand the variable and constraint builders different snapshots than base_commit hands them.
+  - residue: Universal over networks, inputs and call paths reaching this function; a finite test refutes instances but cannot decide the claim. Judged from the diff as a semantic comparison with base_commit.
+- JSL-cov (deliverable.instruction, coverage, prohibition, weight 3, ABSENCE, judged): For some network with secant transmission losses and some value of optimization.model_snapshot_index, the change makes define_secant_loss_constraints in pypsa/optimization/constraints.py read its per-snapshot line data in a fixed snapshot representation instead of the representation of the snapshots it is given.
+  - residue: Universal over networks, inputs and call paths reaching this function; a finite test refutes instances but cannot decide the claim. Judged from the diff against the requirement that a model uses its representation consistently.
+- JSL-leg (deliverable.instruction, constraints, prohibition, weight 3, INVARIANT, judged): For some network with secant transmission losses under legacy semantics with optimization.model_snapshot_index at its default, "auto" or "multiindex", the change makes define_secant_loss_constraints in pypsa/optimization/constraints.py build different secant loss constraints from the snapshots it is given than base_commit builds.
+  - residue: Universal over networks, inputs and call paths reaching this function; a finite test refutes instances but cannot decide the claim. Judged from the diff as a semantic comparison with base_commit.
+- JFX-cov (deliverable.instruction, coverage, prohibition, weight 3, ABSENCE, judged): For some snapshot-indexed array and some value of optimization.model_snapshot_index, the change makes _from_xarray in pypsa/components/array.py assume a fixed snapshot representation when it converts the array, instead of the representation the option selects.
+  - residue: Universal over networks, inputs and call paths reaching this function; a finite test refutes instances but cannot decide the claim. Judged from the diff against the requirement that a model uses its representation consistently.
+- JFX-leg (deliverable.instruction, constraints, prohibition, weight 3, INVARIANT, judged): For some array and some component under legacy semantics with optimization.model_snapshot_index at its default, "auto" or "multiindex", the change makes _from_xarray in pypsa/components/array.py return a different result than base_commit returns for the same input.
+  - residue: Universal over networks, inputs and call paths reaching this function; a finite test refutes instances but cannot decide the claim. Judged from the diff as a semantic comparison with base_commit.
+- JAD-cov (deliverable.instruction, coverage, prohibition, weight 3, ABSENCE, judged): For some component and some value of optimization.model_snapshot_index, the change makes _as_dynamic in pypsa/components/array.py build the dynamic frame for static attributes on a fixed snapshot representation instead of the representation the option selects.
+  - residue: Universal over networks, inputs and call paths reaching this function; a finite test refutes instances but cannot decide the claim. Judged from the diff against the requirement that a model uses its representation consistently.
+- JAD-leg (deliverable.instruction, constraints, prohibition, weight 3, INVARIANT, judged): For some component and some snapshots under legacy semantics with optimization.model_snapshot_index at its default, "auto" or "multiindex", the change makes _as_dynamic in pypsa/components/array.py build a different dynamic frame than base_commit builds for the same input.
+  - residue: Universal over networks, inputs and call paths reaching this function; a finite test refutes instances but cannot decide the claim. Judged from the diff as a semantic comparison with base_commit.
+- JNL-cov (deliverable.instruction, coverage, prohibition, weight 3, ABSENCE, judged): For some network and some value of optimization.model_snapshot_index, the change makes optimize_and_run_non_linear_powerflow in pypsa/optimization/abstract.py force the snapshots it passes to the optimisation into a fixed snapshot representation instead of leaving them in a form the selected representation accepts.
+  - residue: Universal over networks, inputs and call paths reaching this function; a finite test refutes instances but cannot decide the claim. Judged from the diff against the requirement that a model uses its representation consistently.
+- JNL-leg (deliverable.instruction, constraints, prohibition, weight 3, INVARIANT, judged): For some network and some request under legacy semantics with optimization.model_snapshot_index at its default, "auto" or "multiindex", the change makes optimize_and_run_non_linear_powerflow in pypsa/optimization/abstract.py optimise or power-flow different snapshots than base_commit does for the same request.
+  - residue: Universal over networks, inputs and call paths reaching this function; a finite test refutes instances but cannot decide the claim. Judged from the diff as a semantic comparison with base_commit.
+- JIT-cov (deliverable.instruction, coverage, prohibition, weight 3, ABSENCE, judged): For some network, some iteration and some value of optimization.model_snapshot_index, the change makes optimize_transmission_expansion_iteratively in pypsa/optimization/abstract.py force the snapshots it passes to that iteration's optimisation into a fixed snapshot representation instead of leaving them in a form the selected representation accepts.
+  - residue: Universal over networks, inputs and call paths reaching this function; a finite test refutes instances but cannot decide the claim. Judged from the diff against the requirement that a model uses its representation consistently.
+- JIT-leg (deliverable.instruction, constraints, prohibition, weight 3, INVARIANT, judged): For some network, some request and some iteration under legacy semantics with optimization.model_snapshot_index at its default, "auto" or "multiindex", the change makes optimize_transmission_expansion_iteratively in pypsa/optimization/abstract.py pass that iteration's optimisation different snapshots than base_commit passes for the same request.
+  - residue: Universal over networks, inputs and call paths reaching this function; a finite test refutes instances but cannot decide the claim. Judged from the diff as a semantic comparison with base_commit.
+- JIC-cov (deliverable.instruction, coverage, prohibition, weight 3, ABSENCE, judged): For some multi-period network and some value of optimization.model_snapshot_index, the change makes installed_capex in pypsa/statistics/expressions.py make its investment-period weighting depend on a fixed snapshot representation instead of the representation the option selects.
+  - residue: Universal over networks, inputs and call paths reaching this function; a finite test refutes instances but cannot decide the claim. Judged from the diff against the requirement that a model uses its representation consistently.
+- JIC-leg (deliverable.instruction, constraints, prohibition, weight 3, INVARIANT, judged): For some multi-period network under legacy semantics with optimization.model_snapshot_index at its default, "auto" or "multiindex", the change makes installed_capex in pypsa/statistics/expressions.py report a different period-weighted installed capex than base_commit reports.
+  - residue: Universal over networks, inputs and call paths reaching this function; a finite test refutes instances but cannot decide the claim. Judged from the diff as a semantic comparison with base_commit.
+
+Judged items are graded in two stages (tests/judge/stages.json): the verifier writes /logs/verifier/judge-request.json, openai gpt-6.1-sol judges it on the host over 20 trials per item, and tests/combine.py sets the reward to the compiled score times (compiled weight + judged weight x judged score) / total weight, so a judged item only lowers it. No request is written when the compiled score is 0, and a grader without stage 2 keeps the compiled score.
+
+### Judged controls
+
+- JTR-cov: oracle (YES), approach-a (YES), unchanged-func (YES), unchanged-solve-model (YES), unchanged-create-model (YES), jtr-cov-w1 (NO), jtr-cov-w2 (NO), jtr-cov-w3 (NO)
+- JTR-leg: oracle (NO), approach-a (NO), unchanged-func (NO), unchanged-solve-model (NO), unchanged-create-model (NO), jtr-leg-w1 (YES), jtr-leg-w2 (YES), jtr-leg-w3 (YES)
+- JSM-cov: oracle (YES), approach-a (YES), unchanged-func (YES), unchanged-solve-model (YES), unchanged-create-model (YES), jsm-cov-w1 (NO), jsm-cov-w2 (NO), jsm-cov-w3 (NO)
+- JSM-leg: oracle (NO), approach-a (NO), unchanged-func (NO), unchanged-solve-model (NO), unchanged-create-model (NO), jsm-leg-w1 (YES), jsm-leg-w2 (YES), jsm-leg-w3 (YES)
+- JCM-cov: oracle (YES), approach-a (YES), unchanged-func (YES), unchanged-solve-model (YES), unchanged-create-model (YES), jcm-cov-w1 (NO), jcm-cov-w2 (NO), jcm-cov-w3 (NO)
+- JCM-leg: oracle (NO), approach-a (NO), unchanged-func (NO), unchanged-solve-model (NO), unchanged-create-model (NO), jcm-leg-w1 (YES), jcm-leg-w2 (YES), jcm-leg-w3 (YES)
+- JSL-cov: oracle (NO), approach-a (NO), unchanged-func (NO), unchanged-solve-model (NO), unchanged-create-model (NO), jsl-cov-w1 (YES), jsl-cov-w2 (YES), jsl-cov-w3 (YES)
+- JSL-leg: oracle (NO), approach-a (NO), unchanged-func (NO), unchanged-solve-model (NO), unchanged-create-model (NO), jsl-leg-w1 (YES), jsl-leg-w2 (YES), jsl-leg-w3 (YES)
+- JFX-cov: oracle (NO), approach-a (NO), unchanged-func (NO), unchanged-solve-model (NO), unchanged-create-model (NO), jfx-cov-w1 (YES), jfx-cov-w2 (YES), jfx-cov-w3 (YES)
+- JFX-leg: oracle (NO), approach-a (NO), unchanged-func (NO), unchanged-solve-model (NO), unchanged-create-model (NO), jfx-leg-w1 (YES), jfx-leg-w2 (YES), jfx-leg-w3 (YES)
+- JAD-cov: oracle (NO), approach-a (NO), unchanged-func (NO), unchanged-solve-model (NO), unchanged-create-model (NO), jad-cov-w1 (YES), jad-cov-w2 (YES), jad-cov-w3 (YES)
+- JAD-leg: oracle (NO), approach-a (NO), unchanged-func (NO), unchanged-solve-model (NO), unchanged-create-model (NO), jad-leg-w1 (YES), jad-leg-w2 (YES), jad-leg-w3 (YES)
+- JNL-cov: oracle (NO), approach-a (NO), unchanged-func (NO), unchanged-solve-model (NO), unchanged-create-model (NO), jnl-cov-w1 (YES), jnl-cov-w2 (YES), jnl-cov-w3 (YES)
+- JNL-leg: oracle (NO), approach-a (NO), unchanged-func (NO), unchanged-solve-model (NO), unchanged-create-model (NO), jnl-leg-w1 (YES), jnl-leg-w2 (YES), jnl-leg-w3 (YES)
+- JIT-cov: oracle (NO), approach-a (NO), unchanged-func (NO), unchanged-solve-model (NO), unchanged-create-model (NO), jit-cov-w1 (YES), jit-cov-w2 (YES), jit-cov-w3 (YES)
+- JIT-leg: oracle (NO), approach-a (NO), unchanged-func (NO), unchanged-solve-model (NO), unchanged-create-model (NO), jit-leg-w1 (YES), jit-leg-w2 (YES), jit-leg-w3 (YES)
+- JIC-cov: oracle (NO), approach-a (NO), unchanged-func (NO), unchanged-solve-model (NO), unchanged-create-model (NO), jic-cov-w1 (YES), jic-cov-w2 (YES), jic-cov-w3 (YES)
+- JIC-leg: oracle (NO), approach-a (NO), unchanged-func (NO), unchanged-solve-model (NO), unchanged-create-model (NO), jic-leg-w1 (YES), jic-leg-w2 (YES), jic-leg-w3 (YES)
+- case oracle: known-right: oracle
+- case approach-a: known-right: approach-a
+- case unchanged-func: known-right: unchanged-func
+- case unchanged-solve-model: known-right: unchanged-solve-model
+- case unchanged-create-model: known-right: unchanged-create-model
+- case jtr-cov-w1: known-wrong for JTR-cov: port efficiency taken at the network's snapshots, not the variable's (pypsa/optimization/expressions.py)
+- case jtr-cov-w2: known-wrong for JTR-cov: snapshot weighting relabelled with the network's MultiIndex (pypsa/optimization/expressions.py)
+- case jtr-cov-w3: known-wrong for JTR-cov: variable's snapshot labels always flattened (pypsa/optimization/expressions.py)
+- case jtr-leg-w1: known-wrong for JTR-leg: port efficiency dropped (pypsa/optimization/expressions.py)
+- case jtr-leg-w2: known-wrong for JTR-leg: flow sign reversed (pypsa/optimization/expressions.py)
+- case jtr-leg-w3: known-wrong for JTR-leg: snapshot weights normalised before aggregation (pypsa/optimization/expressions.py)
+- case jsm-cov-w1: known-wrong for JSM-cov: extra_functionality receives the network's snapshots (pypsa/optimization/optimize.py)
+- case jsm-cov-w2: known-wrong for JSM-cov: extra_functionality always receives flat labels (pypsa/optimization/optimize.py)
+- case jsm-cov-w3: known-wrong for JSM-cov: extra_functionality always receives a MultiIndex on periodic networks (pypsa/optimization/optimize.py)
+- case jsm-leg-w1: known-wrong for JSM-leg: first snapshot dropped (pypsa/optimization/optimize.py)
+- case jsm-leg-w2: known-wrong for JSM-leg: investment periods passed on periodic networks (pypsa/optimization/optimize.py)
+- case jsm-leg-w3: known-wrong for JSM-leg: only the timestep level passed on periodic networks (pypsa/optimization/optimize.py)
+- case jcm-cov-w1: known-wrong for JCM-cov: model snapshots never rebound to the selected representation (pypsa/optimization/optimize.py)
+- case jcm-cov-w2: known-wrong for JCM-cov: secant constraints built over the network's snapshots (pypsa/optimization/optimize.py)
+- case jcm-cov-w3: known-wrong for JCM-cov: representation fixed to flat (pypsa/optimization/optimize.py)
+- case jcm-leg-w1: known-wrong for JCM-leg: secant constraints skip the first snapshot (pypsa/optimization/optimize.py)
+- case jcm-leg-w2: known-wrong for JCM-leg: secant constraints over every network snapshot (pypsa/optimization/optimize.py)
+- case jcm-leg-w3: known-wrong for JCM-leg: secant constraints over every other snapshot (pypsa/optimization/optimize.py)
+- case jsl-cov-w1: known-wrong for JSL-cov: s_max_pu read at the network's snapshots (pypsa/optimization/constraints.py)
+- case jsl-cov-w2: known-wrong for JSL-cov: active read at flattened labels (pypsa/optimization/constraints.py)
+- case jsl-cov-w3: known-wrong for JSL-cov: active read at the network's snapshots (pypsa/optimization/constraints.py)
+- case jsl-leg-w1: known-wrong for JSL-leg: secant breakpoints ignore s_max_pu (pypsa/optimization/constraints.py)
+- case jsl-leg-w2: known-wrong for JSL-leg: secant offset halved (pypsa/optimization/constraints.py)
+- case jsl-leg-w3: known-wrong for JSL-leg: secant inequality reversed (pypsa/optimization/constraints.py)
+- case jfx-cov-w1: known-wrong for JFX-cov: labels always rebuilt as a period/timestep MultiIndex (pypsa/components/array.py)
+- case jfx-cov-w2: known-wrong for JFX-cov: labels replaced positionally by the network's snapshots (pypsa/components/array.py)
+- case jfx-cov-w3: known-wrong for JFX-cov: labels always flattened (pypsa/components/array.py)
+- case jfx-leg-w1: known-wrong for JFX-leg: missing values filled with zero (pypsa/components/array.py)
+- case jfx-leg-w2: known-wrong for JFX-leg: frame transposed (pypsa/components/array.py)
+- case jfx-leg-w3: known-wrong for JFX-leg: two-dimensional snapshot frame transposed (pypsa/components/array.py)
+- case jad-cov-w1: known-wrong for JAD-cov: snapshots always flattened (pypsa/components/array.py)
+- case jad-cov-w2: known-wrong for JAD-cov: static frame indexed by the network's snapshots (pypsa/components/array.py)
+- case jad-cov-w3: known-wrong for JAD-cov: result relabelled as a period/timestep MultiIndex (pypsa/components/array.py)
+- case jad-leg-w1: known-wrong for JAD-leg: missing snapshots filled with zero (pypsa/components/array.py)
+- case jad-leg-w2: known-wrong for JAD-leg: static values replaced by zeros (pypsa/components/array.py)
+- case jad-leg-w3: known-wrong for JAD-leg: column axis renamed (pypsa/components/array.py)
+- case jnl-cov-w1: known-wrong for JNL-cov: default snapshots always flattened (pypsa/optimization/abstract.py)
+- case jnl-cov-w2: known-wrong for JNL-cov: optimised snapshots always flattened (pypsa/optimization/abstract.py)
+- case jnl-cov-w3: known-wrong for JNL-cov: optimised snapshots flattened while linopy's v1 semantics are active (pypsa/optimization/abstract.py)
+- case jnl-leg-w1: known-wrong for JNL-leg: last snapshot dropped by default (pypsa/optimization/abstract.py)
+- case jnl-leg-w2: known-wrong for JNL-leg: requested snapshots ignored in the optimisation (pypsa/optimization/abstract.py)
+- case jnl-leg-w3: known-wrong for JNL-leg: power flow runs over every network snapshot (pypsa/optimization/abstract.py)
+- case jit-cov-w1: known-wrong for JIT-cov: iterations optimise flattened snapshots (pypsa/optimization/abstract.py)
+- case jit-cov-w2: known-wrong for JIT-cov: iterations optimise flattened snapshots while linopy's v1 semantics are active (pypsa/optimization/abstract.py)
+- case jit-cov-w3: known-wrong for JIT-cov: final run optimises flattened snapshots (pypsa/optimization/abstract.py)
+- case jit-leg-w1: known-wrong for JIT-leg: iterations optimise only the first snapshot (pypsa/optimization/abstract.py)
+- case jit-leg-w2: known-wrong for JIT-leg: final run ignores the requested snapshots (pypsa/optimization/abstract.py)
+- case jit-leg-w3: known-wrong for JIT-leg: iterations ignore the requested snapshots (pypsa/optimization/abstract.py)
+- case jic-cov-w1: known-wrong for JIC-cov: period weights looked up from the model's MultiIndex levels (pypsa/statistics/expressions.py)
+- case jic-cov-w2: known-wrong for JIC-cov: weighting applied only when the model is indexed by a MultiIndex (pypsa/statistics/expressions.py)
+- case jic-cov-w3: known-wrong for JIC-cov: weights reindexed on the model's period level (pypsa/statistics/expressions.py)
+- case jic-leg-w1: known-wrong for JIC-leg: capex divided by the period weights (pypsa/statistics/expressions.py)
+- case jic-leg-w2: known-wrong for JIC-leg: years weighting used instead of objective (pypsa/statistics/expressions.py)
+- case jic-leg-w3: known-wrong for JIC-leg: every period weighted by the mean weight (pypsa/statistics/expressions.py)

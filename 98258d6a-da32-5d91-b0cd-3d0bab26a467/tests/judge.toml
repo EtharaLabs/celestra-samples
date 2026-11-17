@@ -1,0 +1,271 @@
+# GENERATED SECTION. DO NOT HAND-EDIT.
+
+[[criterion]]
+id = "JTR-cov"
+description = "In pypsa/optimization/expressions.py, for every network and every branch component, the transmission expression (the inner func of the transmission method) takes the port efficiency and the snapshot weighting at the flow variable's own snapshot labels, in the representation optimization.model_snapshot_index selects: the flat (period, timestep) tuple labels with \"flat\", or with \"auto\" while linopy's v1 semantics are active, and the MultiIndex with \"multiindex\", or with \"auto\" under the legacy semantics."
+type = "binary"
+weight = 3
+negate = false
+
+[criterion.annotations]
+mode = "judged"
+type = "EFFECT"
+obligation = "deliverable.instruction"
+dimension = "coverage"
+evidence = ["/logs/verifier/submission.diff, carried as the solver output in /logs/verifier/judge-request.json"]
+residue = "Universal over networks, inputs and call paths reaching this function; a finite test refutes instances but cannot decide the claim. Judged from the diff against the requirement that a model uses its representation consistently."
+
+[[criterion]]
+id = "JTR-leg"
+description = "For some network and some branch component under legacy semantics with optimization.model_snapshot_index at its default, \"auto\" or \"multiindex\", the change makes the transmission expression (the inner func of the transmission method) in pypsa/optimization/expressions.py report a different value than base_commit reports for the same input."
+type = "binary"
+weight = 3
+negate = true
+
+[criterion.annotations]
+mode = "judged"
+type = "INVARIANT"
+obligation = "deliverable.instruction"
+dimension = "constraints"
+evidence = ["/logs/verifier/submission.diff, carried as the solver output in /logs/verifier/judge-request.json"]
+residue = "Universal over networks, inputs and call paths reaching this function; a finite test refutes instances but cannot decide the claim. Judged from the diff as a semantic comparison with base_commit."
+
+[[criterion]]
+id = "JSM-cov"
+description = "In pypsa/optimization/optimize.py, for every network and every call path into solve_model, the snapshots solve_model passes to extra_functionality are in the representation the model was built with."
+type = "binary"
+weight = 3
+negate = false
+
+[criterion.annotations]
+mode = "judged"
+type = "EFFECT"
+obligation = "deliverable.instruction"
+dimension = "coverage"
+evidence = ["/logs/verifier/submission.diff, carried as the solver output in /logs/verifier/judge-request.json"]
+residue = "Universal over networks, inputs and call paths reaching this function; a finite test refutes instances but cannot decide the claim. Judged from the diff against the requirement that a model uses its representation consistently."
+
+[[criterion]]
+id = "JSM-leg"
+description = "For some network or call path under legacy semantics with optimization.model_snapshot_index at its default, \"auto\" or \"multiindex\", the change makes solve_model in pypsa/optimization/optimize.py pass extra_functionality anything other than the snapshots the model was built over, labelled as in the network's own snapshot index."
+type = "binary"
+weight = 3
+negate = true
+
+[criterion.annotations]
+mode = "judged"
+type = "INVARIANT"
+obligation = "deliverable.instruction"
+dimension = "constraints"
+evidence = ["/logs/verifier/submission.diff, carried as the solver output in /logs/verifier/judge-request.json"]
+residue = "Universal over networks, inputs and call paths reaching this function; a finite test refutes instances but cannot decide the claim. Judged from the diff against the value the instruction requires: the build snapshots, labelled as in the network's own index. That value differs from base_commit, which passes n.snapshots even when a model is built over a subset."
+
+[[criterion]]
+id = "JCM-cov"
+description = "In pypsa/optimization/optimize.py, for every network and every transmission_losses setting create_model accepts, the snapshots create_model selects and passes to the variable and constraint builders and to n.model.parameters are in the representation optimization.model_snapshot_index selects: the flat (period, timestep) tuple labels with \"flat\", or with \"auto\" while linopy's v1 semantics are active, and the MultiIndex with \"multiindex\", or with \"auto\" under the legacy semantics."
+type = "binary"
+weight = 3
+negate = false
+
+[criterion.annotations]
+mode = "judged"
+type = "EFFECT"
+obligation = "deliverable.instruction"
+dimension = "coverage"
+evidence = ["/logs/verifier/submission.diff, carried as the solver output in /logs/verifier/judge-request.json"]
+residue = "Universal over networks, inputs and call paths reaching this function; a finite test refutes instances but cannot decide the claim. Judged from the diff against the requirement that a model uses its representation consistently."
+
+[[criterion]]
+id = "JCM-leg"
+description = "For some network and some input base_commit handles, under legacy semantics with optimization.model_snapshot_index at its default, \"auto\" or \"multiindex\", the change makes create_model in pypsa/optimization/optimize.py hand the variable and constraint builders different snapshots than base_commit hands them."
+type = "binary"
+weight = 3
+negate = true
+
+[criterion.annotations]
+mode = "judged"
+type = "INVARIANT"
+obligation = "deliverable.instruction"
+dimension = "constraints"
+evidence = ["/logs/verifier/submission.diff, carried as the solver output in /logs/verifier/judge-request.json"]
+residue = "Universal over networks, inputs and call paths reaching this function; a finite test refutes instances but cannot decide the claim. Judged from the diff as a semantic comparison with base_commit."
+
+[[criterion]]
+id = "JSL-cov"
+description = "For some network with secant transmission losses and some value of optimization.model_snapshot_index, the change makes define_secant_loss_constraints in pypsa/optimization/constraints.py read its per-snapshot line data in a fixed snapshot representation instead of the representation of the snapshots it is given."
+type = "binary"
+weight = 3
+negate = true
+
+[criterion.annotations]
+mode = "judged"
+type = "ABSENCE"
+obligation = "deliverable.instruction"
+dimension = "coverage"
+evidence = ["/logs/verifier/submission.diff, carried as the solver output in /logs/verifier/judge-request.json"]
+residue = "Universal over networks, inputs and call paths reaching this function; a finite test refutes instances but cannot decide the claim. Judged from the diff against the requirement that a model uses its representation consistently."
+
+[[criterion]]
+id = "JSL-leg"
+description = "For some network with secant transmission losses under legacy semantics with optimization.model_snapshot_index at its default, \"auto\" or \"multiindex\", the change makes define_secant_loss_constraints in pypsa/optimization/constraints.py build different secant loss constraints from the snapshots it is given than base_commit builds."
+type = "binary"
+weight = 3
+negate = true
+
+[criterion.annotations]
+mode = "judged"
+type = "INVARIANT"
+obligation = "deliverable.instruction"
+dimension = "constraints"
+evidence = ["/logs/verifier/submission.diff, carried as the solver output in /logs/verifier/judge-request.json"]
+residue = "Universal over networks, inputs and call paths reaching this function; a finite test refutes instances but cannot decide the claim. Judged from the diff as a semantic comparison with base_commit."
+
+[[criterion]]
+id = "JFX-cov"
+description = "For some snapshot-indexed array and some value of optimization.model_snapshot_index, the change makes _from_xarray in pypsa/components/array.py assume a fixed snapshot representation when it converts the array, instead of the representation the option selects."
+type = "binary"
+weight = 3
+negate = true
+
+[criterion.annotations]
+mode = "judged"
+type = "ABSENCE"
+obligation = "deliverable.instruction"
+dimension = "coverage"
+evidence = ["/logs/verifier/submission.diff, carried as the solver output in /logs/verifier/judge-request.json"]
+residue = "Universal over networks, inputs and call paths reaching this function; a finite test refutes instances but cannot decide the claim. Judged from the diff against the requirement that a model uses its representation consistently."
+
+[[criterion]]
+id = "JFX-leg"
+description = "For some array and some component under legacy semantics with optimization.model_snapshot_index at its default, \"auto\" or \"multiindex\", the change makes _from_xarray in pypsa/components/array.py return a different result than base_commit returns for the same input."
+type = "binary"
+weight = 3
+negate = true
+
+[criterion.annotations]
+mode = "judged"
+type = "INVARIANT"
+obligation = "deliverable.instruction"
+dimension = "constraints"
+evidence = ["/logs/verifier/submission.diff, carried as the solver output in /logs/verifier/judge-request.json"]
+residue = "Universal over networks, inputs and call paths reaching this function; a finite test refutes instances but cannot decide the claim. Judged from the diff as a semantic comparison with base_commit."
+
+[[criterion]]
+id = "JAD-cov"
+description = "For some component and some value of optimization.model_snapshot_index, the change makes _as_dynamic in pypsa/components/array.py build the dynamic frame for static attributes on a fixed snapshot representation instead of the representation the option selects."
+type = "binary"
+weight = 3
+negate = true
+
+[criterion.annotations]
+mode = "judged"
+type = "ABSENCE"
+obligation = "deliverable.instruction"
+dimension = "coverage"
+evidence = ["/logs/verifier/submission.diff, carried as the solver output in /logs/verifier/judge-request.json"]
+residue = "Universal over networks, inputs and call paths reaching this function; a finite test refutes instances but cannot decide the claim. Judged from the diff against the requirement that a model uses its representation consistently."
+
+[[criterion]]
+id = "JAD-leg"
+description = "For some component and some snapshots under legacy semantics with optimization.model_snapshot_index at its default, \"auto\" or \"multiindex\", the change makes _as_dynamic in pypsa/components/array.py build a different dynamic frame than base_commit builds for the same input."
+type = "binary"
+weight = 3
+negate = true
+
+[criterion.annotations]
+mode = "judged"
+type = "INVARIANT"
+obligation = "deliverable.instruction"
+dimension = "constraints"
+evidence = ["/logs/verifier/submission.diff, carried as the solver output in /logs/verifier/judge-request.json"]
+residue = "Universal over networks, inputs and call paths reaching this function; a finite test refutes instances but cannot decide the claim. Judged from the diff as a semantic comparison with base_commit."
+
+[[criterion]]
+id = "JNL-cov"
+description = "For some network and some value of optimization.model_snapshot_index, the change makes optimize_and_run_non_linear_powerflow in pypsa/optimization/abstract.py force the snapshots it passes to the optimisation into a fixed snapshot representation instead of leaving them in a form the selected representation accepts."
+type = "binary"
+weight = 3
+negate = true
+
+[criterion.annotations]
+mode = "judged"
+type = "ABSENCE"
+obligation = "deliverable.instruction"
+dimension = "coverage"
+evidence = ["/logs/verifier/submission.diff, carried as the solver output in /logs/verifier/judge-request.json"]
+residue = "Universal over networks, inputs and call paths reaching this function; a finite test refutes instances but cannot decide the claim. Judged from the diff against the requirement that a model uses its representation consistently."
+
+[[criterion]]
+id = "JNL-leg"
+description = "For some network and some request under legacy semantics with optimization.model_snapshot_index at its default, \"auto\" or \"multiindex\", the change makes optimize_and_run_non_linear_powerflow in pypsa/optimization/abstract.py optimise or power-flow different snapshots than base_commit does for the same request."
+type = "binary"
+weight = 3
+negate = true
+
+[criterion.annotations]
+mode = "judged"
+type = "INVARIANT"
+obligation = "deliverable.instruction"
+dimension = "constraints"
+evidence = ["/logs/verifier/submission.diff, carried as the solver output in /logs/verifier/judge-request.json"]
+residue = "Universal over networks, inputs and call paths reaching this function; a finite test refutes instances but cannot decide the claim. Judged from the diff as a semantic comparison with base_commit."
+
+[[criterion]]
+id = "JIT-cov"
+description = "For some network, some iteration and some value of optimization.model_snapshot_index, the change makes optimize_transmission_expansion_iteratively in pypsa/optimization/abstract.py force the snapshots it passes to that iteration's optimisation into a fixed snapshot representation instead of leaving them in a form the selected representation accepts."
+type = "binary"
+weight = 3
+negate = true
+
+[criterion.annotations]
+mode = "judged"
+type = "ABSENCE"
+obligation = "deliverable.instruction"
+dimension = "coverage"
+evidence = ["/logs/verifier/submission.diff, carried as the solver output in /logs/verifier/judge-request.json"]
+residue = "Universal over networks, inputs and call paths reaching this function; a finite test refutes instances but cannot decide the claim. Judged from the diff against the requirement that a model uses its representation consistently."
+
+[[criterion]]
+id = "JIT-leg"
+description = "For some network, some request and some iteration under legacy semantics with optimization.model_snapshot_index at its default, \"auto\" or \"multiindex\", the change makes optimize_transmission_expansion_iteratively in pypsa/optimization/abstract.py pass that iteration's optimisation different snapshots than base_commit passes for the same request."
+type = "binary"
+weight = 3
+negate = true
+
+[criterion.annotations]
+mode = "judged"
+type = "INVARIANT"
+obligation = "deliverable.instruction"
+dimension = "constraints"
+evidence = ["/logs/verifier/submission.diff, carried as the solver output in /logs/verifier/judge-request.json"]
+residue = "Universal over networks, inputs and call paths reaching this function; a finite test refutes instances but cannot decide the claim. Judged from the diff as a semantic comparison with base_commit."
+
+[[criterion]]
+id = "JIC-cov"
+description = "For some multi-period network and some value of optimization.model_snapshot_index, the change makes installed_capex in pypsa/statistics/expressions.py make its investment-period weighting depend on a fixed snapshot representation instead of the representation the option selects."
+type = "binary"
+weight = 3
+negate = true
+
+[criterion.annotations]
+mode = "judged"
+type = "ABSENCE"
+obligation = "deliverable.instruction"
+dimension = "coverage"
+evidence = ["/logs/verifier/submission.diff, carried as the solver output in /logs/verifier/judge-request.json"]
+residue = "Universal over networks, inputs and call paths reaching this function; a finite test refutes instances but cannot decide the claim. Judged from the diff against the requirement that a model uses its representation consistently."
+
+[[criterion]]
+id = "JIC-leg"
+description = "For some multi-period network under legacy semantics with optimization.model_snapshot_index at its default, \"auto\" or \"multiindex\", the change makes installed_capex in pypsa/statistics/expressions.py report a different period-weighted installed capex than base_commit reports."
+type = "binary"
+weight = 3
+negate = true
+
+[criterion.annotations]
+mode = "judged"
+type = "INVARIANT"
+obligation = "deliverable.instruction"
+dimension = "constraints"
+evidence = ["/logs/verifier/submission.diff, carried as the solver output in /logs/verifier/judge-request.json"]
+residue = "Universal over networks, inputs and call paths reaching this function; a finite test refutes instances but cannot decide the claim. Judged from the diff as a semantic comparison with base_commit."

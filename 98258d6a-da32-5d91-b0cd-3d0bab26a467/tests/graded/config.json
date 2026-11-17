@@ -1,0 +1,905 @@
+{
+ "artifact": "/app/pypsa",
+ "cheat_checks": {
+  "cheat-check: the graded library option stayed on its graded value": "option_guard",
+  "cheat-check: the submission planted no test-steering file": "steering",
+  "cheat-check: the test runner, its assertion helpers and its reports stayed unaltered": "runner"
+ },
+ "deselect": [
+  "test/test_optimization_expressions.py::TestExpressionsWithPiecewise::test_expressions_opex",
+  "test/test_optimization_expressions.py::TestExpressionsWithPiecewise::test_expressions_energy_balance",
+  "test/test_statistics.py::TestPortEfficiency::test_dynamic_link_port1_return_type[Link-False-DataFrame]",
+  "test/test_statistics.py::TestPortEfficiency::test_dynamic_link_port1_return_type[Link-True-DataArray]",
+  "test/test_statistics.py::TestPortEfficiency::test_dynamic_link_port1_return_type[Process-False-DataFrame]",
+  "test/test_statistics.py::TestPortEfficiency::test_dynamic_link_port1_return_type[Process-True-DataArray]"
+ ],
+ "graded_files": [
+  {
+   "path": "test/conftest.py",
+   "sealed": "conftest.py"
+  },
+  {
+   "path": "test/test_components_array.py",
+   "sealed": "test_components_array.py"
+  },
+  {
+   "path": "test/test_lopf_multiinvest.py",
+   "sealed": "test_lopf_multiinvest.py"
+  },
+  {
+   "path": "test/test_optimization_expressions.py",
+   "sealed": "test_optimization_expressions.py"
+  },
+  {
+   "path": "test/test_optimization_expressions_equivalence.py",
+   "sealed": "test_optimization_expressions_equivalence.py"
+  },
+  {
+   "path": "test/test_optimization_piecewise.py",
+   "sealed": "test_optimization_piecewise.py"
+  },
+  {
+   "path": "test/test_statistics.py",
+   "sealed": "test_statistics.py"
+  },
+  {
+   "path": "test/test_transport_delay.py",
+   "sealed": "test_transport_delay.py"
+  },
+  {
+   "path": "test/test_forge_requirements.py",
+   "sealed": "test_forge_requirements.py"
+  },
+  {
+   "collect": false,
+   "path": "test/forge_support.py",
+   "sealed": "forge_support.py"
+  },
+  {
+   "collect": false,
+   "path": "test/forge_ag_cases.json",
+   "sealed": "forge_ag_cases.json"
+  },
+  {
+   "collect": false,
+   "path": "test/forge_legacy.json",
+   "sealed": "forge_legacy.json"
+  },
+  {
+   "collect": false,
+   "path": "test/forge_api.json",
+   "sealed": "forge_api.json"
+  }
+ ],
+ "judged": {
+  "compiled": {
+   "A1": 1,
+   "AG": 3,
+   "B1": 3,
+   "CR": 3,
+   "E1": 3,
+   "G1": 5,
+   "K1": 5,
+   "M1": 5,
+   "M2": 5,
+   "O1": 3,
+   "O2": 3,
+   "P1": 3,
+   "PW": 3,
+   "R1": 5,
+   "S1": 3,
+   "TD": 3,
+   "U1": 3,
+   "U2": 3,
+   "UC": 3
+  },
+  "controls": {
+   "JAD-cov": [
+    {
+     "case": "oracle",
+     "label": "NO"
+    },
+    {
+     "case": "approach-a",
+     "label": "NO"
+    },
+    {
+     "case": "unchanged-func",
+     "label": "NO"
+    },
+    {
+     "case": "unchanged-solve-model",
+     "label": "NO"
+    },
+    {
+     "case": "unchanged-create-model",
+     "label": "NO"
+    },
+    {
+     "case": "jad-cov-w1",
+     "label": "YES"
+    },
+    {
+     "case": "jad-cov-w2",
+     "label": "YES"
+    },
+    {
+     "case": "jad-cov-w3",
+     "label": "YES"
+    }
+   ],
+   "JAD-leg": [
+    {
+     "case": "oracle",
+     "label": "NO"
+    },
+    {
+     "case": "approach-a",
+     "label": "NO"
+    },
+    {
+     "case": "unchanged-func",
+     "label": "NO"
+    },
+    {
+     "case": "unchanged-solve-model",
+     "label": "NO"
+    },
+    {
+     "case": "unchanged-create-model",
+     "label": "NO"
+    },
+    {
+     "case": "jad-leg-w1",
+     "label": "YES"
+    },
+    {
+     "case": "jad-leg-w2",
+     "label": "YES"
+    },
+    {
+     "case": "jad-leg-w3",
+     "label": "YES"
+    }
+   ],
+   "JCM-cov": [
+    {
+     "case": "oracle",
+     "label": "YES"
+    },
+    {
+     "case": "approach-a",
+     "label": "YES"
+    },
+    {
+     "case": "unchanged-func",
+     "label": "YES"
+    },
+    {
+     "case": "unchanged-solve-model",
+     "label": "YES"
+    },
+    {
+     "case": "unchanged-create-model",
+     "label": "YES"
+    },
+    {
+     "case": "jcm-cov-w1",
+     "label": "NO"
+    },
+    {
+     "case": "jcm-cov-w2",
+     "label": "NO"
+    },
+    {
+     "case": "jcm-cov-w3",
+     "label": "NO"
+    }
+   ],
+   "JCM-leg": [
+    {
+     "case": "oracle",
+     "label": "NO"
+    },
+    {
+     "case": "approach-a",
+     "label": "NO"
+    },
+    {
+     "case": "unchanged-func",
+     "label": "NO"
+    },
+    {
+     "case": "unchanged-solve-model",
+     "label": "NO"
+    },
+    {
+     "case": "unchanged-create-model",
+     "label": "NO"
+    },
+    {
+     "case": "jcm-leg-w1",
+     "label": "YES"
+    },
+    {
+     "case": "jcm-leg-w2",
+     "label": "YES"
+    },
+    {
+     "case": "jcm-leg-w3",
+     "label": "YES"
+    }
+   ],
+   "JFX-cov": [
+    {
+     "case": "oracle",
+     "label": "NO"
+    },
+    {
+     "case": "approach-a",
+     "label": "NO"
+    },
+    {
+     "case": "unchanged-func",
+     "label": "NO"
+    },
+    {
+     "case": "unchanged-solve-model",
+     "label": "NO"
+    },
+    {
+     "case": "unchanged-create-model",
+     "label": "NO"
+    },
+    {
+     "case": "jfx-cov-w1",
+     "label": "YES"
+    },
+    {
+     "case": "jfx-cov-w2",
+     "label": "YES"
+    },
+    {
+     "case": "jfx-cov-w3",
+     "label": "YES"
+    }
+   ],
+   "JFX-leg": [
+    {
+     "case": "oracle",
+     "label": "NO"
+    },
+    {
+     "case": "approach-a",
+     "label": "NO"
+    },
+    {
+     "case": "unchanged-func",
+     "label": "NO"
+    },
+    {
+     "case": "unchanged-solve-model",
+     "label": "NO"
+    },
+    {
+     "case": "unchanged-create-model",
+     "label": "NO"
+    },
+    {
+     "case": "jfx-leg-w1",
+     "label": "YES"
+    },
+    {
+     "case": "jfx-leg-w2",
+     "label": "YES"
+    },
+    {
+     "case": "jfx-leg-w3",
+     "label": "YES"
+    }
+   ],
+   "JIC-cov": [
+    {
+     "case": "oracle",
+     "label": "NO"
+    },
+    {
+     "case": "approach-a",
+     "label": "NO"
+    },
+    {
+     "case": "unchanged-func",
+     "label": "NO"
+    },
+    {
+     "case": "unchanged-solve-model",
+     "label": "NO"
+    },
+    {
+     "case": "unchanged-create-model",
+     "label": "NO"
+    },
+    {
+     "case": "jic-cov-w1",
+     "label": "YES"
+    },
+    {
+     "case": "jic-cov-w2",
+     "label": "YES"
+    },
+    {
+     "case": "jic-cov-w3",
+     "label": "YES"
+    }
+   ],
+   "JIC-leg": [
+    {
+     "case": "oracle",
+     "label": "NO"
+    },
+    {
+     "case": "approach-a",
+     "label": "NO"
+    },
+    {
+     "case": "unchanged-func",
+     "label": "NO"
+    },
+    {
+     "case": "unchanged-solve-model",
+     "label": "NO"
+    },
+    {
+     "case": "unchanged-create-model",
+     "label": "NO"
+    },
+    {
+     "case": "jic-leg-w1",
+     "label": "YES"
+    },
+    {
+     "case": "jic-leg-w2",
+     "label": "YES"
+    },
+    {
+     "case": "jic-leg-w3",
+     "label": "YES"
+    }
+   ],
+   "JIT-cov": [
+    {
+     "case": "oracle",
+     "label": "NO"
+    },
+    {
+     "case": "approach-a",
+     "label": "NO"
+    },
+    {
+     "case": "unchanged-func",
+     "label": "NO"
+    },
+    {
+     "case": "unchanged-solve-model",
+     "label": "NO"
+    },
+    {
+     "case": "unchanged-create-model",
+     "label": "NO"
+    },
+    {
+     "case": "jit-cov-w1",
+     "label": "YES"
+    },
+    {
+     "case": "jit-cov-w2",
+     "label": "YES"
+    },
+    {
+     "case": "jit-cov-w3",
+     "label": "YES"
+    }
+   ],
+   "JIT-leg": [
+    {
+     "case": "oracle",
+     "label": "NO"
+    },
+    {
+     "case": "approach-a",
+     "label": "NO"
+    },
+    {
+     "case": "unchanged-func",
+     "label": "NO"
+    },
+    {
+     "case": "unchanged-solve-model",
+     "label": "NO"
+    },
+    {
+     "case": "unchanged-create-model",
+     "label": "NO"
+    },
+    {
+     "case": "jit-leg-w1",
+     "label": "YES"
+    },
+    {
+     "case": "jit-leg-w2",
+     "label": "YES"
+    },
+    {
+     "case": "jit-leg-w3",
+     "label": "YES"
+    }
+   ],
+   "JNL-cov": [
+    {
+     "case": "oracle",
+     "label": "NO"
+    },
+    {
+     "case": "approach-a",
+     "label": "NO"
+    },
+    {
+     "case": "unchanged-func",
+     "label": "NO"
+    },
+    {
+     "case": "unchanged-solve-model",
+     "label": "NO"
+    },
+    {
+     "case": "unchanged-create-model",
+     "label": "NO"
+    },
+    {
+     "case": "jnl-cov-w1",
+     "label": "YES"
+    },
+    {
+     "case": "jnl-cov-w2",
+     "label": "YES"
+    },
+    {
+     "case": "jnl-cov-w3",
+     "label": "YES"
+    }
+   ],
+   "JNL-leg": [
+    {
+     "case": "oracle",
+     "label": "NO"
+    },
+    {
+     "case": "approach-a",
+     "label": "NO"
+    },
+    {
+     "case": "unchanged-func",
+     "label": "NO"
+    },
+    {
+     "case": "unchanged-solve-model",
+     "label": "NO"
+    },
+    {
+     "case": "unchanged-create-model",
+     "label": "NO"
+    },
+    {
+     "case": "jnl-leg-w1",
+     "label": "YES"
+    },
+    {
+     "case": "jnl-leg-w2",
+     "label": "YES"
+    },
+    {
+     "case": "jnl-leg-w3",
+     "label": "YES"
+    }
+   ],
+   "JSL-cov": [
+    {
+     "case": "oracle",
+     "label": "NO"
+    },
+    {
+     "case": "approach-a",
+     "label": "NO"
+    },
+    {
+     "case": "unchanged-func",
+     "label": "NO"
+    },
+    {
+     "case": "unchanged-solve-model",
+     "label": "NO"
+    },
+    {
+     "case": "unchanged-create-model",
+     "label": "NO"
+    },
+    {
+     "case": "jsl-cov-w1",
+     "label": "YES"
+    },
+    {
+     "case": "jsl-cov-w2",
+     "label": "YES"
+    },
+    {
+     "case": "jsl-cov-w3",
+     "label": "YES"
+    }
+   ],
+   "JSL-leg": [
+    {
+     "case": "oracle",
+     "label": "NO"
+    },
+    {
+     "case": "approach-a",
+     "label": "NO"
+    },
+    {
+     "case": "unchanged-func",
+     "label": "NO"
+    },
+    {
+     "case": "unchanged-solve-model",
+     "label": "NO"
+    },
+    {
+     "case": "unchanged-create-model",
+     "label": "NO"
+    },
+    {
+     "case": "jsl-leg-w1",
+     "label": "YES"
+    },
+    {
+     "case": "jsl-leg-w2",
+     "label": "YES"
+    },
+    {
+     "case": "jsl-leg-w3",
+     "label": "YES"
+    }
+   ],
+   "JSM-cov": [
+    {
+     "case": "oracle",
+     "label": "YES"
+    },
+    {
+     "case": "approach-a",
+     "label": "YES"
+    },
+    {
+     "case": "unchanged-func",
+     "label": "YES"
+    },
+    {
+     "case": "unchanged-solve-model",
+     "label": "YES"
+    },
+    {
+     "case": "unchanged-create-model",
+     "label": "YES"
+    },
+    {
+     "case": "jsm-cov-w1",
+     "label": "NO"
+    },
+    {
+     "case": "jsm-cov-w2",
+     "label": "NO"
+    },
+    {
+     "case": "jsm-cov-w3",
+     "label": "NO"
+    }
+   ],
+   "JSM-leg": [
+    {
+     "case": "oracle",
+     "label": "NO"
+    },
+    {
+     "case": "approach-a",
+     "label": "NO"
+    },
+    {
+     "case": "unchanged-func",
+     "label": "NO"
+    },
+    {
+     "case": "unchanged-solve-model",
+     "label": "NO"
+    },
+    {
+     "case": "unchanged-create-model",
+     "label": "NO"
+    },
+    {
+     "case": "jsm-leg-w1",
+     "label": "YES"
+    },
+    {
+     "case": "jsm-leg-w2",
+     "label": "YES"
+    },
+    {
+     "case": "jsm-leg-w3",
+     "label": "YES"
+    }
+   ],
+   "JTR-cov": [
+    {
+     "case": "oracle",
+     "label": "YES"
+    },
+    {
+     "case": "approach-a",
+     "label": "YES"
+    },
+    {
+     "case": "unchanged-func",
+     "label": "YES"
+    },
+    {
+     "case": "unchanged-solve-model",
+     "label": "YES"
+    },
+    {
+     "case": "unchanged-create-model",
+     "label": "YES"
+    },
+    {
+     "case": "jtr-cov-w1",
+     "label": "NO"
+    },
+    {
+     "case": "jtr-cov-w2",
+     "label": "NO"
+    },
+    {
+     "case": "jtr-cov-w3",
+     "label": "NO"
+    }
+   ],
+   "JTR-leg": [
+    {
+     "case": "oracle",
+     "label": "NO"
+    },
+    {
+     "case": "approach-a",
+     "label": "NO"
+    },
+    {
+     "case": "unchanged-func",
+     "label": "NO"
+    },
+    {
+     "case": "unchanged-solve-model",
+     "label": "NO"
+    },
+    {
+     "case": "unchanged-create-model",
+     "label": "NO"
+    },
+    {
+     "case": "jtr-leg-w1",
+     "label": "YES"
+    },
+    {
+     "case": "jtr-leg-w2",
+     "label": "YES"
+    },
+    {
+     "case": "jtr-leg-w3",
+     "label": "YES"
+    }
+   ]
+  },
+  "items": [
+   {
+    "criterion": "In pypsa/optimization/expressions.py, for every network and every branch component, the transmission expression (the inner func of the transmission method) takes the port efficiency and the snapshot weighting at the flow variable's own snapshot labels, in the representation optimization.model_snapshot_index selects: the flat (period, timestep) tuple labels with \"flat\", or with \"auto\" while linopy's v1 semantics are active, and the MultiIndex with \"multiindex\", or with \"auto\" under the legacy semantics.",
+    "id": "JTR-cov",
+    "negate": false,
+    "weight": 3
+   },
+   {
+    "criterion": "For some network and some branch component under legacy semantics with optimization.model_snapshot_index at its default, \"auto\" or \"multiindex\", the change makes the transmission expression (the inner func of the transmission method) in pypsa/optimization/expressions.py report a different value than base_commit reports for the same input.",
+    "id": "JTR-leg",
+    "negate": true,
+    "weight": 3
+   },
+   {
+    "criterion": "In pypsa/optimization/optimize.py, for every network and every call path into solve_model, the snapshots solve_model passes to extra_functionality are in the representation the model was built with.",
+    "id": "JSM-cov",
+    "negate": false,
+    "weight": 3
+   },
+   {
+    "criterion": "For some network or call path under legacy semantics with optimization.model_snapshot_index at its default, \"auto\" or \"multiindex\", the change makes solve_model in pypsa/optimization/optimize.py pass extra_functionality anything other than the snapshots the model was built over, labelled as in the network's own snapshot index.",
+    "id": "JSM-leg",
+    "negate": true,
+    "weight": 3
+   },
+   {
+    "criterion": "In pypsa/optimization/optimize.py, for every network and every transmission_losses setting create_model accepts, the snapshots create_model selects and passes to the variable and constraint builders and to n.model.parameters are in the representation optimization.model_snapshot_index selects: the flat (period, timestep) tuple labels with \"flat\", or with \"auto\" while linopy's v1 semantics are active, and the MultiIndex with \"multiindex\", or with \"auto\" under the legacy semantics.",
+    "id": "JCM-cov",
+    "negate": false,
+    "weight": 3
+   },
+   {
+    "criterion": "For some network and some input base_commit handles, under legacy semantics with optimization.model_snapshot_index at its default, \"auto\" or \"multiindex\", the change makes create_model in pypsa/optimization/optimize.py hand the variable and constraint builders different snapshots than base_commit hands them.",
+    "id": "JCM-leg",
+    "negate": true,
+    "weight": 3
+   },
+   {
+    "criterion": "For some network with secant transmission losses and some value of optimization.model_snapshot_index, the change makes define_secant_loss_constraints in pypsa/optimization/constraints.py read its per-snapshot line data in a fixed snapshot representation instead of the representation of the snapshots it is given.",
+    "id": "JSL-cov",
+    "negate": true,
+    "weight": 3
+   },
+   {
+    "criterion": "For some network with secant transmission losses under legacy semantics with optimization.model_snapshot_index at its default, \"auto\" or \"multiindex\", the change makes define_secant_loss_constraints in pypsa/optimization/constraints.py build different secant loss constraints from the snapshots it is given than base_commit builds.",
+    "id": "JSL-leg",
+    "negate": true,
+    "weight": 3
+   },
+   {
+    "criterion": "For some snapshot-indexed array and some value of optimization.model_snapshot_index, the change makes _from_xarray in pypsa/components/array.py assume a fixed snapshot representation when it converts the array, instead of the representation the option selects.",
+    "id": "JFX-cov",
+    "negate": true,
+    "weight": 3
+   },
+   {
+    "criterion": "For some array and some component under legacy semantics with optimization.model_snapshot_index at its default, \"auto\" or \"multiindex\", the change makes _from_xarray in pypsa/components/array.py return a different result than base_commit returns for the same input.",
+    "id": "JFX-leg",
+    "negate": true,
+    "weight": 3
+   },
+   {
+    "criterion": "For some component and some value of optimization.model_snapshot_index, the change makes _as_dynamic in pypsa/components/array.py build the dynamic frame for static attributes on a fixed snapshot representation instead of the representation the option selects.",
+    "id": "JAD-cov",
+    "negate": true,
+    "weight": 3
+   },
+   {
+    "criterion": "For some component and some snapshots under legacy semantics with optimization.model_snapshot_index at its default, \"auto\" or \"multiindex\", the change makes _as_dynamic in pypsa/components/array.py build a different dynamic frame than base_commit builds for the same input.",
+    "id": "JAD-leg",
+    "negate": true,
+    "weight": 3
+   },
+   {
+    "criterion": "For some network and some value of optimization.model_snapshot_index, the change makes optimize_and_run_non_linear_powerflow in pypsa/optimization/abstract.py force the snapshots it passes to the optimisation into a fixed snapshot representation instead of leaving them in a form the selected representation accepts.",
+    "id": "JNL-cov",
+    "negate": true,
+    "weight": 3
+   },
+   {
+    "criterion": "For some network and some request under legacy semantics with optimization.model_snapshot_index at its default, \"auto\" or \"multiindex\", the change makes optimize_and_run_non_linear_powerflow in pypsa/optimization/abstract.py optimise or power-flow different snapshots than base_commit does for the same request.",
+    "id": "JNL-leg",
+    "negate": true,
+    "weight": 3
+   },
+   {
+    "criterion": "For some network, some iteration and some value of optimization.model_snapshot_index, the change makes optimize_transmission_expansion_iteratively in pypsa/optimization/abstract.py force the snapshots it passes to that iteration's optimisation into a fixed snapshot representation instead of leaving them in a form the selected representation accepts.",
+    "id": "JIT-cov",
+    "negate": true,
+    "weight": 3
+   },
+   {
+    "criterion": "For some network, some request and some iteration under legacy semantics with optimization.model_snapshot_index at its default, \"auto\" or \"multiindex\", the change makes optimize_transmission_expansion_iteratively in pypsa/optimization/abstract.py pass that iteration's optimisation different snapshots than base_commit passes for the same request.",
+    "id": "JIT-leg",
+    "negate": true,
+    "weight": 3
+   },
+   {
+    "criterion": "For some multi-period network and some value of optimization.model_snapshot_index, the change makes installed_capex in pypsa/statistics/expressions.py make its investment-period weighting depend on a fixed snapshot representation instead of the representation the option selects.",
+    "id": "JIC-cov",
+    "negate": true,
+    "weight": 3
+   },
+   {
+    "criterion": "For some multi-period network under legacy semantics with optimization.model_snapshot_index at its default, \"auto\" or \"multiindex\", the change makes installed_capex in pypsa/statistics/expressions.py report a different period-weighted installed capex than base_commit reports.",
+    "id": "JIC-leg",
+    "negate": true,
+    "weight": 3
+   }
+  ],
+  "pinned": {
+   "model": "gpt-6.1-sol",
+   "passLabel": "YES",
+   "provider": "openai",
+   "seed": "912136e36b7cd9b2b90c5f2c102e013deb7beddaa2c269a9613fad599fecbbb9",
+   "temperature": 0,
+   "trials": 20
+  }
+ },
+ "option_guard": {
+  "bindings": [
+   "linopy.semantics.is_v1",
+   "linopy.config.V1_SEMANTICS",
+   "linopy.config.LEGACY_SEMANTICS",
+   "linopy.config.VALID_SEMANTICS"
+  ],
+  "bindings_reason": "these decide which semantics linopy applies without passing through the option, so replacing one is switching the semantics by another route; every other linopy function is left to the graded tests, because the instruction does not forbid wrapping or replacing one",
+  "module": "linopy",
+  "option": "semantics",
+  "options": "options",
+  "reason": "the instruction asks for multi-period optimisation to work under linopy's v1 semantics, which the verifier selects; a submission that switches linopy back to legacy semantics, even for one model build, sidesteps the migration rather than making it",
+  "runner": [
+   "_pytest.reports.BaseReport.passed",
+   "_pytest.reports.BaseReport.failed",
+   "_pytest.reports.BaseReport.skipped",
+   "_pytest.reports.TestReport.__init__",
+   "_pytest.reports.TestReport.from_item_and_call",
+   "_pytest.runner.CallInfo.from_call",
+   "_pytest.runner.call_and_report",
+   "_pytest.runner.runtestprotocol",
+   "_pytest.runner.pytest_runtest_protocol",
+   "_pytest.runner.pytest_runtest_setup",
+   "_pytest.runner.pytest_runtest_call",
+   "_pytest.runner.pytest_runtest_teardown",
+   "_pytest.runner.pytest_runtest_makereport",
+   "_pytest.runner.check_interactive_exception",
+   "_pytest.skipping.pytest_runtest_makereport",
+   "_pytest.python.Function.runtest",
+   "_pytest.python.pytest_pyfunc_call",
+   "_pytest.main.pytest_runtestloop",
+   "_pytest.main.Session.perform_collect",
+   "_pytest.terminal.TerminalReporter.pytest_runtest_logreport",
+   "_pytest.terminal.TerminalReporter.short_test_summary",
+   "_pytest.terminal.TerminalReporter.summary_stats",
+   "_pytest.terminal._get_line_with_reprcrash_message",
+   "_pytest.assertion.rewrite.AssertionRewritingHook.find_spec",
+   "_pytest.assertion.rewrite.AssertionRewritingHook.exec_module",
+   "_pytest.assertion.rewrite.rewrite_asserts",
+   "pluggy._hooks.HookCaller.__call__",
+   "pluggy._manager.PluginManager._hookexec",
+   "pluggy._callers._multicall",
+   "pytest.approx",
+   "_pytest.python_api.approx",
+   "_pytest.python_api.ApproxBase.__eq__",
+   "_pytest.python_api.ApproxScalar.__eq__",
+   "_pytest.python_api.ApproxMapping.__eq__",
+   "_pytest.python_api.ApproxSequenceLike.__eq__",
+   "_pytest.python_api.ApproxNumpy.__eq__",
+   "numpy.testing.assert_allclose",
+   "numpy.testing.assert_array_equal",
+   "numpy.testing.assert_array_almost_equal",
+   "numpy.testing.assert_almost_equal",
+   "numpy.testing._private.utils.assert_array_compare",
+   "pandas.testing.assert_frame_equal",
+   "pandas.testing.assert_series_equal",
+   "pandas.testing.assert_index_equal",
+   "pandas._testing.asserters.assert_almost_equal",
+   "pandas._testing.asserters.assert_extension_array_equal",
+   "pandas._libs.testing.assert_almost_equal"
+  ],
+  "runner_reason": "these decide whether a graded test passes and how pytest reports it, or compare the values the graded tests assert on; the submission is imported into the process that runs the tests, so replacing one of them passes a test without solving it",
+  "value": "v1"
+ },
+ "package_src": "pypsa",
+ "probes": [
+  {
+   "argv": [
+    "python",
+    "-c",
+    "import pypsa; pypsa.options.describe()"
+   ],
+   "id": "options_describe"
+  }
+ ],
+ "timeout_sec": 1800
+}
