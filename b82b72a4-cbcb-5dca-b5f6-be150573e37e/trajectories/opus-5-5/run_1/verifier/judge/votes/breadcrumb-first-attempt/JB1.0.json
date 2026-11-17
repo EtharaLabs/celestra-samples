@@ -1,0 +1,8 @@
+{
+ "case": "breadcrumb-first-attempt",
+ "id": "JB1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "Previously, `_sentry_request_created` added a breadcrumb on every invocation, including retry attempts. The change calls `_add_request_breadcrumb` only when `request.context[\"retries\"][\"attempt\"]` is 1 (or absent), so subsequent retry requests no longer receive the breadcrumbs the base commit recorded.\nYES"
+}

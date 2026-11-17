@@ -1,0 +1,8 @@
+{
+ "case": "read-chunk-finish",
+ "id": "JF2",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The exception path finishes the client span once, while a successful non-streaming call finishes it once after instrumentation. For streaming responses, the shared `finished` guard prevents repeated finishes across reads, closes, and errors; if instrumentation fails, cleanup finishes only the stream span and the caller finishes the client span once.\nNO"
+}

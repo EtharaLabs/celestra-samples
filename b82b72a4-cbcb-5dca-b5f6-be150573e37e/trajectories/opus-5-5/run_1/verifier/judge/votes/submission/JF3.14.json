@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JF3",
+ "trial": 14,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The wrapper keeps the client span open when streaming-body instrumentation succeeds, finishing it alongside the body-reading span when consumption ends. Otherwise it finishes the span after the underlying call returns or raises; the diff does not establish a case where a real client span is finished prematurely.\nNO"
+}

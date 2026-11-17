@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JS1",
+ "trial": 18,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "For a call returning a supported streaming body, `_sentry_make_api_call` starts a client span, then `_instrument_streaming_body` starts an additional span for reading that response body. The streaming-mode branch explicitly creates that second span with the client span as its parent, so both spans are associated with the same boto3 call.\n\nYES"
+}

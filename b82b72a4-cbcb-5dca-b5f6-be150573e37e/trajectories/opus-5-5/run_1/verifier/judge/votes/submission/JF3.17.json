@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JF3",
+ "trial": 17,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The wrapper defers finishing the client span when `_instrument_streaming_body` successfully instruments the response body; the body\u2019s finish callback now finishes both the reading span and the client span. Otherwise, the client span finishes after the API call returns or raises, with no premature finish demonstrated by the diff.\nNO"
+}

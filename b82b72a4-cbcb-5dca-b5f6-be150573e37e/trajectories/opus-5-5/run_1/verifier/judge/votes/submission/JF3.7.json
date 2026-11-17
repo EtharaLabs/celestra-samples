@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JF3",
+ "trial": 7,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The wrapper does not finish the client span merely because `_make_api_call` returns: when streaming-body instrumentation succeeds, it defers finishing the client span until the body\u2019s completion callback runs. It also removes the old `after-call` handler that finished the span before instrumenting the body.\nNO"
+}

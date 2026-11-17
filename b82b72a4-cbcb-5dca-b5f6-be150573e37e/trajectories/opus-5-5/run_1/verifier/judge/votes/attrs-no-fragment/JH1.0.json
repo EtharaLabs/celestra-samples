@@ -1,0 +1,8 @@
+{
+ "case": "attrs-no-fragment",
+ "id": "JH1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "In non-streaming tracing mode, the original code sets `SPANDATA.HTTP_FRAGMENT` from `parsed_url.fragment` on the span. The new `_set_request_attributes` sets the URL and query but omits the fragment attribute, which is a difference under the criterion even though the breadcrumb still includes it.\nYES"
+}

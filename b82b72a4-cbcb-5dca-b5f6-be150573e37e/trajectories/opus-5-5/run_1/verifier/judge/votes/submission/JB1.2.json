@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JB1",
+ "trial": 2,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The change still registers one `request-created` handler, which records a breadcrumb unconditionally when the integration is enabled. Both streaming and non-streaming branches retain the same breadcrumb URL and method data; the changes to span creation and completion do not change those breadcrumbs.\nNO"
+}

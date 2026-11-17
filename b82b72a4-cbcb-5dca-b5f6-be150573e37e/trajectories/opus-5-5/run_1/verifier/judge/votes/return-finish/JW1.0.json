@@ -1,0 +1,8 @@
+{
+ "case": "return-finish",
+ "id": "JW1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The API-call wrapper and the added streamed-body consumption wrapper both re-raise failures with bare `raise`, preserving the original exception object. The diff shows no exception conversion, replacement, or suppression on these failure paths.\nNO"
+}

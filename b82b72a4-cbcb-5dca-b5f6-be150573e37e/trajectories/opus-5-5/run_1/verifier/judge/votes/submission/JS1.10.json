@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JS1",
+ "trial": 10,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The wrapper starts a single client-call span through `_start_client_span`, while `_sentry_request_created` now only enriches that existing span, including on retries. The separate streaming-body span instruments reading the response body rather than starting another client-call span.\nNO"
+}

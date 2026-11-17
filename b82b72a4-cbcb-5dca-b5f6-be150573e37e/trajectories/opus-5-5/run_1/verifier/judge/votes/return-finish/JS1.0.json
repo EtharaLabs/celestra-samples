@@ -1,0 +1,8 @@
+{
+ "case": "return-finish",
+ "id": "JS1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "`_make_api_call` starts an `OP.HTTP_CLIENT` span through `_start_client_span`. For an underlying HTTP request with span streaming enabled, the stdlib integration also starts an `OP.HTTP_CLIENT` child span; setting `active=False` does not prevent its creation. Thus a boto3 call can start more than one client span.\nYES"
+}

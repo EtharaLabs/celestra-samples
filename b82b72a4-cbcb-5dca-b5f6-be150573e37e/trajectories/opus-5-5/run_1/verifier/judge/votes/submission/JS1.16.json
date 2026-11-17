@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JS1",
+ "trial": 16,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "For a call returning a streaming body, `_sentry_make_api_call` first starts a client span through `_start_client_span`, then invokes `_instrument_streaming_body`, which starts another span for the response body. Keeping the first span open until body consumption does not prevent that second span from being started.\nYES"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JS2",
+ "trial": 3,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The change starts the client span in a wrapper around `BaseClient._make_api_call`, rather than in a per-request-attempt botocore hook. The `request-created` hook only retrieves and enriches the existing span; it no longer starts one.\nNO"
+}

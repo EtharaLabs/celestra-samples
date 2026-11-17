@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JH1",
+ "trial": 1,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The request URL is still parsed the same way, and both tracing modes retain the same URL, query, fragment, and method attribute keys and values. The change moves those attributes onto the client-call span and lets retries update that span, but those differences are explicitly excluded by the criterion.\nNO"
+}

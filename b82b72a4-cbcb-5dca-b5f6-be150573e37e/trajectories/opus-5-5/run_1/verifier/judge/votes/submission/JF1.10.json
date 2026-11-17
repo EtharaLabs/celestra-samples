@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JF1",
+ "trial": 10,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The API-call wrapper finishes the client span immediately for non-streaming responses and when the call raises, including after retries. For streaming responses, the body instrumentation\u2019s shared finish callback now finishes both the reading span and the client span, covering consumption to the end and early closure.\nYES"
+}

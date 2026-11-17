@@ -1,0 +1,8 @@
+{
+ "case": "first-attempt",
+ "id": "JS2",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The change registers `_sentry_request_created` on botocore\u2019s `request-created` event, which fires for each request attempt. That handler calls `_start_client_span` on the first attempt, so the client span is started from the per-attempt hook, even though subsequent attempts do not start another span.\nYES"
+}

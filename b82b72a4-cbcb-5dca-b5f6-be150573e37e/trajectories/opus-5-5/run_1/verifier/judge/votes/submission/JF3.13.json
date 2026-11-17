@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JF3",
+ "trial": 13,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "`_instrument_streaming_body` only looks for a response stream under the `\"Body\"` key. A boto3 Bedrock `invoke_model` response instead exposes its `StreamingBody` under lowercase `\"body\"`, so instrumentation returns false and `_sentry_make_api_call` finishes the client span while that body can still be unread.\nYES"
+}

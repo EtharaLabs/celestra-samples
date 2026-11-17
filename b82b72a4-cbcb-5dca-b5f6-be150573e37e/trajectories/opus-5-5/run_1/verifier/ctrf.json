@@ -1,0 +1,859 @@
+{
+ "results": {
+  "tool": {
+   "name": "pytest"
+  },
+  "summary": {
+   "tests": 168,
+   "passed": 158,
+   "failed": 10,
+   "skipped": 0,
+   "pending": 0,
+   "other": 0,
+   "start": 0,
+   "stop": 0
+  },
+  "tests": [
+   {
+    "name": "tests/integrations/boto3/test_aws_http_connection.py::test_aws_http_connection_adds_missing_unsigned_propagation_headers[False]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_aws_http_connection.py::test_aws_http_connection_adds_missing_unsigned_propagation_headers[True]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_aws_http_connection.py::test_aws_http_connection_appends_baggage_but_preserves_sentry_trace[False]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_aws_http_connection.py::test_aws_http_connection_appends_baggage_but_preserves_sentry_trace[True]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_aws_http_connection.py::test_aws_http_connection_preserves_query_signed_baggage[False]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_aws_http_connection.py::test_aws_http_connection_preserves_query_signed_baggage[True]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_aws_http_connection.py::test_aws_http_connection_preserves_signed_propagation_headers[False]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_aws_http_connection.py::test_aws_http_connection_preserves_signed_propagation_headers[True]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_client.py::test_client_call_exception_is_unchanged_and_finishes_span[False-before-parameter-build]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_client.py::test_client_call_exception_is_unchanged_and_finishes_span[False-before-send]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_client.py::test_client_call_exception_is_unchanged_and_finishes_span[True-before-parameter-build]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_client.py::test_client_call_exception_is_unchanged_and_finishes_span[True-before-send]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_client.py::test_retries_exhausted_has_one_failed_client_span[False]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_client.py::test_retries_exhausted_has_one_failed_client_span[True]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_client.py::test_retry_attempts_share_one_client_span[False]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_client.py::test_retry_attempts_share_one_client_span[True]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_client.py::test_streaming_body_read_failure_finishes_stream_span[False]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_client.py::test_streaming_body_read_failure_finishes_stream_span[True]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_client.py::test_streaming_span_order_and_scope[False-close]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_client.py::test_streaming_span_order_and_scope[False-context]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_client.py::test_streaming_span_order_and_scope[False-read]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_client.py::test_streaming_span_order_and_scope[False-read_exact]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_client.py::test_streaming_span_order_and_scope[True-close]",
+    "status": "failed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_client.py::test_streaming_span_order_and_scope[True-context]",
+    "status": "failed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_client.py::test_streaming_span_order_and_scope[True-read]",
+    "status": "failed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_client.py::test_streaming_span_order_and_scope[True-read_exact]",
+    "status": "failed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_forge_lifecycle.py::test_each_retry_attempt_records_a_breadcrumb[False]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_forge_lifecycle.py::test_each_retry_attempt_records_a_breadcrumb[True]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_forge_lifecycle.py::test_partial_read_keeps_client_span_open[False]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_forge_lifecycle.py::test_partial_read_keeps_client_span_open[True]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_forge_lifecycle.py::test_propagation_header_names_the_recorded_client_span[False]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_forge_lifecycle.py::test_propagation_header_names_the_recorded_client_span[True]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_forge_lifecycle.py::test_readinto_to_the_end_consumes_the_body[False]",
+    "status": "failed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_forge_lifecycle.py::test_readinto_to_the_end_consumes_the_body[True]",
+    "status": "failed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_forge_lifecycle.py::test_readlines_consumes_the_body[False]",
+    "status": "failed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_forge_lifecycle.py::test_readlines_consumes_the_body[True]",
+    "status": "failed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_forge_lifecycle.py::test_streaming_payload_keeps_client_span_open[False]",
+    "status": "failed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_forge_lifecycle.py::test_streaming_payload_keeps_client_span_open[True]",
+    "status": "failed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_s3.py::test_basic[False]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_s3.py::test_basic[True]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_s3.py::test_breadcrumb",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_s3.py::test_breadcrumb_span_streaming[False]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_s3.py::test_breadcrumb_span_streaming[True]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_s3.py::test_omit_url_data_if_parsing_fails[False]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_s3.py::test_omit_url_data_if_parsing_fails[True]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_s3.py::test_span_origin[False]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_s3.py::test_span_origin[True]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_s3.py::test_streaming[False-False]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_s3.py::test_streaming[False-True]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_s3.py::test_streaming[True-False]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_s3.py::test_streaming[True-True]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_s3.py::test_streaming_close[False]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_s3.py::test_streaming_close[True]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_s3.py::test_url_query_data_collection_breadcrumb[data_collection_allowlist]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_s3.py::test_url_query_data_collection_breadcrumb[data_collection_allowlist_sensitive_term]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_s3.py::test_url_query_data_collection_breadcrumb[data_collection_denylist_custom_terms]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_s3.py::test_url_query_data_collection_breadcrumb[data_collection_denylist_default]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_s3.py::test_url_query_data_collection_breadcrumb[data_collection_off]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_s3.py::test_url_query_data_collection_breadcrumb[data_collection_wins_over_send_default_pii]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_s3.py::test_url_query_data_collection_breadcrumb[defaults]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_s3.py::test_url_query_data_collection_breadcrumb[send_default_pii_false]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_s3.py::test_url_query_data_collection_breadcrumb[send_default_pii_true]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_s3.py::test_url_query_data_collection_span_streaming[data_collection_allowlist]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_s3.py::test_url_query_data_collection_span_streaming[data_collection_allowlist_sensitive_term]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_s3.py::test_url_query_data_collection_span_streaming[data_collection_denylist_custom_terms]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_s3.py::test_url_query_data_collection_span_streaming[data_collection_denylist_default]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_s3.py::test_url_query_data_collection_span_streaming[data_collection_off]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_s3.py::test_url_query_data_collection_span_streaming[data_collection_wins_over_send_default_pii]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_s3.py::test_url_query_data_collection_span_streaming[defaults]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_s3.py::test_url_query_data_collection_span_streaming[send_default_pii_false]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_s3.py::test_url_query_data_collection_span_streaming[send_default_pii_true]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_trace_propagation.py::test_botocore_merges_propagation_before_sigv4_signing[False]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_trace_propagation.py::test_botocore_merges_propagation_before_sigv4_signing[True]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_trace_propagation.py::test_botocore_without_boto3_integration_preserves_signed_baggage[False]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_trace_propagation.py::test_botocore_without_boto3_integration_preserves_signed_baggage[True]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/boto3/test_trace_propagation.py::test_presigned_urls_do_not_require_sentry_headers",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_chunked_response_span_covers_body_read[False]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_chunked_response_span_covers_body_read[True]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_crumb_capture",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_crumb_capture_client_error[200-None]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_crumb_capture_client_error[301-None]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_crumb_capture_client_error[403-warning]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_crumb_capture_client_error[405-warning]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_crumb_capture_client_error[500-error]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_crumb_capture_client_error_span_streaming[False-200-None]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_crumb_capture_client_error_span_streaming[False-301-None]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_crumb_capture_client_error_span_streaming[False-403-warning]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_crumb_capture_client_error_span_streaming[False-405-warning]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_crumb_capture_client_error_span_streaming[False-500-error]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_crumb_capture_client_error_span_streaming[True-200-None]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_crumb_capture_client_error_span_streaming[True-301-None]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_crumb_capture_client_error_span_streaming[True-403-warning]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_crumb_capture_client_error_span_streaming[True-405-warning]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_crumb_capture_client_error_span_streaming[True-500-error]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_crumb_capture_hint",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_crumb_capture_hint_span_streaming[False]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_crumb_capture_hint_span_streaming[True]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_crumb_capture_span_streaming[False]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_crumb_capture_span_streaming[True]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_crumb_url_query_data_collection_span_streaming[data_collection_denylist_default]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_crumb_url_query_data_collection_span_streaming[data_collection_off]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_crumb_url_query_data_collection_span_streaming[defaults]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_crumb_url_query_data_collection_span_streaming[send_default_pii_true]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_empty_realurl[False]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_empty_realurl[True]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_http_timeout[False]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_http_timeout[True]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_httplib_misuse",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_no_request_source_if_duration_too_short[False]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_no_request_source_if_duration_too_short[True]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_option_trace_propagation_targets[False-None-example.com-/-False]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_option_trace_propagation_targets[False-trace_propagation_targets0-example.com-/-False]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_option_trace_propagation_targets[False-trace_propagation_targets2-example.com-/-True]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_option_trace_propagation_targets[False-trace_propagation_targets3-example.com-/-True]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_option_trace_propagation_targets[False-trace_propagation_targets4-example.com--False]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_option_trace_propagation_targets[False-trace_propagation_targets5-example.com--True]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_option_trace_propagation_targets[False-trace_propagation_targets6-example.net--False]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_option_trace_propagation_targets[False-trace_propagation_targets7-good.example.net--True]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_option_trace_propagation_targets[False-trace_propagation_targets8-good.example.net-/some/thing-True]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_option_trace_propagation_targets[True-None-example.com-/-False]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_option_trace_propagation_targets[True-trace_propagation_targets0-example.com-/-False]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_option_trace_propagation_targets[True-trace_propagation_targets2-example.com-/-True]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_option_trace_propagation_targets[True-trace_propagation_targets3-example.com-/-True]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_option_trace_propagation_targets[True-trace_propagation_targets4-example.com--False]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_option_trace_propagation_targets[True-trace_propagation_targets5-example.com--True]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_option_trace_propagation_targets[True-trace_propagation_targets6-example.net--False]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_option_trace_propagation_targets[True-trace_propagation_targets7-good.example.net--True]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_option_trace_propagation_targets[True-trace_propagation_targets8-good.example.net-/some/thing-True]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_outgoing_trace_headers[False]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_outgoing_trace_headers[True]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_outgoing_trace_headers_head_sdk[False]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_outgoing_trace_headers_head_sdk[True]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_outgoing_trace_headers_span_streaming_no_current_span",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_proxy_http_tunnel[False-False-8080]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_proxy_http_tunnel[False-False-None]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_proxy_http_tunnel[False-True-8080]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_proxy_http_tunnel[False-True-None]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_proxy_http_tunnel[True-False-8080]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_proxy_http_tunnel[True-False-None]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_proxy_http_tunnel[True-True-8080]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_proxy_http_tunnel[True-True-None]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_request_source[False]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_request_source[True]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_request_source_disabled[False]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_request_source_disabled[True]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_request_source_enabled[False-None]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_request_source_enabled[False-True]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_request_source_enabled[True-None]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_request_source_enabled[True-True]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_request_source_if_duration_over_threshold[False]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_request_source_if_duration_over_threshold[True]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_request_source_with_module_in_search_path[False]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_request_source_with_module_in_search_path[True]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_span_origin[False]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_span_origin[True]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_url_full_reassembly_span_streaming[data_collection_allowlist]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_url_full_reassembly_span_streaming[data_collection_denylist_default]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_url_full_reassembly_span_streaming[send_default_pii_true]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_url_query_data_collection_span_streaming[data_collection_allowlist]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_url_query_data_collection_span_streaming[data_collection_allowlist_sensitive_term]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_url_query_data_collection_span_streaming[data_collection_denylist_custom_terms]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_url_query_data_collection_span_streaming[data_collection_denylist_default]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_url_query_data_collection_span_streaming[data_collection_off]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_url_query_data_collection_span_streaming[data_collection_wins_over_send_default_pii]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_url_query_data_collection_span_streaming[defaults]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_url_query_data_collection_span_streaming[send_default_pii_false]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "tests/integrations/stdlib/test_httplib.py::test_url_query_data_collection_span_streaming[send_default_pii_true]",
+    "status": "passed",
+    "duration": 0
+   },
+   {
+    "name": "cheat-check: the submission planted no test-steering file",
+    "status": "passed",
+    "duration": 0
+   }
+  ]
+ }
+}

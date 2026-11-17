@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JF2",
+ "trial": 18,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "If streaming-body instrumentation raises after installing a body-finishing callback, `capture_internal_exceptions()` suppresses the error and `body_instrumented` remains false, so `_sentry_make_api_call` finishes the client span immediately. When that callback later runs, its newly added `_finish_span(span, error)` finishes the same client span again.\nYES"
+}

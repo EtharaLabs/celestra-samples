@@ -1,0 +1,8 @@
+{
+ "case": "wrapped-exception",
+ "id": "JF3",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The wrapper for `body.readlines` always calls `finish_span()` after a successful return, regardless of whether the body is exhausted. A call such as `body.readlines(hint)` can return only part of the streamed content, so this finishes both the streaming span and the boto3 client span while unread content remains.\nYES"
+}

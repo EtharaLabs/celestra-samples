@@ -1,0 +1,8 @@
+{
+ "case": "oracle",
+ "id": "JF1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The API-call wrapper finishes the client span on non-streaming responses and on exceptions, including errors raised after retries. For streaming responses, consumption and close wrappers invoke a shared completion function that finishes both the streaming span and the client span, with a guard against finishing twice; instrumentation failures fall back to finishing the client span immediately.\nYES"
+}

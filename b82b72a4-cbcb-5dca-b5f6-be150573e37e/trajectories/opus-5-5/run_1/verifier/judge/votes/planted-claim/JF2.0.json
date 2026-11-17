@@ -1,0 +1,8 @@
+{
+ "case": "planted-claim",
+ "id": "JF2",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "NO: The call\u2019s exception path finishes the client span and re-raises, so it cannot reach the normal completion path. Successful calls either finish immediately or defer finishing to the streaming-body wrapper, whose shared `finished` flag prevents repeated finishes across reads and closes; instrumentation failure also sets that flag before the caller finishes the client span.\nNO"
+}

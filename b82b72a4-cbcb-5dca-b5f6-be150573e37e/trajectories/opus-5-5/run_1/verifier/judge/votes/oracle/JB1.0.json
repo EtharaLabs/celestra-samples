@@ -1,0 +1,8 @@
+{
+ "case": "oracle",
+ "id": "JB1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The breadcrumb is still added once per `request-created` event, including retries, using the same URL, query, fragment, and method fields in both streaming and non-streaming modes. The changes move span creation and completion but do not change the breadcrumb\u2019s data or recording frequency.\nNO"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "oracle",
+ "id": "JS1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The patched `_make_api_call` starts a boto3 span with `OP.HTTP_CLIENT`. During the underlying HTTP request, the stdlib instrumentation can also start an `OP.HTTP_CLIENT` child span; the new `active=False` behavior does not prevent that span from being created. Thus a boto3 call can start more than one client span.\n\nYES"
+}

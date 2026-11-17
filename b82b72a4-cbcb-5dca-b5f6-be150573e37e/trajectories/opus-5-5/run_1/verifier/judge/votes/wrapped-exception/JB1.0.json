@@ -1,0 +1,8 @@
+{
+ "case": "wrapped-exception",
+ "id": "JB1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The request-created handler still records one breadcrumb per invocation, using the same URL, query, fragment, and method fields as before in both streaming and non-streaming modes. Breadcrumb recording also remains independent of whether a span exists; the span lifecycle changes do not introduce a missing, repeated, or differently populated request breadcrumb.\nNO"
+}

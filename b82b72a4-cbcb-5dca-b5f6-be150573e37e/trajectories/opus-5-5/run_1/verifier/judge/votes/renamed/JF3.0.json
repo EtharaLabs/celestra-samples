@@ -1,0 +1,8 @@
+{
+ "case": "renamed",
+ "id": "JF3",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "`_instrument_streaming_body` only recognizes top-level `StreamingBody` values. A boto3 call returning an `EventStream`, such as `subscribe_to_shard`, is therefore untracked, causing `_finish_span(span)` to run when the API method returns even though its response stream remains unread.\nYES"
+}

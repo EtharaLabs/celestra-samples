@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JP1",
+ "trial": 3,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The change moves span creation and lifetime management from botocore event handlers to `_make_api_call`, but retains the same `before-sign` handler and its registration order. The diff does not change propagation-header selection or merging with existing headers; changes to the active span\u2019s identifiers do not count under the criterion.\nNO"
+}

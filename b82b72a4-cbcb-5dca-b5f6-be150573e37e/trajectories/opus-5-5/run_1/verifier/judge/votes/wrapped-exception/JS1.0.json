@@ -1,0 +1,8 @@
+{
+ "case": "wrapped-exception",
+ "id": "JS1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The patched `_make_api_call` starts an `HTTP_CLIENT` span and activates it while executing the original call. For an underlying HTTP request instrumented by the stdlib integration, that integration still starts another `HTTP_CLIENT` span beneath it; setting `active=False` only changes activation, not span creation.\nYES"
+}

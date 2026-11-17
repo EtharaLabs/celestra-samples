@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JB1",
+ "trial": 7,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The change retains one `request-created` breadcrumb handler and the same `add_http_breadcrumb(None, breadcrumb)` call. Both streaming and non-streaming paths populate the same URL and method data as before; the changes move span creation and completion without changing breadcrumb recording.\nNO"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JF2",
+ "trial": 3,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "If streaming-body instrumentation fails after its error-cleanup path finishes the client span, the exception is swallowed by `capture_internal_exceptions()`. The assignment to `body_instrumented` never completes, so it remains `False` and `_sentry_make_api_call` calls `_finish_span(span)` again.\nYES"
+}

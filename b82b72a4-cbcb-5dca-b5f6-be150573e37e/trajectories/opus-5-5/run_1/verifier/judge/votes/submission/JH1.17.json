@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JH1",
+ "trial": 17,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The request URL is still parsed the same way, and both tracing modes retain the same URL, query, fragment, and method attribute keys and values. The diff changes span creation and lifetime and moves request attributes onto the client-call span; those span-placement and retry-overwrite differences are explicitly excluded.\nNO"
+}

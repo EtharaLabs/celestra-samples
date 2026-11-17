@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JS1",
+ "trial": 17,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The API-call wrapper starts one client span, and `request-created` now updates that existing span rather than starting another on each request or retry. The separate span for consuming a streaming response body is not another client-call span.\nNO"
+}

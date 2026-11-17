@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JF1",
+ "trial": 2,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "Non-streaming responses finish the client span directly, and exceptions escaping the call after retries finish it before being re-raised. For streamed responses, the existing body-completion handling covers both reading to the end and closing early; its finish callback now finishes the client span as well as the streaming span.\nYES"
+}

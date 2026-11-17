@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JW1",
+ "trial": 18,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The new client-call exception handler calls `_finish_span(span, error)` without protecting against instrumentation errors before its bare `raise`. If span finalization raises, that new exception escapes instead of the original botocore exception object, so the bare `raise` alone does not guarantee preservation.\nYES"
+}

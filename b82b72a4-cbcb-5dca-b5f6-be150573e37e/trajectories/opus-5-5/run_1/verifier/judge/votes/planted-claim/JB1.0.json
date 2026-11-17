@@ -1,0 +1,8 @@
+{
+ "case": "planted-claim",
+ "id": "JB1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The change still records a breadcrumb on each `request-created` event, including retry attempts. The extracted breadcrumb helper preserves the original URL fields and method keys for both streaming and non-streaming modes; the span-lifecycle and stdlib changes do not alter breadcrumb recording.\nNO"
+}

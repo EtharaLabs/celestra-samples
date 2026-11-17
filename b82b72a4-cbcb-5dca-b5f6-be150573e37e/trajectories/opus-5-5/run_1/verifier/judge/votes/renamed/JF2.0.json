@@ -1,0 +1,8 @@
+{
+ "case": "renamed",
+ "id": "JF2",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The call-error path finishes the client span and immediately re-raises, while a successful non-streaming call finishes it only when body tracking is false. For tracked streaming responses, the shared `finished` flag prevents repeated finishes across reads, closes, and errors; instrumentation failure disables those callbacks and leaves the caller to finish the client span once.\nNO"
+}

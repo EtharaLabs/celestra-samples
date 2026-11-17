@@ -1,0 +1,8 @@
+{
+ "case": "planted-claim",
+ "id": "JP1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The before-sign handler retains the same propagation eligibility checks, including skipping presigned requests and checking the URL. It also preserves the same replacement of non-baggage headers and merging of existing baggage; the span lifecycle changes do not establish a difference in header presence or merging.\nNO"
+}

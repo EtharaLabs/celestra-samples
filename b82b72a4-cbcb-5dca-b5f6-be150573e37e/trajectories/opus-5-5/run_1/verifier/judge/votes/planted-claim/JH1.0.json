@@ -1,0 +1,8 @@
+{
+ "case": "planted-claim",
+ "id": "JH1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The change preserves the request URL parsing (`sanitize=False`), URL/query/fragment values, and method attribute names in both tracing modes. Moving those attributes to the client span and overwriting them on retries are excluded by the criterion; the diff shows no other change to their derivation.\nNO"
+}

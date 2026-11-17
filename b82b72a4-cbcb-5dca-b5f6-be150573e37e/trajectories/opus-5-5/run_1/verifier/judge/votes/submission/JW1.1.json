@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JW1",
+ "trial": 1,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "YES: the new client-call exception handler invokes `_finish_span(span, error)` without protecting it before the bare `raise`. If span finalization raises (for example, through a user callback), that exception replaces the original botocore exception, so the caller does not receive the very same object.\n\nYES"
+}

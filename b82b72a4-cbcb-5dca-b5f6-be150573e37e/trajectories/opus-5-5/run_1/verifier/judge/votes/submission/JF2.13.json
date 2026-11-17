@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JF2",
+ "trial": 13,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "If streaming-body instrumentation finishes the client span through its completion/error handler and then raises, `capture_internal_exceptions()` suppresses the exception before `body_instrumented` is assigned. It remains `False`, so `_sentry_make_api_call` calls `_finish_span(span)` again; the handler\u2019s local `finished` guard does not protect this outer call.\nYES"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "oracle",
+ "id": "JW1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "NO. The client-call wrapper and streaming-body wrappers re-raise failures with bare `raise`, preserving the original exception object. The diff shows no path that deliberately replaces or suppresses a botocore failure.\nNO"
+}

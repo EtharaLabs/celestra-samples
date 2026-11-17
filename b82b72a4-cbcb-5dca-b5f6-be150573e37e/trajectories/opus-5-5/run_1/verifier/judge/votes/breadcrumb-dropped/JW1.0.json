@@ -1,0 +1,8 @@
+{
+ "case": "breadcrumb-dropped",
+ "id": "JW1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The client-call wrapper catches the exception and uses a bare `raise`, preserving the original exception object. The streamed-body wrappers likewise re-raise caught exceptions rather than wrapping or replacing them; the diff shows no change that makes callers receive a different exception.\nNO"
+}

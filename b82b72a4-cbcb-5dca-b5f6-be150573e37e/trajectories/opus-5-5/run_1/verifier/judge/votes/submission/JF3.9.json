@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JF3",
+ "trial": 9,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "`_instrument_streaming_body` looks only for a `\"Body\"` entry, but boto3 calls such as Lambda `invoke` return a streamed response under `\"Payload\"`. That stream is not instrumented, so `_sentry_make_api_call` finishes the client span when the method returns, even if the payload remains unread.\nYES"
+}

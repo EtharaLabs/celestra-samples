@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JP1",
+ "trial": 15,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The `before-sign` propagation handler and its registration order are unchanged, so the same header-selection and existing-header merging logic applies. The diff moves span creation and cleanup around the API call, but does not show a change to which propagation headers are added or how they are merged; changes to their trace or span IDs do not count.\nNO"
+}

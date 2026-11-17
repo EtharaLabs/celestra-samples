@@ -1,0 +1,8 @@
+{
+ "case": "attrs-dropped",
+ "id": "JH1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The original `_sentry_request_created` writes URL, query, fragment, and method attributes to the span. The change moves that logic into `_set_request_attributes` but never calls it, so those span attributes are missing even though request breadcrumbs still receive them. This is an attribute omission, not merely a change in which span holds them.\nYES"
+}

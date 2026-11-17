@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JB1",
+ "trial": 19,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The change keeps the `request-created` breadcrumb hook and still records one breadcrumb per event with the same URL and HTTP-method data in both streaming and non-streaming modes. The changed span lifecycle does not alter the breadcrumb emission or its data.\nNO"
+}

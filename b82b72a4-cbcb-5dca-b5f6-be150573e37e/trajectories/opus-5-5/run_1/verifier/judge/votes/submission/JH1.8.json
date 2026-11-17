@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JH1",
+ "trial": 8,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The request-derived attributes use the same URL parsing, attribute keys, values, and method-presence checks in both tracing modes. The change moves span creation to the client-call wrapper and writes request attributes onto that span; span placement and retry overwrites are explicitly excluded by the criterion.\nNO"
+}

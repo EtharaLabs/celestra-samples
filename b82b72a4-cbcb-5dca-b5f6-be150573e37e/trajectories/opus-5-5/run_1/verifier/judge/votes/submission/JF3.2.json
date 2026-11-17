@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JF3",
+ "trial": 2,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The wrapper finishes the client span immediately when `_instrument_streaming_body` returns false, and that helper only looks for a stream under `\"Body\"`. Boto3 calls such as Bedrock Runtime\u2019s `invoke_model` return a streaming body under lowercase `\"body\"`, so their client span finishes when the method returns even if the stream is unread.\nYES"
+}

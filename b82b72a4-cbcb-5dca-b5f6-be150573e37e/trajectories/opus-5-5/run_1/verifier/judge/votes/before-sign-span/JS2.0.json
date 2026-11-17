@@ -1,0 +1,8 @@
+{
+ "case": "before-sign-span",
+ "id": "JS2",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The change registers `_sentry_before_sign` on botocore\u2019s `before-sign` hook, which runs for each request attempt. That handler calls `_start_client_span(...)`, so it starts a boto3 client span from a per-attempt hook, in addition to the span started by the `_make_api_call` wrapper.\n\nYES"
+}

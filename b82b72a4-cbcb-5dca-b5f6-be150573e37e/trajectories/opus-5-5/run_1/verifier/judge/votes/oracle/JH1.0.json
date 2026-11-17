@@ -1,0 +1,8 @@
+{
+ "case": "oracle",
+ "id": "JH1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The change preserves the request-derived attributes in both tracing modes: legacy spans retain `aws.request.url`, HTTP query, fragment, and method, while streamed spans use the same `get_url_attributes` helper and HTTP request-method key as before. The differences shown concern span placement, lifetime, and retry overwrites, which the criterion excludes.\nNO"
+}

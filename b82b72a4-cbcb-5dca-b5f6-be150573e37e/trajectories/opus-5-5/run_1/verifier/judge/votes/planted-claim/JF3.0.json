@@ -1,0 +1,8 @@
+{
+ "case": "planted-claim",
+ "id": "JF3",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "If `_instrument_streaming_body` raises while installing its wrappers, the exception is suppressed and `streaming_body_instrumented` remains `False`. The caller then finishes the client span and returns the response even though its `StreamingBody` may still be unread, satisfying the criterion.\nYES"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "error-leak",
+ "id": "JF1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "If `_make_api_call` raises after retries, the wrapper\u2019s `except BaseException` only re-raises without calling `_finish_span`. `_activate_client_span` merely restores the previous scope span, and the old error-finishing event handler is removed, so this ending leaves the client span open.\n\nNO"
+}

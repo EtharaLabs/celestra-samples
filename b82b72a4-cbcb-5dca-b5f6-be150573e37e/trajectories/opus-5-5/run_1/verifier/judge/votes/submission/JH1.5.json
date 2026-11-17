@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JH1",
+ "trial": 5,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The change preserves the URL parsing and attribute mappings in both tracing modes: legacy mode uses the same URL, query, fragment, and method keys and values, while streaming mode still uses `get_url_attributes` and `HTTP_REQUEST_METHOD`. It moves those attributes onto the client-call span and allows retries to update that span, both of which the criterion explicitly excludes.\nNO"
+}

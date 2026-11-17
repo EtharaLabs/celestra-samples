@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JS1",
+ "trial": 7,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "For a call returning a streaming body, `_sentry_make_api_call` starts a client span and then invokes `_instrument_streaming_body`. In the `StreamedSpan` branch, that function starts another span with the same name, parented to the first, so such a call starts more than one client span.\nYES"
+}

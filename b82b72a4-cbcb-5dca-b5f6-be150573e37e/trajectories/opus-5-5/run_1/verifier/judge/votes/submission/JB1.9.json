@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JB1",
+ "trial": 9,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "NO change to breadcrumb contents or emission is shown: the `request-created` handler still builds the same URL and HTTP-method data in both tracing modes and calls `add_http_breadcrumb` once per event. The changes relocate span creation and completion without changing that breadcrumb behavior.\nNO"
+}

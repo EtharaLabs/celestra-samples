@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JW1",
+ "trial": 13,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "In `_sentry_make_api_call`, the exception handler calls `_finish_span(span, error)` without protecting it with `capture_internal_exceptions()`. If span finalization raises, that new exception escapes before the bare `raise` executes, so the caller receives it instead of the original botocore exception object.\nYES"
+}

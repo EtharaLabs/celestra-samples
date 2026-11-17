@@ -1,0 +1,8 @@
+{
+ "case": "propagation-dropped",
+ "id": "JP1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The change removes registration of `_sentry_before_sign` from the botocore client\u2019s events without registering it elsewhere in the diff. Thus, for eligible requests where the original handler added trace propagation headers, the submitted change no longer adds those headers through that handler, despite retaining its implementation.\nYES"
+}

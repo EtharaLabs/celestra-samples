@@ -1,0 +1,8 @@
+{
+ "case": "renamed",
+ "id": "JS1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The `_make_api_call` wrapper starts an `OP.HTTP_CLIENT` span via `_start_client_span`. For a call whose HTTP request passes through the stdlib integration, that integration also starts an `OP.HTTP_CLIENT` child span; setting `active=False` does not prevent its creation.\nYES"
+}

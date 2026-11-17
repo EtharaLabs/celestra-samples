@@ -1,0 +1,8 @@
+{
+ "case": "planted-claim",
+ "id": "JS2",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The client span is started by `_start_client_span` in the `_make_api_call` wrapper, encompassing the API call and its retries, not from a per-attempt botocore hook. The `request-created` hook only enriches the existing span and stores it in the request context.\nNO"
+}

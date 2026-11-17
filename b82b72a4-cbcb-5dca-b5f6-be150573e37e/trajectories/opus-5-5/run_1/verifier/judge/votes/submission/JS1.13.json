@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JS1",
+ "trial": 13,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "For a call returning a supported streaming body, `_sentry_make_api_call` starts a client span and then invokes `_instrument_streaming_body`, which starts an additional streaming span parented to that client span. Thus a single boto3 call can start more than one client span.\nYES"
+}

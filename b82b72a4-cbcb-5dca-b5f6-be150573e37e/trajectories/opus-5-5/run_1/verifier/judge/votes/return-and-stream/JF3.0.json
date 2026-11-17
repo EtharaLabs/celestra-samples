@@ -1,0 +1,8 @@
+{
+ "case": "return-and-stream",
+ "id": "JF3",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "In `sentry_patched_make_api_call`, `_finish_span(span)` is called unconditionally after `_instrument_streaming_body(span, parsed)`, regardless of whether a streaming body was successfully instrumented. Thus, a call returning an unread streaming body has its client span finished immediately, rather than waiting for the body to be consumed or closed.\nYES"
+}
