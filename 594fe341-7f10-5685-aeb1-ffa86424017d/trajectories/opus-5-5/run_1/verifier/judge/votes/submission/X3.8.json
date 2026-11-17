@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X3",
+ "trial": 8,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission does not meet the criterion because it can persist an answer before that answer has been validated.\n\nIn LangGraph\u2019s replay branch, it validates only the current answer but writes the entire resume list:\n\n```python\nv = _validate_resume(adapter, scratchpad.resume[idx])\nconf[CONFIG_KEY_SEND]([(RESUME, scratchpad.resume)])\n```\n\nFor a node with multiple sequential interrupts, that list can contain previously accepted answers followed by a newly supplied, interrupt-ID-keyed answer. While replaying an earlier interrupt, this code saves the later answer as well\u2014even though its own interrupt has not yet validated it. If that later validation fails, the invalid answer has already been included in a task-level `RESUME` write.\n\nThe submission\u2019s cleanup does not fix this: `_discard_null_resume()` only retracts an unkeyed null-task resume value, not the task-level resume list written during replay. Consequently, a rejected keyed answer can remain stored and fail again on replay.\n\nWriting only the validated prefix, `scratchpad.resume[: idx + 1]`, avoids that problem. Without it, the provider does not consistently enforce validation before storage across resume routes, regardless of whether the consumer is middleware or a plain graph.\n\nFAIL"
+}

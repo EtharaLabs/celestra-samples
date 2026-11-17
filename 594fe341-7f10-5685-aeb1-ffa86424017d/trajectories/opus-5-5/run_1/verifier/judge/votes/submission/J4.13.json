@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J4",
+ "trial": 13,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission does not fully meet the criterion.\n\nIt correctly documents several important behaviors:\n- `interrupt` enforces Python/Pydantic-compatible types, while JSON Schema dictionaries are only surfaced.\n- Typed resume values are validated, and the validated object is returned.\n- Invalid answers are not recorded, leaving the interrupt pending.\n- JSON-schema tool arguments can be shown while accepting any arguments object.\n\nHowever, the per-call documentation never explains that callers must submit each decision **keyed by the interrupt ID**. Saying that each call \u201cis answered with a single decision\u201d is insufficient to describe the resume protocol. The comment about `_decided` being keyed by `ToolRuntime` identity describes an internal cache, not how clients key their answers.\n\nThe tool-argument documentation also does not clarify that the enforced Pydantic schema is `tool_call_schema`, rather than the full tool `args_schema`, whose validator methods run during tool execution. This leaves the enforcement boundary less explicit than the criterion requires.\n\nFAIL"
+}

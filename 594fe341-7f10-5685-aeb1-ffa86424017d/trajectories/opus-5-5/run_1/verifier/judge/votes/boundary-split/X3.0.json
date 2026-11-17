@@ -1,0 +1,8 @@
+{
+ "case": "boundary-split",
+ "id": "X3",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission does not meet the criterion because LangGraph stores different representations depending on how an answer arrives.\n\nIn the current/null-resume path, it changes the stored value to the validated result:\n\n```python\nscratchpad.resume.append(validated)\n```\n\nBut the existing-resume path, also used for interrupt-ID-keyed answers, validates and returns the answer without replacing its stored raw value.\n\nThis difference matters on replay: both paths call `adapter.validate_python(...)` again. For a schema with a non-idempotent validator\u2014for example, an integer validator that increments its input\u2014a direct resume initially returns and stores the incremented value, then increments it again on replay. An ID-keyed answer retains the original input and therefore produces a different replay result.\n\nThe middleware correctly delegates answer validation to `interrupt`, but that does not resolve the provider\u2019s storage inconsistency, which also affects plain graphs. Keeping the original answer in both paths, as the reference does, avoids feeding a previously transformed result back into validation.\n\nFAIL"
+}

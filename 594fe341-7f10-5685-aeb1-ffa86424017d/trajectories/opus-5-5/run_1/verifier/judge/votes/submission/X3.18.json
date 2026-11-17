@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X3",
+ "trial": 18,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission centralizes schema validation in LangGraph, and the middleware supplies a typed decision schema rather than separately validating the returned answer. Both resume paths also return the validated object while retaining the original input for replay.\n\nHowever, it does not consistently ensure that only validated answers are persisted. In the existing-resume branch, it validates one entry and then publishes the entire resume list:\n\n```python\nv = _validate_resume(adapter, scratchpad.resume[idx])\nconf[CONFIG_KEY_SEND]([(RESUME, scratchpad.resume)])\n```\n\nThat write includes entries beyond `idx`, although those entries have not yet passed their corresponding interrupts\u2019 validation. If a later answer fails validation, it can already have been included in an earlier `RESUME` write. Raising `InvalidResumeError` does not retract that earlier write; the added cleanup only addresses the null-task resume value.\n\nThe reference avoids this by publishing only `scratchpad.resume[: idx + 1]`. This is a substantive boundary guarantee, not merely a structural difference: the submission can persist an answer before validating it, making rejection and replay depend on the resume path and the other answers present.\n\nFAIL"
+}

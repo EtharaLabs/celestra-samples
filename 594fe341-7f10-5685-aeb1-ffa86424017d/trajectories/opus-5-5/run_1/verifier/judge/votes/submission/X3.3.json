@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X3",
+ "trial": 3,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission centralizes schema validation in LangGraph\u2019s `interrupt()`, and the middleware passes a Python decision schema to it rather than independently validating the resumed decision. It also stores the raw answer while returning its validated form, consistently in both resume branches.\n\nHowever, it does not consistently validate answers before persisting them. In the existing-resume branch, it validates only the current answer and then sends the entire resume list:\n\n```python\nv = _validate_resume(adapter, scratchpad.resume[idx])\nconf[CONFIG_KEY_SEND]([(RESUME, scratchpad.resume)])\n```\n\nThat list can contain answers for subsequent interrupts that have not yet been validated. For example, when a task encounters multiple interrupts, a valid answer to the first interrupt can cause a later invalid answer to be written before execution reaches that later interrupt and rejects it. The reference avoids this by sending only the validated prefix, `scratchpad.resume[: idx + 1]`.\n\nThe submission\u2019s invalid-resume exception and null-resume cleanup do not fix this: they do not retract the unvalidated suffix already sent by an earlier interrupt. Consequently, persistence and replay can depend on the resume path and the presence of other answers, rather than validation occurring before each answer is stored.\n\nFAIL"
+}

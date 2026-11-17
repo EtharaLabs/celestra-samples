@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J4",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission does not fully meet the documentation criterion.\n\nIt documents several required behaviors correctly:\n- `interrupt` distinguishes JSON Schema dictionaries, which are only surfaced, from Pydantic-compatible types, which validate resume values.\n- It states that typed validation returns the validated object.\n- `_review` and `InvalidResumeError` explain that an invalid answer is not recorded and the interrupt remains pending.\n- `_decision_schema` distinguishes enforced Pydantic tool-argument schemas from arguments accepted without that enforcement.\n\nHowever, **it never documents how clients must key per-call answers**. The added `InterruptMode` and constructor documentation describe a single decision per call but do not explain that clients submit those decisions keyed by **interrupt ID**, rather than tool-call ID or positional order. The `_decided` docstring describes an internal cache keyed by `ToolRuntime` identity; that is not the client-facing resume convention.\n\nAdditionally, the edited `interrupt` docstring retains a `Returns` section claiming it returns \u201cthe value provided during the first invocation,\u201d despite the new implementation returning the validated resume object. The new argument documentation explains this correctly, but leaves the return documentation inconsistent.\n\nFAIL"
+}

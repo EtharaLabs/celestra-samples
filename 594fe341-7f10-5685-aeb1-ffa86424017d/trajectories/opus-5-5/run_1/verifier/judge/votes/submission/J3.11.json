@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J3",
+ "trial": 11,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets the criterion:\n\n- **Unbuildable schemas fail loudly.** `TypeAdapter(response_schema)` and `adapter.json_schema()` are not wrapped in a fallback handler. Schema-construction or JSON-schema-generation errors propagate rather than disabling validation.\n- **Invalid answers raise.** Both replayed resume values and newly supplied resume values go through `_validate_resume`. A validation failure is re-raised as `InvalidResumeError`, which remains a `pydantic.ValidationError`; it is not replaced with an unchecked value or a default decision.\n- **Validation precedes acceptance.** A new answer is validated before being appended to `scratchpad.resume` or sent as the task\u2019s resume write.\n- **Missing tool-call IDs raise.** For gated per-call reviews, `_review` explicitly raises `ValueError` when the ID is absent or `None`, before requesting approval or executing the tool.\n- **The added exception handling preserves propagation.** The tool-node changes explicitly re-raise `GraphBubbleUp`, including `InvalidResumeError`, instead of converting it into a tool-error response.\n\nThe decision cache stores only decisions returned successfully by `interrupt`; it does not provide a fallback after validation or schema failures.\n\nPASS"
+}

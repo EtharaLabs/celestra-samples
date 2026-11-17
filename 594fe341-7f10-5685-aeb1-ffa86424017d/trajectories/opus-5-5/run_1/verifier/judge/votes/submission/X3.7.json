@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X3",
+ "trial": 7,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission centralizes answer validation in LangGraph\u2019s `interrupt()`, and the middleware supplies a Python response type rather than independently validating the returned decision. It also preserves the raw submitted value for storage while returning the validated result.\n\nHowever, it does not consistently validate replayed answers before writing them. In the existing-resume branch, it does:\n\n```python\nv = _validate_resume(adapter, scratchpad.resume[idx])\nconf[CONFIG_KEY_SEND]([(RESUME, scratchpad.resume)])\n```\n\nOnly the answer at `idx` has been checked, but the write republishes the **entire resume list**, including later answers whose corresponding interrupts have not yet run or validated them. If a later answer fails validation, that answer may already have been written by an earlier interrupt. The reference avoids this by sending only `scratchpad.resume[: idx + 1]`.\n\nThis also differs from the new, unkeyed-resume path, which validates an answer before appending and sending it. The added invalid-resume exception and null-resume cleanup do not correct the premature publication of the replay list.\n\nConsequently, the provider does not maintain the required validate-before-storage boundary consistently across fresh answers and replay, including in a plain graph with multiple interrupts.\n\nFAIL"
+}

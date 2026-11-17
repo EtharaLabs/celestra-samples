@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X1",
+ "trial": 2,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission centralizes resume-value validation in LangGraph\u2019s `_validate_resume`, called by `interrupt`, and the middleware supplies its decision type through `response_schema`.\n\nHowever, the middleware then checks the returned decision again. In `_resolve`, it passes the validated decision to `_process_decision(decision, request.tool_call, config)`. That existing method checks whether the decision type is among the configured allowed decisions and raises `ValueError` for an unexpected or disallowed decision. The schema supplied to `interrupt` already enforces that restriction.\n\nThus, although the provider performs validation, the consumer still repeats part of that validation after `interrupt` returns, contrary to the criterion.\n\nFAIL"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X2",
+ "trial": 12,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission does not meet the minimal, backwards-compatible criterion.\n\nThe new keyword defaults to `None`, and the SDK field uses `NotRequired`, so existing calls and SDK dictionaries remain valid. The submission also preserves the old interrupt representation when no schema is supplied.\n\nHowever, it changes unrelated runtime behavior in `prebuilt/tool_node.py`: tool-call wrappers now re-raise every `GraphBubbleUp` instead of passing it through the existing exception-handling path. That applies even to ordinary `interrupt(value)` calls with no schema, potentially changing whether an exception becomes a handled tool error or propagates out of the graph.\n\nThe additional exception class and execution-loop changes also substantially broaden the LangGraph patch beyond the minimal optional-schema extension. Most importantly, the unconditional tool-wrapper behavior change violates the requirement that schema-free callers see the same behavior as before.\n\nFAIL"
+}

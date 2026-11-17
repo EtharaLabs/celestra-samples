@@ -1,0 +1,8 @@
+{
+ "case": "swallow",
+ "id": "J3",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission fails the criterion in `langgraph/types.py`: it catches every exception from `TypeAdapter(response_schema)` and sets `adapter = None`. If Pydantic cannot build the supplied schema, that error is suppressed rather than raised to the caller.\n\nBoth resume paths then use `adapter.validate_python(v) if adapter else v`, so this fallback returns the resume value unchecked. This directly violates the requirement that an unbuildable schema must fail loudly rather than enable an unchecked resume.\n\nThe submission does propagate answer-validation errors when an adapter is successfully built, and explicitly raises for a gated tool call whose ID is `None`. Those behaviors do not compensate for swallowing schema-construction errors.\n\nFAIL"
+}

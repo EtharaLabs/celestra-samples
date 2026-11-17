@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J3",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets the criterion:\n\n- **Unbuildable schemas are not suppressed.** `TypeAdapter(response_schema)` and JSON-schema generation run without a fallback that drops validation or substitutes an unchecked resume.\n- **Invalid answers raise.** Both previously recorded and newly supplied resume values go through `_validate_resume`. Validation failures are re-raised as `InvalidResumeError`, a `ValidationError` and `GraphBubbleUp`, rather than replaced with a default decision. New answers are validated before being appended or sent as task resume writes.\n- **Validation failures propagate through tool wrappers.** The added `GraphBubbleUp` handlers explicitly re-raise these errors instead of treating them as ordinary tool errors.\n- **Missing tool-call IDs fail explicitly.** For a gated per-call review, `_review` raises `ValueError` when the ID is missing or `None`, before issuing the approval interrupt. It does not silently skip review or approve the call.\n\nThere is no exception-handling path here that replaces a bad schema or invalid answer with an unchecked decision.\n\nPASS"
+}

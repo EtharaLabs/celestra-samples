@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X3",
+ "trial": 11,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission centralizes schema validation in LangGraph\u2019s `interrupt()`, and the middleware passes a Python decision schema to it. Both fresh and replayed answers are validated, and fresh answers are appended only after validation succeeds.\n\nHowever, the replay path publishes the **entire resume buffer** after validating only the current answer:\n\n```python\nv = _validate_resume(adapter, scratchpad.resume[idx])\nconf[CONFIG_KEY_SEND]([(RESUME, scratchpad.resume)])\n```\n\nIf that buffer contains multiple answers, validating an earlier answer can publish later answers before their interrupts have validated them. A later answer may then fail validation, even though an earlier `RESUME` write has already included it. The submission\u2019s null-resume cleanup does not retract such task-level writes.\n\nThis matters at the requested boundary: persistence must follow validation consistently, including when replaying answers supplied by interrupt ID. The reference limits each replay write to `scratchpad.resume[: idx + 1]`, so it publishes only the prefix validated so far. The submission omits that safeguard and therefore does not guarantee the required storage and replay behavior across resume paths.\n\nFAIL"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X3",
+ "trial": 14,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission does not fully meet the boundary criterion.\n\nIt correctly places schema validation in LangGraph\u2019s `interrupt()` and has the middleware supply a Python decision schema rather than independently validate the answer. It also validates a newly consumed unkeyed answer before appending it to the task\u2019s resume history.\n\nHowever, the replay branch still publishes the **entire resume buffer** after validating only the current entry:\n\n```python\nv = _validate_resume(adapter, scratchpad.resume[idx])\nconf[CONFIG_KEY_SEND]([(RESUME, scratchpad.resume)])\n```\n\nThe buffer can contain answers for later interrupts that have not yet been validated. In particular, when a keyed answer is available while earlier interrupts are being replayed, replaying an earlier valid answer can persist that later answer before execution reaches its validation. If the later answer is invalid, raising `InvalidResumeError` does not retract the resume history already sent by the earlier replay.\n\nThe reference avoids this by sending only `scratchpad.resume[: idx + 1]`, so the stored history includes only answers that execution has reached and validated. The submission\u2019s cleanup of the null-task resume write does not fix this task-local replay problem.\n\nConsequently, \u201cvalidate before storing\u201d is not consistent across fresh unkeyed answers and keyed answers encountered during replay, including in plain graphs with multiple interrupts.\n\nFAIL"
+}

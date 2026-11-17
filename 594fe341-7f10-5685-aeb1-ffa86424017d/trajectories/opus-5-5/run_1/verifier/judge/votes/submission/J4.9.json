@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J4",
+ "trial": 9,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission does not fully meet the documentation criterion.\n\n- **Resume return value is described inconsistently.** The new `response_schema` argument documentation correctly says that validation returns the validated object, but the `interrupt()` docstring\u2019s `Returns` section still says it returns \u201cthe value provided during the first invocation.\u201d That is not what the implementation does: it returns the resume answer, potentially transformed by Pydantic validation.\n- **Per-call answer keying is not documented for callers.** The middleware documentation says each interrupt takes a single decision, but never explains that callers supply those decisions keyed by **interrupt ID**. The `_decided` comment describes an internal cache keyed by `id(request.runtime)`, which is a different mechanism and does not document the resume contract.\n\nThe submission does correctly distinguish display-only JSON Schema dictionaries from enforced Python schemas in `interrupt()`, and explicitly documents that invalid answers are not recorded. Those strengths do not resolve the return-value contradiction or the missing per-call keying documentation.\n\nFAIL"
+}

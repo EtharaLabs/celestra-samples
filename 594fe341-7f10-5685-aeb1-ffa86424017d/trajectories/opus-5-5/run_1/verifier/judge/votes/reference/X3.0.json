@@ -1,0 +1,8 @@
+{
+ "case": "reference",
+ "id": "X3",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets the criterion.\n\n- **Validation is owned by LangGraph.** The middleware constructs the decision schema and passes it to `interrupt`; it does not separately parse or validate the resumed answer.\n- **Both resume paths have the same semantics.** Whether an answer is already in `scratchpad.resume` (including an ID-keyed answer) or arrives through the current resume slot, `interrupt` validates it with the same `TypeAdapter` and returns the validated result.\n- **Storage and replay preserve the submitted value.** The current-resume path appends the original `v`, not its parsed replacement. Replay validates that original value again, producing the same return semantics. Validation occurs before a resume write is emitted; replay emits only the successfully validated prefix.\n- **Middleware and plain graphs use the same boundary.** Per-call HITL delegates to the public `interrupt` implementation. Its edit-schema wrapper checks the edit while preserving the submitted dictionary, so the middleware can consume it without introducing a competing normalization step.\n- **Schema publication agrees with enforcement.** Python schemas are enforced and exposed as JSON Schema, while JSON-schema dictionaries are explicitly display-only.\n\nPASS"
+}

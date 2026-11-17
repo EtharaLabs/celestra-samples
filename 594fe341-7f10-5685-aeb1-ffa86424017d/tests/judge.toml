@@ -1,0 +1,111 @@
+# GENERATED SECTION. DO NOT HAND-EDIT.
+
+[judge]
+judge = "openai/gpt-6.1-sol"
+files = ["/logs/verifier/submission.diff"]
+reference = "/tests/reference.diff"
+
+[[criterion]]
+id = "J1"
+description = "The change is a focused fix in the style of the surrounding code in each checkout: confined to langgraph's interrupt and Interrupt (and the SDK's interrupt type) and to langchain's HumanInTheLoopMiddleware, with no dead code, unused alternative builders, unrelated rewrites of existing logic, or duplicated helpers."
+type = "binary"
+weight = 5
+negate = false
+
+[criterion.annotations]
+mode = "judged"
+type = "EFFECT"
+obligation = "deliverable.instruction"
+dimension = "craft"
+evidence = ["/logs/verifier/submission.diff against /tests/reference.diff"]
+residue = "Whether a change is focused and in the style of the surrounding code cannot be reduced to a predicate: many differently structured diffs are acceptable, and no line count or token overlap with the reference separates them."
+
+[[criterion]]
+id = "J2"
+description = "The per-call schema and the provider's validation hold for any tool, any tool name, and any response schema the caller passes; nothing special-cases the tool names, argument names, decision sets, or schema kinds the tests use."
+type = "binary"
+weight = 5
+negate = false
+
+[criterion.annotations]
+mode = "judged"
+type = "EFFECT"
+obligation = "deliverable.instruction"
+dimension = "robustness"
+evidence = ["/logs/verifier/submission.diff against /tests/reference.diff"]
+residue = "Whether a branch is a legitimate case distinction or a shortcut fitted to the graded inputs is a judgment of intent and generality over an unbounded input space that sampled tests cannot decide."
+
+[[criterion]]
+id = "J3"
+description = "Bad answers and bad schemas fail loudly: a schema pydantic cannot build, an answer that does not validate, or a tool call without an ID raises to the caller rather than being caught and replaced by an unchecked resume, a default decision, or a silent skip."
+type = "binary"
+weight = 5
+negate = false
+
+[criterion.annotations]
+mode = "judged"
+type = "EFFECT"
+obligation = "deliverable.instruction"
+dimension = "constraints"
+evidence = ["/logs/verifier/submission.diff against /tests/reference.diff"]
+residue = "Whether a guard or fallback discards a case the code can handle, or only handles input it can never receive, is a judgment of reachability that no finite set of graded runs settles."
+
+[[criterion]]
+id = "J4"
+description = "Every docstring and comment the change adds or edits describes what the code does: which schemas are enforced and which are only shown, that an invalid answer is not kept, what interrupt returns on resume, and how per-call answers are keyed."
+type = "binary"
+weight = 5
+negate = false
+
+[criterion.annotations]
+mode = "judged"
+type = "EFFECT"
+obligation = "deliverable.instruction"
+dimension = "craft"
+evidence = ["/logs/verifier/submission.diff against /tests/reference.diff"]
+residue = "Whether prose describes code truthfully is a semantic judgment: no deterministic check compares a docstring's claims with the behaviour of the code it documents."
+
+[[criterion]]
+id = "X1"
+description = "The answer check lives once, in langgraph's interrupt, and langchain relies on it: the middleware hands its decision type to interrupt and does not validate the returned answer again or re-implement the provider's checking."
+type = "binary"
+weight = 5
+negate = false
+
+[criterion.annotations]
+mode = "judged"
+type = "EFFECT"
+obligation = "deliverable.instruction"
+dimension = "constraints"
+evidence = ["/logs/verifier/submission.diff against /tests/reference.diff"]
+residue = "Whether a second check is a duplicate of the provider's contract or a distinct consumer rule depends on what each check means, which no graded node observes because a duplicate check passes whenever the first one does."
+
+[[criterion]]
+id = "X2"
+description = "The langgraph change is minimal and backwards compatible: callers of interrupt that pass no schema, and readers of the SDK's interrupt type, see exactly what they saw before; the new field and keyword are optional everywhere."
+type = "binary"
+weight = 5
+negate = false
+
+[criterion.annotations]
+mode = "judged"
+type = "EFFECT"
+obligation = "deliverable.instruction"
+dimension = "constraints"
+evidence = ["/logs/verifier/submission.diff against /tests/reference.diff"]
+residue = "Whether a change to a public type or signature breaks existing callers outside the graded suites is a judgment over every consumer of the API, which no sampled test enumerates."
+
+[[criterion]]
+id = "X3"
+description = "Provider and consumer agree at the boundary: an answer is validated in one place, and what is stored and replayed for it is the same whether it arrives as Command(resume=value) or keyed by interrupt id, through the middleware or through a plain graph."
+type = "binary"
+weight = 5
+negate = false
+
+[criterion.annotations]
+mode = "judged"
+type = "EFFECT"
+obligation = "deliverable.instruction"
+dimension = "robustness"
+evidence = ["/logs/verifier/submission.diff against /tests/reference.diff"]
+residue = "Whether the stored and replayed form of an answer is the same across resume paths is a property of persisted state the graded tests only sample through their own assertions, so equivalence across paths is a judgment."

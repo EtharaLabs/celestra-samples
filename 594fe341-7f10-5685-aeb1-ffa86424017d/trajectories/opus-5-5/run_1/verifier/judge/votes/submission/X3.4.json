@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X3",
+ "trial": 4,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission implements much of the boundary correctly: the middleware supplies a Python response type, LangGraph performs validation, raw answers are retained for replay, and JSON Schema dictionaries remain display-only.\n\nHowever, the replay path does not preserve the validation-before-storage boundary. In `interrupt()`, after validating only `scratchpad.resume[idx]`, it sends the **entire** resume list:\n\n```python\nv = _validate_resume(adapter, scratchpad.resume[idx])\nconf[CONFIG_KEY_SEND]([(RESUME, scratchpad.resume)])\n```\n\nThat list can contain later answers that have not yet been checked against their corresponding interrupt schemas during this execution. Replaying an earlier answer therefore republishes those later answers prematurely. The reference deliberately sends only `scratchpad.resume[: idx + 1]`, so each answer is included only after its own validation succeeds.\n\nThe new `InvalidResumeError` handling does not fix this ordering defect: it handles a validation failure once encountered, rather than ensuring that only the validated prefix is emitted. Thus the provider still has inconsistent validation and persistence boundaries between consuming a new answer and replaying existing answers, including in plain graphs.\n\nFAIL"
+}

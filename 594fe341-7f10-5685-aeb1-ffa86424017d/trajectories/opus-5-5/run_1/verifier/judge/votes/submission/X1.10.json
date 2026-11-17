@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X1",
+ "trial": 10,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission centralizes resume-schema validation in LangGraph\u2019s `interrupt` through `_validate_resume`, and the middleware passes its decision type via `response_schema`.\n\nHowever, the middleware then checks the returned decision again. In `_resolve`, after `_review` returns the validated answer, it calls:\n\n```python\n_, tool_message = self._process_decision(decision, request.tool_call, config)\n```\n\n`_process_decision` retains the existing checks that each decision type is in the tool\u2019s `allowed_decisions`, including raising an error for an unexpected or disallowed decision. Those checks duplicate constraints already enforced by the decision type supplied to `interrupt`.\n\nKeeping this validation for legacy batched mode would not itself violate the criterion, but routing per-call answers through it does. The middleware should consume the validated decision without checking its admissibility again.\n\nFAIL"
+}

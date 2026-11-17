@@ -1,0 +1,8 @@
+{
+ "case": "misdoc",
+ "id": "J4",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission fails the criterion because two edited docstrings contradict the implementation:\n\n- In `HumanInTheLoopMiddleware.__init__`, the documentation says an invalid answer raises `ValidationError` **after it is saved**, so the interrupt cannot be answered again. The code validates before appending or sending the resume value, so an invalid answer is not saved and the interrupt can be answered again. This also contradicts the submission\u2019s tool-call wrapper docstrings.\n- In `interrupt`, the `response_schema` documentation reverses which schemas are enforced. It claims JSON Schema dictionaries validate resume values, while Python schemas are only published to clients and the raw value is returned. The code does the opposite: dictionaries bypass validation; Python schemas use `TypeAdapter.validate_python`, and `interrupt` returns the validated result.\n\nThe per-call answer keying is correctly documented as using interrupt IDs, but these inaccuracies mean not every added or edited docstring describes what the code does.\n\nFAIL"
+}

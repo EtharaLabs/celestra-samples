@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J3",
+ "trial": 7,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets the fail-loud criterion:\n\n- **Unbuildable schemas:** `TypeAdapter(response_schema)` and JSON-schema generation run without a fallback that would discard the schema or accept an unchecked answer. Errors from building the middleware\u2019s decision schema likewise propagate.\n- **Invalid answers:** Both replayed and newly supplied resume values pass through `_validate_resume`. Validation failures are re-raised as `InvalidResumeError`, a subclass of both Pydantic\u2019s `ValidationError` and `GraphBubbleUp`. The tool-node changes explicitly re-raise `GraphBubbleUp` rather than converting it into a tool-error result.\n- **No unchecked persistence:** A new resume value is validated before being appended to `scratchpad.resume` or sent as a resume write. A validation failure does not become an approval or another default decision.\n- **Missing tool-call IDs:** `_review` explicitly raises `ValueError` when a gated tool call\u2019s ID is absent or `None`, before requesting approval or executing the tool.\n\nThe exception conversion preserves loud failure rather than replacing an invalid answer with a usable decision.\n\nPASS"
+}

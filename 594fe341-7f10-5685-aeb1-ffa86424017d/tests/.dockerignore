@@ -1,0 +1,16 @@
+*
+!binary.txt
+!combine.py
+!graded
+!judge
+!judge.toml
+!reference.diff
+!requirements-sdist.txt
+!requirements-tools.txt
+!requirements.txt
+!reward.toml
+!run_graded.py
+!score.py
+!*.sh
+!test_output.py
+!vguard.py

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J4",
+ "trial": 14,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission does not fully meet the documentation criterion.\n\n- **Per-call answer keys are not documented.** The new `InterruptMode` and constructor documentation say each interrupt takes a single decision, but never explain that callers should submit those decisions keyed by **interrupt ID**, rather than tool-call ID or position. The `_decided` comment describes an internal cache keyed by runtime identity, not the public resume-answer mapping.\n- **The resume-return documentation is contradictory.** The new `response_schema` argument documentation correctly says a typed schema produces a validated return object. However, the retained `Returns` section in the edited `interrupt` docstring still says it returns \u201cthe value provided during the first invocation.\u201d That does not accurately describe returning a validated/coerced object, such as a Pydantic model.\n- The submission does correctly explain that raw JSON schemas are shown but not enforced, and that invalid resume answers are not recorded. Those improvements do not resolve the missing keying explanation and inconsistent return description.\n\nFAIL"
+}

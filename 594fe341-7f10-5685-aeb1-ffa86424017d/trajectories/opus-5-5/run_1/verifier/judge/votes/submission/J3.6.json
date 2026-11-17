@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J3",
+ "trial": 6,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets the criterion:\n\n- **Unbuildable schemas are not given a fallback.** `TypeAdapter(response_schema)` and JSON-schema generation are not wrapped in handlers that substitute an unchecked schema or resume value.\n- **Invalid answers raise.** Both previously stored and newly supplied resume values pass through `_validate_resume`. A Pydantic validation failure is converted into `InvalidResumeError` and re-raised, not replaced with a default decision or the original, unchecked answer. New answers are validated before being appended to the task\u2019s resume list.\n- **Validation errors remain visible to callers.** `InvalidResumeError` inherits from `GraphBubbleUp`, and the tool-wrapper changes explicitly re-raise such exceptions rather than treating them as tool errors.\n- **Missing tool-call IDs raise.** `_review` explicitly raises `ValueError` when a gated call\u2019s ID is absent or `None`, before asking for approval or executing the tool.\n\nThe added exception conversion and resume cleanup preserve failure rather than silently bypassing validation.\n\nPASS"
+}

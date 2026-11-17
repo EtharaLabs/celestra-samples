@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X1",
+ "trial": 19,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission does not meet the criterion.\n\nLangGraph performs resume validation through `_validate_resume`, and LangChain passes its decision type to `interrupt(..., response_schema=_decision_schema(...))`. However, LangChain then checks the returned decision again: `_resolve` passes it to the existing `_process_decision(decision, request.tool_call, config)`.\n\nThat method retains the allowed-decision checks and raises an error for an unexpected or disallowed decision. Thus, the per-call path repeats checks already enforced by the schema passed to LangGraph rather than trusting the validated answer and only applying it. The reference avoids this by dispatching directly on the returned decision without routing it through `_process_decision`.\n\nFAIL"
+}

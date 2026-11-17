@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X1",
+ "trial": 6,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission centralizes schema validation in LangGraph: `interrupt` calls `_validate_resume` on both resumed-value paths, and the middleware passes its decision type via `response_schema`.\n\nHowever, the middleware then checks the returned decision again. After `_review` returns the validated decision, `_resolve` calls:\n\n```python\n_, tool_message = self._process_decision(decision, request.tool_call, config)\n```\n\nThe existing `_process_decision` checks the decision type against the configured `allowed_decisions` and raises for an unexpected or disallowed decision. Reusing that method on the per-call path therefore repeats an acceptance check already enforced by the schema supplied to `interrupt`.\n\nThe criterion requires the middleware to trust the provider-validated answer and dispatch its behavior without validating it again. This submission does not meet that requirement.\n\nFAIL"
+}

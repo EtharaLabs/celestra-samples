@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X2",
+ "trial": 8,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission makes the new parameter optional (`response_schema=None`) and adds the SDK field with `NotRequired`, preserving existing SDK type usage. It also preserves the old interrupt representation when no schema is supplied.\n\nHowever, it changes existing no-schema behavior in `prebuilt/tool_node.py`: two wrapper execution paths now unconditionally re-raise `GraphBubbleUp` instead of passing it through the existing exception-handling logic. `GraphInterrupt` is a `GraphBubbleUp`, so an existing tool-call wrapper that calls plain `interrupt(value)` can now propagate an interrupt where previously the configured tool-error handling applied. This change is not restricted to callers opting into a response schema.\n\nThus, although the new field and keyword are optional, the LangGraph changes do not preserve existing no-schema behavior everywhere, as the criterion requires.\n\nFAIL"
+}

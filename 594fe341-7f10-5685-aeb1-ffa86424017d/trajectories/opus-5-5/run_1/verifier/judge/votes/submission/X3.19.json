@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X3",
+ "trial": 19,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission does not fully satisfy the boundary agreement.\n\nIt correctly centralizes schema validation in LangGraph and has the middleware pass a typed decision schema to `interrupt()`. It also preserves raw resume inputs while returning their validated forms.\n\nHowever, the replay branch validates only the current entry and then emits the **entire** resume list:\n\n```python\nv = _validate_resume(adapter, scratchpad.resume[idx])\nconf[CONFIG_KEY_SEND]([(RESUME, scratchpad.resume)])\n```\n\nThat list can include later answers that have not yet passed their own interrupts\u2019 validation. When a task encounters multiple interrupts, replaying an earlier valid answer can therefore emit a later invalid answer into the resume writes before validation reaches it. The reference avoids this by emitting only `scratchpad.resume[: idx + 1]`.\n\nValidation before appending a new, unkeyed answer does not fix this replay path, and converting validation failures into `InvalidResumeError` does not prevent the earlier emission of the full list. Consequently, the submission does not consistently enforce the same validation-before-storage behavior across resume paths, including plain graphs with multiple interrupts.\n\nFAIL"
+}

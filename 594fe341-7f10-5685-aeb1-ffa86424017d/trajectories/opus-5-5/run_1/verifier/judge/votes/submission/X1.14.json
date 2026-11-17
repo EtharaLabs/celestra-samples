@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X1",
+ "trial": 14,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission puts resume-value validation in LangGraph\u2019s `interrupt`, through `_validate_resume`, and the middleware passes its decision type using `response_schema=_decision_schema(...)`.\n\nHowever, the middleware checks the returned decision again. In `_resolve`, after `_review` returns the validated answer, it calls:\n\n```python\n_, tool_message = self._process_decision(decision, request.tool_call, config)\n```\n\nThe existing `_process_decision` checks the decision type against the configured allowed decisions and raises for unexpected decisions. Reusing that path for per-call answers duplicates checks already enforced by the type passed to `interrupt`.\n\nThus, although the provider performs validation, the consumer does not rely exclusively on it as required.\n\nFAIL"
+}

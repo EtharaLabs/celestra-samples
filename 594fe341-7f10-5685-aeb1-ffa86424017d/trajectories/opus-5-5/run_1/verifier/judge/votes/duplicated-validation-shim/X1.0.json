@@ -1,0 +1,8 @@
+{
+ "case": "duplicated-validation-shim",
+ "id": "X1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission fails the criterion because LangChain validates the answer again after LangGraph\u2019s `interrupt` returns it.\n\nIn `HumanInTheLoopMiddleware._resolve_per_call`, it correctly passes the decision type to the provider:\n\n```python\ndecision = interrupt(value, response_schema=response_schema)\n```\n\nBut then it duplicates the provider\u2019s checking:\n\n```python\ndecision = TypeAdapter(response_schema).validate_python(decision)\n```\n\nLangGraph\u2019s `interrupt` already validates resume values with `adapter.validate_python` before returning them. The extra validation in the middleware violates the requirement that answer checking live only in LangGraph and that LangChain rely on it.\n\nFAIL"
+}

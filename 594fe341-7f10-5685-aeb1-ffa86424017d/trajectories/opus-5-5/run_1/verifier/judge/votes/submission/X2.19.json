@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X2",
+ "trial": 19,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The new API arguments are optional: `interrupt` defaults `response_schema` to `None`, both `Interrupt` construction methods retain their existing required arguments, and the SDK field is `NotRequired`. The submission also preserves the no-schema interrupt representation and omits the absent schema from debug output.\n\nHowever, the LangGraph change is not minimal or fully backward compatible. In `prebuilt/tool_node.py`, it unconditionally adds `except GraphBubbleUp: raise` around tool-call wrappers. That changes how existing wrappers\u2019 exceptions are handled\u2014even when they use `interrupt` without a schema. Exceptions previously subject to the configured tool-error handling now escape it. This behavior change is not gated on use of the new optional feature.\n\nThe submission additionally introduces a new error class and loop-level resume-write retraction, expanding the change beyond the narrowly additive schema support. While those additions may serve validation behavior, the unconditional change to existing tool-wrapper behavior is enough to violate this criterion.\n\nFAIL"
+}

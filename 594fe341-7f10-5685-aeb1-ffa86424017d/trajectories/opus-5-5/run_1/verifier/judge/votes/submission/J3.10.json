@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J3",
+ "trial": 10,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets the criterion:\n\n- **Unbuildable schemas raise:** `TypeAdapter(response_schema)` is constructed without a fallback handler. Errors during schema construction or JSON Schema generation are not replaced with an unchecked resume or default decision.\n- **Invalid answers raise:** Both stored and newly supplied resume values pass through `_validate_resume` before being returned. A `ValidationError` is converted to `InvalidResumeError`, which remains a `ValidationError` and also inherits `GraphBubbleUp`. It is re-raised, not suppressed or replaced with an answer. Newly supplied invalid values are not appended to `scratchpad.resume`.\n- **Missing tool-call IDs raise:** For gated per-call reviews, `_review` explicitly raises `ValueError` when the ID is missing or `None`, before consulting cached decisions or calling `interrupt`.\n- **No silent validation bypass:** Decisions are cached only after `interrupt` returns successfully. The added tool-node handling explicitly re-raises `GraphBubbleUp`, preserving invalid-resume failures rather than converting them into ordinary tool-error results.\n\nThe exception conversion and rejected-resume cleanup differ from the reference implementation, but neither substitutes an unchecked value nor hides the failure from the caller.\n\nPASS"
+}

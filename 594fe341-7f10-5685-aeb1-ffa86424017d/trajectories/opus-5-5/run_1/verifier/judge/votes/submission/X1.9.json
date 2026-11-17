@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X1",
+ "trial": 9,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission puts resume validation in LangGraph\u2019s `interrupt` via `_validate_resume`, and LangChain passes its decision type through `response_schema`.\n\nHowever, LangChain does not fully rely on that validation. After `_review` returns the validated decision, `_resolve` calls:\n\n```python\n_, tool_message = self._process_decision(decision, request.tool_call, config)\n```\n\nThe existing `_process_decision` checks the decision type against the configured allowed decisions and raises for unexpected or disallowed decisions. Thus, the per-call path rechecks an answer that LangGraph has already validated against the allowed-decision schema.\n\nThe criterion requires the middleware to consume the validated answer without validating it again. Reusing the batched decision-checking method in the per-call path violates that requirement.\n\nFAIL"
+}

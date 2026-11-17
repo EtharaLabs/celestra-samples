@@ -1,0 +1,8 @@
+{
+ "case": "craft-sprawl",
+ "id": "J1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission stays within the intended files, and the LangGraph and SDK changes are focused. However, the LangChain changes violate the criterion:\n\n- `_decision_schema_v2` is an unused alternative builder duplicating `_decision_schema`. It is never called.\n- `_is_decision_allowed` replaces a straightforward membership check with an unnecessary helper that loops through every allowed decision, adding a cast and rewriting existing logic without a need related to the fix.\n\nThe unused, duplicated schema builder alone is sufficient to fail the explicit requirement against dead code and unused alternative builders.\n\nFAIL"
+}

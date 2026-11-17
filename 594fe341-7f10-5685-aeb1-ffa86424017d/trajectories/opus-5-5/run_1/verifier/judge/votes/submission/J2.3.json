@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J2",
+ "trial": 3,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission does not fully satisfy the criterion for arbitrary caller-provided response schemas.\n\nThe provider catches every Pydantic `ValidationError` and reconstructs it as `InvalidResumeError` using:\n\n```python\n_, args = error.__reduce__()\nreturn cls.from_exception_data(*args)\n```\n\nThat reconstruction does not work for all Pydantic validation errors. For example, a caller can pass an `Annotated` type or model with a validator that raises:\n\n```python\nPydanticCustomError(\"review_denied\", \"This answer is not permitted\")\n```\n\nPydantic can validate that schema and produce a legitimate `ValidationError`. However, reconstructing its exported error details through `from_exception_data` cannot resolve the arbitrary custom error identifier and raises a `KeyError` instead.\n\nConsequently, the behavior depends on the kinds of validators in the caller\u2019s schema. This also bypasses the submission\u2019s invalid-resume cleanup, since `_suppress_interrupt` only performs that cleanup for `InvalidResumeError`. The reference directly propagates the original validation error and does not impose this restriction.\n\nThe middleware otherwise builds its decisions dynamically rather than hard-coding particular tools, but the provider\u2019s failure with valid custom-validator schemas is enough to violate the requirement that validation hold for any caller-provided response schema.\n\nFAIL"
+}

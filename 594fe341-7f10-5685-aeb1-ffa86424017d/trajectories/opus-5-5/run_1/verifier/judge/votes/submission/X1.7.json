@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X1",
+ "trial": 7,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission does put resume validation in LangGraph: `interrupt()` uses a `TypeAdapter` through `_validate_resume()` before returning an answer or recording a new resume value. LangChain also passes its decision type via `response_schema` as required.\n\nHowever, LangChain does not fully rely on that validation. After `_review()` returns the validated decision, `_resolve()` passes it to the existing `_process_decision()`:\n\n```python\n_, tool_message = self._process_decision(decision, request.tool_call, config)\n```\n\nThat method checks the decision type against `allowed_decisions` and raises for unexpected or disallowed decisions. Consequently, the per-call path checks decision admissibility again after `interrupt()` has already checked it against the tool-specific decision schema.\n\nThis violates the criterion that the answer check live only in LangGraph and that the middleware not validate the returned answer again. The middleware should dispatch on the validated decision without routing it through the legacy admissibility checks.\n\nFAIL"
+}

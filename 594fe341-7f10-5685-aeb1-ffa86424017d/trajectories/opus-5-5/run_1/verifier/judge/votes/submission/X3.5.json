@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X3",
+ "trial": 5,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission centralizes schema validation in LangGraph\u2019s `interrupt()`, and the middleware supplies a Python decision schema rather than independently parsing the answer. It also preserves the raw incoming value in the new-resume path while returning the validated result.\n\nHowever, it does not maintain that boundary consistently during replay. In the existing-resume path, it validates only the value at `idx`, then emits the **entire** resume list:\n\n```python\nv = _validate_resume(adapter, scratchpad.resume[idx])\nconf[CONFIG_KEY_SEND]([(RESUME, scratchpad.resume)])\n```\n\nThat list can include a newly supplied, later answer that has not yet reached its corresponding interrupt or passed its schema validation. Thus, replaying an earlier answer can mark a later, unchecked answer for persistence. If execution changes branches or raises another interrupt before consuming that later entry, it can retain an answer that was never validated at its own boundary.\n\nThe reference avoids this by emitting only `scratchpad.resume[: idx + 1]`: the prefix actually consumed and validated so far. The submission\u2019s special handling of validation errors does not cover execution that never reaches the later validator.\n\nConsequently, the submission does not guarantee that stored resume history contains only answers accepted at their respective interrupt boundaries, consistently across direct and keyed resume paths.\n\nFAIL"
+}

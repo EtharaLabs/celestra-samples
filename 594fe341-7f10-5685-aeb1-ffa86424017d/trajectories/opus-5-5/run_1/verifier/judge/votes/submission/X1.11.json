@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X1",
+ "trial": 11,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission centralizes schema-based resume validation in LangGraph: `interrupt` calls `_validate_resume` before returning an answer, and LangChain passes its decision type through `response_schema`.\n\nHowever, LangChain then checks that returned decision again. In `_resolve`, the result of `_review` is passed to `_process_decision(decision, request.tool_call, config)`. That existing method checks whether the decision type is allowed by the tool configuration and raises an error for unexpected or disallowed decisions. Thus the per-call path repeats an allowed-decision check already enforced by the type supplied to `interrupt`.\n\nThe criterion requires the middleware to rely on the provider\u2019s validation, not validate the returned answer again. This redundant check violates it.\n\nFAIL"
+}

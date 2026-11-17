@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J2",
+ "trial": 9,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission builds decision schemas dynamically from each tool\u2019s name, argument schema, and allowed decisions; it does not hard-code the tools or decision combinations used by tests.\n\nHowever, the provider\u2019s validation does not work for every caller-supplied response schema. `_validate_resume` catches every Pydantic `ValidationError` and reconstructs it through `InvalidResumeError.from_validation_error`, using `error.__reduce__()` and `from_exception_data`.\n\nThat reconstruction is not valid for all Pydantic validation errors. For example, a response model can have a validator that raises `PydanticCustomError` with a caller-defined error code. The reduced error details contain that code as a string, but `from_exception_data` cannot reconstruct an arbitrary custom error from that string. Instead of propagating the schema\u2019s validation failure as a `ValidationError`, this path can raise a `KeyError` for an invalid error type.\n\nThis is a failure for a legitimate caller-supplied response schema, so the provider\u2019s validation does not satisfy the criterion\u2019s universal requirement.\n\nFAIL"
+}

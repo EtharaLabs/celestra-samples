@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J3",
+ "trial": 9,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets the criterion:\n\n- **Unbuildable schemas fail rather than falling back.** `TypeAdapter(response_schema)` and `adapter.json_schema()` are called without a fallback to an unchecked interrupt or resume. Errors from middleware decision-schema construction also propagate.\n- **Invalid answers raise.** Both replayed and newly supplied resume values pass through `_validate_resume`. A Pydantic validation failure is converted to `InvalidResumeError` and re-raised\u2014not replaced with the original answer or a default decision. Because that exception also inherits from `GraphBubbleUp`, the added tool-wrapper exception handling explicitly propagates it.\n- **Missing tool-call IDs raise.** For a gated per-call review, `_review` checks `tool_call.get(\"id\") is None` and raises `ValueError` before creating the interrupt or executing the tool.\n- **Validation precedes recording.** Newly supplied answers are validated before being appended to `scratchpad.resume`, and middleware decisions are cached only after `interrupt` returns successfully.\n\nThe exception conversion and additional resume cleanup differ from the reference, but they preserve loud failure rather than introducing a permissive fallback.\n\nPASS"
+}

@@ -1,0 +1,142 @@
+[
+ {
+  "id": "J1",
+  "case": "reference",
+  "reference": "PASS",
+  "labels": [
+   "PASS"
+  ],
+  "majority": "PASS",
+  "agrees": true
+ },
+ {
+  "id": "J1",
+  "case": "craft-sprawl",
+  "reference": "FAIL",
+  "labels": [
+   "FAIL"
+  ],
+  "majority": "FAIL",
+  "agrees": true
+ },
+ {
+  "id": "J2",
+  "case": "reference",
+  "reference": "PASS",
+  "labels": [
+   "PASS"
+  ],
+  "majority": "PASS",
+  "agrees": true
+ },
+ {
+  "id": "J2",
+  "case": "test-fitted",
+  "reference": "FAIL",
+  "labels": [
+   "FAIL"
+  ],
+  "majority": "FAIL",
+  "agrees": true
+ },
+ {
+  "id": "J3",
+  "case": "reference",
+  "reference": "PASS",
+  "labels": [
+   "PASS"
+  ],
+  "majority": "PASS",
+  "agrees": true
+ },
+ {
+  "id": "J3",
+  "case": "swallow",
+  "reference": "FAIL",
+  "labels": [
+   "FAIL"
+  ],
+  "majority": "FAIL",
+  "agrees": true
+ },
+ {
+  "id": "J4",
+  "case": "reference",
+  "reference": "PASS",
+  "labels": [
+   "PASS"
+  ],
+  "majority": "PASS",
+  "agrees": true
+ },
+ {
+  "id": "J4",
+  "case": "misdoc",
+  "reference": "FAIL",
+  "labels": [
+   "FAIL"
+  ],
+  "majority": "FAIL",
+  "agrees": true
+ },
+ {
+  "id": "X1",
+  "case": "reference",
+  "reference": "PASS",
+  "labels": [
+   "PASS"
+  ],
+  "majority": "PASS",
+  "agrees": true
+ },
+ {
+  "id": "X1",
+  "case": "duplicated-validation-shim",
+  "reference": "FAIL",
+  "labels": [
+   "FAIL"
+  ],
+  "majority": "FAIL",
+  "agrees": true
+ },
+ {
+  "id": "X2",
+  "case": "reference",
+  "reference": "PASS",
+  "labels": [
+   "PASS"
+  ],
+  "majority": "PASS",
+  "agrees": true
+ },
+ {
+  "id": "X2",
+  "case": "schemaless-break",
+  "reference": "FAIL",
+  "labels": [
+   "FAIL"
+  ],
+  "majority": "FAIL",
+  "agrees": true
+ },
+ {
+  "id": "X3",
+  "case": "reference",
+  "reference": "PASS",
+  "labels": [
+   "PASS"
+  ],
+  "majority": "PASS",
+  "agrees": true
+ },
+ {
+  "id": "X3",
+  "case": "boundary-split",
+  "reference": "FAIL",
+  "labels": [
+   "FAIL"
+  ],
+  "majority": "FAIL",
+  "agrees": true
+ }
+]

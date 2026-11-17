@@ -1,0 +1,44 @@
+schema_version = "1.4"
+reward_type = "bounded_continuous"
+artifacts = [
+  { source = "/app/langgraph", destination = "workspace/langgraph", exclude = [".git", "__pycache__"] },
+  { source = "/app/langchain", destination = "workspace/langchain", exclude = [".git", "__pycache__"] },
+]
+
+[task]
+name = "ethara/594fe341-7f10-5685-aeb1-ffa86424017d"
+version = "1.0.0"
+description = "Let LangChain's HumanInTheLoopMiddleware review each tool call on its own with a typed answer schema, which needs LangGraph's interrupt to carry a response schema and to reject an invalid answer without keeping it."
+authors = [{ name = "kshitij.sharma", email = "kshitij.sharma@ethara.ai" }]
+keywords = ["langgraph", "langchain", "human-in-the-loop", "interrupt", "cross-repo", "python"]
+
+[metadata]
+null_floor = 0.0
+discrimination_weight = 0.5
+platforms = ["linux/amd64", "linux/arm64"]
+
+[verifier]
+timeout_sec = 3600
+network_mode = "no-network"
+environment_mode = "separate"
+
+[verifier.environment]
+network_mode = "no-network"
+build_timeout_sec = 3600
+cpus = 2
+memory_mb = 8192
+storage_mb = 20480
+gpus = 0
+
+[agent]
+timeout_sec = 10800
+network_mode = "no-network"
+user = "10001"
+
+[environment]
+network_mode = "no-network"
+build_timeout_sec = 3600
+cpus = 2
+memory_mb = 8192
+storage_mb = 20480
+gpus = 0

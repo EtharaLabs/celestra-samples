@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J1",
+ "trial": 7,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission does not meet the focused-scope criterion.\n\nIn LangGraph, it modifies several areas beyond `interrupt`, `Interrupt`, and the SDK interrupt type:\n- `errors.py` introduces and exports `InvalidResumeError`.\n- `pregel/_loop.py` adds resume-write cleanup and exception-handling logic.\n- `pregel/debug.py` changes interrupt serialization.\n- `prebuilt/tool_node.py` changes wrapper exception handling.\n\nThese are substantive changes to error propagation, persistence, and tool execution, not changes confined to the permitted interrupt API surface. Even if motivated by the feature, they exceed the criterion\u2019s explicit boundary.\n\nThe LangChain changes stay in the middleware module and share resolution logic between synchronous and asynchronous wrappers. However, they also introduce considerable additional machinery, including runtime-identity decision caching with weak-reference cleanup and a custom Pydantic core-schema/reference-rewriting implementation. The scope violations in LangGraph alone are sufficient to fail this criterion, regardless of whether that additional middleware machinery is warranted.\n\nFAIL"
+}

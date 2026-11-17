@@ -1,0 +1,1615 @@
+<!-- FORGE-CANARY-BEGIN -->
+<!-- FORGE-CANARY-SLOT-1: 2684b0b2a550f0065210a04f68e105d25df414586798a1844263d79dd0257b24 -->
+<!-- FORGE-CANARY-SLOT-2: eddf2e75c7420328f22b95ce32d9f1505cae47564369c359a57fbe17d53be916 -->
+<!-- FORGE-CANARY-SLOT-3: 00f61037f6be9482aa057e248e2d016978834c8aeb583036923223518ea10ebe -->
+<!-- FORGE-CANARY-END -->
+
+<!-- GENERATED SECTION. DO NOT HAND-EDIT. -->
+
+# Ground truth: celestra/langgraph-langchain-per-call-review
+
+Repositories langgraph at base commit 230927fb3a9ac9b2893a30322b4dfea7cdea9a8f; langchain at base commit f295bfef22e9aeb02ad0f79b49883f4b446e4641.
+
+## Golden path
+
+- S1: Expose each gated call's accepted answers as a JSON Schema on the surfaced interrupt, built by _decision_schema. Establishes: a one-decision tool gets a plain object schema, a tool without a pydantic argument schema shows its args without enforcing them, and the per-call interrupt shows the call and the answers it accepts
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_decision_schema_with_one_decision_is_a_plain_object[allowed0]
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_decision_schema_with_one_decision_is_a_plain_object[allowed1]
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_edit_args_without_a_pydantic_schema_are_shown_but_not_enforced[json_schema_tool]
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_edit_args_without_a_pydantic_schema_are_shown_but_not_enforced[no_tool]
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_interrupt_shows_the_call_and_the_answers_it_accepts
+- S2: Add interrupt_mode with per_call, pausing each gated tool call by itself as it is about to run, sync and async. Establishes: the mode is checked, a call needs an ID, the description factory gets the graph Runtime, each gated call pauses once and its answer is applied by interrupt id, the same tool twice routes each answer to its own call, and ainvoke works
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_middleware_checks_interrupt_mode
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_description_factory_gets_the_graph_runtime
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_needs_a_tool_call_id
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_pauses_once_per_gated_call_and_applies_answers_by_id
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_same_tool_twice_routes_each_answer_to_its_own_call
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_works_with_ainvoke[edit]
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_works_with_ainvoke[reject]
+- S3: Validate an answer against its type schema and report one error at the actual problem. Establishes: a bad decision raises one pydantic error at its location, and langgraph rejects an invalid resume value for both resume forms
+  - checker: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema_rejects_invalid_resume[memory-map]
+  - checker: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema_rejects_invalid_resume[memory-null]
+  - checker: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema_rejects_invalid_resume[sqlite-map]
+  - checker: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema_rejects_invalid_resume[sqlite-null]
+  - checker: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema_rejects_invalid_resume[sqlite_aes-map]
+  - checker: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema_rejects_invalid_resume[sqlite_aes-null]
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_decision_schema_rejects_a_bad_answer_with_one_error_at_the_problem[answer0-loc0-missing]
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_decision_schema_rejects_a_bad_answer_with_one_error_at_the_problem[answer1-loc1-union_tag_invalid]
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_decision_schema_rejects_a_bad_answer_with_one_error_at_the_problem[answer2-loc2-missing]
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_decision_schema_rejects_a_bad_answer_with_one_error_at_the_problem[answer3-loc3-literal_error]
+- S4: Apply approve, edit, reject, and respond per call, with edits run through the tool's own validation and no second review on retry. Establishes: each decision produces today's messages, an edit runs with exactly the reviewer's args and the tool's validators and injected args, and a retried tool is not reviewed again
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_edit_leaves_validation_and_injected_args_to_the_tool
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_resume_with_each_decision[approve]
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_resume_with_each_decision[edit-with-an-undeclared-arg]
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_resume_with_each_decision[edit]
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_resume_with_each_decision[reject]
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_resume_with_each_decision[respond]
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_retried_tool_is_not_reviewed_again_when_hitl_wraps_retry
+- S5: Keep nothing of an invalid answer, and on replay resend only the answers up to the current interrupt. Establishes: an invalid answer is not saved, through the middleware and its retry and error orderings and after an earlier answered interrupt in the same node, so the pause can be answered again
+  - checker: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema_invalid_resume_after_earlier_interrupt[memory-id_map]
+  - checker: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema_invalid_resume_after_earlier_interrupt[memory-null]
+  - checker: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema_invalid_resume_after_earlier_interrupt[sqlite-id_map]
+  - checker: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema_invalid_resume_after_earlier_interrupt[sqlite-null]
+  - checker: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema_invalid_resume_after_earlier_interrupt[sqlite_aes-id_map]
+  - checker: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema_invalid_resume_after_earlier_interrupt[sqlite_aes-null]
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_rejects_a_bad_answer_without_saving_it[hitl_alone]
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_rejects_a_bad_answer_without_saving_it[hitl_wraps_retry]
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_rejects_a_bad_answer_without_saving_it[hitl_wraps_tool_error]
+- S6: Give langgraph's Interrupt a response_schema field and interrupt a response_schema keyword, surfaced wherever an interrupt is surfaced, stored, or rendered. Establishes: interrupts carry the schema through streams, state, every checkpointer, and debug events
+  - checker: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[memory-dataclass]
+  - checker: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[memory-none]
+  - checker: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[memory-pydantic]
+  - checker: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[memory-raw_dict]
+  - checker: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[memory-typeddict]
+  - checker: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[sqlite-dataclass]
+  - checker: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[sqlite-none]
+  - checker: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[sqlite-pydantic]
+  - checker: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[sqlite-raw_dict]
+  - checker: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[sqlite-typeddict]
+  - checker: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[sqlite_aes-dataclass]
+  - checker: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[sqlite_aes-none]
+  - checker: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[sqlite_aes-pydantic]
+  - checker: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[sqlite_aes-raw_dict]
+  - checker: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[sqlite_aes-typeddict]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_falsy_return_from_task[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_falsy_return_from_task[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_falsy_return_from_task[sqlite_aes]
+- S7: Keep every existing behaviour of both checkouts. Establishes: batched mode, schema-less interrupts, and the rest of both suites are unchanged
+  - checker: langgraph/libs/langgraph/tests/test_interruption.py::test_interruption_without_state_updates[memory-async]
+  - checker: langgraph/libs/langgraph/tests/test_interruption.py::test_interruption_without_state_updates[memory-exit]
+  - checker: langgraph/libs/langgraph/tests/test_interruption.py::test_interruption_without_state_updates[memory-sync]
+  - checker: langgraph/libs/langgraph/tests/test_interruption.py::test_interruption_without_state_updates[sqlite-async]
+  - checker: langgraph/libs/langgraph/tests/test_interruption.py::test_interruption_without_state_updates[sqlite-exit]
+  - checker: langgraph/libs/langgraph/tests/test_interruption.py::test_interruption_without_state_updates[sqlite-sync]
+  - checker: langgraph/libs/langgraph/tests/test_interruption.py::test_interruption_without_state_updates[sqlite_aes-async]
+  - checker: langgraph/libs/langgraph/tests/test_interruption.py::test_interruption_without_state_updates[sqlite_aes-exit]
+  - checker: langgraph/libs/langgraph/tests/test_interruption.py::test_interruption_without_state_updates[sqlite_aes-sync]
+  - checker: langgraph/libs/langgraph/tests/test_interruption.py::test_interruption_without_state_updates_async[memory-async]
+  - checker: langgraph/libs/langgraph/tests/test_interruption.py::test_interruption_without_state_updates_async[memory-exit]
+  - checker: langgraph/libs/langgraph/tests/test_interruption.py::test_interruption_without_state_updates_async[memory-sync]
+  - checker: langgraph/libs/langgraph/tests/test_interruption.py::test_interruption_without_state_updates_async[sqlite_aio-async]
+  - checker: langgraph/libs/langgraph/tests/test_interruption.py::test_interruption_without_state_updates_async[sqlite_aio-exit]
+  - checker: langgraph/libs/langgraph/tests/test_interruption.py::test_interruption_without_state_updates_async[sqlite_aio-sync]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_add_sequence
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_batch_many_processes_in_out
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_batch_two_processes_in_out
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_batch_update_as_input[memory-async]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_batch_update_as_input[memory-exit]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_batch_update_as_input[memory-sync]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_batch_update_as_input[sqlite-async]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_batch_update_as_input[sqlite-exit]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_batch_update_as_input[sqlite-sync]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_batch_update_as_input[sqlite_aes-async]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_batch_update_as_input[sqlite_aes-exit]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_batch_update_as_input[sqlite_aes-sync]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_bulk_state_updates[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_bulk_state_updates[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_bulk_state_updates[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_callable_in_conditional_edges_with_no_path_map
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_channel_values[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_channel_values[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_channel_values[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_checkpoint_errors
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_checkpoint_metadata[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_checkpoint_metadata[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_checkpoint_metadata[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_checkpoint_recovery[memory-async]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_checkpoint_recovery[memory-exit]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_checkpoint_recovery[memory-sync]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_checkpoint_recovery[sqlite-async]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_checkpoint_recovery[sqlite-exit]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_checkpoint_recovery[sqlite-sync]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_checkpoint_recovery[sqlite_aes-async]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_checkpoint_recovery[sqlite_aes-exit]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_checkpoint_recovery[sqlite_aes-sync]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_command_goto_with_static_breakpoints[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_command_goto_with_static_breakpoints[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_command_goto_with_static_breakpoints[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_command_pydantic_dataclass
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_command_with_static_breakpoints[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_command_with_static_breakpoints[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_command_with_static_breakpoints[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_concurrent_emit_sends
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_concurrent_execution_thread_safety
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_cond_edge_after_send
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_conditional_entrypoint_graph_state
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_conditional_entrypoint_to_multiple_state_graph
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_conditional_state_graph_with_list_edge_inputs
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_configurable_propagates_to_stream_metadata
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_context_json_schema
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_debug_nested_subgraphs[memory-async]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_debug_nested_subgraphs[memory-exit]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_debug_nested_subgraphs[memory-sync]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_debug_nested_subgraphs[sqlite-async]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_debug_nested_subgraphs[sqlite-exit]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_debug_nested_subgraphs[sqlite-sync]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_debug_nested_subgraphs[sqlite_aes-async]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_debug_nested_subgraphs[sqlite_aes-exit]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_debug_nested_subgraphs[sqlite_aes-sync]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_debug_retry[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_debug_retry[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_debug_retry[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_debug_subgraphs[memory-async]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_debug_subgraphs[memory-exit]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_debug_subgraphs[memory-sync]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_debug_subgraphs[sqlite-async]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_debug_subgraphs[sqlite-exit]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_debug_subgraphs[sqlite-sync]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_debug_subgraphs[sqlite_aes-async]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_debug_subgraphs[sqlite_aes-exit]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_debug_subgraphs[sqlite_aes-sync]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_delta_channel_async_write_ordering
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_delta_channel_durability_exit_stores_snapshot
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_delta_channel_end_to_end_inmemory
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_delta_channel_remove_message_end_to_end
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_delta_channel_time_travel
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_delta_channel_update_by_id_end_to_end
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_dict_mixed_return
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_double_interrupt_subgraph[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_double_interrupt_subgraph[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_double_interrupt_subgraph[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_doubly_nested_graph_interrupts[memory-async]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_doubly_nested_graph_interrupts[memory-exit]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_doubly_nested_graph_interrupts[memory-sync]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_doubly_nested_graph_interrupts[sqlite-async]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_doubly_nested_graph_interrupts[sqlite-exit]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_doubly_nested_graph_interrupts[sqlite-sync]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_doubly_nested_graph_interrupts[sqlite_aes-async]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_doubly_nested_graph_interrupts[sqlite_aes-exit]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_doubly_nested_graph_interrupts[sqlite_aes-sync]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_empty_invoke
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_entrypoint_from_sync_generator
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_entrypoint_output_schema_with_return_and_save
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_entrypoint_stateful[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_entrypoint_stateful[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_entrypoint_stateful[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_entrypoint_stateful_update_state[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_entrypoint_stateful_update_state[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_entrypoint_stateful_update_state[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_entrypoint_with_return_and_save[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_entrypoint_with_return_and_save[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_entrypoint_with_return_and_save[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_entrypoint_without_checkpointer
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_enum_node_names
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_fork_and_update_task_results[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_fork_and_update_task_results[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_fork_and_update_task_results[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_fork_does_not_apply_pending_writes[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_fork_does_not_apply_pending_writes[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_fork_does_not_apply_pending_writes[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_function_in_conditional_edges_with_no_path_map
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_get_graph_loop
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_get_graph_nonterminal_last_step_source
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_get_graph_root_channel
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_get_graph_self_loop
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_get_stream_writer
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_graph_validation
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_graph_validation_with_command
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_exception[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_exception[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_exception[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_nested[memory-async]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_nested[memory-exit]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_nested[memory-sync]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_nested[sqlite-async]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_nested[sqlite-exit]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_nested[sqlite-sync]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_nested[sqlite_aes-async]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_nested[sqlite_aes-exit]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_nested[sqlite_aes-sync]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_stream_order[memory-async]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_stream_order[memory-exit]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_stream_order[memory-sync]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_stream_order[sqlite-async]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_stream_order[sqlite-exit]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_stream_order[sqlite-sync]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_stream_order[sqlite_aes-async]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_stream_order[sqlite_aes-exit]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_stream_order[sqlite_aes-sync]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_task[memory-async]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_task[memory-exit]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_task[memory-sync]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_task[sqlite-async]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_task[sqlite-exit]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_task[sqlite-sync]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_task[sqlite_aes-async]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_task[sqlite_aes-exit]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_task[sqlite_aes-sync]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_defer_node[memory-False]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_defer_node[memory-True]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_defer_node[sqlite-False]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_defer_node[sqlite-True]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_defer_node[sqlite_aes-False]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_defer_node[sqlite_aes-True]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_waiting_edge[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_waiting_edge[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_waiting_edge[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_waiting_edge_custom_state_class_pydantic2[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_waiting_edge_custom_state_class_pydantic2[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_waiting_edge_custom_state_class_pydantic2[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_waiting_edge_custom_state_class_pydantic_input[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_waiting_edge_custom_state_class_pydantic_input[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_waiting_edge_custom_state_class_pydantic_input[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_waiting_edge_multiple[memory-False]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_waiting_edge_multiple[memory-True]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_waiting_edge_multiple[sqlite-False]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_waiting_edge_multiple[sqlite-True]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_waiting_edge_multiple_cond_edge
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_waiting_edge_plus_regular[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_waiting_edge_plus_regular[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_waiting_edge_plus_regular[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_waiting_edge_via_branch[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_waiting_edge_via_branch[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_waiting_edge_via_branch[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_interrupt_functional[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_interrupt_functional[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_interrupt_functional[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_interrupt_loop[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_interrupt_loop[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_interrupt_loop[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_interrupt_multiple[memory-map]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_interrupt_multiple[memory-null]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_interrupt_multiple[sqlite-map]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_interrupt_multiple[sqlite-null]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_interrupt_multiple[sqlite_aes-map]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_interrupt_multiple[sqlite_aes-null]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_interrupt_stream_mode_values[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_interrupt_stream_mode_values[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_interrupt_stream_mode_values[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_interrupt_subgraph[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_interrupt_subgraph[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_interrupt_subgraph[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_interrupt_subgraph_reenter_checkpointer_true[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_interrupt_subgraph_reenter_checkpointer_true[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_interrupt_subgraph_reenter_checkpointer_true[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_interrupt_task_functional[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_interrupt_task_functional[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_interrupt_task_functional[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_invalid_checkpointer_type
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_invoke_checkpoint_three[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_invoke_checkpoint_three[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_invoke_checkpoint_three[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_invoke_checkpoint_two[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_invoke_checkpoint_two[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_invoke_checkpoint_two[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_invoke_join_then_call_other_pregel[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_invoke_join_then_call_other_pregel[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_invoke_join_then_call_other_pregel[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_invoke_many_processes_in_out
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_invoke_single_process_in_dict_out_dict
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_invoke_single_process_in_out
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_invoke_single_process_in_out_dict
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_invoke_single_process_in_write_kwargs
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_invoke_two_processes_in_out
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_invoke_two_processes_no_in
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_invoke_two_processes_no_out
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_invoke_two_processes_one_in_two_out
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_invoke_two_processes_two_in_join_two_out
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_invoke_two_processes_two_in_two_out_invalid
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_invoke_two_processes_two_in_two_out_valid
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_migration_graph
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_multi_resume[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_multi_resume[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_multi_resume[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_interrupt_state_persistence[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_interrupt_state_persistence[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_interrupt_state_persistence[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_interrupts_functional[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_interrupts_functional[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_interrupts_functional[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_interrupts_functional_cache[memory-memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_interrupts_functional_cache[memory-sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_interrupts_functional_cache[sqlite-memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_interrupts_functional_cache[sqlite-sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_interrupts_functional_cache[sqlite_aes-memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_interrupts_functional_cache[sqlite_aes-sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_nodes_before_interrupt_resume_graph_api[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_nodes_before_interrupt_resume_graph_api[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_nodes_before_interrupt_resume_graph_api[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_sinks_subgraphs
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_subgraphs[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_subgraphs[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_subgraphs[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_subgraphs_checkpointer[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_subgraphs_checkpointer[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_subgraphs_checkpointer[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_subgraphs_functional[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_subgraphs_functional[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_subgraphs_functional[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_subgraphs_mixed_entrypoint[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_subgraphs_mixed_entrypoint[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_subgraphs_mixed_entrypoint[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_subgraphs_mixed_state_graph[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_subgraphs_mixed_state_graph[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_subgraphs_mixed_state_graph[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_tasks_before_interrupt_resume[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_tasks_before_interrupt_resume[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_tasks_before_interrupt_resume[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_updates
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_updates_root
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_writes_same_channel_from_same_node[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_writes_same_channel_from_same_node[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_writes_same_channel_from_same_node[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_multistep_plan[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_multistep_plan[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_multistep_plan[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_named_tasks_functional
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_nested_graph
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_nested_graph_interrupts_parallel[memory-async]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_nested_graph_interrupts_parallel[memory-exit]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_nested_graph_interrupts_parallel[memory-sync]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_nested_graph_interrupts_parallel[sqlite-async]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_nested_graph_interrupts_parallel[sqlite-exit]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_nested_graph_interrupts_parallel[sqlite-sync]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_nested_graph_interrupts_parallel[sqlite_aes-async]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_nested_graph_interrupts_parallel[sqlite_aes-exit]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_nested_graph_interrupts_parallel[sqlite_aes-sync]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_nested_graph_xray
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_no_redundant_put_writes_for_cached_task[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_no_redundant_put_writes_for_cached_task[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_no_redundant_put_writes_for_cached_task[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_node_before_interrupt_resume_graph_api[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_node_before_interrupt_resume_graph_api[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_node_before_interrupt_resume_graph_api[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_node_before_multiple_interrupt_cycles_graph_api[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_node_before_multiple_interrupt_cycles_graph_api[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_node_before_multiple_interrupt_cycles_graph_api[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_node_destinations
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_node_schemas_custom_output
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_null_resume_disallowed_with_multiple_interrupts[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_null_resume_disallowed_with_multiple_interrupts[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_null_resume_disallowed_with_multiple_interrupts[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_overriding_injectable_args_with_tasks[in_memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_overwrite_parallel[memory-False]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_overwrite_parallel[memory-True]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_overwrite_parallel[sqlite-False]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_overwrite_parallel[sqlite-True]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_overwrite_parallel[sqlite_aes-False]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_overwrite_parallel[sqlite_aes-True]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_overwrite_parallel_error[memory-False]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_overwrite_parallel_error[memory-True]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_overwrite_parallel_error[sqlite-False]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_overwrite_parallel_error[sqlite-True]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_overwrite_parallel_error[sqlite_aes-False]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_overwrite_parallel_error[sqlite_aes-True]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_overwrite_sequential[memory-False]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_overwrite_sequential[memory-True]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_overwrite_sequential[sqlite-False]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_overwrite_sequential[sqlite-True]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_overwrite_sequential[sqlite_aes-False]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_overwrite_sequential[sqlite_aes-True]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_parallel_interrupts[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_parallel_interrupts[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_parallel_interrupts[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_parallel_interrupts_double[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_parallel_interrupts_double[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_parallel_interrupts_double[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_parallel_node_execution
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command[memory-False]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command[memory-True]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command[sqlite-False]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command[sqlite-True]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command[sqlite_aes-False]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command[sqlite_aes-True]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto[memory-False-False]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto[memory-False-both]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto[memory-False-inner]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto[memory-False-outer]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto[memory-True-False]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto[memory-True-both]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto[memory-True-inner]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto[memory-True-outer]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto[sqlite-False-False]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto[sqlite-False-both]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto[sqlite-False-inner]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto[sqlite-False-outer]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto[sqlite-True-False]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto[sqlite-True-both]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto[sqlite-True-inner]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto[sqlite-True-outer]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto[sqlite_aes-False-False]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto[sqlite_aes-False-both]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto[sqlite_aes-False-inner]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto[sqlite_aes-False-outer]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto[sqlite_aes-True-False]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto[sqlite_aes-True-both]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto[sqlite_aes-True-inner]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto[sqlite_aes-True-outer]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto_deeply_nested[memory-False]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto_deeply_nested[memory-True]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto_deeply_nested[sqlite-False]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto_deeply_nested[sqlite-True]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto_deeply_nested[sqlite_aes-False]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto_deeply_nested[sqlite_aes-True]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_pending_writes_resume[memory-async]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_pending_writes_resume[memory-exit]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_pending_writes_resume[memory-sync]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_pending_writes_resume[sqlite-async]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_pending_writes_resume[sqlite-exit]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_pending_writes_resume[sqlite-sync]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_pending_writes_resume[sqlite_aes-async]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_pending_writes_resume[sqlite_aes-exit]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_pending_writes_resume[sqlite_aes-sync]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_pregel_loop_refcount
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_pregel_node_copy
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_pydantic_none_state_update
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_pydantic_state_mutation
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_pydantic_state_mutation_command
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_pydantic_state_update_command
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_reducer_before_first_node
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_remove_message_from_node
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_remove_message_via_state_update[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_remove_message_via_state_update[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_remove_message_via_state_update[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_repeat_condition
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_request_drain_allows_inflight_call_scheduling[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_request_drain_allows_inflight_call_scheduling[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_request_drain_allows_inflight_call_scheduling[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_root_mixed_return
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_run_from_checkpoint_id_retains_previous_writes[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_run_from_checkpoint_id_retains_previous_writes[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_run_from_checkpoint_id_retains_previous_writes[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_runnable_passthrough_node_graph
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_send_sequences
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_send_with_untracked_value[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_send_with_untracked_value[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_send_with_untracked_value[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_send_with_untracked_value_overlapping_keys[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_send_with_untracked_value_overlapping_keys[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_send_with_untracked_value_overlapping_keys[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_simple_multi_edge
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_state_graph_w_config_inherited_state_keys
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_store_injected[memory-in_memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_store_injected[sqlite-in_memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_store_injected[sqlite_aes-in_memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_stream_buffering_single_node[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_stream_buffering_single_node[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_stream_buffering_single_node[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_stream_messages_dedupe_inputs
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_stream_messages_dedupe_pydantic_subgraph_interrupt[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_stream_messages_dedupe_pydantic_subgraph_interrupt[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_stream_messages_dedupe_pydantic_subgraph_interrupt[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_stream_messages_dedupe_state[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_stream_messages_dedupe_state[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_stream_messages_dedupe_state[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_stream_mode_messages_command
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_stream_subgraphs_during_execution[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_stream_subgraphs_during_execution[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_stream_subgraphs_during_execution[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_subgraph_checkpoint_true[memory-async]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_subgraph_checkpoint_true[memory-exit]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_subgraph_checkpoint_true[memory-sync]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_subgraph_checkpoint_true[sqlite-async]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_subgraph_checkpoint_true[sqlite-exit]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_subgraph_checkpoint_true[sqlite-sync]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_subgraph_checkpoint_true[sqlite_aes-async]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_subgraph_checkpoint_true[sqlite_aes-exit]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_subgraph_checkpoint_true[sqlite_aes-sync]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_subgraph_checkpoint_true_interrupt[memory-async]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_subgraph_checkpoint_true_interrupt[memory-exit]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_subgraph_checkpoint_true_interrupt[memory-sync]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_subgraph_checkpoint_true_interrupt[sqlite-async]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_subgraph_checkpoint_true_interrupt[sqlite-exit]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_subgraph_checkpoint_true_interrupt[sqlite-sync]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_subgraph_checkpoint_true_interrupt[sqlite_aes-async]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_subgraph_checkpoint_true_interrupt[sqlite_aes-exit]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_subgraph_checkpoint_true_interrupt[sqlite_aes-sync]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_subgraph_durability_inherited[async]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_subgraph_durability_inherited[exit]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_subgraph_durability_inherited[sync]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_subgraph_streaming_sync
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_supersteps_populate_task_results[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_supersteps_populate_task_results[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_supersteps_populate_task_results[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_sync_streaming_with_functional_api
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_task_before_interrupt_resume[memory]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_task_before_interrupt_resume[sqlite]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_task_before_interrupt_resume[sqlite_aes]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_timeout_with_parent_command[memory-False]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_timeout_with_parent_command[memory-True]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_timeout_with_parent_command[sqlite-False]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_timeout_with_parent_command[sqlite-True]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_timeout_with_parent_command[sqlite_aes-False]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_timeout_with_parent_command[sqlite_aes-True]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_update_as_input[memory-async]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_update_as_input[memory-exit]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_update_as_input[memory-sync]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_update_as_input[sqlite-async]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_update_as_input[sqlite-exit]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_update_as_input[sqlite-sync]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_update_as_input[sqlite_aes-async]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_update_as_input[sqlite_aes-exit]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_update_as_input[sqlite_aes-sync]
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_xray_bool
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_xray_issue
+  - checker: langgraph/libs/langgraph/tests/test_pregel.py::test_xray_lance
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/core/test_internal_call_transformer.py::test_caller_supplied_metadata_cannot_forge_internal_marker
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/core/test_internal_call_transformer.py::test_internal_call_token_is_not_a_predictable_value
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/core/test_internal_call_transformer.py::test_internal_call_transformer_dedup_accepts_unhashable_factories
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/core/test_internal_call_transformer.py::test_internal_call_transformer_deduped_across_middleware
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/core/test_internal_call_transformer.py::test_internal_call_transformer_deduped_alongside_builtins
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/core/test_internal_call_transformer.py::test_internal_call_transformer_not_registered_without_offending_middleware
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/core/test_internal_call_transformer.py::test_internal_call_transformer_registered_before_messages_transformer
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/core/test_internal_call_transformer.py::test_internal_model_calls_excluded_from_messages_projection
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/core/test_internal_call_transformer.py::test_internal_model_calls_excluded_from_messages_projection_sync
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/core/test_internal_call_transformer.py::test_internal_model_calls_excluded_from_raw_event_log
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/core/test_internal_call_transformer.py::test_internal_whole_message_excluded_from_messages_projection
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/core/test_internal_call_transformer.py::test_internal_whole_message_excluded_from_raw_event_log
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/core/test_internal_call_transformer.py::test_process_ignores_events_outside_its_own_scope
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/core/test_transformers.py::test_middleware_and_user_transformers_compose_in_order
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/core/test_transformers.py::test_middleware_transformer_registered_on_compiled_graph
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/core/test_transformers.py::test_middleware_without_transformers_does_not_affect_registry
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/core/test_transformers.py::test_transformers_from_multiple_middleware_preserve_middleware_order
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_a_turn_that_resolves_no_decisions_clears_the_previous_turns_edits
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_a_turn_with_nothing_recorded_does_not_write_state
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_async_turn_that_resolves_no_decisions_clears_the_previous_turns_edits
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_approve_does_not_annotate
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_boolean_configs
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_default_rejection_message
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_description_as_callable
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_disallowed_action
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_edit_annotates_async
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_edit_annotates_command_result
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_edit_annotates_list_content[empty]
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_edit_annotates_list_content[mixed-blocks]
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_edit_annotates_list_content[plain-strings]
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_edit_annotates_list_content[text-block]
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_edit_annotates_tool_result
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_edit_can_redirect_to_another_tool
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_edit_executes_reviewers_call
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_edit_notice_can_be_disabled[blocks]
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_edit_notice_can_be_disabled[string]
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_edit_notice_is_customizable
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_edit_notice_is_not_duplicated
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_edit_routes_on_executed_tool[direct-to-normal]
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_edit_routes_on_executed_tool[normal-to-direct]
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_edit_to_unknown_tool_raises
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_edit_with_modified_args
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_initialization
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_interrupt_request_structure
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_mixed_auto_approved_and_interrupt
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_mixed_with_respond
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_multiple_tools_edit_responses
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_multiple_tools_mixed_responses
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_no_interrupts_needed
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_preserves_order_with_edits
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_preserves_order_with_rejections
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_preserves_tool_call_order
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_rejected_call_not_executed_and_stays_paired
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_rejects_empty_allowed_decisions
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_rejects_missing_allowed_decisions
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_rejects_typoed_key
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_respond_disallowed
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_sequence_mismatch
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_single_tool_accept
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_single_tool_edit
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_single_tool_rejection_reason
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_single_tool_respond
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_true_allows_respond
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_unknown_response_type
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_recorded_edit_survives_a_later_tightening_of_allowed_decisions
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_return_direct_routing_keeps_calls_with_unnamed_results
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_reused_tool_call_id_does_not_replay_a_previous_turns_edit
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_when_predicate_batch_fires_interrupt_when_true
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_when_predicate_batch_skips_interrupt_when_false
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_when_predicate_receives_correct_args
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestBlockStrategy::test_block_raises_exception
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestBlockStrategy::test_block_with_multiple_matches
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestCreditCardDetection::test_detect_credit_card_with_dashes
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestCreditCardDetection::test_detect_credit_card_with_spaces
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestCreditCardDetection::test_detect_valid_credit_card
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestCreditCardDetection::test_invalid_luhn_not_detected
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestCreditCardDetection::test_no_credit_card
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestCustomDetector::test_custom_callable_detector
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestCustomDetector::test_custom_callable_detector_with_text_key_hash
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestCustomDetector::test_custom_callable_detector_with_text_key_mask
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestCustomDetector::test_custom_regex_detector
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestCustomDetector::test_custom_type_without_detector_raises_error
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestCustomDetector::test_unknown_builtin_type_raises_error
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestEmailDetection::test_detect_multiple_emails
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestEmailDetection::test_detect_valid_email
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestEmailDetection::test_invalid_email_format
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestEmailDetection::test_no_email
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestHashStrategy::test_hash_email
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestHashStrategy::test_hash_is_deterministic
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestIPDetection::test_detect_multiple_ips
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestIPDetection::test_detect_valid_ipv4
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestIPDetection::test_invalid_ip_not_detected
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestIPDetection::test_no_ip
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestIPDetection::test_version_number_not_detected
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestMACAddressDetection::test_detect_lowercase_mac
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestMACAddressDetection::test_detect_mac_with_colons
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestMACAddressDetection::test_detect_mac_with_dashes
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestMACAddressDetection::test_no_mac
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestMACAddressDetection::test_partial_mac_not_detected
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestMaskStrategy::test_mask_credit_card
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestMaskStrategy::test_mask_email
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestMaskStrategy::test_mask_ip
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestMultipleMiddleware::test_custom_detector_for_multiple_types
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestMultipleMiddleware::test_multiple_pii_middleware_with_create_agent
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestMultipleMiddleware::test_sequential_application
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIMatchPublicExport::test_pii_match_importable_from_middleware_package
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIMiddlewareIntegration::test_apply_to_both
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIMiddlewareIntegration::test_apply_to_input_only
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIMiddlewareIntegration::test_apply_to_output_only
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIMiddlewareIntegration::test_apply_to_tool_results
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIMiddlewareIntegration::test_apply_to_tool_results_block_strategy
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIMiddlewareIntegration::test_apply_to_tool_results_mask_strategy
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIMiddlewareIntegration::test_empty_messages
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIMiddlewareIntegration::test_input_list_content_preserved
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIMiddlewareIntegration::test_no_pii_returns_none
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIMiddlewareIntegration::test_output_list_content_preserved
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIMiddlewareIntegration::test_redaction_preserves_message_fields
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIMiddlewareIntegration::test_tool_result_list_content_preserved
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIMiddlewareIntegration::test_with_agent
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_block_strategy_installs_buffering_stream_transformer
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_block_strategy_raises_on_first_pii_detection
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_block_strategy_releases_full_text_at_finalize_when_clean
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_buffers_isolated_by_run_id
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_credit_card_split_across_whitespace_is_caught
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_data_delta_passes_through_untouched
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_drop_run_does_not_sweep_tool_buffers
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_finalize_block_raises_on_tool_call_args_under_block
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_finalize_block_redacts_full_text_even_if_stream_redaction_partial
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_finalize_block_redacts_tool_call_args
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_finalize_clears_all_state
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_finalize_invalid_tool_call_redacts_string_args
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_legacy_payload_block_raises_when_tool_call_has_pii
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_legacy_payload_redacts_tool_call_args
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_legacy_payload_redacts_tool_message_content
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_long_pii_exceeding_lookback_still_caught_on_finalize
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_message_finish_drops_buffers
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_no_transformer_when_neither_output_nor_tool_results_apply
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_pii_fully_inside_one_delta_is_redacted_on_finalize
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_pii_split_across_deltas_is_caught
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_pii_straddling_lookback_boundary_is_caught
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_process_tools_event_passes_through
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_reasoning_delta_block_strategy_raises
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_reasoning_delta_uses_lookback
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_redact_value_block_strategy_raises
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_redact_value_passthrough_for_clean_input
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_redact_value_walks_ai_message_tool_calls
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_redact_value_walks_both_content_and_tool_calls
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_redact_value_walks_invalid_tool_calls
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_redact_value_walks_nested_strings
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_redact_value_walks_structured_message_content
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_tool_call_args_block_strategy_raises
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_tool_call_args_long_args_emit_safe_prefix
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_tool_call_args_partial_pii_across_chunks_withheld
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_tool_call_args_short_args_withheld_during_streaming
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_tool_error_message_redacted
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_tool_finished_clears_per_tool_buffer
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_tool_finished_output_redacted
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_tool_output_delta_block_strategy_raises
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_tool_output_delta_dict_walks_strings
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_tool_output_delta_string_uses_lookback
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_tool_started_input_is_redacted
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_tool_started_list_input_redacted
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_tool_started_string_input_redacted
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_tools_in_required_stream_modes
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_transformer_installed_for_tool_results_only
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_transformer_registered_before_messages_transformer_on_agent
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamingEndToEnd::test_block_fails_all_projections_cleanly
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamingEndToEnd::test_block_raises_on_tool_output_pii
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamingEndToEnd::test_block_strategy_emits_no_pii_and_run_raises
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamingEndToEnd::test_main_event_log_carries_redacted_deltas
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamingEndToEnd::test_streamed_messages_projection_is_redacted
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamingEndToEnd::test_subgraph_redaction_via_create_agent_in_tool
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamingEndToEnd::test_tool_call_args_redacted_end_to_end
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamingEndToEnd::test_tool_output_redacted_end_to_end
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestRedactStrategy::test_redact_email
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestRedactStrategy::test_redact_multiple_pii
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestURLDetection::test_bare_domain_without_path_not_detected
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestURLDetection::test_detect_bare_domain_with_path
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestURLDetection::test_detect_http_url
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestURLDetection::test_detect_https_url
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestURLDetection::test_detect_multiple_urls
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestURLDetection::test_detect_www_url
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestURLDetection::test_no_url
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/test_agent_streaming.py::TestAgentStreamV3Async::test_astream_returns_async_agent_run_stream
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/test_agent_streaming.py::TestAgentStreamV3Async::test_async_tool_deltas_flow
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/test_agent_streaming.py::TestAgentStreamV3Sync::test_caller_transformers_appended_not_replaced
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/test_agent_streaming.py::TestAgentStreamV3Sync::test_inner_agent_tool_calls_via_subgraph
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/test_agent_streaming.py::TestAgentStreamV3Sync::test_messages_projection_present
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/test_agent_streaming.py::TestAgentStreamV3Sync::test_no_tools_run_is_still_usable
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/test_agent_streaming.py::TestAgentStreamV3Sync::test_stream_returns_agent_run_stream
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/test_agent_streaming.py::TestAgentStreamV3Sync::test_tool_calls_populated_without_opt_in
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/test_agent_streaming.py::TestAgentStreamV3Sync::test_tool_error_sets_error_field
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/test_agent_streaming.py::TestAgentStreamV3Sync::test_tool_output_deltas_flow_through
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/test_subagent_transformer.py::test_create_agent_registers_subagent_transformer
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/test_subagent_transformer.py::test_create_agent_subagent_transformer_precedes_user_transformers
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/test_subagent_transformer.py::test_plain_tool_not_surfaced
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/test_subagent_transformer.py::test_same_name_nested_agent_surfaced
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/test_subagent_transformer.py::test_subagents_surfaces_named_subagent
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/test_subagent_transformer.py::test_subagents_surfaces_named_subagent_async
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/test_subagent_transformer.py::test_transformer_init_exposes_subagents_channel
+  - checker: langchain/libs/langchain_v1/tests/unit_tests/agents/test_subagent_transformer.py::test_unnamed_inner_agent_surfaces_with_inherited_name
+
+## Rejected routes
+
+- langchain-only: The consumer change alone: per_call mode in langchain, langgraph untouched.
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[memory-dataclass]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[memory-none]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[memory-pydantic]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[memory-raw_dict]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[memory-typeddict]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[sqlite-dataclass]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[sqlite-none]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[sqlite-pydantic]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[sqlite-raw_dict]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[sqlite-typeddict]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[sqlite_aes-dataclass]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[sqlite_aes-none]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[sqlite_aes-pydantic]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[sqlite_aes-raw_dict]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[sqlite_aes-typeddict]
+  - rejected by: langgraph/libs/langgraph/tests/test_pregel.py::test_falsy_return_from_task[memory]
+  - rejected by: langgraph/libs/langgraph/tests/test_pregel.py::test_falsy_return_from_task[sqlite]
+  - rejected by: langgraph/libs/langgraph/tests/test_pregel.py::test_falsy_return_from_task[sqlite_aes]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema_rejects_invalid_resume[memory-map]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema_rejects_invalid_resume[memory-null]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema_rejects_invalid_resume[sqlite-map]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema_rejects_invalid_resume[sqlite-null]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema_rejects_invalid_resume[sqlite_aes-map]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema_rejects_invalid_resume[sqlite_aes-null]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema_invalid_resume_after_earlier_interrupt[memory-id_map]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema_invalid_resume_after_earlier_interrupt[memory-null]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema_invalid_resume_after_earlier_interrupt[sqlite-id_map]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema_invalid_resume_after_earlier_interrupt[sqlite-null]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema_invalid_resume_after_earlier_interrupt[sqlite_aes-id_map]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema_invalid_resume_after_earlier_interrupt[sqlite_aes-null]
+  - rejected by: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_description_factory_gets_the_graph_runtime
+  - rejected by: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_edit_leaves_validation_and_injected_args_to_the_tool
+  - rejected by: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_interrupt_shows_the_call_and_the_answers_it_accepts
+  - rejected by: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_needs_a_tool_call_id
+  - rejected by: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_pauses_once_per_gated_call_and_applies_answers_by_id
+  - rejected by: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_rejects_a_bad_answer_without_saving_it[hitl_alone]
+  - rejected by: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_rejects_a_bad_answer_without_saving_it[hitl_wraps_retry]
+  - rejected by: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_rejects_a_bad_answer_without_saving_it[hitl_wraps_tool_error]
+  - rejected by: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_resume_with_each_decision[approve]
+  - rejected by: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_resume_with_each_decision[edit-with-an-undeclared-arg]
+  - rejected by: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_resume_with_each_decision[edit]
+  - rejected by: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_resume_with_each_decision[reject]
+  - rejected by: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_resume_with_each_decision[respond]
+  - rejected by: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_retried_tool_is_not_reviewed_again_when_hitl_wraps_retry
+  - rejected by: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_same_tool_twice_routes_each_answer_to_its_own_call
+  - rejected by: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_works_with_ainvoke[edit]
+  - rejected by: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_works_with_ainvoke[reject]
+- langgraph-only: The provider change alone: response_schema in langgraph, langchain untouched.
+  - rejected by: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_decision_schema_rejects_a_bad_answer_with_one_error_at_the_problem[answer0-loc0-missing]
+  - rejected by: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_decision_schema_rejects_a_bad_answer_with_one_error_at_the_problem[answer1-loc1-union_tag_invalid]
+  - rejected by: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_decision_schema_rejects_a_bad_answer_with_one_error_at_the_problem[answer2-loc2-missing]
+  - rejected by: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_decision_schema_rejects_a_bad_answer_with_one_error_at_the_problem[answer3-loc3-literal_error]
+  - rejected by: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_decision_schema_with_one_decision_is_a_plain_object[allowed0]
+  - rejected by: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_decision_schema_with_one_decision_is_a_plain_object[allowed1]
+  - rejected by: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_edit_args_without_a_pydantic_schema_are_shown_but_not_enforced[json_schema_tool]
+  - rejected by: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_edit_args_without_a_pydantic_schema_are_shown_but_not_enforced[no_tool]
+  - rejected by: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_middleware_checks_interrupt_mode
+  - rejected by: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_description_factory_gets_the_graph_runtime
+  - rejected by: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_edit_leaves_validation_and_injected_args_to_the_tool
+  - rejected by: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_interrupt_shows_the_call_and_the_answers_it_accepts
+  - rejected by: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_needs_a_tool_call_id
+  - rejected by: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_pauses_once_per_gated_call_and_applies_answers_by_id
+  - rejected by: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_rejects_a_bad_answer_without_saving_it[hitl_alone]
+  - rejected by: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_rejects_a_bad_answer_without_saving_it[hitl_wraps_retry]
+  - rejected by: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_rejects_a_bad_answer_without_saving_it[hitl_wraps_tool_error]
+  - rejected by: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_resume_with_each_decision[approve]
+  - rejected by: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_resume_with_each_decision[edit-with-an-undeclared-arg]
+  - rejected by: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_resume_with_each_decision[edit]
+  - rejected by: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_resume_with_each_decision[reject]
+  - rejected by: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_resume_with_each_decision[respond]
+  - rejected by: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_retried_tool_is_not_reviewed_again_when_hitl_wraps_retry
+  - rejected by: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_same_tool_twice_routes_each_answer_to_its_own_call
+  - rejected by: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_works_with_ainvoke[edit]
+  - rejected by: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_works_with_ainvoke[reject]
+- consumer-shim: The provider behaviour copied into langchain beside an untouched langgraph.
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[memory-dataclass]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[memory-none]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[memory-pydantic]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[memory-raw_dict]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[memory-typeddict]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[sqlite-dataclass]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[sqlite-none]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[sqlite-pydantic]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[sqlite-raw_dict]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[sqlite-typeddict]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[sqlite_aes-dataclass]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[sqlite_aes-none]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[sqlite_aes-pydantic]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[sqlite_aes-raw_dict]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[sqlite_aes-typeddict]
+  - rejected by: langgraph/libs/langgraph/tests/test_pregel.py::test_falsy_return_from_task[memory]
+  - rejected by: langgraph/libs/langgraph/tests/test_pregel.py::test_falsy_return_from_task[sqlite]
+  - rejected by: langgraph/libs/langgraph/tests/test_pregel.py::test_falsy_return_from_task[sqlite_aes]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema_rejects_invalid_resume[memory-map]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema_rejects_invalid_resume[memory-null]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema_rejects_invalid_resume[sqlite-map]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema_rejects_invalid_resume[sqlite-null]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema_rejects_invalid_resume[sqlite_aes-map]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema_rejects_invalid_resume[sqlite_aes-null]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema_invalid_resume_after_earlier_interrupt[memory-id_map]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema_invalid_resume_after_earlier_interrupt[memory-null]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema_invalid_resume_after_earlier_interrupt[sqlite-id_map]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema_invalid_resume_after_earlier_interrupt[sqlite-null]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema_invalid_resume_after_earlier_interrupt[sqlite_aes-id_map]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema_invalid_resume_after_earlier_interrupt[sqlite_aes-null]
+- variant-c: The provider validates before saving but resends every later answer on replay.
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema_invalid_resume_after_earlier_interrupt[memory-id_map]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema_invalid_resume_after_earlier_interrupt[sqlite-id_map]
+  - rejected by: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema_invalid_resume_after_earlier_interrupt[sqlite_aes-id_map]
+
+## Graded checkers
+
+- fail-to-pass: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[memory-dataclass]
+- fail-to-pass: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[memory-none]
+- fail-to-pass: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[memory-pydantic]
+- fail-to-pass: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[memory-raw_dict]
+- fail-to-pass: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[memory-typeddict]
+- fail-to-pass: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[sqlite-dataclass]
+- fail-to-pass: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[sqlite-none]
+- fail-to-pass: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[sqlite-pydantic]
+- fail-to-pass: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[sqlite-raw_dict]
+- fail-to-pass: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[sqlite-typeddict]
+- fail-to-pass: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[sqlite_aes-dataclass]
+- fail-to-pass: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[sqlite_aes-none]
+- fail-to-pass: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[sqlite_aes-pydantic]
+- fail-to-pass: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[sqlite_aes-raw_dict]
+- fail-to-pass: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema[sqlite_aes-typeddict]
+- fail-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_falsy_return_from_task[memory]
+- fail-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_falsy_return_from_task[sqlite]
+- fail-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_falsy_return_from_task[sqlite_aes]
+- fail-to-pass: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema_rejects_invalid_resume[memory-map]
+- fail-to-pass: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema_rejects_invalid_resume[memory-null]
+- fail-to-pass: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema_rejects_invalid_resume[sqlite-map]
+- fail-to-pass: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema_rejects_invalid_resume[sqlite-null]
+- fail-to-pass: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema_rejects_invalid_resume[sqlite_aes-map]
+- fail-to-pass: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema_rejects_invalid_resume[sqlite_aes-null]
+- fail-to-pass: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema_invalid_resume_after_earlier_interrupt[memory-id_map]
+- fail-to-pass: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema_invalid_resume_after_earlier_interrupt[memory-null]
+- fail-to-pass: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema_invalid_resume_after_earlier_interrupt[sqlite-id_map]
+- fail-to-pass: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema_invalid_resume_after_earlier_interrupt[sqlite-null]
+- fail-to-pass: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema_invalid_resume_after_earlier_interrupt[sqlite_aes-id_map]
+- fail-to-pass: langgraph/libs/langgraph/tests/test_interruption.py::test_interrupt_response_schema_invalid_resume_after_earlier_interrupt[sqlite_aes-null]
+- fail-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_decision_schema_rejects_a_bad_answer_with_one_error_at_the_problem[answer0-loc0-missing]
+- fail-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_decision_schema_rejects_a_bad_answer_with_one_error_at_the_problem[answer1-loc1-union_tag_invalid]
+- fail-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_decision_schema_rejects_a_bad_answer_with_one_error_at_the_problem[answer2-loc2-missing]
+- fail-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_decision_schema_rejects_a_bad_answer_with_one_error_at_the_problem[answer3-loc3-literal_error]
+- fail-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_decision_schema_with_one_decision_is_a_plain_object[allowed0]
+- fail-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_decision_schema_with_one_decision_is_a_plain_object[allowed1]
+- fail-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_edit_args_without_a_pydantic_schema_are_shown_but_not_enforced[json_schema_tool]
+- fail-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_edit_args_without_a_pydantic_schema_are_shown_but_not_enforced[no_tool]
+- fail-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_middleware_checks_interrupt_mode
+- fail-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_description_factory_gets_the_graph_runtime
+- fail-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_edit_leaves_validation_and_injected_args_to_the_tool
+- fail-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_interrupt_shows_the_call_and_the_answers_it_accepts
+- fail-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_needs_a_tool_call_id
+- fail-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_pauses_once_per_gated_call_and_applies_answers_by_id
+- fail-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_rejects_a_bad_answer_without_saving_it[hitl_alone]
+- fail-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_rejects_a_bad_answer_without_saving_it[hitl_wraps_retry]
+- fail-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_rejects_a_bad_answer_without_saving_it[hitl_wraps_tool_error]
+- fail-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_resume_with_each_decision[approve]
+- fail-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_resume_with_each_decision[edit-with-an-undeclared-arg]
+- fail-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_resume_with_each_decision[edit]
+- fail-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_resume_with_each_decision[reject]
+- fail-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_resume_with_each_decision[respond]
+- fail-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_retried_tool_is_not_reviewed_again_when_hitl_wraps_retry
+- fail-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_same_tool_twice_routes_each_answer_to_its_own_call
+- fail-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_works_with_ainvoke[edit]
+- fail-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_per_call_works_with_ainvoke[reject]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_interruption.py::test_interruption_without_state_updates[memory-async]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_interruption.py::test_interruption_without_state_updates[memory-exit]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_interruption.py::test_interruption_without_state_updates[memory-sync]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_interruption.py::test_interruption_without_state_updates[sqlite-async]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_interruption.py::test_interruption_without_state_updates[sqlite-exit]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_interruption.py::test_interruption_without_state_updates[sqlite-sync]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_interruption.py::test_interruption_without_state_updates[sqlite_aes-async]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_interruption.py::test_interruption_without_state_updates[sqlite_aes-exit]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_interruption.py::test_interruption_without_state_updates[sqlite_aes-sync]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_interruption.py::test_interruption_without_state_updates_async[memory-async]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_interruption.py::test_interruption_without_state_updates_async[memory-exit]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_interruption.py::test_interruption_without_state_updates_async[memory-sync]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_interruption.py::test_interruption_without_state_updates_async[sqlite_aio-async]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_interruption.py::test_interruption_without_state_updates_async[sqlite_aio-exit]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_interruption.py::test_interruption_without_state_updates_async[sqlite_aio-sync]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_add_sequence
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_batch_many_processes_in_out
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_batch_two_processes_in_out
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_batch_update_as_input[memory-async]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_batch_update_as_input[memory-exit]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_batch_update_as_input[memory-sync]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_batch_update_as_input[sqlite-async]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_batch_update_as_input[sqlite-exit]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_batch_update_as_input[sqlite-sync]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_batch_update_as_input[sqlite_aes-async]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_batch_update_as_input[sqlite_aes-exit]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_batch_update_as_input[sqlite_aes-sync]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_bulk_state_updates[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_bulk_state_updates[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_bulk_state_updates[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_callable_in_conditional_edges_with_no_path_map
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_channel_values[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_channel_values[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_channel_values[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_checkpoint_errors
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_checkpoint_metadata[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_checkpoint_metadata[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_checkpoint_metadata[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_checkpoint_recovery[memory-async]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_checkpoint_recovery[memory-exit]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_checkpoint_recovery[memory-sync]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_checkpoint_recovery[sqlite-async]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_checkpoint_recovery[sqlite-exit]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_checkpoint_recovery[sqlite-sync]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_checkpoint_recovery[sqlite_aes-async]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_checkpoint_recovery[sqlite_aes-exit]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_checkpoint_recovery[sqlite_aes-sync]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_command_goto_with_static_breakpoints[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_command_goto_with_static_breakpoints[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_command_goto_with_static_breakpoints[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_command_pydantic_dataclass
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_command_with_static_breakpoints[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_command_with_static_breakpoints[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_command_with_static_breakpoints[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_concurrent_emit_sends
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_concurrent_execution_thread_safety
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_cond_edge_after_send
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_conditional_entrypoint_graph_state
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_conditional_entrypoint_to_multiple_state_graph
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_conditional_state_graph_with_list_edge_inputs
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_configurable_propagates_to_stream_metadata
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_context_json_schema
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_debug_nested_subgraphs[memory-async]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_debug_nested_subgraphs[memory-exit]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_debug_nested_subgraphs[memory-sync]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_debug_nested_subgraphs[sqlite-async]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_debug_nested_subgraphs[sqlite-exit]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_debug_nested_subgraphs[sqlite-sync]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_debug_nested_subgraphs[sqlite_aes-async]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_debug_nested_subgraphs[sqlite_aes-exit]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_debug_nested_subgraphs[sqlite_aes-sync]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_debug_retry[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_debug_retry[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_debug_retry[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_debug_subgraphs[memory-async]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_debug_subgraphs[memory-exit]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_debug_subgraphs[memory-sync]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_debug_subgraphs[sqlite-async]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_debug_subgraphs[sqlite-exit]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_debug_subgraphs[sqlite-sync]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_debug_subgraphs[sqlite_aes-async]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_debug_subgraphs[sqlite_aes-exit]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_debug_subgraphs[sqlite_aes-sync]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_delta_channel_async_write_ordering
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_delta_channel_durability_exit_stores_snapshot
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_delta_channel_end_to_end_inmemory
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_delta_channel_remove_message_end_to_end
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_delta_channel_time_travel
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_delta_channel_update_by_id_end_to_end
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_dict_mixed_return
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_double_interrupt_subgraph[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_double_interrupt_subgraph[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_double_interrupt_subgraph[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_doubly_nested_graph_interrupts[memory-async]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_doubly_nested_graph_interrupts[memory-exit]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_doubly_nested_graph_interrupts[memory-sync]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_doubly_nested_graph_interrupts[sqlite-async]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_doubly_nested_graph_interrupts[sqlite-exit]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_doubly_nested_graph_interrupts[sqlite-sync]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_doubly_nested_graph_interrupts[sqlite_aes-async]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_doubly_nested_graph_interrupts[sqlite_aes-exit]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_doubly_nested_graph_interrupts[sqlite_aes-sync]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_empty_invoke
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_entrypoint_from_sync_generator
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_entrypoint_output_schema_with_return_and_save
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_entrypoint_stateful[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_entrypoint_stateful[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_entrypoint_stateful[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_entrypoint_stateful_update_state[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_entrypoint_stateful_update_state[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_entrypoint_stateful_update_state[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_entrypoint_with_return_and_save[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_entrypoint_with_return_and_save[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_entrypoint_with_return_and_save[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_entrypoint_without_checkpointer
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_enum_node_names
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_fork_and_update_task_results[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_fork_and_update_task_results[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_fork_and_update_task_results[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_fork_does_not_apply_pending_writes[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_fork_does_not_apply_pending_writes[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_fork_does_not_apply_pending_writes[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_function_in_conditional_edges_with_no_path_map
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_get_graph_loop
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_get_graph_nonterminal_last_step_source
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_get_graph_root_channel
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_get_graph_self_loop
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_get_stream_writer
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_graph_validation
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_graph_validation_with_command
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_exception[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_exception[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_exception[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_nested[memory-async]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_nested[memory-exit]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_nested[memory-sync]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_nested[sqlite-async]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_nested[sqlite-exit]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_nested[sqlite-sync]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_nested[sqlite_aes-async]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_nested[sqlite_aes-exit]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_nested[sqlite_aes-sync]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_stream_order[memory-async]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_stream_order[memory-exit]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_stream_order[memory-sync]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_stream_order[sqlite-async]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_stream_order[sqlite-exit]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_stream_order[sqlite-sync]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_stream_order[sqlite_aes-async]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_stream_order[sqlite_aes-exit]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_stream_order[sqlite_aes-sync]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_task[memory-async]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_task[memory-exit]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_task[memory-sync]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_task[sqlite-async]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_task[sqlite-exit]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_task[sqlite-sync]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_task[sqlite_aes-async]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_task[sqlite_aes-exit]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_imp_task[sqlite_aes-sync]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_defer_node[memory-False]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_defer_node[memory-True]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_defer_node[sqlite-False]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_defer_node[sqlite-True]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_defer_node[sqlite_aes-False]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_defer_node[sqlite_aes-True]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_waiting_edge[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_waiting_edge[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_waiting_edge[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_waiting_edge_custom_state_class_pydantic2[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_waiting_edge_custom_state_class_pydantic2[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_waiting_edge_custom_state_class_pydantic2[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_waiting_edge_custom_state_class_pydantic_input[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_waiting_edge_custom_state_class_pydantic_input[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_waiting_edge_custom_state_class_pydantic_input[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_waiting_edge_multiple[memory-False]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_waiting_edge_multiple[memory-True]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_waiting_edge_multiple[sqlite-False]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_waiting_edge_multiple[sqlite-True]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_waiting_edge_multiple_cond_edge
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_waiting_edge_plus_regular[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_waiting_edge_plus_regular[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_waiting_edge_plus_regular[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_waiting_edge_via_branch[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_waiting_edge_via_branch[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_in_one_fan_out_state_graph_waiting_edge_via_branch[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_interrupt_functional[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_interrupt_functional[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_interrupt_functional[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_interrupt_loop[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_interrupt_loop[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_interrupt_loop[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_interrupt_multiple[memory-map]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_interrupt_multiple[memory-null]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_interrupt_multiple[sqlite-map]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_interrupt_multiple[sqlite-null]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_interrupt_multiple[sqlite_aes-map]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_interrupt_multiple[sqlite_aes-null]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_interrupt_stream_mode_values[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_interrupt_stream_mode_values[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_interrupt_stream_mode_values[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_interrupt_subgraph[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_interrupt_subgraph[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_interrupt_subgraph[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_interrupt_subgraph_reenter_checkpointer_true[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_interrupt_subgraph_reenter_checkpointer_true[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_interrupt_subgraph_reenter_checkpointer_true[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_interrupt_task_functional[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_interrupt_task_functional[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_interrupt_task_functional[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_invalid_checkpointer_type
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_invoke_checkpoint_three[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_invoke_checkpoint_three[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_invoke_checkpoint_three[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_invoke_checkpoint_two[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_invoke_checkpoint_two[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_invoke_checkpoint_two[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_invoke_join_then_call_other_pregel[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_invoke_join_then_call_other_pregel[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_invoke_join_then_call_other_pregel[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_invoke_many_processes_in_out
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_invoke_single_process_in_dict_out_dict
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_invoke_single_process_in_out
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_invoke_single_process_in_out_dict
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_invoke_single_process_in_write_kwargs
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_invoke_two_processes_in_out
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_invoke_two_processes_no_in
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_invoke_two_processes_no_out
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_invoke_two_processes_one_in_two_out
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_invoke_two_processes_two_in_join_two_out
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_invoke_two_processes_two_in_two_out_invalid
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_invoke_two_processes_two_in_two_out_valid
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_migration_graph
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_multi_resume[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_multi_resume[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_multi_resume[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_interrupt_state_persistence[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_interrupt_state_persistence[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_interrupt_state_persistence[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_interrupts_functional[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_interrupts_functional[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_interrupts_functional[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_interrupts_functional_cache[memory-memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_interrupts_functional_cache[memory-sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_interrupts_functional_cache[sqlite-memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_interrupts_functional_cache[sqlite-sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_interrupts_functional_cache[sqlite_aes-memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_interrupts_functional_cache[sqlite_aes-sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_nodes_before_interrupt_resume_graph_api[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_nodes_before_interrupt_resume_graph_api[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_nodes_before_interrupt_resume_graph_api[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_sinks_subgraphs
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_subgraphs[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_subgraphs[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_subgraphs[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_subgraphs_checkpointer[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_subgraphs_checkpointer[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_subgraphs_checkpointer[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_subgraphs_functional[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_subgraphs_functional[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_subgraphs_functional[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_subgraphs_mixed_entrypoint[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_subgraphs_mixed_entrypoint[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_subgraphs_mixed_entrypoint[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_subgraphs_mixed_state_graph[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_subgraphs_mixed_state_graph[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_subgraphs_mixed_state_graph[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_tasks_before_interrupt_resume[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_tasks_before_interrupt_resume[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_tasks_before_interrupt_resume[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_updates
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_updates_root
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_writes_same_channel_from_same_node[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_writes_same_channel_from_same_node[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_multiple_writes_same_channel_from_same_node[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_multistep_plan[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_multistep_plan[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_multistep_plan[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_named_tasks_functional
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_nested_graph
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_nested_graph_interrupts_parallel[memory-async]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_nested_graph_interrupts_parallel[memory-exit]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_nested_graph_interrupts_parallel[memory-sync]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_nested_graph_interrupts_parallel[sqlite-async]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_nested_graph_interrupts_parallel[sqlite-exit]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_nested_graph_interrupts_parallel[sqlite-sync]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_nested_graph_interrupts_parallel[sqlite_aes-async]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_nested_graph_interrupts_parallel[sqlite_aes-exit]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_nested_graph_interrupts_parallel[sqlite_aes-sync]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_nested_graph_xray
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_no_redundant_put_writes_for_cached_task[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_no_redundant_put_writes_for_cached_task[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_no_redundant_put_writes_for_cached_task[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_node_before_interrupt_resume_graph_api[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_node_before_interrupt_resume_graph_api[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_node_before_interrupt_resume_graph_api[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_node_before_multiple_interrupt_cycles_graph_api[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_node_before_multiple_interrupt_cycles_graph_api[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_node_before_multiple_interrupt_cycles_graph_api[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_node_destinations
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_node_schemas_custom_output
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_null_resume_disallowed_with_multiple_interrupts[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_null_resume_disallowed_with_multiple_interrupts[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_null_resume_disallowed_with_multiple_interrupts[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_overriding_injectable_args_with_tasks[in_memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_overwrite_parallel[memory-False]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_overwrite_parallel[memory-True]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_overwrite_parallel[sqlite-False]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_overwrite_parallel[sqlite-True]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_overwrite_parallel[sqlite_aes-False]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_overwrite_parallel[sqlite_aes-True]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_overwrite_parallel_error[memory-False]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_overwrite_parallel_error[memory-True]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_overwrite_parallel_error[sqlite-False]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_overwrite_parallel_error[sqlite-True]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_overwrite_parallel_error[sqlite_aes-False]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_overwrite_parallel_error[sqlite_aes-True]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_overwrite_sequential[memory-False]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_overwrite_sequential[memory-True]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_overwrite_sequential[sqlite-False]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_overwrite_sequential[sqlite-True]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_overwrite_sequential[sqlite_aes-False]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_overwrite_sequential[sqlite_aes-True]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_parallel_interrupts[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_parallel_interrupts[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_parallel_interrupts[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_parallel_interrupts_double[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_parallel_interrupts_double[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_parallel_interrupts_double[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_parallel_node_execution
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command[memory-False]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command[memory-True]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command[sqlite-False]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command[sqlite-True]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command[sqlite_aes-False]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command[sqlite_aes-True]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto[memory-False-False]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto[memory-False-both]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto[memory-False-inner]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto[memory-False-outer]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto[memory-True-False]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto[memory-True-both]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto[memory-True-inner]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto[memory-True-outer]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto[sqlite-False-False]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto[sqlite-False-both]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto[sqlite-False-inner]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto[sqlite-False-outer]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto[sqlite-True-False]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto[sqlite-True-both]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto[sqlite-True-inner]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto[sqlite-True-outer]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto[sqlite_aes-False-False]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto[sqlite_aes-False-both]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto[sqlite_aes-False-inner]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto[sqlite_aes-False-outer]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto[sqlite_aes-True-False]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto[sqlite_aes-True-both]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto[sqlite_aes-True-inner]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto[sqlite_aes-True-outer]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto_deeply_nested[memory-False]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto_deeply_nested[memory-True]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto_deeply_nested[sqlite-False]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto_deeply_nested[sqlite-True]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto_deeply_nested[sqlite_aes-False]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_parent_command_goto_deeply_nested[sqlite_aes-True]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_pending_writes_resume[memory-async]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_pending_writes_resume[memory-exit]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_pending_writes_resume[memory-sync]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_pending_writes_resume[sqlite-async]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_pending_writes_resume[sqlite-exit]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_pending_writes_resume[sqlite-sync]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_pending_writes_resume[sqlite_aes-async]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_pending_writes_resume[sqlite_aes-exit]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_pending_writes_resume[sqlite_aes-sync]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_pregel_loop_refcount
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_pregel_node_copy
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_pydantic_none_state_update
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_pydantic_state_mutation
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_pydantic_state_mutation_command
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_pydantic_state_update_command
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_reducer_before_first_node
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_remove_message_from_node
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_remove_message_via_state_update[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_remove_message_via_state_update[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_remove_message_via_state_update[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_repeat_condition
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_request_drain_allows_inflight_call_scheduling[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_request_drain_allows_inflight_call_scheduling[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_request_drain_allows_inflight_call_scheduling[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_root_mixed_return
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_run_from_checkpoint_id_retains_previous_writes[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_run_from_checkpoint_id_retains_previous_writes[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_run_from_checkpoint_id_retains_previous_writes[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_runnable_passthrough_node_graph
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_send_sequences
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_send_with_untracked_value[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_send_with_untracked_value[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_send_with_untracked_value[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_send_with_untracked_value_overlapping_keys[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_send_with_untracked_value_overlapping_keys[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_send_with_untracked_value_overlapping_keys[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_simple_multi_edge
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_state_graph_w_config_inherited_state_keys
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_store_injected[memory-in_memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_store_injected[sqlite-in_memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_store_injected[sqlite_aes-in_memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_stream_buffering_single_node[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_stream_buffering_single_node[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_stream_buffering_single_node[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_stream_messages_dedupe_inputs
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_stream_messages_dedupe_pydantic_subgraph_interrupt[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_stream_messages_dedupe_pydantic_subgraph_interrupt[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_stream_messages_dedupe_pydantic_subgraph_interrupt[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_stream_messages_dedupe_state[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_stream_messages_dedupe_state[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_stream_messages_dedupe_state[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_stream_mode_messages_command
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_stream_subgraphs_during_execution[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_stream_subgraphs_during_execution[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_stream_subgraphs_during_execution[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_subgraph_checkpoint_true[memory-async]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_subgraph_checkpoint_true[memory-exit]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_subgraph_checkpoint_true[memory-sync]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_subgraph_checkpoint_true[sqlite-async]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_subgraph_checkpoint_true[sqlite-exit]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_subgraph_checkpoint_true[sqlite-sync]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_subgraph_checkpoint_true[sqlite_aes-async]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_subgraph_checkpoint_true[sqlite_aes-exit]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_subgraph_checkpoint_true[sqlite_aes-sync]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_subgraph_checkpoint_true_interrupt[memory-async]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_subgraph_checkpoint_true_interrupt[memory-exit]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_subgraph_checkpoint_true_interrupt[memory-sync]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_subgraph_checkpoint_true_interrupt[sqlite-async]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_subgraph_checkpoint_true_interrupt[sqlite-exit]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_subgraph_checkpoint_true_interrupt[sqlite-sync]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_subgraph_checkpoint_true_interrupt[sqlite_aes-async]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_subgraph_checkpoint_true_interrupt[sqlite_aes-exit]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_subgraph_checkpoint_true_interrupt[sqlite_aes-sync]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_subgraph_durability_inherited[async]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_subgraph_durability_inherited[exit]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_subgraph_durability_inherited[sync]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_subgraph_streaming_sync
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_supersteps_populate_task_results[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_supersteps_populate_task_results[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_supersteps_populate_task_results[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_sync_streaming_with_functional_api
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_task_before_interrupt_resume[memory]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_task_before_interrupt_resume[sqlite]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_task_before_interrupt_resume[sqlite_aes]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_timeout_with_parent_command[memory-False]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_timeout_with_parent_command[memory-True]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_timeout_with_parent_command[sqlite-False]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_timeout_with_parent_command[sqlite-True]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_timeout_with_parent_command[sqlite_aes-False]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_timeout_with_parent_command[sqlite_aes-True]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_update_as_input[memory-async]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_update_as_input[memory-exit]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_update_as_input[memory-sync]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_update_as_input[sqlite-async]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_update_as_input[sqlite-exit]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_update_as_input[sqlite-sync]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_update_as_input[sqlite_aes-async]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_update_as_input[sqlite_aes-exit]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_update_as_input[sqlite_aes-sync]
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_xray_bool
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_xray_issue
+- pass-to-pass: langgraph/libs/langgraph/tests/test_pregel.py::test_xray_lance
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/core/test_internal_call_transformer.py::test_caller_supplied_metadata_cannot_forge_internal_marker
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/core/test_internal_call_transformer.py::test_internal_call_token_is_not_a_predictable_value
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/core/test_internal_call_transformer.py::test_internal_call_transformer_dedup_accepts_unhashable_factories
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/core/test_internal_call_transformer.py::test_internal_call_transformer_deduped_across_middleware
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/core/test_internal_call_transformer.py::test_internal_call_transformer_deduped_alongside_builtins
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/core/test_internal_call_transformer.py::test_internal_call_transformer_not_registered_without_offending_middleware
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/core/test_internal_call_transformer.py::test_internal_call_transformer_registered_before_messages_transformer
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/core/test_internal_call_transformer.py::test_internal_model_calls_excluded_from_messages_projection
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/core/test_internal_call_transformer.py::test_internal_model_calls_excluded_from_messages_projection_sync
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/core/test_internal_call_transformer.py::test_internal_model_calls_excluded_from_raw_event_log
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/core/test_internal_call_transformer.py::test_internal_whole_message_excluded_from_messages_projection
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/core/test_internal_call_transformer.py::test_internal_whole_message_excluded_from_raw_event_log
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/core/test_internal_call_transformer.py::test_process_ignores_events_outside_its_own_scope
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/core/test_transformers.py::test_middleware_and_user_transformers_compose_in_order
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/core/test_transformers.py::test_middleware_transformer_registered_on_compiled_graph
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/core/test_transformers.py::test_middleware_without_transformers_does_not_affect_registry
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/core/test_transformers.py::test_transformers_from_multiple_middleware_preserve_middleware_order
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_a_turn_that_resolves_no_decisions_clears_the_previous_turns_edits
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_a_turn_with_nothing_recorded_does_not_write_state
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_async_turn_that_resolves_no_decisions_clears_the_previous_turns_edits
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_approve_does_not_annotate
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_boolean_configs
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_default_rejection_message
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_description_as_callable
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_disallowed_action
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_edit_annotates_async
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_edit_annotates_command_result
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_edit_annotates_list_content[empty]
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_edit_annotates_list_content[mixed-blocks]
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_edit_annotates_list_content[plain-strings]
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_edit_annotates_list_content[text-block]
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_edit_annotates_tool_result
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_edit_can_redirect_to_another_tool
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_edit_executes_reviewers_call
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_edit_notice_can_be_disabled[blocks]
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_edit_notice_can_be_disabled[string]
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_edit_notice_is_customizable
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_edit_notice_is_not_duplicated
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_edit_routes_on_executed_tool[direct-to-normal]
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_edit_routes_on_executed_tool[normal-to-direct]
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_edit_to_unknown_tool_raises
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_edit_with_modified_args
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_initialization
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_interrupt_request_structure
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_mixed_auto_approved_and_interrupt
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_mixed_with_respond
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_multiple_tools_edit_responses
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_multiple_tools_mixed_responses
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_no_interrupts_needed
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_preserves_order_with_edits
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_preserves_order_with_rejections
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_preserves_tool_call_order
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_rejected_call_not_executed_and_stays_paired
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_rejects_empty_allowed_decisions
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_rejects_missing_allowed_decisions
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_rejects_typoed_key
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_respond_disallowed
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_sequence_mismatch
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_single_tool_accept
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_single_tool_edit
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_single_tool_rejection_reason
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_single_tool_respond
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_true_allows_respond
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_human_in_the_loop_middleware_unknown_response_type
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_recorded_edit_survives_a_later_tightening_of_allowed_decisions
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_return_direct_routing_keeps_calls_with_unnamed_results
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_reused_tool_call_id_does_not_replay_a_previous_turns_edit
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_when_predicate_batch_fires_interrupt_when_true
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_when_predicate_batch_skips_interrupt_when_false
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_human_in_the_loop.py::test_when_predicate_receives_correct_args
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestBlockStrategy::test_block_raises_exception
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestBlockStrategy::test_block_with_multiple_matches
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestCreditCardDetection::test_detect_credit_card_with_dashes
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestCreditCardDetection::test_detect_credit_card_with_spaces
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestCreditCardDetection::test_detect_valid_credit_card
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestCreditCardDetection::test_invalid_luhn_not_detected
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestCreditCardDetection::test_no_credit_card
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestCustomDetector::test_custom_callable_detector
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestCustomDetector::test_custom_callable_detector_with_text_key_hash
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestCustomDetector::test_custom_callable_detector_with_text_key_mask
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestCustomDetector::test_custom_regex_detector
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestCustomDetector::test_custom_type_without_detector_raises_error
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestCustomDetector::test_unknown_builtin_type_raises_error
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestEmailDetection::test_detect_multiple_emails
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestEmailDetection::test_detect_valid_email
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestEmailDetection::test_invalid_email_format
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestEmailDetection::test_no_email
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestHashStrategy::test_hash_email
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestHashStrategy::test_hash_is_deterministic
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestIPDetection::test_detect_multiple_ips
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestIPDetection::test_detect_valid_ipv4
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestIPDetection::test_invalid_ip_not_detected
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestIPDetection::test_no_ip
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestIPDetection::test_version_number_not_detected
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestMACAddressDetection::test_detect_lowercase_mac
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestMACAddressDetection::test_detect_mac_with_colons
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestMACAddressDetection::test_detect_mac_with_dashes
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestMACAddressDetection::test_no_mac
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestMACAddressDetection::test_partial_mac_not_detected
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestMaskStrategy::test_mask_credit_card
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestMaskStrategy::test_mask_email
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestMaskStrategy::test_mask_ip
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestMultipleMiddleware::test_custom_detector_for_multiple_types
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestMultipleMiddleware::test_multiple_pii_middleware_with_create_agent
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestMultipleMiddleware::test_sequential_application
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIMatchPublicExport::test_pii_match_importable_from_middleware_package
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIMiddlewareIntegration::test_apply_to_both
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIMiddlewareIntegration::test_apply_to_input_only
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIMiddlewareIntegration::test_apply_to_output_only
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIMiddlewareIntegration::test_apply_to_tool_results
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIMiddlewareIntegration::test_apply_to_tool_results_block_strategy
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIMiddlewareIntegration::test_apply_to_tool_results_mask_strategy
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIMiddlewareIntegration::test_empty_messages
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIMiddlewareIntegration::test_input_list_content_preserved
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIMiddlewareIntegration::test_no_pii_returns_none
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIMiddlewareIntegration::test_output_list_content_preserved
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIMiddlewareIntegration::test_redaction_preserves_message_fields
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIMiddlewareIntegration::test_tool_result_list_content_preserved
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIMiddlewareIntegration::test_with_agent
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_block_strategy_installs_buffering_stream_transformer
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_block_strategy_raises_on_first_pii_detection
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_block_strategy_releases_full_text_at_finalize_when_clean
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_buffers_isolated_by_run_id
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_credit_card_split_across_whitespace_is_caught
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_data_delta_passes_through_untouched
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_drop_run_does_not_sweep_tool_buffers
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_finalize_block_raises_on_tool_call_args_under_block
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_finalize_block_redacts_full_text_even_if_stream_redaction_partial
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_finalize_block_redacts_tool_call_args
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_finalize_clears_all_state
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_finalize_invalid_tool_call_redacts_string_args
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_legacy_payload_block_raises_when_tool_call_has_pii
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_legacy_payload_redacts_tool_call_args
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_legacy_payload_redacts_tool_message_content
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_long_pii_exceeding_lookback_still_caught_on_finalize
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_message_finish_drops_buffers
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_no_transformer_when_neither_output_nor_tool_results_apply
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_pii_fully_inside_one_delta_is_redacted_on_finalize
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_pii_split_across_deltas_is_caught
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_pii_straddling_lookback_boundary_is_caught
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_process_tools_event_passes_through
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_reasoning_delta_block_strategy_raises
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_reasoning_delta_uses_lookback
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_redact_value_block_strategy_raises
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_redact_value_passthrough_for_clean_input
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_redact_value_walks_ai_message_tool_calls
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_redact_value_walks_both_content_and_tool_calls
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_redact_value_walks_invalid_tool_calls
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_redact_value_walks_nested_strings
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_redact_value_walks_structured_message_content
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_tool_call_args_block_strategy_raises
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_tool_call_args_long_args_emit_safe_prefix
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_tool_call_args_partial_pii_across_chunks_withheld
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_tool_call_args_short_args_withheld_during_streaming
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_tool_error_message_redacted
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_tool_finished_clears_per_tool_buffer
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_tool_finished_output_redacted
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_tool_output_delta_block_strategy_raises
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_tool_output_delta_dict_walks_strings
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_tool_output_delta_string_uses_lookback
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_tool_started_input_is_redacted
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_tool_started_list_input_redacted
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_tool_started_string_input_redacted
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_tools_in_required_stream_modes
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_transformer_installed_for_tool_results_only
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamTransformer::test_transformer_registered_before_messages_transformer_on_agent
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamingEndToEnd::test_block_fails_all_projections_cleanly
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamingEndToEnd::test_block_raises_on_tool_output_pii
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamingEndToEnd::test_block_strategy_emits_no_pii_and_run_raises
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamingEndToEnd::test_main_event_log_carries_redacted_deltas
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamingEndToEnd::test_streamed_messages_projection_is_redacted
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamingEndToEnd::test_subgraph_redaction_via_create_agent_in_tool
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamingEndToEnd::test_tool_call_args_redacted_end_to_end
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestPIIStreamingEndToEnd::test_tool_output_redacted_end_to_end
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestRedactStrategy::test_redact_email
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestRedactStrategy::test_redact_multiple_pii
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestURLDetection::test_bare_domain_without_path_not_detected
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestURLDetection::test_detect_bare_domain_with_path
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestURLDetection::test_detect_http_url
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestURLDetection::test_detect_https_url
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestURLDetection::test_detect_multiple_urls
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestURLDetection::test_detect_www_url
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_pii.py::TestURLDetection::test_no_url
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/test_agent_streaming.py::TestAgentStreamV3Async::test_astream_returns_async_agent_run_stream
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/test_agent_streaming.py::TestAgentStreamV3Async::test_async_tool_deltas_flow
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/test_agent_streaming.py::TestAgentStreamV3Sync::test_caller_transformers_appended_not_replaced
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/test_agent_streaming.py::TestAgentStreamV3Sync::test_inner_agent_tool_calls_via_subgraph
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/test_agent_streaming.py::TestAgentStreamV3Sync::test_messages_projection_present
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/test_agent_streaming.py::TestAgentStreamV3Sync::test_no_tools_run_is_still_usable
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/test_agent_streaming.py::TestAgentStreamV3Sync::test_stream_returns_agent_run_stream
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/test_agent_streaming.py::TestAgentStreamV3Sync::test_tool_calls_populated_without_opt_in
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/test_agent_streaming.py::TestAgentStreamV3Sync::test_tool_error_sets_error_field
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/test_agent_streaming.py::TestAgentStreamV3Sync::test_tool_output_deltas_flow_through
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/test_subagent_transformer.py::test_create_agent_registers_subagent_transformer
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/test_subagent_transformer.py::test_create_agent_subagent_transformer_precedes_user_transformers
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/test_subagent_transformer.py::test_plain_tool_not_surfaced
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/test_subagent_transformer.py::test_same_name_nested_agent_surfaced
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/test_subagent_transformer.py::test_subagents_surfaces_named_subagent
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/test_subagent_transformer.py::test_subagents_surfaces_named_subagent_async
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/test_subagent_transformer.py::test_transformer_init_exposes_subagents_channel
+- pass-to-pass: langchain/libs/langchain_v1/tests/unit_tests/agents/test_subagent_transformer.py::test_unnamed_inner_agent_surfaces_with_inherited_name
+
+## Rubric
+
+- G1 (deliverable.instruction, constraints, prohibition, weight 5, INVARIANT, compiled, guard, zeroes and is not averaged): At least one of the 669 non-regression graded nodes of step S7, the existing behaviour of both checkouts the instruction requires to keep passing, does not pass on the submitted package sources.
+- P1 (deliverable.instruction, process, prohibition, weight 3, ABSENCE, compiled, guard, zeroes and is not averaged): A submitted package source of either checkout carries a conftest.py, sitecustomize.py, usercustomize.py, or .pth file that could steer the graded test run.
+- B1 (deliverable.instruction, outcome, weight 5, EFFECT, compiled): Every one of the 5 fail-to-pass graded nodes of step S1 (schema surfacing) passes on the submitted package sources: a one-decision tool gets a plain object schema, a tool without a pydantic argument schema shows its args without enforcing them, and the per-call interrupt shows the call and the answers it accepts.
+- B2 (deliverable.instruction, outcome, weight 5, EFFECT, compiled): Every one of the 7 fail-to-pass graded nodes of step S2 (the per-call pause) passes on the submitted package sources: the mode is checked, a call needs an ID, the description factory gets the graph Runtime, each gated call pauses once and its answer is applied by interrupt id, the same tool twice routes each answer to its own call, and ainvoke works.
+- B3 (deliverable.instruction, constraints, weight 5, EFFECT, compiled): Every one of the 10 fail-to-pass graded nodes of step S3 (validation and error location) passes on the submitted package sources: a bad decision raises one pydantic error at its location, and langgraph rejects an invalid resume value for both resume forms.
+- B4 (deliverable.instruction, outcome, weight 5, EFFECT, compiled): Every one of the 7 fail-to-pass graded nodes of step S4 (edit and reject semantics) passes on the submitted package sources: each decision produces today's messages, an edit runs with exactly the reviewer's args and the tool's validators and injected args, and a retried tool is not reviewed again.
+- B5 (deliverable.instruction, outcome, weight 5, EFFECT, compiled): Every one of the 9 fail-to-pass graded nodes of step S5 (replay through the middleware) passes on the submitted package sources: an invalid answer is not saved, through the middleware and its retry and error orderings and after an earlier answered interrupt in the same node, so the pause can be answered again.
+- B6 (deliverable.instruction, outcome, weight 5, EFFECT, compiled): Every one of the 18 fail-to-pass graded nodes of step S6 (the langgraph interrupt surface) passes on the submitted package sources: interrupts carry the schema through streams, state, every checkpointer, and debug events.
+- F1 (deliverable.instruction, outcome, weight 5, EFFECT, compiled): The share of the 56 fail-to-pass graded nodes of steps S1 to S6, 30 in langgraph and 26 in langchain, that pass on the submitted package sources of both checkouts.
+- J1 (deliverable.instruction, craft, weight 5, EFFECT, judged): The change is a focused fix in the style of the surrounding code in each checkout: confined to langgraph's interrupt and Interrupt (and the SDK's interrupt type) and to langchain's HumanInTheLoopMiddleware, with no dead code, unused alternative builders, unrelated rewrites of existing logic, or duplicated helpers.
+  - residue: Whether a change is focused and in the style of the surrounding code cannot be reduced to a predicate: many differently structured diffs are acceptable, and no line count or token overlap with the reference separates them.
+- J2 (deliverable.instruction, robustness, weight 5, EFFECT, judged): The per-call schema and the provider's validation hold for any tool, any tool name, and any response schema the caller passes; nothing special-cases the tool names, argument names, decision sets, or schema kinds the tests use.
+  - residue: Whether a branch is a legitimate case distinction or a shortcut fitted to the graded inputs is a judgment of intent and generality over an unbounded input space that sampled tests cannot decide.
+- J3 (deliverable.instruction, constraints, weight 5, EFFECT, judged): Bad answers and bad schemas fail loudly: a schema pydantic cannot build, an answer that does not validate, or a tool call without an ID raises to the caller rather than being caught and replaced by an unchecked resume, a default decision, or a silent skip.
+  - residue: Whether a guard or fallback discards a case the code can handle, or only handles input it can never receive, is a judgment of reachability that no finite set of graded runs settles.
+- J4 (deliverable.instruction, craft, weight 5, EFFECT, judged): Every docstring and comment the change adds or edits describes what the code does: which schemas are enforced and which are only shown, that an invalid answer is not kept, what interrupt returns on resume, and how per-call answers are keyed.
+  - residue: Whether prose describes code truthfully is a semantic judgment: no deterministic check compares a docstring's claims with the behaviour of the code it documents.
+- X1 (deliverable.instruction, constraints, weight 5, EFFECT, judged): The answer check lives once, in langgraph's interrupt, and langchain relies on it: the middleware hands its decision type to interrupt and does not validate the returned answer again or re-implement the provider's checking.
+  - residue: Whether a second check is a duplicate of the provider's contract or a distinct consumer rule depends on what each check means, which no graded node observes because a duplicate check passes whenever the first one does.
+- X2 (deliverable.instruction, constraints, weight 5, EFFECT, judged): The langgraph change is minimal and backwards compatible: callers of interrupt that pass no schema, and readers of the SDK's interrupt type, see exactly what they saw before; the new field and keyword are optional everywhere.
+  - residue: Whether a change to a public type or signature breaks existing callers outside the graded suites is a judgment over every consumer of the API, which no sampled test enumerates.
+- X3 (deliverable.instruction, robustness, weight 5, EFFECT, judged): Provider and consumer agree at the boundary: an answer is validated in one place, and what is stored and replayed for it is the same whether it arrives as Command(resume=value) or keyed by interrupt id, through the middleware or through a plain graph.
+  - residue: Whether the stored and replayed form of an answer is the same across resume paths is a property of persisted state the graded tests only sample through their own assertions, so equivalence across paths is a judgment.
+
+Judged items are graded in two stages (ADR 0212) by openai/gpt-6.1-sol over /logs/verifier/submission.diff, against /tests/reference.diff (sha256 82a3837f5d228728c5af5e7ca78088d1cd1b871e85f310ce05283994e67df760). The verifier runs with no network, writes the compiled score as the reward, and writes judge-request.json; stage 2 judges it through KeyProxy, and stage 3 runs tests/combine.py, whose reward is the compiled score times (compiled weight + judged weight x judged score) / total weight, so a judged item only lowers it.
