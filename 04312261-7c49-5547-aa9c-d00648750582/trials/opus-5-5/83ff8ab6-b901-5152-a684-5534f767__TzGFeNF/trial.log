@@ -4,6 +4,6 @@ Running command: mkdir -p $CLAUDE_CONFIG_DIR/debug $CLAUDE_CONFIG_DIR/projects/-
 Command outputs captured
 Running command: export PATH="$HOME/.local/bin:$PATH"; claude_code_instruction_3269b97ac156483e98ae40d258881c5c="$CLAUDE_CODE_INSTRUCTION_3269B97AC156483E98AE40D258881C5C"; unset CLAUDE_CODE_INSTRUCTION_3269B97AC156483E98AE40D258881C5C; printf "%s" "$claude_code_instruction_3269b97ac156483e98ae40d258881c5c" | claude --verbose --output-format=stream-json --disallowedTools WebSearch,WebFetch --permission-mode=bypassPermissions --print 2>&1 | tee /logs/agent/claude-code.txt
 Command outputs captured
-Wrote Claude Code trajectory to trials/83ff8ab6-b901-5152-a684-5534f767__TzGFeNF/agent/trajectory.json
+Wrote Claude Code trajectory to trials/opus-5-5/83ff8ab6-b901-5152-a684-5534f767__TzGFeNF/agent/trajectory.json
 Collecting main service artifacts
 The verifier.env contains an API key (often the case for LLM-based verifiers). You will incur costs associated with the API calls.

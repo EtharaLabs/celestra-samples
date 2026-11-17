@@ -3,7 +3,7 @@
         "path": "tasks/594fe341-7f10-5685-aeb1-ffa86424017d"
     },
     "trial_name": "b558b8c2-ddd8-546d-8b1a-f13e6933__cZAen2h",
-    "trials_dir": "trials",
+    "trials_dir": "trials/opus-5-5",
     "environment_build_timeout_multiplier": 4.0,
     "agent": {
         "name": "crossrepo_harness.adapters.prebaked_openhands:PrebakedOpenHands",

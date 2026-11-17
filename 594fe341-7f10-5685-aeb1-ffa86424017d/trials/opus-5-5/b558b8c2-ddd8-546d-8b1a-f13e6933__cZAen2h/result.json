@@ -1,16 +1,16 @@
 {
-    "id": "d929e089-97e9-49e1-b97c-8f958804b07c",
-    "task_name": "celestra/pybamm-solver-restarts",
-    "trial_name": "83ff8ab6-b901-5152-a684-5534f767__TzGFeNF",
-    "trial_uri": "trials/83ff8ab6-b901-5152-a684-5534f767__TzGFeNF",
+    "id": "ff66b007-cf8f-4bb0-ad18-334a9125ad10",
+    "task_name": "celestra/langgraph-langchain-per-call-review",
+    "trial_name": "b558b8c2-ddd8-546d-8b1a-f13e6933__cZAen2h",
+    "trial_uri": "trials/opus-5-5/b558b8c2-ddd8-546d-8b1a-f13e6933__cZAen2h",
     "task_id": {
-        "path": "tasks/04312261-7c49-5547-aa9c-d00648750582"
+        "path": "tasks/594fe341-7f10-5685-aeb1-ffa86424017d"
     },
     "source": null,
-    "task_checksum": "5eb868b3d96a6755620b3d4065dd01a3d91fe0270bc05268adfbc51a95abccff",
+    "task_checksum": "73236b20580cd88fa287740979b04fc8677d95a67b9f1c1f1b9d312e2fbd3796",
     "config": {
         "task": {
-            "path": "tasks/04312261-7c49-5547-aa9c-d00648750582",
+            "path": "tasks/594fe341-7f10-5685-aeb1-ffa86424017d",
             "git_url": null,
             "git_commit_id": null,
             "name": null,
@@ -19,8 +19,8 @@
             "download_dir": null,
             "source": null
         },
-        "trial_name": "83ff8ab6-b901-5152-a684-5534f767__TzGFeNF",
-        "trials_dir": "trials",
+        "trial_name": "b558b8c2-ddd8-546d-8b1a-f13e6933__cZAen2h",
+        "trials_dir": "trials/opus-5-5",
         "install_only": false,
         "timeout_multiplier": 1.0,
         "agent_timeout_multiplier": null,
@@ -28,7 +28,7 @@
         "agent_setup_timeout_multiplier": null,
         "environment_build_timeout_multiplier": 4.0,
         "agent": {
-            "name": "claude-code",
+            "name": "crossrepo_harness.adapters.prebaked_openhands:PrebakedOpenHands",
             "import_path": null,
             "model_name": "anthropic/claude-opus-5-5",
             "base_url": null,
@@ -46,12 +46,11 @@
             "extra_allowed_hosts": [
                 "cc-bridge-internal"
             ],
-            "kwargs": {
-                "disable_web_search": true
-            },
+            "kwargs": {},
             "env": {
-                "ANTHROPIC_BASE_URL": "http://cc-bridge-internal:8765",
-                "ANTHROPIC_API_KEY": "${ANTHROPIC_API_KEY}"
+                "LLM_BASE_URL": "http://cc-bridge-internal:8765",
+                "LLM_API_KEY": "${LLM_API_KEY}",
+                "LLM_DROP_PARAMS": "true"
             },
             "mcp_servers": []
         },
@@ -77,53 +76,38 @@
         "verifier": {
             "override_timeout_sec": null,
             "max_timeout_sec": null,
-            "env": {
-                "JUDGE_PROVIDER": "anthropic",
-                "JUDGE_MODEL": "claude-sonnet-5",
-                "REWARDKIT_JUDGE": "anthropic/claude-sonnet-5",
-                "CLAUDE_CODE_OAUTH_TOKEN": "",
-                "ANTHROPIC_BASE_URL": "http://host.docker.internal:8765",
-                "ANTHROPIC_API_KEY": "${ANTHROPIC_API_KEY}"
-            },
             "disable": false
         },
         "artifacts": [],
         "extra_instruction_paths": [],
         "extra_instructions": [],
-        "job_id": "0ded496e-2861-479e-99bb-e6356ae7dfd3",
+        "job_id": "97e92334-c391-4e81-a8ef-da8202374b09",
         "source_trial": null
     },
     "agent_info": {
-        "name": "claude-code",
-        "version": "2.1.311",
+        "name": "openhands",
+        "version": "/opt/openhands-venv/lib/python3.13/site-packages/google/auth/transport/grpc.py:43: FutureWarning: grpcio < 1.83.0 does not support Post-Quantum Cryptography (PQC). Support for non-PQC environments is deprecated. In April 2027, google-auth will raise its minimum requirements to enforce grpcio >= 1.83.0. For more details on Google Cloud's post-quantum security migration, visit: https://cloud.google.com/security/resources/post-quantum-cryptography\n  warnings.warn(\nOpenHands version: 1.6.0",
         "model_info": {
             "name": "claude-opus-5-5",
             "provider": "anthropic"
         }
     },
     "agent_result": {
-        "n_input_tokens": 11884756,
-        "n_cache_tokens": 11658279,
-        "n_output_tokens": 94694,
-        "cost_usd": 5.357764800000002,
-        "model_usage": {
-            "claude-opus-5-5": {
-                "n_input_tokens": 11884756,
-                "n_cache_tokens": 11658279,
-                "n_output_tokens": 94694,
-                "cost_usd": 5.357764800000002
-            }
-        },
+        "n_input_tokens": 18891491,
+        "n_cache_tokens": 18663672,
+        "n_output_tokens": 906019,
+        "cost_usd": null,
+        "model_usage": null,
         "rollout_details": null,
         "metadata": null
     },
     "verifier_result": {
         "rewards": {
-            "reward": 0.5942
+            "reward": 0.7041
         },
         "assay": {
-            "score_deterministic": 0.8333,
-            "gate": 0,
+            "score_deterministic": 1.0,
+            "gate": 1,
             "if_score": null,
             "if_status": "absent",
             "verifier_mode": "separate",
@@ -132,28 +116,28 @@
     },
     "verifier_environment_mode": "separate",
     "exception_info": null,
-    "started_at": "2026-11-10T10:35:19.419465Z",
-    "finished_at": "2026-11-10T11:14:43.451065Z",
+    "started_at": "2026-11-17T09:16:15.213689Z",
+    "finished_at": "2026-11-17T12:04:24.930255Z",
     "environment_setup": {
-        "started_at": "2026-11-10T10:35:19.481940Z",
-        "finished_at": "2026-11-10T10:37:48.840770Z"
+        "started_at": "2026-11-17T09:16:15.225520Z",
+        "finished_at": "2026-11-17T09:16:47.228367Z"
     },
     "agent_setup": {
-        "started_at": "2026-11-10T10:37:48.842618Z",
-        "finished_at": "2026-11-10T10:37:49.201458Z"
+        "started_at": "2026-11-17T09:16:47.229374Z",
+        "finished_at": "2026-11-17T09:17:02.551308Z"
     },
     "agent_execution": {
-        "started_at": "2026-11-10T10:37:49.202255Z",
-        "finished_at": "2026-11-10T11:13:07.780616Z"
+        "started_at": "2026-11-17T09:17:02.551565Z",
+        "finished_at": "2026-11-17T12:02:53.335492Z"
     },
     "verifier": {
-        "started_at": "2026-11-10T11:13:28.886187Z",
-        "finished_at": "2026-11-10T11:14:43.450933Z"
+        "started_at": "2026-11-17T12:03:09.936586Z",
+        "finished_at": "2026-11-17T12:04:24.930238Z"
     },
     "step_results": null,
     "assay": {
-        "score_deterministic": 0.8333,
-        "gate": 0,
+        "score_deterministic": 1.0,
+        "gate": 1,
         "if_score": null,
         "if_status": "absent",
         "verifier_mode": "separate",

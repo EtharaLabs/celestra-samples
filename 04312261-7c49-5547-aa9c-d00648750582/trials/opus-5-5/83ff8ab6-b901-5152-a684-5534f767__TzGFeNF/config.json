@@ -3,7 +3,7 @@
         "path": "tasks/04312261-7c49-5547-aa9c-d00648750582"
     },
     "trial_name": "83ff8ab6-b901-5152-a684-5534f767__TzGFeNF",
-    "trials_dir": "trials",
+    "trials_dir": "trials/opus-5-5",
     "environment_build_timeout_multiplier": 4.0,
     "agent": {
         "name": "claude-code",

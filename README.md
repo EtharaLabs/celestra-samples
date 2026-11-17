@@ -51,15 +51,15 @@ Each sample ships one rollout with `claude-opus-5-5`, scored by the task's own v
 
 ## Trials
 
-Each task was run once with `claude-opus-5-5`, under the task's own time limit, and scored by the task's own verifier: the compiled tests inside the verifier image, then the judged criteria over the agent's diff with `gpt-6.1-sol`, 20 trials per criterion, a criterion passing on a majority of trials. Trials are stored under each task's `trials/<task-uuid>__<trial-id>/`, Harbor's trial layout.
+Each task was run once with `claude-opus-5-5`, under the task's own time limit, and scored by the task's own verifier: the compiled tests inside the verifier image, then the judged criteria over the agent's diff with `gpt-6.1-sol`, 20 trials per criterion, a criterion passing on a majority of trials. Trials are stored under each task's `trials/opus-5-5/<task-uuid>__<trial-id>/`, Harbor's trial layout under the agent model.
 
 | Task | Agent | Compiled score | Judged criteria passed | Combined reward | Graded nodes passed | Agent time |
 | --- | --- | ---: | ---: | ---: | ---: | ---: |
-| [`04312261-7c49-5547-aa9c-d00648750582`](04312261-7c49-5547-aa9c-d00648750582/trials/) | Claude Code | 0.6154 | 0 / 4 | 0.5517 | 201 / 223 | 35m 13s |
-| [`594fe341-7f10-5685-aeb1-ffa86424017d`](594fe341-7f10-5685-aeb1-ffa86424017d/trials/) | OpenHands | 0.7041 | 1 / 7 | 0.4023 | 721 / 726 | 2h 45m 51s |
-| [`98258d6a-da32-5d91-b0cd-3d0bab26a467`](98258d6a-da32-5d91-b0cd-3d0bab26a467/trials/) | OpenHands | 0.7234 | 5 / 18 | 0.5775 | 876 / 1045 | 2h 9m 27s |
-| [`b82b72a4-cbcb-5dca-b5f6-be150573e37e`](b82b72a4-cbcb-5dca-b5f6-be150573e37e/trials/) | OpenHands | 0.6798 | 2 / 9 | 0.6434 | 157 / 167 | 9m 51s |
-| [`e399ed3a-ba44-5777-b1bf-7cb0d481d40e`](e399ed3a-ba44-5777-b1bf-7cb0d481d40e/trials/) | OpenHands | 0.1104 | 3 / 11 | 0.1104 | 1427 / 1447 | 13m 48s |
+| [`04312261-7c49-5547-aa9c-d00648750582`](04312261-7c49-5547-aa9c-d00648750582/trials/opus-5-5/) | Claude Code | 0.6154 | 0 / 4 | 0.5517 | 201 / 223 | 35m 13s |
+| [`594fe341-7f10-5685-aeb1-ffa86424017d`](594fe341-7f10-5685-aeb1-ffa86424017d/trials/opus-5-5/) | OpenHands | 0.7041 | 1 / 7 | 0.4023 | 721 / 726 | 2h 45m 51s |
+| [`98258d6a-da32-5d91-b0cd-3d0bab26a467`](98258d6a-da32-5d91-b0cd-3d0bab26a467/trials/opus-5-5/) | OpenHands | 0.7234 | 5 / 18 | 0.5775 | 876 / 1045 | 2h 9m 27s |
+| [`b82b72a4-cbcb-5dca-b5f6-be150573e37e`](b82b72a4-cbcb-5dca-b5f6-be150573e37e/trials/opus-5-5/) | OpenHands | 0.6798 | 2 / 9 | 0.6434 | 157 / 167 | 9m 51s |
+| [`e399ed3a-ba44-5777-b1bf-7cb0d481d40e`](e399ed3a-ba44-5777-b1bf-7cb0d481d40e/trials/opus-5-5/) | OpenHands | 0.1104 | 3 / 11 | 0.1104 | 1427 / 1447 | 13m 48s |
 | **mean** | | **0.5666** | **11 / 49** | **0.4571** | | **1h 10m 50s** |
 
 The **mean** row averages the scores and agent time over the five trials; its criteria cell is the total across them. The compiled score weighs each required behaviour as an all-or-nothing item, with a regression gate that zeroes the score when any existing test breaks, so a rollout that fixes most of a change still scores well below 1. The combined reward multiplies the compiled score by the share of judged criteria passed, scaled by the task's compiled and judged weights, so the judge only ever lowers it.
@@ -133,12 +133,13 @@ Each task is one Harbor task in a directory named by its uuid.
 ├── tests/            verifier, hidden from the agent (graded tests, judge rubric, reference diff)
 ├── solution/         reference solution
 └── trials/
-    └── <task-uuid>__<trial-id>/   one scored rollout with claude-opus-5-5
-        ├── config.json
-        ├── result.json
-        ├── trial.log
-        ├── agent/        trajectory.json and the scaffold's log
-        └── verifier/     reward.txt, test output, grading details, judge votes
+    └── opus-5-5/                      trials with claude-opus-5-5
+        └── <task-uuid>__<trial-id>/   one scored rollout
+            ├── config.json
+            ├── result.json
+            ├── trial.log
+            ├── agent/        trajectory.json and the scaffold's log
+            └── verifier/     reward.txt, test output, grading details, judge votes
 ```
 
 ## Reproduction
@@ -171,5 +172,7 @@ A citation for celestra will be published here once it releases its first full d
 ## Contact
 
 Celestra is built by [Ethara.AI](https://github.com/Ethara-Ai).
+
+For questions about the benchmarking dataset, contact research@ethara.ai.
 
 Copyright (c) 2026 Green Rider Technology LLP (Ethara AI). All rights reserved.
