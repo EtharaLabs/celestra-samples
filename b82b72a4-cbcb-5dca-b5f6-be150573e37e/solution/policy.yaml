@@ -1,0 +1,11 @@
+schema: trinity.capability-policy/v1
+channels:
+  read: restricted
+  write: restricted
+  execute: allowed
+  network: denied
+  environment: restricted
+  timing: restricted
+  ipc: denied
+  resource: restricted
+  context: restricted

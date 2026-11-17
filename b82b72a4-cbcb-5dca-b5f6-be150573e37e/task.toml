@@ -1,0 +1,55 @@
+schema_version = "1.4"
+# score.py writes a weighted-mean score in [0, 1], not a pass/fail bit.
+reward_type = "bounded_continuous"
+artifacts = [{ source = "/app/sentry-python", destination = "workspace", exclude = [".git", "__pycache__"] }]
+
+[task]
+name = "ethara/b82b72a4-cbcb-5dca-b5f6-be150573e37e"
+version = "1.0.0"
+description = "Make the Sentry Python SDK's boto3 integration trace one span per botocore client call, covering every retry attempt, failures before any request exists, and streamed response bodies until they are consumed, in both the static and the span-streaming tracing modes."
+authors = [{ name = "mumukshu.panchal", email = "mumukshu.panchal@ethara.ai" }]
+keywords = ["sentry-python", "boto3", "botocore", "tracing", "observability", "cross-repo", "python"]
+
+[metadata]
+null_floor = 0.0
+discrimination_weight = 0.5
+platforms = ["linux/amd64", "linux/arm64"]
+
+[verifier]
+timeout_sec = 1800
+network_mode = "no-network"
+environment_mode = "separate"
+# test.sh starts as root only to make the submission readable, then grades as uid 10001.
+user = "root"
+
+[verifier.environment]
+network_mode = "no-network"
+build_timeout_sec = 1800
+cpus = 2
+memory_mb = 4096
+storage_mb = 10240
+gpus = 0
+
+[agent]
+timeout_sec = 7200
+network_mode = "no-network"
+user = "10001"
+
+[environment]
+network_mode = "no-network"
+build_timeout_sec = 1800
+cpus = 2
+memory_mb = 4096
+storage_mb = 10240
+gpus = 0
+
+[upstream_provenance]
+origin = "original"
+provenance_date = "2026-09-18"
+source_kind = "public_repository"
+
+[upstream_provenance.source]
+canonical_repo = "https://github.com/getsentry/sentry-python"
+fork_ancestry_digest = "sha256:5cefaa32be2f4cfd1a9a0b8b11aebd9c9e6a4a9b4d6d181461a4dca53071a29d"
+base_commit = "500f10e79e783754b0dae92119139d2db212602e"
+event_timestamp = "2026-09-18T14:23:33Z"

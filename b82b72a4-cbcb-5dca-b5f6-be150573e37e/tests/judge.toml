@@ -1,0 +1,136 @@
+# GENERATED SECTION. DO NOT HAND-EDIT.
+
+[[criterion]]
+id = "JF1"
+description = "Every way a boto3 client call can end (a response without a streamed body, an error raised after the retries, a streamed body read to the end, a streamed body closed before the end) finishes the call's client span, so no way of ending leaves it open."
+type = "binary"
+weight = 3
+negate = false
+
+[criterion.annotations]
+mode = "judged"
+type = "EFFECT"
+obligation = "deliverable.instruction"
+dimension = "coverage"
+evidence = ["/logs/verifier/submission.diff, carried as the solver output in /logs/verifier/judge-request.json"]
+residue = "Universal over the ways a call ends and over retry outcomes; a finite test refutes instances but cannot decide the claim."
+
+[[criterion]]
+id = "JF2"
+description = "For some way a boto3 client call can end, the change finishes the call's client span more than once."
+type = "binary"
+weight = 3
+negate = true
+
+[criterion.annotations]
+mode = "judged"
+type = "INVARIANT"
+obligation = "deliverable.instruction"
+dimension = "constraints"
+evidence = ["/logs/verifier/submission.diff, carried as the solver output in /logs/verifier/judge-request.json"]
+residue = "Universal over the ways a call ends, including a streamed body that is read and then closed; a finite test refutes instances but cannot decide the claim."
+
+[[criterion]]
+id = "JF3"
+description = "For some boto3 client call, the change finishes the call's client span before the call has ended, such as when the call returns while its streamed body is still unread."
+type = "binary"
+weight = 3
+negate = true
+
+[criterion.annotations]
+mode = "judged"
+type = "ORDERING"
+obligation = "deliverable.instruction"
+dimension = "constraints"
+evidence = ["/logs/verifier/submission.diff, carried as the solver output in /logs/verifier/judge-request.json"]
+residue = "Universal over the ways a call ends and the read patterns of a streamed body; a finite test refutes instances but cannot decide the claim."
+
+[[criterion]]
+id = "JS1"
+description = "For some boto3 client call, the change starts more than one client span for that call."
+type = "binary"
+weight = 3
+negate = true
+
+[criterion.annotations]
+mode = "judged"
+type = "INVARIANT"
+obligation = "deliverable.instruction"
+dimension = "constraints"
+evidence = ["/logs/verifier/submission.diff, carried as the solver output in /logs/verifier/judge-request.json"]
+residue = "Universal over retry configurations and response kinds; a finite test refutes instances but cannot decide the claim."
+
+[[criterion]]
+id = "JS2"
+description = "The change starts a boto3 client span from a botocore hook that fires once per request attempt."
+type = "binary"
+weight = 1
+negate = true
+
+[criterion.annotations]
+mode = "judged"
+type = "INVARIANT"
+obligation = "deliverable.instruction"
+dimension = "constraints"
+evidence = ["/logs/verifier/submission.diff, carried as the solver output in /logs/verifier/judge-request.json"]
+residue = "A property of where in botocore's event sequence the span starts, decidable only by reading which hook the change registers; no graded outcome distinguishes a hook that happens to fire once."
+
+[[criterion]]
+id = "JW1"
+description = "For some failing boto3 client call or failing read of its streamed body, the caller does not receive the very exception object botocore raised."
+type = "binary"
+weight = 3
+negate = true
+
+[criterion.annotations]
+mode = "judged"
+type = "INVARIANT"
+obligation = "deliverable.instruction"
+dimension = "constraints"
+evidence = ["/logs/verifier/submission.diff, carried as the solver output in /logs/verifier/judge-request.json"]
+residue = "Universal over errors and failure points; a finite test refutes instances but cannot decide the claim."
+
+[[criterion]]
+id = "JB1"
+description = "For some request botocore sends, the breadcrumb the change records differs from the one base_commit records for that request: missing, repeated, or with different data."
+type = "binary"
+weight = 1
+negate = true
+
+[criterion.annotations]
+mode = "judged"
+type = "INVARIANT"
+obligation = "deliverable.instruction"
+dimension = "constraints"
+evidence = ["/logs/verifier/submission.diff, carried as the solver output in /logs/verifier/judge-request.json"]
+residue = "Universal over requests and retry attempts; judged from the diff as a semantic comparison with base_commit."
+
+[[criterion]]
+id = "JH1"
+description = "For some request botocore sends, the HTTP attributes the change derives from that request differ from those base_commit derives from it: in either tracing mode, a URL, query, fragment, or method attribute is missing, renamed, or given a different value. Which span holds the attributes, and a later attempt of the same call writing its values over an earlier attempt's on the one client span, are not differences under this criterion."
+type = "binary"
+weight = 1
+negate = true
+
+[criterion.annotations]
+mode = "judged"
+type = "INVARIANT"
+obligation = "deliverable.instruction"
+dimension = "constraints"
+evidence = ["/logs/verifier/submission.diff, carried as the solver output in /logs/verifier/judge-request.json"]
+residue = "Universal over requests and tracing modes; judged from the diff as a semantic comparison of the attribute derivation with base_commit, independent of span placement."
+
+[[criterion]]
+id = "JP1"
+description = "For some request botocore sends, the change adds a trace propagation header where base_commit adds none, leaves out one that base_commit adds, or merges them differently with headers the request already carries. Only which headers are present and how they are merged count, not the span or trace ids their values carry."
+type = "binary"
+weight = 3
+negate = true
+
+[criterion.annotations]
+mode = "judged"
+type = "INVARIANT"
+obligation = "deliverable.instruction"
+dimension = "constraints"
+evidence = ["/logs/verifier/submission.diff, carried as the solver output in /logs/verifier/judge-request.json"]
+residue = "Universal over requests, propagation targets, and signature versions; judged from the diff as a semantic comparison with base_commit."

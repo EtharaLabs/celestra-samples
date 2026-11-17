@@ -1,0 +1,6 @@
+{
+ "schema": "trinity.cheat-checks/v1",
+ "ids": [
+  "cheat-check: the submission planted no test-steering file"
+ ]
+}
