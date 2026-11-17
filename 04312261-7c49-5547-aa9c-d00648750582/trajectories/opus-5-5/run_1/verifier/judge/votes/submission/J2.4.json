@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J2",
+ "trial": 4,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission uses general mechanisms for most restarts: it tracks active input sets dynamically, takes each set\u2019s final state and named sensitivities, and applies consistent initialization. It does not appear to special-case particular models, input names, or test-array lengths.\n\nHowever, its discontinuity scheduling is not general for arbitrary solve windows. In `_set_up_events`, constant modulo periods for solvers without `supports_t_eval_discontinuities` still use:\n\n```python\nelif tf is None:\n    num_events = 200\n```\n\nThose discontinuities are expanded during setup rather than from the current integration window. For example, stepping a model containing `t mod 1` over a window extending beyond time 201 can require resets that are absent from the fixed 200-event list. Likewise, a subsequent solve extending beyond the original setup horizon does not regenerate the constant-modulo events for that longer window.\n\nThis is a substantive limitation on deriving every restart from solver semantics for arbitrary discontinuity times. Although the restart-state handling is broadly generic, the fixed/setup-bound event expansion prevents the submission from meeting the criterion as stated.\n\nFAIL"
+}

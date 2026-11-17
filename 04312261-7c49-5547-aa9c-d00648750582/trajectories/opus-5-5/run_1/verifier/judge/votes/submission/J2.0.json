@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J2",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission uses general mechanisms for much of the restart logic: it tracks active input sets dynamically, restarts each from its own final state, selects sensitivities by name, and applies chain-rule mappings between models. It does not branch on particular model names, input names, parameter sets, or `t_eval` lengths.\n\nHowever, discontinuity discovery is still not general across arbitrary integration windows. For constant modulo periods on solvers without `t_eval` discontinuity support, `_set_up_events` still expands a fixed collection of events during setup:\n- When `t_eval` is absent, it uses `num_events = 200`. A step spanning more than 200 periods therefore lacks the remaining restarts.\n- When `t_eval` is present, the collection is bounded by that setup call\u2019s final time. Reusing the setup for a longer solve does not discover additional constant-period resets.\n- Expansion starts at positive multiples, so it also does not cover arbitrary negative-time windows.\n\nThese are substantive limits on deriving **each** restart from the current solve\u2019s semantics, even though they are not explicit test-specific branches. Thus the submission does not meet the criterion\u2019s requirement of generality for any discontinuity times.\n\nFAIL"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J2",
+ "trial": 2,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission implements much of the restart logic generically: it tracks an arbitrary number of active input sets, restarts each from its own final state, selects sensitivities by name, and applies chain-rule differentiation when mapping between models. It does not hard-code particular model names, input names, parameter sets, or `t_eval` lengths.\n\nHowever, its handling of constant modulo periods is not general. For solvers without `t_eval` discontinuity support, `_set_up_events` still expands constant modulo resets only during setup:\n- When `t_eval` is absent, it uses the fixed limit `num_events = 200`.\n- Otherwise, it generates events only up to the final time of the setup call.\n\nThose events are not regenerated from the integration window on every solve or step. Consequently, later steps beyond the first 200 resets, or a subsequent solve extending beyond the original setup horizon, can omit necessary restarts. Input-dependent modulo periods receive window-based expansion, but constant periods do not.\n\nThus, although the change is largely model- and input-independent, it does not derive **each** restart from general solver semantics for arbitrary integration windows and discontinuity times, as required.\n\nFAIL"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J2",
+ "trial": 6,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission uses general mechanisms for much of the restart logic: it tracks active input sets dynamically, reads final states and sensitivities from each solution, selects sensitivities by name, and applies chain-rule mappings between models. It does not special-case particular model names, input names, or numbers of input sets.\n\nHowever, its discontinuity scheduling is not general for arbitrary solve windows. For constant modulo periods on solvers that do not support discontinuities through `t_eval`, `_set_up_events` still generates a fixed list of events at setup:\n- If `t_eval` is absent, it hard-codes `num_events = 200`.\n- Otherwise, it generates events only through the setup-time final time.\n\nUnlike the input-dependent modulo path, this constant-period path does not expand the resets for each subsequent solve or step. Thus, stepping past 200 periods, or reusing setup for a longer integration window, can omit required restarts. The resulting restart schedule is bounded by a fixed cap or an earlier window rather than derived from the current integration interval.\n\nThat violates the requirement that restarts follow general solver semantics for arbitrary discontinuity times, even though there is no evident special-casing of test models or parameter names.\n\nFAIL"
+}

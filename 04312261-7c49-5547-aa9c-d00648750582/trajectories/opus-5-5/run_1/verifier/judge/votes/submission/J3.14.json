@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J3",
+ "trial": 14,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission does not preserve the required failure behaviour.\n\nSeveral new paths silently continue when they cannot handle a condition:\n\n- In `IDAKLUSolver._consistent_algebraic_sensitivities`, invalid sensitivity shapes, a mismatch between parameter Jacobians and sensitivities, a failed linear solve, or nonfinite results cause it to return the original `y0S`. This continues with potentially inconsistent sensitivities instead of raising `pybamm.SolverError`.\n- In `_set_sens_initial_conditions_from`, a `ModelError` from building the state mapper is caught and replaced with variable-name mapping. Missing mapper input values also trigger this fallback rather than reporting that the requested mapping cannot be handled.\n- Modulo handling converts negative periods to positive using `abs`, and treats zero or NaN periods as having no resets. Both `_t_discon` and the constant-period setup path therefore silently accept invalid periods. A nonscalar period raises `ShapeError`, not the solver\u2019s own error.\n\nThe explicit `SolverError` for time- or state-dependent periods and the checks for missing final-state sensitivities are appropriate, but they do not compensate for these silent fallback paths.\n\nFAIL"
+}

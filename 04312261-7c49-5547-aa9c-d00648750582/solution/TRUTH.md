@@ -1,0 +1,714 @@
+<!-- FORGE-CANARY-BEGIN -->
+<!-- FORGE-CANARY-SLOT-1: a24d69d496e08818fa619e41b58cd9f6d620e8625c0cb10ee96c2f972ed068cf -->
+<!-- FORGE-CANARY-SLOT-2: 587c1b9570e3a135387df57d9adcc2846bbc21e9ec7b10cbf026a5b01c9bcf3a -->
+<!-- FORGE-CANARY-SLOT-3: d261d0b447984f33d20d169edb4ac36db2c2f05e207203b4f1de78187cd83eca -->
+<!-- FORGE-CANARY-END -->
+
+<!-- GENERATED SECTION. DO NOT HAND-EDIT. -->
+
+# Ground truth: celestra/pybamm-solver-restarts
+
+Repository pybamm-team/PyBaMM at base commit fe6784fb08d386950d546f75c95849a7edeb5fa8.
+
+## Golden path
+
+- S1: Restart each integration segment after an input-timed discontinuity from the previous segment's final state and state sensitivities, per input set, with a consistent re-initialisation; restart only the input sets that reached the segment end, give each segment the t_interp values inside it plus its end points, and place discontinuities next to or within one float of t_eval points without spurious errors. Establishes: solve() integrates across input-timed discontinuities from the right state for every input set
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuities_with_python_format
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuities_within_one_float[1]
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuities_within_one_float[2]
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_at_non_positive_time[negative]
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_at_non_positive_time[zero]
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_next_to_t_eval_point[above]
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_next_to_t_eval_point[below]
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_one_float_after_t_eval_start
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_rejects_t_interp_outside_t_eval[t_interp0-greater than the smallest]
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_rejects_t_interp_outside_t_eval[t_interp1-less than the greatest]
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_restarts_each_input_set[array-False-False]
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_restarts_each_input_set[array-False-True]
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_restarts_each_input_set[array-True-False]
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_restarts_each_input_set[array-True-True]
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_restarts_each_input_set[integer_list-False-False]
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_restarts_each_input_set[integer_list-False-True]
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_restarts_each_input_set[integer_list-True-False]
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_restarts_each_input_set[integer_list-True-True]
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_restarts_running_input_sets[0]
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_restarts_running_input_sets[1]
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_times_match_casadi[modulo]
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_times_match_casadi[switch]
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_with_t_interp[False]
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_with_t_interp[True]
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_within_one_float_of_t_eval_end
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_restarts_algebraic_sensitivities_without_calc_ic
+- S2: Expand the discontinuities of Modulo(t, period) per input set when the period is an input, stop one float before and restart one float after each reset, ignore an infinite period, and reject a time-dependent period. Establishes: modulo resets with input periods restart exactly where fmod resets
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_modulo_before_zero[constant]
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_modulo_before_zero[input]
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_modulo_restarts_where_fmod_resets[10]
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_modulo_restarts_where_fmod_resets[5]
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_modulo_restarts_where_fmod_resets[9]
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_modulo_with_infinite_period[input]
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_modulo_with_input_period
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_modulo_with_time_dependent_period_raises
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_one_float_before_modulo_reset
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_stops_at_every_modulo_reset[constant]
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_stops_at_every_modulo_reset[input]
+- S3: Split step() at discontinuities through the same segment loop as solve(), so a step across an input-timed jump in an algebraic state succeeds and a step after an event-terminated step is unchanged by splitting. Establishes: step() stops and restarts at discontinuities like solve()
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_after_event_keeps_sensitivities_continuous_at_discontinuity
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_after_event_matches_unsplit_step
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_restarts_at_input_dependent_discontinuity
+- S4: Map initial sensitivities across a change of model through the state mapper by forward-mode differentiation, and without a mapper differentiate (var - reference) / scale with input-dependent reference and scale. Establishes: sensitivities stay correct across experiment model changes
+  - checker: packages/pybamm/tests/integration/test_experiments.py::TestExperimentSensitivities::test_sensitivities_across_model_changes[electrolyte_scale-False]
+  - checker: packages/pybamm/tests/integration/test_experiments.py::TestExperimentSensitivities::test_sensitivities_across_model_changes[electrolyte_scale-True]
+  - checker: packages/pybamm/tests/integration/test_experiments.py::TestExperimentSensitivities::test_sensitivities_across_model_changes[particle_scale-False]
+  - checker: packages/pybamm/tests/integration/test_experiments.py::TestExperimentSensitivities::test_sensitivities_across_model_changes[particle_scale-True]
+  - checker: packages/pybamm/tests/integration/test_experiments.py::TestExperimentSensitivities::test_sensitivities_across_model_changes[reference-False]
+  - checker: packages/pybamm/tests/integration/test_experiments.py::TestExperimentSensitivities::test_sensitivities_across_model_changes[reference-True]
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_to_new_model_maps_sensitivities[constant-False]
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_to_new_model_maps_sensitivities[constant-True]
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_to_new_model_maps_sensitivities[input-False]
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_to_new_model_maps_sensitivities[input-True]
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_to_new_model_rejects_missing_sensitivities[fewer]
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_to_new_model_rejects_missing_sensitivities[none]
+- S5: Seed step() sensitivities by input name and raise SolverError naming the inputs for which the continued solution has no sensitivities. Establishes: continued solves never silently reuse another input's sensitivities
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_starting_solution_rejects_changed_sensitivities[fewer]
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_starting_solution_rejects_changed_sensitivities[more]
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_starting_solution_rejects_changed_sensitivities[none]
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_saved_step_rejects_changed_sensitivities[fewer]
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_saved_step_rejects_changed_sensitivities[none]
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_rejects_restart_without_requested_sensitivities[False]
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_rejects_restart_without_requested_sensitivities[True]
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_seeds_sensitivities_by_name
+- S6: Rebuild the solver in step() when calculate_sensitivities changes, as solve() does, and leave model.calculate_sensitivities unchanged when a second-model RuntimeError is raised. Establishes: experiments can be re-solved with different sensitivity settings
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_resolve_with_changed_sensitivities[legacy]
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_resolve_with_changed_sensitivities[unified]
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_second_model_error_keeps_sensitivity_setting[solve]
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_second_model_error_keeps_sensitivity_setting[step]
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_after_changing_sensitivities
+- S7: Add each discontinuity event to model.events once per model, however often the model is set up. Establishes: repeated set-ups do not duplicate discontinuity events
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_set_up_adds_discontinuity_events_once
+- S8: Keep every other solver, simulation, experiment and expression-tree behaviour unchanged. Establishes: no regression in the existing behaviour
+  - checker: packages/pybamm/tests/integration/test_experiments.py::TestExperiments::test_discharge_rest_charge
+  - checker: packages/pybamm/tests/integration/test_experiments.py::TestExperiments::test_drive_cycle
+  - checker: packages/pybamm/tests/integration/test_experiments.py::TestExperiments::test_drive_cycle_duration
+  - checker: packages/pybamm/tests/integration/test_experiments.py::TestExperiments::test_gitt
+  - checker: packages/pybamm/tests/integration/test_experiments.py::TestExperiments::test_infeasible
+  - checker: packages/pybamm/tests/integration/test_experiments.py::TestExperiments::test_rest_discharge_rest
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_all_empty_solution_errors
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_batch_cross_cycle_equivalent
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_build_experiment_step_inputs_uses_expected_step_index
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_build_for_experiment_legacy_processes_each_unique_step
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_built_models_and_state_mappers_independent_of_cycle_count
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_cycle_summary_variables
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_decode_combined_step_termination_handles_none_events_and_missing_t_event
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_decode_combined_step_termination_returns_original_when_no_events_match
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_distinct_control_types_with_same_value_yield_distinct_models
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_experiment_custom_steps
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_experiment_custom_termination
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_experiment_start_time_identical_steps
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_experiment_start_time_starting_solution
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_experiment_state_mapper_has_full_state_size_for_2d_current_collector
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_experiment_state_mappers_built
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_inputs
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_inputs_with_initial_soc
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_non_unified_model_jacobian_is_plain_casadi
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_padding_rest_model
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_processed_variable_sensitivities_ignore_experiment_input
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_repeated_solves_refresh_initial_soc[legacy]
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_repeated_solves_refresh_initial_soc[unified]
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_event_driven_experiment_unified_matches_legacy
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_experiment
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_experiment_breaks_early_error
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_experiment_breaks_early_infeasible
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_experiment_cccv_solvers
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_experiment_drive_cycle
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_experiment_drive_cycle_experiment
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_experiment_half_cell
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_experiment_infeasible_time
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_experiment_lead_acid
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_experiment_multiple_times
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_experiment_output_variable_time_integrals
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_experiment_output_variables_repeated_step
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_experiment_skip_steps
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_experiment_temperature_switching_unified
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_experiment_termination_capacity
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_experiment_termination_time_h
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_experiment_termination_time_min
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_experiment_termination_time_s
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_experiment_termination_time_with_starting_solution_at_limit
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_experiment_termination_voltage
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_experiment_with_pbar
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_mixed_control_experiment_unified_matches_legacy
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_mixed_control_experiment_unified_single_model
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_multi_termination_step_unified_matches_legacy
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_start_time_experiment
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_start_time_experiment_forced_unified
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_start_time_experiment_legacy_builds_padding_rest_mappers
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_unified_resistance_branch_is_safe_when_inactive_at_zero_current
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_save_at_cycles
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_set_up_all_explicit_defaults_to_legacy_model
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_set_up_all_explicit_uses_unified_model_with_dae_solver
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_set_up_can_force_legacy_experiment_models
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_set_up_differential_custom_step_falls_back_to_legacy
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_set_up_unified_mode_rejects_all_explicit_ode_solver
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_set_up_unified_mode_rejects_differential_custom_step
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_set_up_unified_preserves_voltage_safety_events
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_setup_experiment_string_or_list
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_simulation_changing_capacity_crate_steps[legacy]
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_simulation_changing_capacity_crate_steps[unified]
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_simulation_logging_with_capacity_change[legacy]
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_simulation_logging_with_capacity_change[unified]
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_simulation_multiple_cycles_with_capacity_change[legacy]
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_simulation_multiple_cycles_with_capacity_change[unified]
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_skip_ok
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_skip_ok_with_multiple_infeasible_terminations_in_unified_model
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_skipped_step_continuous
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_solve_with_sensitivities_and_experiment[DFN]
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_solve_with_sensitivities_and_experiment[SPM]
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_solve_with_sensitivities_true_excludes_all_internal_inputs
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_solve_with_sensitivity_list_ignores_internal_experiment_input
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_starting_solution
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_unified_active_branch_independent_of_other_modes
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_unified_allows_drive_cycle_and_algebraic_implicit
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_unified_ambient_temperature_scalar_value
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_unified_aot_compile_bounded_in_unique_steps
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_unified_builds_exactly_one_model_and_solver
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_unified_cc_per_step_current_parses
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_unified_collapses_every_control_kind_by_value
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_unified_constant_current_steps_collapse_to_one_branch
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_unified_control_row_jacobian_is_sparse
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_unified_drive_cycle_matches_legacy
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_unified_model_mode_validation_and_blockers
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_unified_model_switching_size_independent_of_cycle_count
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_unified_records_switching_control_variable_not_voltage
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_unified_switch_matches_legacy_voltage
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_unified_switch_top_functions_flat_in_unique_steps
+  - checker: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_unified_voltage_per_step_matches_legacy
+  - checker: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_addition
+  - checker: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_addition_numpy_array
+  - checker: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_advanced_binary_simplifications
+  - checker: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_binary_operator
+  - checker: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_binary_operator_domains
+  - checker: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_binary_simplifications
+  - checker: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_binary_simplifications_concatenations
+  - checker: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_diff
+  - checker: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_eq
+  - checker: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_equality
+  - checker: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_heaviside
+  - checker: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_hypot
+  - checker: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_inner
+  - checker: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_inner_simplifications
+  - checker: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_minimum_maximum
+  - checker: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_modulo
+  - checker: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_number_overloading
+  - checker: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_power
+  - checker: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_printing
+  - checker: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_sigmoid
+  - checker: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_smooth_minus_plus
+  - checker: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_softminus_softplus
+  - checker: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_source
+  - checker: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_source_error
+  - checker: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_sparse_divide
+  - checker: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_sparse_multiply
+  - checker: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_t_discon_error
+  - checker: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_to_equation
+  - checker: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_to_json
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_additional_inputs_provided
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_base_solver_init
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_block_symbolic_inputs
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_convert_to_casadi_format
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_discontinuity_events_different_times_error
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_discretise_model
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_events_fail_on_initialisation_multiple_input_params[None]
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_events_fail_on_initialisation_multiple_input_params[casadi]
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_events_fail_on_initialisation_multiple_input_params[python]
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_extrapolation_warnings
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_fail_consistent_initialization
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_find_consistent_initialization
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_inputs_step
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_integrate_single_error
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_multiple_models_error
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_multiprocess_context
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_nonmonotonic_teval
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_ode_solver_fail_with_dae
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_on_extrapolation_and_on_failure_settings
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_one_process_solves_input_sets_without_a_pool
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_root_method_init
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_root_method_takes_the_tightest_entry_of_a_per_state_atol
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_sensitivities
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_single_input_set_uses_the_first_initial_state
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_solution_time_length_fail
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_step_or_solve_empty_model
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_step_restarts_sensitivities_from_output_variables
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_t_eval_none
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_next_to_t_eval_point[at]
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_modulo_with_infinite_period[constant]
+  - checker: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_starting_just_before_input_dependent_discontinuity
+  - checker: packages/pybamm/tests/integration/test_experiments.py::TestExperimentSensitivities::test_sensitivities_across_a_differentially_controlled_step
+
+## Rejected routes
+
+- restart-from-initial: Split the solve at input-timed discontinuities but restart every segment from the model's initial conditions instead of the previous segment's final state.
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuities_within_one_float[1]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuities_within_one_float[2]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_at_non_positive_time[negative]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_at_non_positive_time[zero]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_restarts_each_input_set[array-False-False]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_restarts_each_input_set[array-False-True]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_restarts_each_input_set[array-True-False]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_restarts_each_input_set[array-True-True]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_restarts_each_input_set[integer_list-False-False]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_restarts_each_input_set[integer_list-False-True]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_restarts_each_input_set[integer_list-True-False]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_restarts_each_input_set[integer_list-True-True]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_restarts_running_input_sets[0]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_restarts_running_input_sets[1]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_with_t_interp[False]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_with_t_interp[True]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_modulo_before_zero[input]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_modulo_with_input_period
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_after_event_matches_unsplit_step
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_restarts_at_input_dependent_discontinuity
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_stops_at_every_modulo_reset[input]
+- positional-sensitivities: Restart sensitivities from the previous solution by column position rather than by input name, so continuing an ['a'] solve with ['b'] hands back the sensitivities to a.
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_seeds_sensitivities_by_name
+- duplicate-events: Add the discontinuity events on every set-up without checking for those already on the model.
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_set_up_adds_discontinuity_events_once
+- resets-rounded-not-nudged: Round each multiple of a Modulo period to 12 decimals instead of moving one that rounds short of the reset one float on, so a restart can land where fmod has not reset.
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_times_match_casadi[modulo]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_modulo_restarts_where_fmod_resets[10]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_modulo_restarts_where_fmod_resets[5]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_modulo_restarts_where_fmod_resets[9]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_one_float_before_modulo_reset
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_stops_at_every_modulo_reset[constant]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_stops_at_every_modulo_reset[input]
+- mapper-skipped-scale-dropped: Map sensitivities across an experiment's change of model with the generic (var - reference) / scale formula instead of differentiating the state mapper, and drop the derivative of an input-dependent scale.
+  - rejected by: packages/pybamm/tests/integration/test_experiments.py::TestExperimentSensitivities::test_sensitivities_across_model_changes[electrolyte_scale-False]
+  - rejected by: packages/pybamm/tests/integration/test_experiments.py::TestExperimentSensitivities::test_sensitivities_across_model_changes[electrolyte_scale-True]
+  - rejected by: packages/pybamm/tests/integration/test_experiments.py::TestExperimentSensitivities::test_sensitivities_across_model_changes[particle_scale-False]
+  - rejected by: packages/pybamm/tests/integration/test_experiments.py::TestExperimentSensitivities::test_sensitivities_across_model_changes[particle_scale-True]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_to_new_model_maps_sensitivities[input-False]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_to_new_model_maps_sensitivities[input-True]
+- restart-check-off: Never check, before a sensitivity step, that the solution being continued carries sensitivities for every requested input.
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_rejects_restart_without_requested_sensitivities[False]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_rejects_restart_without_requested_sensitivities[True]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_to_new_model_rejects_missing_sensitivities[fewer]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_to_new_model_rejects_missing_sensitivities[none]
+- starting-solution-check-off: Accept a Simulation starting_solution whose sensitivities name different inputs than the ones requested.
+  - rejected by: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_starting_solution_rejects_changed_sensitivities[fewer]
+  - rejected by: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_starting_solution_rejects_changed_sensitivities[more]
+  - rejected by: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_starting_solution_rejects_changed_sensitivities[none]
+- step-keeps-stale-solver: Keep the solver step() set up for the previous sensitivity setting when calculate_sensitivities changes, instead of rebuilding it as solve() does.
+  - rejected by: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_resolve_with_changed_sensitivities[legacy]
+  - rejected by: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_resolve_with_changed_sensitivities[unified]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_after_changing_sensitivities
+- restart-at-final-time: Restart after a discontinuity whose restart time equals the last t_eval point, instead of integrating across it to the end.
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_rejects_t_interp_outside_t_eval[t_interp1-less than the greatest]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_with_t_interp[False]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_with_t_interp[True]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_within_one_float_of_t_eval_end
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_modulo_with_input_period
+- unscaled-sensitivities: Carry sensitivities across a change of model or from a starting_solution without dividing by the state's scale.
+  - rejected by: packages/pybamm/tests/integration/test_experiments.py::TestExperimentSensitivities::test_sensitivities_across_model_changes[electrolyte_scale-True]
+  - rejected by: packages/pybamm/tests/integration/test_experiments.py::TestExperimentSensitivities::test_sensitivities_across_model_changes[particle_scale-True]
+  - rejected by: packages/pybamm/tests/integration/test_experiments.py::TestExperimentSensitivities::test_sensitivities_across_model_changes[reference-True]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_to_new_model_maps_sensitivities[constant-False]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_to_new_model_maps_sensitivities[input-False]
+- error-leaves-sensitivity-setting: When step() rejects a sensitivity restart or save, leave model.calculate_sensitivities at the rejected setting.
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_saved_step_rejects_changed_sensitivities[fewer]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_saved_step_rejects_changed_sensitivities[none]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_rejects_restart_without_requested_sensitivities[False]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_rejects_restart_without_requested_sensitivities[True]
+- always-stop-before: Always insert a stop point before each discontinuity, even when the segment has no time left to stop in.
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuities_within_one_float[1]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuities_within_one_float[2]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_one_float_after_t_eval_start
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_one_float_before_modulo_reset
+- step-never-splits: Never split step() at discontinuities, so a step integrates across switches and Modulo resets.
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_after_event_keeps_sensitivities_continuous_at_discontinuity
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_after_event_matches_unsplit_step
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_one_float_before_modulo_reset
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_restarts_at_input_dependent_discontinuity
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_stops_at_every_modulo_reset[constant]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_stops_at_every_modulo_reset[input]
+- input-period-ignored: Ignore Modulo resets whose period is an input parameter, so the solve integrates across them.
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuities_with_python_format
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_times_match_casadi[modulo]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_with_t_interp[False]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_with_t_interp[True]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_modulo_before_zero[input]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_modulo_with_input_period
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_one_float_before_modulo_reset
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_stops_at_every_modulo_reset[input]
+- input-period-infinite-rejected: Reject an infinite input period of a Modulo as invalid, instead of treating t mod inf as t, which never resets.
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_modulo_with_infinite_period[input]
+- keeps-t-eval-point-at-restart: Keep a t_eval point that equals the restart time after a discontinuity, so the times repeat.
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_next_to_t_eval_point[above]
+- keeps-t-eval-point-at-stop: Keep a t_eval point that equals the stop time before a discontinuity, so the times repeat.
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_next_to_t_eval_point[below]
+- negative-resets-as-positive: Stop and restart around negative Modulo resets the way positive ones are handled, although fmod takes the old value at a negative reset.
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_modulo_before_zero[constant]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_modulo_before_zero[input]
+- solve-sets-sensitivities-before-model-check: In solve(), set model.calculate_sensitivities before checking that the solver belongs to another model, so the RuntimeError leaves the setting changed.
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_second_model_error_keeps_sensitivity_setting[solve]
+- t-interp-drops-before: Give the first segment only the t_interp values inside it, dropping those before its start, so out-of-range t_interp is never rejected.
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_rejects_t_interp_outside_t_eval[t_interp0-greater than the smallest]
+- step-sets-sensitivities-before-model-check: In step(), set model.calculate_sensitivities before checking that the solver belongs to another model, so the RuntimeError leaves the setting changed.
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_second_model_error_keeps_sensitivity_setting[step]
+- time-dependent-period-allowed: Accept a Modulo period that depends on time, checking only that it does not depend on the state.
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_modulo_with_time_dependent_period_raises
+- mapper-skipped-reference-dropped: Map sensitivities across an experiment's change of model with the generic (var - reference) / scale formula instead of differentiating the state mapper, and drop the derivative of an input-dependent reference.
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_to_new_model_maps_sensitivities[input-False]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_to_new_model_maps_sensitivities[input-True]
+- end-points-only-t-interp-passed-whole: Pass the whole t_interp to every segment when it holds only the end points store_first_last sets, so later segments see times outside their span.
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_with_t_interp[True]
+- negative-switch-times-dropped: Drop discontinuities whose restart time is not positive, so a switch at a negative time is integrated across.
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_at_non_positive_time[negative]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_modulo_before_zero[input]
+- new-model-rejects-none-only: When continuing to a new model, raise only if the solution has no sensitivities for any requested input, not when some are missing.
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_to_new_model_rejects_missing_sensitivities[fewer]
+- restart-check-fresh-solver-only: Check that the continued solution has the requested sensitivities only on a solver not yet set up for the model.
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_rejects_restart_without_requested_sensitivities[True]
+- restart-stopped-sets: Restart every input set at a discontinuity, including those that stopped on an event before it.
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_restarts_running_input_sets[0]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_restarts_running_input_sets[1]
+- running-by-position: After a discontinuity, number the input sets that restart by their position among the restarting sets instead of their original index.
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_restarts_running_input_sets[0]
+- saved-check-needs-requested: Reject saving a step onto a solution with other sensitivities only when the step requests some sensitivities.
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_saved_step_rejects_changed_sensitivities[none]
+- starting-check-needs-requested: Reject a starting_solution with other sensitivities only when the solve requests some sensitivities.
+  - rejected by: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_starting_solution_rejects_changed_sensitivities[none]
+- starting-solution-check-subset: Accept a starting_solution whose sensitivities are a superset of the requested ones.
+  - rejected by: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_starting_solution_rejects_changed_sensitivities[fewer]
+  - rejected by: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_starting_solution_rejects_changed_sensitivities[none]
+- t-interp-drops-after: Give the last segment only the t_interp values inside it, dropping those after its end, so out-of-range t_interp is never rejected.
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_rejects_t_interp_outside_t_eval[t_interp1-less than the greatest]
+- mapper-drops-state-sensitivities: Map sensitivities across an experiment's change of model from the input seeds alone, passing zeros for the old solution's state sensitivities.
+  - rejected by: packages/pybamm/tests/integration/test_experiments.py::TestExperimentSensitivities::test_sensitivities_across_model_changes[electrolyte_scale-False]
+  - rejected by: packages/pybamm/tests/integration/test_experiments.py::TestExperimentSensitivities::test_sensitivities_across_model_changes[electrolyte_scale-True]
+  - rejected by: packages/pybamm/tests/integration/test_experiments.py::TestExperimentSensitivities::test_sensitivities_across_model_changes[particle_scale-False]
+  - rejected by: packages/pybamm/tests/integration/test_experiments.py::TestExperimentSensitivities::test_sensitivities_across_model_changes[particle_scale-True]
+  - rejected by: packages/pybamm/tests/integration/test_experiments.py::TestExperimentSensitivities::test_sensitivities_across_model_changes[reference-False]
+  - rejected by: packages/pybamm/tests/integration/test_experiments.py::TestExperimentSensitivities::test_sensitivities_across_model_changes[reference-True]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_to_new_model_maps_sensitivities[constant-True]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_to_new_model_maps_sensitivities[input-True]
+  - rejected by: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_solve_with_sensitivities_and_experiment[DFN]
+  - rejected by: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_solve_with_sensitivities_and_experiment[SPM]
+- restart-at-discontinuity: Restart each segment exactly at the discontinuity time instead of one float after it, so the new segment starts where the switch has not yet taken effect.
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuities_within_one_float[1]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuities_within_one_float[2]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_at_non_positive_time[negative]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_at_non_positive_time[zero]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_next_to_t_eval_point[above]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_next_to_t_eval_point[below]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_one_float_after_t_eval_start
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_restarts_each_input_set[array-True-False]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_restarts_each_input_set[array-True-True]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_restarts_each_input_set[integer_list-True-False]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_restarts_each_input_set[integer_list-True-True]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_times_match_casadi[switch]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_within_one_float_of_t_eval_end
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_restarts_at_input_dependent_discontinuity
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_next_to_t_eval_point[at]
+- stop-at-discontinuity: Stop each segment exactly at the discontinuity time instead of one float before it, so the old segment is evaluated where the switch has already taken effect.
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuities_within_one_float[1]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuities_within_one_float[2]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_at_non_positive_time[negative]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_at_non_positive_time[zero]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_next_to_t_eval_point[above]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_next_to_t_eval_point[below]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_one_float_after_t_eval_start
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_times_match_casadi[switch]
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_after_event_keeps_sensitivities_continuous_at_discontinuity
+  - rejected by: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_next_to_t_eval_point[at]
+
+## Graded checkers
+
+- fail-to-pass: packages/pybamm/tests/integration/test_experiments.py::TestExperimentSensitivities::test_sensitivities_across_model_changes[electrolyte_scale-False]
+- fail-to-pass: packages/pybamm/tests/integration/test_experiments.py::TestExperimentSensitivities::test_sensitivities_across_model_changes[electrolyte_scale-True]
+- fail-to-pass: packages/pybamm/tests/integration/test_experiments.py::TestExperimentSensitivities::test_sensitivities_across_model_changes[particle_scale-False]
+- fail-to-pass: packages/pybamm/tests/integration/test_experiments.py::TestExperimentSensitivities::test_sensitivities_across_model_changes[particle_scale-True]
+- fail-to-pass: packages/pybamm/tests/integration/test_experiments.py::TestExperimentSensitivities::test_sensitivities_across_model_changes[reference-False]
+- fail-to-pass: packages/pybamm/tests/integration/test_experiments.py::TestExperimentSensitivities::test_sensitivities_across_model_changes[reference-True]
+- fail-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_resolve_with_changed_sensitivities[legacy]
+- fail-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_resolve_with_changed_sensitivities[unified]
+- fail-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_starting_solution_rejects_changed_sensitivities[fewer]
+- fail-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_starting_solution_rejects_changed_sensitivities[more]
+- fail-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_starting_solution_rejects_changed_sensitivities[none]
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuities_with_python_format
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuities_within_one_float[1]
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuities_within_one_float[2]
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_at_non_positive_time[negative]
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_at_non_positive_time[zero]
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_next_to_t_eval_point[above]
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_next_to_t_eval_point[below]
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_one_float_after_t_eval_start
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_rejects_t_interp_outside_t_eval[t_interp0-greater than the smallest]
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_rejects_t_interp_outside_t_eval[t_interp1-less than the greatest]
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_restarts_each_input_set[array-False-False]
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_restarts_each_input_set[array-False-True]
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_restarts_each_input_set[array-True-False]
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_restarts_each_input_set[array-True-True]
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_restarts_each_input_set[integer_list-False-False]
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_restarts_each_input_set[integer_list-False-True]
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_restarts_each_input_set[integer_list-True-False]
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_restarts_each_input_set[integer_list-True-True]
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_restarts_running_input_sets[0]
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_restarts_running_input_sets[1]
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_times_match_casadi[modulo]
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_times_match_casadi[switch]
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_with_t_interp[False]
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_with_t_interp[True]
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_within_one_float_of_t_eval_end
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_modulo_before_zero[constant]
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_modulo_before_zero[input]
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_modulo_restarts_where_fmod_resets[10]
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_modulo_restarts_where_fmod_resets[5]
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_modulo_restarts_where_fmod_resets[9]
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_modulo_with_infinite_period[input]
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_modulo_with_input_period
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_modulo_with_time_dependent_period_raises
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_saved_step_rejects_changed_sensitivities[fewer]
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_saved_step_rejects_changed_sensitivities[none]
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_second_model_error_keeps_sensitivity_setting[solve]
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_second_model_error_keeps_sensitivity_setting[step]
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_set_up_adds_discontinuity_events_once
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_after_changing_sensitivities
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_after_event_keeps_sensitivities_continuous_at_discontinuity
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_after_event_matches_unsplit_step
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_one_float_before_modulo_reset
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_rejects_restart_without_requested_sensitivities[False]
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_rejects_restart_without_requested_sensitivities[True]
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_restarts_at_input_dependent_discontinuity
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_seeds_sensitivities_by_name
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_stops_at_every_modulo_reset[constant]
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_stops_at_every_modulo_reset[input]
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_to_new_model_maps_sensitivities[constant-False]
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_to_new_model_maps_sensitivities[constant-True]
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_to_new_model_maps_sensitivities[input-False]
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_to_new_model_maps_sensitivities[input-True]
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_to_new_model_rejects_missing_sensitivities[fewer]
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_to_new_model_rejects_missing_sensitivities[none]
+- fail-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_restarts_algebraic_sensitivities_without_calc_ic
+- pass-to-pass: packages/pybamm/tests/integration/test_experiments.py::TestExperiments::test_discharge_rest_charge
+- pass-to-pass: packages/pybamm/tests/integration/test_experiments.py::TestExperiments::test_drive_cycle
+- pass-to-pass: packages/pybamm/tests/integration/test_experiments.py::TestExperiments::test_drive_cycle_duration
+- pass-to-pass: packages/pybamm/tests/integration/test_experiments.py::TestExperiments::test_gitt
+- pass-to-pass: packages/pybamm/tests/integration/test_experiments.py::TestExperiments::test_infeasible
+- pass-to-pass: packages/pybamm/tests/integration/test_experiments.py::TestExperiments::test_rest_discharge_rest
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_all_empty_solution_errors
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_batch_cross_cycle_equivalent
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_build_experiment_step_inputs_uses_expected_step_index
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_build_for_experiment_legacy_processes_each_unique_step
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_built_models_and_state_mappers_independent_of_cycle_count
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_cycle_summary_variables
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_decode_combined_step_termination_handles_none_events_and_missing_t_event
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_decode_combined_step_termination_returns_original_when_no_events_match
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_distinct_control_types_with_same_value_yield_distinct_models
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_experiment_custom_steps
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_experiment_custom_termination
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_experiment_start_time_identical_steps
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_experiment_start_time_starting_solution
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_experiment_state_mapper_has_full_state_size_for_2d_current_collector
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_experiment_state_mappers_built
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_inputs
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_inputs_with_initial_soc
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_non_unified_model_jacobian_is_plain_casadi
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_padding_rest_model
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_processed_variable_sensitivities_ignore_experiment_input
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_repeated_solves_refresh_initial_soc[legacy]
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_repeated_solves_refresh_initial_soc[unified]
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_event_driven_experiment_unified_matches_legacy
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_experiment
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_experiment_breaks_early_error
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_experiment_breaks_early_infeasible
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_experiment_cccv_solvers
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_experiment_drive_cycle
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_experiment_drive_cycle_experiment
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_experiment_half_cell
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_experiment_infeasible_time
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_experiment_lead_acid
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_experiment_multiple_times
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_experiment_output_variable_time_integrals
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_experiment_output_variables_repeated_step
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_experiment_skip_steps
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_experiment_temperature_switching_unified
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_experiment_termination_capacity
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_experiment_termination_time_h
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_experiment_termination_time_min
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_experiment_termination_time_s
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_experiment_termination_time_with_starting_solution_at_limit
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_experiment_termination_voltage
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_experiment_with_pbar
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_mixed_control_experiment_unified_matches_legacy
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_mixed_control_experiment_unified_single_model
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_multi_termination_step_unified_matches_legacy
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_start_time_experiment
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_start_time_experiment_forced_unified
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_start_time_experiment_legacy_builds_padding_rest_mappers
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_run_unified_resistance_branch_is_safe_when_inactive_at_zero_current
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_save_at_cycles
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_set_up_all_explicit_defaults_to_legacy_model
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_set_up_all_explicit_uses_unified_model_with_dae_solver
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_set_up_can_force_legacy_experiment_models
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_set_up_differential_custom_step_falls_back_to_legacy
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_set_up_unified_mode_rejects_all_explicit_ode_solver
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_set_up_unified_mode_rejects_differential_custom_step
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_set_up_unified_preserves_voltage_safety_events
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_setup_experiment_string_or_list
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_simulation_changing_capacity_crate_steps[legacy]
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_simulation_changing_capacity_crate_steps[unified]
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_simulation_logging_with_capacity_change[legacy]
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_simulation_logging_with_capacity_change[unified]
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_simulation_multiple_cycles_with_capacity_change[legacy]
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_simulation_multiple_cycles_with_capacity_change[unified]
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_skip_ok
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_skip_ok_with_multiple_infeasible_terminations_in_unified_model
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_skipped_step_continuous
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_solve_with_sensitivities_and_experiment[DFN]
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_solve_with_sensitivities_and_experiment[SPM]
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_solve_with_sensitivities_true_excludes_all_internal_inputs
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_solve_with_sensitivity_list_ignores_internal_experiment_input
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_starting_solution
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_unified_active_branch_independent_of_other_modes
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_unified_allows_drive_cycle_and_algebraic_implicit
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_unified_ambient_temperature_scalar_value
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_unified_aot_compile_bounded_in_unique_steps
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_unified_builds_exactly_one_model_and_solver
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_unified_cc_per_step_current_parses
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_unified_collapses_every_control_kind_by_value
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_unified_constant_current_steps_collapse_to_one_branch
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_unified_control_row_jacobian_is_sparse
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_unified_drive_cycle_matches_legacy
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_unified_model_mode_validation_and_blockers
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_unified_model_switching_size_independent_of_cycle_count
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_unified_records_switching_control_variable_not_voltage
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_unified_switch_matches_legacy_voltage
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_unified_switch_top_functions_flat_in_unique_steps
+- pass-to-pass: packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_unified_voltage_per_step_matches_legacy
+- pass-to-pass: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_addition
+- pass-to-pass: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_addition_numpy_array
+- pass-to-pass: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_advanced_binary_simplifications
+- pass-to-pass: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_binary_operator
+- pass-to-pass: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_binary_operator_domains
+- pass-to-pass: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_binary_simplifications
+- pass-to-pass: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_binary_simplifications_concatenations
+- pass-to-pass: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_diff
+- pass-to-pass: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_eq
+- pass-to-pass: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_equality
+- pass-to-pass: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_heaviside
+- pass-to-pass: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_hypot
+- pass-to-pass: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_inner
+- pass-to-pass: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_inner_simplifications
+- pass-to-pass: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_minimum_maximum
+- pass-to-pass: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_modulo
+- pass-to-pass: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_number_overloading
+- pass-to-pass: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_power
+- pass-to-pass: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_printing
+- pass-to-pass: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_sigmoid
+- pass-to-pass: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_smooth_minus_plus
+- pass-to-pass: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_softminus_softplus
+- pass-to-pass: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_source
+- pass-to-pass: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_source_error
+- pass-to-pass: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_sparse_divide
+- pass-to-pass: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_sparse_multiply
+- pass-to-pass: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_t_discon_error
+- pass-to-pass: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_to_equation
+- pass-to-pass: packages/pybamm/tests/unit/test_expression_tree/test_binary_operators.py::TestBinaryOperators::test_to_json
+- pass-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_additional_inputs_provided
+- pass-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_base_solver_init
+- pass-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_block_symbolic_inputs
+- pass-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_convert_to_casadi_format
+- pass-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_discontinuity_events_different_times_error
+- pass-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_discretise_model
+- pass-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_events_fail_on_initialisation_multiple_input_params[None]
+- pass-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_events_fail_on_initialisation_multiple_input_params[casadi]
+- pass-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_events_fail_on_initialisation_multiple_input_params[python]
+- pass-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_extrapolation_warnings
+- pass-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_fail_consistent_initialization
+- pass-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_find_consistent_initialization
+- pass-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_inputs_step
+- pass-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_integrate_single_error
+- pass-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_multiple_models_error
+- pass-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_multiprocess_context
+- pass-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_nonmonotonic_teval
+- pass-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_ode_solver_fail_with_dae
+- pass-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_on_extrapolation_and_on_failure_settings
+- pass-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_one_process_solves_input_sets_without_a_pool
+- pass-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_root_method_init
+- pass-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_root_method_takes_the_tightest_entry_of_a_per_state_atol
+- pass-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_sensitivities
+- pass-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_single_input_set_uses_the_first_initial_state
+- pass-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_solution_time_length_fail
+- pass-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_step_or_solve_empty_model
+- pass-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_step_restarts_sensitivities_from_output_variables
+- pass-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolver::test_t_eval_none
+- pass-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_next_to_t_eval_point[at]
+- pass-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_modulo_with_infinite_period[constant]
+- pass-to-pass: packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_starting_just_before_input_dependent_discontinuity
+- pass-to-pass: packages/pybamm/tests/integration/test_experiments.py::TestExperimentSensitivities::test_sensitivities_across_a_differentially_controlled_step
+
+## Rubric
+
+- G1 (deliverable.instruction, constraints, prohibition, weight 5, INVARIANT, compiled, guard, zeroes and is not averaged): At least one of the 157 pass-to-pass graded nodes of step S8, the existing solver, simulation, experiment, and expression-tree behaviour the instruction requires to stay unchanged, does not pass on the submitted /app/pybamm/packages/pybamm/src/pybamm.
+- P1 (deliverable.instruction, process, prohibition, weight 3, ABSENCE, compiled, guard, zeroes and is not averaged): The submitted /app/pybamm/packages/pybamm/src/pybamm tree carries a conftest.py, sitecustomize.py, usercustomize.py, or .pth file that could steer the graded test run.
+- F01 (deliverable.instruction, outcome, weight 1, EFFECT, compiled): The fail-to-pass graded node packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuities_with_python_format passes on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S1: solve() integrates across input-timed discontinuities from the right state for every input set).
+- M01 (deliverable.instruction, outcome, weight 1, EFFECT, compiled): The share of the fail-to-pass graded nodes test_input_dependent_discontinuities_within_one_float[1], test_input_dependent_discontinuities_within_one_float[2] that pass on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S1: solve() integrates across input-timed discontinuities from the right state for every input set); no known-wrong control or mutant-ladder rung separates these nodes, so they form one item (formerly F02, F03).
+- F04 (deliverable.instruction, outcome, weight 1, EFFECT, compiled): The fail-to-pass graded node packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_at_non_positive_time[negative] passes on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S1: solve() integrates across input-timed discontinuities from the right state for every input set).
+- F05 (deliverable.instruction, outcome, weight 1, EFFECT, compiled): The fail-to-pass graded node packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_at_non_positive_time[zero] passes on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S1: solve() integrates across input-timed discontinuities from the right state for every input set).
+- F06 (deliverable.instruction, outcome, weight 1, EFFECT, compiled): The fail-to-pass graded node packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_next_to_t_eval_point[above] passes on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S1: solve() integrates across input-timed discontinuities from the right state for every input set).
+- F07 (deliverable.instruction, outcome, weight 1, EFFECT, compiled): The fail-to-pass graded node packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_next_to_t_eval_point[below] passes on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S1: solve() integrates across input-timed discontinuities from the right state for every input set).
+- F08 (deliverable.instruction, outcome, weight 1, EFFECT, compiled): The fail-to-pass graded node packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_one_float_after_t_eval_start passes on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S1: solve() integrates across input-timed discontinuities from the right state for every input set).
+- F09 (deliverable.instruction, outcome, weight 1, EFFECT, compiled): The fail-to-pass graded node packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_rejects_t_interp_outside_t_eval[t_interp0-greater than the smallest] passes on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S1: solve() integrates across input-timed discontinuities from the right state for every input set).
+- F10 (deliverable.instruction, outcome, weight 1, EFFECT, compiled): The fail-to-pass graded node packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_rejects_t_interp_outside_t_eval[t_interp1-less than the greatest] passes on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S1: solve() integrates across input-timed discontinuities from the right state for every input set).
+- M02 (deliverable.instruction, outcome, weight 1, EFFECT, compiled): The share of the fail-to-pass graded nodes test_input_dependent_discontinuity_restarts_each_input_set[array-False-False], test_input_dependent_discontinuity_restarts_each_input_set[array-False-True], test_input_dependent_discontinuity_restarts_each_input_set[integer_list-False-False], test_input_dependent_discontinuity_restarts_each_input_set[integer_list-False-True] that pass on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S1: solve() integrates across input-timed discontinuities from the right state for every input set); no known-wrong control or mutant-ladder rung separates these nodes, so they form one item (formerly F11, F12, F15, F16).
+- M03 (deliverable.instruction, outcome, weight 1, EFFECT, compiled): The share of the fail-to-pass graded nodes test_input_dependent_discontinuity_restarts_each_input_set[array-True-False], test_input_dependent_discontinuity_restarts_each_input_set[array-True-True], test_input_dependent_discontinuity_restarts_each_input_set[integer_list-True-False], test_input_dependent_discontinuity_restarts_each_input_set[integer_list-True-True] that pass on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S1: solve() integrates across input-timed discontinuities from the right state for every input set); no known-wrong control or mutant-ladder rung separates these nodes, so they form one item (formerly F13, F14, F17, F18).
+- F19 (deliverable.instruction, outcome, weight 1, EFFECT, compiled): The fail-to-pass graded node packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_restarts_running_input_sets[0] passes on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S1: solve() integrates across input-timed discontinuities from the right state for every input set).
+- F20 (deliverable.instruction, outcome, weight 1, EFFECT, compiled): The fail-to-pass graded node packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_restarts_running_input_sets[1] passes on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S1: solve() integrates across input-timed discontinuities from the right state for every input set).
+- F21 (deliverable.instruction, outcome, weight 1, EFFECT, compiled): The fail-to-pass graded node packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_times_match_casadi[modulo] passes on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S1: solve() integrates across input-timed discontinuities from the right state for every input set).
+- F22 (deliverable.instruction, outcome, weight 1, EFFECT, compiled): The fail-to-pass graded node packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_times_match_casadi[switch] passes on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S1: solve() integrates across input-timed discontinuities from the right state for every input set).
+- F23 (deliverable.instruction, outcome, weight 1, EFFECT, compiled): The fail-to-pass graded node packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_with_t_interp[False] passes on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S1: solve() integrates across input-timed discontinuities from the right state for every input set).
+- F24 (deliverable.instruction, outcome, weight 1, EFFECT, compiled): The fail-to-pass graded node packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_with_t_interp[True] passes on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S1: solve() integrates across input-timed discontinuities from the right state for every input set).
+- F25 (deliverable.instruction, outcome, weight 1, EFFECT, compiled): The fail-to-pass graded node packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_within_one_float_of_t_eval_end passes on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S1: solve() integrates across input-timed discontinuities from the right state for every input set).
+- F26 (deliverable.instruction, coverage, weight 1, EFFECT, compiled): The fail-to-pass graded node packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_modulo_before_zero[constant] passes on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S2: modulo resets with input periods restart exactly where fmod resets).
+- F27 (deliverable.instruction, coverage, weight 1, EFFECT, compiled): The fail-to-pass graded node packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_modulo_before_zero[input] passes on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S2: modulo resets with input periods restart exactly where fmod resets).
+- M07 (deliverable.instruction, coverage, weight 1, EFFECT, compiled): The share of the fail-to-pass graded nodes test_modulo_restarts_where_fmod_resets[10], test_modulo_restarts_where_fmod_resets[5], test_modulo_restarts_where_fmod_resets[9] that pass on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S2: modulo resets with input periods restart exactly where fmod resets); no known-wrong control or mutant-ladder rung separates these nodes, so they form one item (formerly F28, F29, F30).
+- F31 (deliverable.instruction, coverage, weight 1, EFFECT, compiled): The fail-to-pass graded node packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_modulo_with_infinite_period[input] passes on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S2: modulo resets with input periods restart exactly where fmod resets).
+- F32 (deliverable.instruction, coverage, weight 1, EFFECT, compiled): The fail-to-pass graded node packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_modulo_with_input_period passes on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S2: modulo resets with input periods restart exactly where fmod resets).
+- F33 (deliverable.instruction, coverage, weight 1, EFFECT, compiled): The fail-to-pass graded node packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_modulo_with_time_dependent_period_raises passes on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S2: modulo resets with input periods restart exactly where fmod resets).
+- F34 (deliverable.instruction, coverage, weight 1, EFFECT, compiled): The fail-to-pass graded node packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_one_float_before_modulo_reset passes on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S2: modulo resets with input periods restart exactly where fmod resets).
+- F35 (deliverable.instruction, coverage, weight 1, EFFECT, compiled): The fail-to-pass graded node packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_stops_at_every_modulo_reset[constant] passes on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S2: modulo resets with input periods restart exactly where fmod resets).
+- F36 (deliverable.instruction, coverage, weight 1, EFFECT, compiled): The fail-to-pass graded node packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_stops_at_every_modulo_reset[input] passes on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S2: modulo resets with input periods restart exactly where fmod resets).
+- F37 (deliverable.instruction, coverage, weight 1, EFFECT, compiled): The fail-to-pass graded node packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_after_event_keeps_sensitivities_continuous_at_discontinuity passes on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S3: step() stops and restarts at discontinuities like solve()).
+- F38 (deliverable.instruction, coverage, weight 1, EFFECT, compiled): The fail-to-pass graded node packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_after_event_matches_unsplit_step passes on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S3: step() stops and restarts at discontinuities like solve()).
+- F39 (deliverable.instruction, coverage, weight 1, EFFECT, compiled): The fail-to-pass graded node packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_restarts_at_input_dependent_discontinuity passes on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S3: step() stops and restarts at discontinuities like solve()).
+- M04 (deliverable.instruction, outcome, weight 1, EFFECT, compiled): The share of the fail-to-pass graded nodes test_sensitivities_across_model_changes[electrolyte_scale-False], test_sensitivities_across_model_changes[particle_scale-False] that pass on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S4: sensitivities stay correct across experiment model changes); no known-wrong control or mutant-ladder rung separates these nodes, so they form one item (formerly F40, F42).
+- M05 (deliverable.instruction, outcome, weight 1, EFFECT, compiled): The share of the fail-to-pass graded nodes test_sensitivities_across_model_changes[electrolyte_scale-True], test_sensitivities_across_model_changes[particle_scale-True] that pass on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S4: sensitivities stay correct across experiment model changes); no known-wrong control or mutant-ladder rung separates these nodes, so they form one item (formerly F41, F43).
+- M06 (deliverable.instruction, outcome, weight 1, EFFECT, compiled): The share of the fail-to-pass graded nodes test_sensitivities_across_model_changes[reference-False], test_step_to_new_model_maps_sensitivities[constant-True] that pass on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S4: sensitivities stay correct across experiment model changes); no known-wrong control or mutant-ladder rung separates these nodes, so they form one item (formerly F44, F47).
+- F45 (deliverable.instruction, outcome, weight 1, EFFECT, compiled): The fail-to-pass graded node packages/pybamm/tests/integration/test_experiments.py::TestExperimentSensitivities::test_sensitivities_across_model_changes[reference-True] passes on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S4: sensitivities stay correct across experiment model changes).
+- F46 (deliverable.instruction, outcome, weight 1, EFFECT, compiled): The fail-to-pass graded node packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_to_new_model_maps_sensitivities[constant-False] passes on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S4: sensitivities stay correct across experiment model changes).
+- F48 (deliverable.instruction, outcome, weight 1, EFFECT, compiled): The fail-to-pass graded node packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_to_new_model_maps_sensitivities[input-False] passes on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S4: sensitivities stay correct across experiment model changes).
+- F49 (deliverable.instruction, outcome, weight 1, EFFECT, compiled): The fail-to-pass graded node packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_to_new_model_maps_sensitivities[input-True] passes on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S4: sensitivities stay correct across experiment model changes).
+- F50 (deliverable.instruction, outcome, weight 1, EFFECT, compiled): The fail-to-pass graded node packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_to_new_model_rejects_missing_sensitivities[fewer] passes on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S4: sensitivities stay correct across experiment model changes).
+- F51 (deliverable.instruction, outcome, weight 1, EFFECT, compiled): The fail-to-pass graded node packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_to_new_model_rejects_missing_sensitivities[none] passes on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S4: sensitivities stay correct across experiment model changes).
+- F52 (deliverable.instruction, constraints, weight 1, EFFECT, compiled): The fail-to-pass graded node packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_starting_solution_rejects_changed_sensitivities[fewer] passes on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S5: continued solves never silently reuse another input's sensitivities).
+- F53 (deliverable.instruction, constraints, weight 1, EFFECT, compiled): The fail-to-pass graded node packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_starting_solution_rejects_changed_sensitivities[more] passes on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S5: continued solves never silently reuse another input's sensitivities).
+- F54 (deliverable.instruction, constraints, weight 1, EFFECT, compiled): The fail-to-pass graded node packages/pybamm/tests/unit/test_experiments/test_simulation_with_experiment.py::TestSimulationExperiment::test_starting_solution_rejects_changed_sensitivities[none] passes on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S5: continued solves never silently reuse another input's sensitivities).
+- F55 (deliverable.instruction, constraints, weight 1, EFFECT, compiled): The fail-to-pass graded node packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_saved_step_rejects_changed_sensitivities[fewer] passes on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S5: continued solves never silently reuse another input's sensitivities).
+- F56 (deliverable.instruction, constraints, weight 1, EFFECT, compiled): The fail-to-pass graded node packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_saved_step_rejects_changed_sensitivities[none] passes on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S5: continued solves never silently reuse another input's sensitivities).
+- F57 (deliverable.instruction, constraints, weight 1, EFFECT, compiled): The fail-to-pass graded node packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_rejects_restart_without_requested_sensitivities[False] passes on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S5: continued solves never silently reuse another input's sensitivities).
+- F58 (deliverable.instruction, constraints, weight 1, EFFECT, compiled): The fail-to-pass graded node packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_rejects_restart_without_requested_sensitivities[True] passes on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S5: continued solves never silently reuse another input's sensitivities).
+- F59 (deliverable.instruction, constraints, weight 1, EFFECT, compiled): The fail-to-pass graded node packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_step_seeds_sensitivities_by_name passes on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S5: continued solves never silently reuse another input's sensitivities).
+- M08 (deliverable.instruction, constraints, weight 1, EFFECT, compiled): The share of the fail-to-pass graded nodes test_resolve_with_changed_sensitivities[legacy], test_resolve_with_changed_sensitivities[unified], test_step_after_changing_sensitivities that pass on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S6: experiments can be re-solved with different sensitivity settings); no known-wrong control or mutant-ladder rung separates these nodes, so they form one item (formerly F60, F61, F64).
+- F62 (deliverable.instruction, constraints, weight 1, EFFECT, compiled): The fail-to-pass graded node packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_second_model_error_keeps_sensitivity_setting[solve] passes on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S6: experiments can be re-solved with different sensitivity settings).
+- F63 (deliverable.instruction, constraints, weight 1, EFFECT, compiled): The fail-to-pass graded node packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_second_model_error_keeps_sensitivity_setting[step] passes on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S6: experiments can be re-solved with different sensitivity settings).
+- F65 (deliverable.instruction, robustness, weight 1, EFFECT, compiled): The fail-to-pass graded node packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_set_up_adds_discontinuity_events_once passes on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S7: repeated set-ups do not duplicate discontinuity events).
+- F66 (deliverable.instruction, outcome, weight 1, EFFECT, compiled): The fail-to-pass graded node packages/pybamm/tests/unit/test_solvers/test_base_solver.py::TestBaseSolverSensitivityRestarts::test_input_dependent_discontinuity_restarts_algebraic_sensitivities_without_calc_ic passes on the submitted /app/pybamm/packages/pybamm/src/pybamm (step S1: solve() integrates across input-timed discontinuities from the right state for every input set).
+- J1 (deliverable.instruction, craft, weight 1, EFFECT, judged): The change to packages/pybamm/src/pybamm is a minimal, coherent fix in the style of the surrounding solver, simulation, and expression-tree code: it is confined to the segment loop, the discontinuity handling, the sensitivity initialisation, and the Modulo discontinuities, reuses the module's existing helpers rather than re-implementing them, and adds no dead code, unrelated refactor, or duplicated logic.
+  - residue: Whether a change is coherent and in the style of the surrounding code cannot be reduced to a predicate: many differently structured diffs are acceptable, and no line count, AST metric, or token overlap with the reference separates an acceptable alternative from an incoherent one.
+- J2 (deliverable.instruction, robustness, weight 3, EFFECT, judged): The submitted change derives each restart from general solver semantics, for any number of input sets, any discontinuity times, any model, and any requested sensitivities, and does not special-case what the graded tests contain, such as particular models or parameter sets, input names like t_switch, a or b, a fixed number of input sets, or particular t_eval lengths.
+  - residue: Whether a branch is a legitimate case distinction or a shortcut fitted to the graded inputs is a judgment of intent and generality over an unbounded input space that sampled tests cannot decide.
+- J3 (deliverable.instruction, constraints, weight 1, EFFECT, judged): The new code keeps PyBaMM's established failure behaviour: when a restart, a sensitivity mapping, or a Modulo period cannot be handled, it raises the solver's own error, as the instruction requires for missing sensitivities and time-dependent periods, rather than catching the error, or testing for the condition, and then falling back to the initial conditions, dropping sensitivities, or continuing silently.
+  - residue: Whether a guard or fallback discards a case the solver can handle, or only handles input it can never receive, is a judgment of what the code can reach that no finite set of graded runs settles.
+- J4 (deliverable.instruction, craft, weight 1, EFFECT, judged): The docstrings and comments the change adds or edits describe accurately what the code does, including how segments restart per input set, how sensitivities are carried across a change of model, how Modulo discontinuities are expanded, and when a SolverError is raised.
+  - residue: Whether prose describes code truthfully is a semantic judgment: no deterministic check compares a docstring's claims with the behaviour of the code it documents.
+
+Judged items are graded in two stages (ADR 0212) by openai/gpt-6.1-sol over /logs/verifier/submission.diff, against /tests/reference.diff (sha256 bbceb85514d9bc7a9cf46b8486a2f44025980196354b646a58c36eb8f12ccda1). The verifier runs with no network, writes the compiled score as the reward, and writes judge-request.json; stage 2 judges it through KeyProxy, and stage 3 runs tests/combine.py, whose reward is the compiled score times (compiled weight + judged weight x judged score) / total weight, so a judged item only lowers it.

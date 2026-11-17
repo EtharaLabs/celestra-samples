@@ -1,0 +1,52 @@
+schema_version = "1.4"
+reward_type = "bounded_continuous"
+artifacts = [{ source = "/app/pybamm", destination = "workspace", exclude = [".git", "__pycache__"] }]
+
+[task]
+name = "ethara/04312261-7c49-5547-aa9c-d00648750582"
+version = "1.0.0"
+description = "Make PyBaMM's solvers restart each integration segment from the right state and sensitivities after input-timed discontinuities, periodic resets, and changes of model, and keep continued solves consistent when the requested sensitivities change."
+authors = [{ name = "kshitij.sharma", email = "kshitij.sharma@ethara.ai" }]
+keywords = ["pybamm", "battery-modelling", "ode-dae", "sensitivities", "domainfix", "python"]
+
+[metadata]
+null_floor = 0.0
+discrimination_weight = 1.0
+platforms = ["linux/amd64", "linux/arm64"]
+
+[verifier]
+timeout_sec = 1800
+network_mode = "no-network"
+environment_mode = "separate"
+
+[verifier.environment]
+network_mode = "no-network"
+build_timeout_sec = 3600
+cpus = 2
+memory_mb = 4096
+storage_mb = 10240
+gpus = 0
+
+[agent]
+timeout_sec = 3600
+network_mode = "no-network"
+user = "10001"
+
+[environment]
+network_mode = "no-network"
+build_timeout_sec = 3600
+cpus = 2
+memory_mb = 4096
+storage_mb = 10240
+gpus = 0
+
+[upstream_provenance]
+origin = "original"
+provenance_date = "2026-10-15"
+source_kind = "public_repository"
+
+[upstream_provenance.source]
+canonical_repo = "https://github.com/pybamm-team/PyBaMM"
+fork_ancestry_digest = "sha256:92f3299053ebcc2a18ca76d069640f6e6ec27251e47bfbade6b2b3a7fa81934c"
+base_commit = "fe6784fb08d386950d546f75c95849a7edeb5fa8"
+event_timestamp = "2026-10-15T11:45:28Z"

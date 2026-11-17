@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J3",
+ "trial": 10,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission does not preserve the required failure behaviour.\n\nSeveral new paths silently continue when the requested operation cannot be handled:\n\n- In `IDAKLUSolver._consistent_algebraic_sensitivities`, incompatible sensitivity shapes, a mismatch in Jacobian counts, a failed linear solve, or non-finite results all cause `return y0S`. This retains the supplied sensitivities instead of raising `pybamm.SolverError` when consistent restart sensitivities cannot be computed.\n- In `_set_sens_initial_conditions_from`, a `ModelError` from building the state mapper is caught and replaced with variable-name mapping. Missing mapper input values also trigger that fallback rather than a solver error.\n- Modulo periods are normalized with `abs`, so negative periods are accepted instead of rejected. Zero and NaN periods are treated as having no resets: `_t_discon` returns an empty list, and the constant-period setup path creates zero events. These cases continue silently rather than raising the solver\u2019s error. Infinite periods legitimately need no resets, but that does not justify treating zero or NaN the same way.\n- `_restart_after_discontinuity` skips sensitivity propagation if `y0S_list` is absent, even when sensitivities are requested, rather than reporting that the restart cannot be seeded.\n\nThe explicit errors for time-dependent periods and missing named state sensitivities are appropriate, but they do not compensate for these silent fallback paths.\n\nFAIL"
+}
