@@ -1,0 +1,8 @@
+{
+ "case": "alternate",
+ "id": "J-TRIM-LO",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The contextual decoder sets `firstGlyph = max(0, (substitutionTableOffset + 1) // 2 - offset)` and reads replacements starting at `stateTablePos + 2 * (offset + firstGlyph)`. This guarantees that every replacement word starts at or after the substitution table, regardless of whether the entry offset is negative or positive.\nYES"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "oracle",
+ "id": "J-MAL-LIGVAL",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new classic `mort` ligature reader explicitly checks `rawComponents` and raises `ValueError(\"invalid mort ligature component value\")` if any component is odd. Thus, although the change adds classic ligature-subtable support, it does not allow a component table containing an odd value to decompile successfully.\nNO"
+}

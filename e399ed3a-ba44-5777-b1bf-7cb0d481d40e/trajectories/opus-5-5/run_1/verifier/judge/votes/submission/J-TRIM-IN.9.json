@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-TRIM-IN",
+ "trial": 9,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The decoder converts entry offsets to signed 16-bit values and reads every glyph whose replacement word falls at or after the substitution-table start and entirely within the subtable\u2019s bytes. The subtable-specific reader bounds those bytes, and the computed glyph range handles both negative and positive offsets.\nYES"
+}

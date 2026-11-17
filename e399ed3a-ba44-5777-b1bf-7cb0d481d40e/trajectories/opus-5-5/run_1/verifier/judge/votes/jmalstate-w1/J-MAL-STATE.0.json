@@ -1,0 +1,8 @@
+{
+ "case": "jmalstate-w1",
+ "id": "J-MAL-STATE",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The change adds classic `mort` state-table dispatch and support for previously unsupported morph types. When the state array starts after the entry table, `stateDataLength` and `numStates` are negative, so the state-reading loop is skipped rather than raising; a rearrangement subtable can therefore return a table with no decoded states, satisfying the stated criterion even though it is not correctly decoded.\nYES"
+}

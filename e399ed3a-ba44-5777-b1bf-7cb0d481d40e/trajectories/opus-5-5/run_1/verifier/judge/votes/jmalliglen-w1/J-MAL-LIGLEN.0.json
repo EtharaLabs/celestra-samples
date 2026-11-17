@@ -1,0 +1,8 @@
+{
+ "case": "jmalliglen-w1",
+ "id": "J-MAL-LIGLEN",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The change registers classic `mort` ligature subtables and routes them to the new `StateHeader` reader. That reader reads `(ligatureOffset - componentOffset) // 2` component words without rejecting an odd byte length, so a trailing unmatched byte can be ignored and an otherwise suitable subtable can decompile successfully; previously, the ligature lookup type was unsupported.\nYES"
+}

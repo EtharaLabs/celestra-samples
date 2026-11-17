@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-TRIM-IN",
+ "trial": 12,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "`MortSubtableConverter` limits decoding to each subtable\u2019s bytes, and contextual entry offsets are converted to signed 16-bit values. `_readClassicSubstitutions` then reads every glyph whose replacement word starts at or after `substOffset` and fits within that bounded data, using bounds that work for both negative and positive offsets.\nYES"
+}

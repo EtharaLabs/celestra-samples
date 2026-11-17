@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MORX-ENC",
+ "trial": 18,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The new `_AATValue.__eq__` changes `LigAction` comparison from identity to structural equality. Consequently, the existing ligature-action sequence reuse during extended `morx` compilation can merge separately instantiated but equal actions that previously remained distinct, changing the action data and indices written for the same objects.\nYES"
+}

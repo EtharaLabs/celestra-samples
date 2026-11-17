@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MORX-DEC",
+ "trial": 15,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new state-table decoding path is used only when `reader.tableTag == \"mort\"`; morx retains the original decoding logic and converter mapping. The shared AAT classes gain equality methods, but these do not change the objects or attributes decoded from morx bytes.\nNO"
+}

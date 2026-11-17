@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MAL-LIGORD",
+ "trial": 10,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new classic ligature decoding path calls `_readClassicLigComponents`, which explicitly raises `ValueError` whenever `componentOffset > ligatureOffset`. Thus, the specified ordering still raises an exception rather than returning a table.\nNO"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MAL-LIGVAL",
+ "trial": 4,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new classic mort ligature reader calls `_readClassicLigComponents`, which explicitly raises `ValueError` if any component value is odd. Thus the added decoding support still rejects the tables described in the criterion.\nNO"
+}

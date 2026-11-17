@@ -1,0 +1,8 @@
+{
+ "case": "jmalligord-w3",
+ "id": "J-MAL-LIGORD",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The change registers mort ligature type 2 and routes it through the new classic-state-table reader. When the component offset exceeds the ligature offset, that reader clamps it to the ligature offset; a table whose transitions have no ligature actions can therefore finish decompiling with empty component and ligature lists, rather than failing on the previously unsupported lookup type. Thus at least some tables with the specified offset ordering now return successfully, even though action-bearing examples may still fail.\nYES"
+}

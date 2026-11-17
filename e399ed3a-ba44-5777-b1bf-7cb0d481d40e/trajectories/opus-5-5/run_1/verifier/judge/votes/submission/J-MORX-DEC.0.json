@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MORX-DEC",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new binary decoding logic is restricted to readers whose table tag is `\"mort\"`; the `\"morx\"` decoding path and its subtable converter remain unchanged. The shared AAT classes gain value-based equality, but this does not change the objects\u2019 decoded types or field values for the same morx bytes.\nNO"
+}

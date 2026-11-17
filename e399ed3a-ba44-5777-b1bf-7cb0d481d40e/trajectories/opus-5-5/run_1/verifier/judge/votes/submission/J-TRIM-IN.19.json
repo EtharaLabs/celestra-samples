@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-TRIM-IN",
+ "trial": 19,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The change decodes entry offsets as signed 16-bit values and reads replacements for all glyphs whose words fall between the substitution-table start and the end of the subtable. The new bounded subtable reader prevents reads into subsequent subtables, and the range calculation handles both negative and positive offsets.\nYES"
+}

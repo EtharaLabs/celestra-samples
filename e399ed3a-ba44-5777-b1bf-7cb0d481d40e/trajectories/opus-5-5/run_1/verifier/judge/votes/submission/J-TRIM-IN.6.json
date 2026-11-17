@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-TRIM-IN",
+ "trial": 6,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The change decodes entry offsets as signed 16-bit values and reads replacements at `2 * (offset + glyphID)`. Its bounds include every glyph whose complete replacement word lies at or after the substitution-table start and within the subtable, and `MortSubtableConverter` limits decoding to that subtable\u2019s bytes.\nYES"
+}

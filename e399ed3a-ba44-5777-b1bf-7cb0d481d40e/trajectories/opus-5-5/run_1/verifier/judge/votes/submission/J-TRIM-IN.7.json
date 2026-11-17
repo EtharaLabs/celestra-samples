@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-TRIM-IN",
+ "trial": 7,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The decoder sign-extends entry offsets with `_int16` and reads replacements at `2 * (offset + glyphID)`. Its lower and upper glyph bounds include every complete word from `substOffset` through the end of the state-table data, and `MortSubtableConverter` limits that data to the current subtable, so the bounds work for both negative and positive offsets.\nYES"
+}

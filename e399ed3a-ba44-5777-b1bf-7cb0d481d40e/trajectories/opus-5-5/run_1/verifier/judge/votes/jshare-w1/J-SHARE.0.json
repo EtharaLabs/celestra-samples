@@ -1,0 +1,8 @@
+{
+ "case": "jshare-w1",
+ "id": "J-SHARE",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The diff adds separate `MortRearrangementMorphAction`, `MortContextualMorphAction`, `MortLigatureMorphAction`, and `MortInsertionMorphAction` classes in `otTables.py`, each with its own implementation rather than reusing the corresponding morx action class. `otConverters.py` maps the existing action types to these mort-specific copies for classic state-table reading, so the criterion is met even though the state-table XML code is reused.\n\nYES"
+}

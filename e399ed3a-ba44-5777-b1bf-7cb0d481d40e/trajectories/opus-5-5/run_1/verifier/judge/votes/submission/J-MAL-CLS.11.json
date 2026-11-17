@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MAL-CLS",
+ "trial": 11,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new `read` path routes classic `mort` state tables to `_readClassic`, which explicitly raises `ValueError` when `numClasses == 0`. Thus the change does not allow a zero-class classic state table to decompile successfully.\nNO"
+}

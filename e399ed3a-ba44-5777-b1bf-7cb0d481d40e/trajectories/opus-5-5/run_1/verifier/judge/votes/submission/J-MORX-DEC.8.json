@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MORX-DEC",
+ "trial": 8,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The binary-reading changes apply only to `mort`: the new state-table reader is gated on `reader.tableTag == \"mort\"`, and the converter mapping changes only `MortSubtable`. The shared object classes gain equality methods, but their decoded types and attributes do not change; the `morx` decoding path remains unchanged.\nNO"
+}

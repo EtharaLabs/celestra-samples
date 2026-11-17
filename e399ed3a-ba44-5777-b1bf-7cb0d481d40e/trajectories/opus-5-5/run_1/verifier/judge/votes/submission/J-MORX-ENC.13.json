@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MORX-ENC",
+ "trial": 13,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new compilation branch runs only when `writer.tableTag == \"mort\"`; the existing extended `morx` write path is unchanged. The XML parsing and object-equality changes do not change how that path serializes the same objects, and the other new converters and mappings are specific to `mort`.\nNO"
+}

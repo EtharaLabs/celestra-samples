@@ -1,0 +1,552 @@
+[
+ {
+  "id": "J-SHARE",
+  "case": "oracle",
+  "reference": "NO",
+  "labels": [
+   "NO"
+  ],
+  "majority": "NO",
+  "agrees": true
+ },
+ {
+  "id": "J-SHARE",
+  "case": "alternate",
+  "reference": "NO",
+  "labels": [
+   "NO"
+  ],
+  "majority": "NO",
+  "agrees": true
+ },
+ {
+  "id": "J-SHARE",
+  "case": "jshare-w1",
+  "reference": "YES",
+  "labels": [
+   "YES"
+  ],
+  "majority": "YES",
+  "agrees": true
+ },
+ {
+  "id": "J-SHARE",
+  "case": "jshare-w2",
+  "reference": "YES",
+  "labels": [
+   "YES"
+  ],
+  "majority": "YES",
+  "agrees": true
+ },
+ {
+  "id": "J-SHARE",
+  "case": "jshare-w3",
+  "reference": "YES",
+  "labels": [
+   "YES"
+  ],
+  "majority": "YES",
+  "agrees": true
+ },
+ {
+  "id": "J-TRIM-LO",
+  "case": "oracle",
+  "reference": "YES",
+  "labels": [
+   "YES"
+  ],
+  "majority": "YES",
+  "agrees": true
+ },
+ {
+  "id": "J-TRIM-LO",
+  "case": "alternate",
+  "reference": "YES",
+  "labels": [
+   "YES"
+  ],
+  "majority": "YES",
+  "agrees": true
+ },
+ {
+  "id": "J-TRIM-LO",
+  "case": "jtrimlo-w1",
+  "reference": "NO",
+  "labels": [
+   "NO"
+  ],
+  "majority": "NO",
+  "agrees": true
+ },
+ {
+  "id": "J-TRIM-LO",
+  "case": "jtrimlo-w2",
+  "reference": "NO",
+  "labels": [
+   "NO"
+  ],
+  "majority": "NO",
+  "agrees": true
+ },
+ {
+  "id": "J-TRIM-LO",
+  "case": "jtrimlo-w3",
+  "reference": "NO",
+  "labels": [
+   "NO"
+  ],
+  "majority": "NO",
+  "agrees": true
+ },
+ {
+  "id": "J-TRIM-HI",
+  "case": "oracle",
+  "reference": "YES",
+  "labels": [
+   "YES"
+  ],
+  "majority": "YES",
+  "agrees": true
+ },
+ {
+  "id": "J-TRIM-HI",
+  "case": "alternate",
+  "reference": "YES",
+  "labels": [
+   "YES"
+  ],
+  "majority": "YES",
+  "agrees": true
+ },
+ {
+  "id": "J-TRIM-HI",
+  "case": "jtrimhi-w1",
+  "reference": "NO",
+  "labels": [
+   "YES"
+  ],
+  "majority": "YES",
+  "agrees": false
+ },
+ {
+  "id": "J-TRIM-HI",
+  "case": "jtrimhi-w2",
+  "reference": "NO",
+  "labels": [
+   "NO"
+  ],
+  "majority": "NO",
+  "agrees": true
+ },
+ {
+  "id": "J-TRIM-HI",
+  "case": "jtrimhi-w3",
+  "reference": "NO",
+  "labels": [
+   "YES"
+  ],
+  "majority": "YES",
+  "agrees": false
+ },
+ {
+  "id": "J-TRIM-IN",
+  "case": "oracle",
+  "reference": "YES",
+  "labels": [
+   "YES"
+  ],
+  "majority": "YES",
+  "agrees": true
+ },
+ {
+  "id": "J-TRIM-IN",
+  "case": "alternate",
+  "reference": "YES",
+  "labels": [
+   "NO"
+  ],
+  "majority": "NO",
+  "agrees": false
+ },
+ {
+  "id": "J-TRIM-IN",
+  "case": "jtrimin-w1",
+  "reference": "NO",
+  "labels": [
+   "NO"
+  ],
+  "majority": "NO",
+  "agrees": true
+ },
+ {
+  "id": "J-TRIM-IN",
+  "case": "jtrimin-w2",
+  "reference": "NO",
+  "labels": [
+   "NO"
+  ],
+  "majority": "NO",
+  "agrees": true
+ },
+ {
+  "id": "J-TRIM-IN",
+  "case": "jtrimin-w3",
+  "reference": "NO",
+  "labels": [
+   "NO"
+  ],
+  "majority": "NO",
+  "agrees": true
+ },
+ {
+  "id": "J-MORX-DEC",
+  "case": "oracle",
+  "reference": "NO",
+  "labels": [
+   "NO"
+  ],
+  "majority": "NO",
+  "agrees": true
+ },
+ {
+  "id": "J-MORX-DEC",
+  "case": "alternate",
+  "reference": "NO",
+  "labels": [
+   "NO"
+  ],
+  "majority": "NO",
+  "agrees": true
+ },
+ {
+  "id": "J-MORX-DEC",
+  "case": "jmorxdec-w1",
+  "reference": "YES",
+  "labels": [
+   "YES"
+  ],
+  "majority": "YES",
+  "agrees": true
+ },
+ {
+  "id": "J-MORX-DEC",
+  "case": "jmorxdec-w2",
+  "reference": "YES",
+  "labels": [
+   "YES"
+  ],
+  "majority": "YES",
+  "agrees": true
+ },
+ {
+  "id": "J-MORX-DEC",
+  "case": "jmorxdec-w3",
+  "reference": "YES",
+  "labels": [
+   "YES"
+  ],
+  "majority": "YES",
+  "agrees": true
+ },
+ {
+  "id": "J-MORX-ENC",
+  "case": "oracle",
+  "reference": "NO",
+  "labels": [
+   "NO"
+  ],
+  "majority": "NO",
+  "agrees": true
+ },
+ {
+  "id": "J-MORX-ENC",
+  "case": "alternate",
+  "reference": "NO",
+  "labels": [
+   "NO"
+  ],
+  "majority": "NO",
+  "agrees": true
+ },
+ {
+  "id": "J-MORX-ENC",
+  "case": "jmorxenc-w1",
+  "reference": "YES",
+  "labels": [
+   "YES"
+  ],
+  "majority": "YES",
+  "agrees": true
+ },
+ {
+  "id": "J-MORX-ENC",
+  "case": "jmorxenc-w2",
+  "reference": "YES",
+  "labels": [
+   "YES"
+  ],
+  "majority": "YES",
+  "agrees": true
+ },
+ {
+  "id": "J-MORX-ENC",
+  "case": "jmorxenc-w3",
+  "reference": "YES",
+  "labels": [
+   "YES"
+  ],
+  "majority": "YES",
+  "agrees": true
+ },
+ {
+  "id": "J-MAL-CLS",
+  "case": "oracle",
+  "reference": "NO",
+  "labels": [
+   "NO"
+  ],
+  "majority": "NO",
+  "agrees": true
+ },
+ {
+  "id": "J-MAL-CLS",
+  "case": "alternate",
+  "reference": "NO",
+  "labels": [
+   "NO"
+  ],
+  "majority": "NO",
+  "agrees": true
+ },
+ {
+  "id": "J-MAL-CLS",
+  "case": "jmalcls-w1",
+  "reference": "YES",
+  "labels": [
+   "YES"
+  ],
+  "majority": "YES",
+  "agrees": true
+ },
+ {
+  "id": "J-MAL-CLS",
+  "case": "jmalcls-w2",
+  "reference": "YES",
+  "labels": [
+   "YES"
+  ],
+  "majority": "YES",
+  "agrees": true
+ },
+ {
+  "id": "J-MAL-CLS",
+  "case": "jmalcls-w3",
+  "reference": "YES",
+  "labels": [
+   "YES"
+  ],
+  "majority": "YES",
+  "agrees": true
+ },
+ {
+  "id": "J-MAL-STATE",
+  "case": "oracle",
+  "reference": "NO",
+  "labels": [
+   "NO"
+  ],
+  "majority": "NO",
+  "agrees": true
+ },
+ {
+  "id": "J-MAL-STATE",
+  "case": "alternate",
+  "reference": "NO",
+  "labels": [
+   "NO"
+  ],
+  "majority": "NO",
+  "agrees": true
+ },
+ {
+  "id": "J-MAL-STATE",
+  "case": "jmalstate-w1",
+  "reference": "YES",
+  "labels": [
+   "YES"
+  ],
+  "majority": "YES",
+  "agrees": true
+ },
+ {
+  "id": "J-MAL-STATE",
+  "case": "jmalstate-w2",
+  "reference": "YES",
+  "labels": [
+   "YES"
+  ],
+  "majority": "YES",
+  "agrees": true
+ },
+ {
+  "id": "J-MAL-STATE",
+  "case": "jmalstate-w3",
+  "reference": "YES",
+  "labels": [
+   "YES"
+  ],
+  "majority": "YES",
+  "agrees": true
+ },
+ {
+  "id": "J-MAL-LIGORD",
+  "case": "oracle",
+  "reference": "NO",
+  "labels": [
+   "NO"
+  ],
+  "majority": "NO",
+  "agrees": true
+ },
+ {
+  "id": "J-MAL-LIGORD",
+  "case": "alternate",
+  "reference": "NO",
+  "labels": [
+   "NO"
+  ],
+  "majority": "NO",
+  "agrees": true
+ },
+ {
+  "id": "J-MAL-LIGORD",
+  "case": "jmalligord-w1",
+  "reference": "YES",
+  "labels": [
+   "NO"
+  ],
+  "majority": "NO",
+  "agrees": false
+ },
+ {
+  "id": "J-MAL-LIGORD",
+  "case": "jmalligord-w2",
+  "reference": "YES",
+  "labels": [
+   "YES"
+  ],
+  "majority": "YES",
+  "agrees": true
+ },
+ {
+  "id": "J-MAL-LIGORD",
+  "case": "jmalligord-w3",
+  "reference": "YES",
+  "labels": [
+   "YES"
+  ],
+  "majority": "YES",
+  "agrees": true
+ },
+ {
+  "id": "J-MAL-LIGLEN",
+  "case": "oracle",
+  "reference": "NO",
+  "labels": [
+   "NO"
+  ],
+  "majority": "NO",
+  "agrees": true
+ },
+ {
+  "id": "J-MAL-LIGLEN",
+  "case": "alternate",
+  "reference": "NO",
+  "labels": [
+   "NO"
+  ],
+  "majority": "NO",
+  "agrees": true
+ },
+ {
+  "id": "J-MAL-LIGLEN",
+  "case": "jmalliglen-w1",
+  "reference": "YES",
+  "labels": [
+   "YES"
+  ],
+  "majority": "YES",
+  "agrees": true
+ },
+ {
+  "id": "J-MAL-LIGLEN",
+  "case": "jmalliglen-w2",
+  "reference": "YES",
+  "labels": [
+   "YES"
+  ],
+  "majority": "YES",
+  "agrees": true
+ },
+ {
+  "id": "J-MAL-LIGLEN",
+  "case": "jmalliglen-w3",
+  "reference": "YES",
+  "labels": [
+   "YES"
+  ],
+  "majority": "YES",
+  "agrees": true
+ },
+ {
+  "id": "J-MAL-LIGVAL",
+  "case": "oracle",
+  "reference": "NO",
+  "labels": [
+   "NO"
+  ],
+  "majority": "NO",
+  "agrees": true
+ },
+ {
+  "id": "J-MAL-LIGVAL",
+  "case": "alternate",
+  "reference": "NO",
+  "labels": [
+   "NO"
+  ],
+  "majority": "NO",
+  "agrees": true
+ },
+ {
+  "id": "J-MAL-LIGVAL",
+  "case": "jmalligval-w1",
+  "reference": "YES",
+  "labels": [
+   "YES"
+  ],
+  "majority": "YES",
+  "agrees": true
+ },
+ {
+  "id": "J-MAL-LIGVAL",
+  "case": "jmalligval-w2",
+  "reference": "YES",
+  "labels": [
+   "YES"
+  ],
+  "majority": "YES",
+  "agrees": true
+ },
+ {
+  "id": "J-MAL-LIGVAL",
+  "case": "jmalligval-w3",
+  "reference": "YES",
+  "labels": [
+   "YES"
+  ],
+  "majority": "YES",
+  "agrees": true
+ }
+]

@@ -1,0 +1,8 @@
+{
+ "case": "jmorxdec-w3",
+ "id": "J-MORX-DEC",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The diff routes morx state-table decoding through `MorphStateTable.read`, which calls the existing extended decoder and then overwrites `GlyphClassCount` with `max(table.GlyphClasses.values(), default=3) + 1`. For an extended morx table whose encoded class count exceeds that derived from its glyph assignments, the decoded object therefore has a different `GlyphClassCount` than in the base commit.\nYES"
+}

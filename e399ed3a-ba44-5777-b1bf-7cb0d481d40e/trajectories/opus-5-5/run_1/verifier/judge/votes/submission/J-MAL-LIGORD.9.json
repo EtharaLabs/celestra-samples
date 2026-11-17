@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MAL-LIGORD",
+ "trial": 9,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The classic ligature decoding path always calls `_readClassicLigComponents`, which explicitly raises `ValueError` when `componentOffset > ligatureOffset`. Thus, although the change adds classic `mort` state-table support, it still rejects the table layout specified in the criterion.\nNO"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "alternate",
+ "id": "J-MAL-LIGORD",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The change routes classic `mort` ligature subtables to `ClassicStateHeader.read`, which explicitly raises `ValueError(\"invalid mort ligature component table\")` whenever `componentOffset > ligatureOffset`. Thus any subtable whose component table starts after its ligature table is still rejected.\nNO"
+}

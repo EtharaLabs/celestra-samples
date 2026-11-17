@@ -1,0 +1,8 @@
+{
+ "case": "oracle",
+ "id": "J-TRIM-IN",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The decoder reads entry offsets as signed values and computes each glyph window from the substitution-table start and the bounded subtable end. Those bounds apply equally to negative and positive offsets, so all in-bounds substitution words are read, with zero values treated as no substitution.\nYES"
+}

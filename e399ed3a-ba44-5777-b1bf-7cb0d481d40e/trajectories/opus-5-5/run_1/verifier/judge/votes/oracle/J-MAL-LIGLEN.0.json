@@ -1,0 +1,8 @@
+{
+ "case": "oracle",
+ "id": "J-MAL-LIGLEN",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new classic ligature reader explicitly raises `ValueError(\"invalid mort ligature component table\")` when `(ligatureOffset - componentOffset) % 2` is nonzero. Thus, although the change adds classic `mort` ligature support, it rejects component tables with an odd byte length rather than returning a table.\nNO"
+}

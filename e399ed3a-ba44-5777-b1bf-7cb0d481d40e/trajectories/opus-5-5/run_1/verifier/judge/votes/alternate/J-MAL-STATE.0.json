@@ -1,0 +1,8 @@
+{
+ "case": "alternate",
+ "id": "J-MAL-STATE",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new `MorphStateTable` dispatcher sends mort state tables to `ClassicStateHeader.read`, which computes `stateDataLength = entryTableOffset - stateArrayOffset`. If the state array starts after the entry table, this is negative and explicitly raises `ValueError(\"mort state-array offset follows its entry table\")`, so decompilation cannot return the requested table.\nNO"
+}

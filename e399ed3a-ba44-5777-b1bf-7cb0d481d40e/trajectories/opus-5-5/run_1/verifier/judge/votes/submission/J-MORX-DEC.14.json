@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MORX-DEC",
+ "trial": 14,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new binary-decoding logic is restricted to readers whose table tag is `\"mort\"`, and the existing `\"morx\"` decoding path remains unchanged. The added equality methods affect comparisons of decoded objects, not what objects or field values are decoded from the bytes; the XML changes likewise do not affect binary decompilation.\nNO"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MAL-LIGLEN",
+ "trial": 4,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The classic ligature reader always calls `_readClassicLigComponents`, which explicitly raises `ValueError(\"'mort' component table has odd length\")` when `ligatureOffset - componentOffset` is odd. Thus the added decompilation path rejects precisely the component-table condition in the criterion.\nNO"
+}

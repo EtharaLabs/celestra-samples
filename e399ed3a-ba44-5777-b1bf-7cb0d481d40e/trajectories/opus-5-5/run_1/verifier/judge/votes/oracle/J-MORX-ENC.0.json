@@ -1,0 +1,8 @@
+{
+ "case": "oracle",
+ "id": "J-MORX-ENC",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "For morx tables, the new MorphStateTable converter delegates writing to the unchanged STXHeader.write, so the binary compilation path retains its existing encoding. The other changes to STXHeader concern XML handling, while the new legacy encoding applies only to mort; none makes compilation produce different bytes for the same morx objects.\nNO"
+}

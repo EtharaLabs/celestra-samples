@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-TRIM-LO",
+ "trial": 6,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The contextual decoder converts entry offsets to signed values and sets the first decoded glyph to `max(0, (substOffset + 1) // 2 - offset)`. Consequently, every replacement word it reads starts at `2 * (offset + glyph) >= substOffset`, for either negative or positive offsets; if no glyph qualifies, it returns an empty mapping.\nYES"
+}

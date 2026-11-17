@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-SHARE",
+ "trial": 16,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The change reuses AATStateTable, AATState, and the existing morph action classes, translating classic mort binary entries into the shared representation. It extends the existing STXHeader XML methods rather than adding separate copies for mort.\nNO"
+}

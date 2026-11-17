@@ -1,0 +1,8 @@
+{
+ "case": "jmalligord-w2",
+ "id": "J-MAL-LIGORD",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The new converter dispatches classic `mort` ligature subtables to `StateHeader`. Its offset check allows the component table to start exactly two bytes after the ligature table; the resulting negative-count array read yields an empty component array, so a table with no ligature actions can finish decompiling rather than raise.\nYES"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "oracle",
+ "id": "J-MORX-DEC",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "For `morx`, the new `MorphStateTable` dispatcher delegates binary reading to the existing `STXHeader.read`, so the decoding path remains unchanged. The other changes either implement legacy `mort` decoding or affect XML handling, not binary decompilation of extended `morx` tables.\nNO"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MORX-DEC",
+ "trial": 5,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new classic-state decoding path is selected only when `reader.tableTag == \"mort\"`; for `\"morx\"`, the existing decoding code remains unchanged. The other changes add mort support, XML handling, and equality methods, none of which changes the objects decoded from morx bytes.\nNO"
+}

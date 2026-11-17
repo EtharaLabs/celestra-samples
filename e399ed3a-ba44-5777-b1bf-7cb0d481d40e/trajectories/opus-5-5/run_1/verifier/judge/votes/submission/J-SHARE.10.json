@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-SHARE",
+ "trial": 10,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The change adds classic mort binary conversion paths, but these instantiate the existing AATStateTable and AATState and reuse the shared morph action classes for compilation and decompilation. It extends the existing state-table XML methods rather than adding separate copies for mort.\nNO"
+}

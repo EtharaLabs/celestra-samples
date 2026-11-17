@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MORX-ENC",
+ "trial": 19,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new binary-writing logic is gated on `writer.tableTag == \"mort\"`, so extended `morx` tables retain the existing compilation path. The other changes add classic-table decoding, XML handling, and object equality; the diff does not show a change that makes compilation of the same `morx` objects produce different bytes.\nNO"
+}

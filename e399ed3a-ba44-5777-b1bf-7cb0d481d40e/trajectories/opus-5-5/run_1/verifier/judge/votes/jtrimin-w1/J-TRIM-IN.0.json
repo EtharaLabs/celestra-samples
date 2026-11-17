@@ -1,0 +1,8 @@
+{
+ "case": "jtrimin-w1",
+ "id": "J-TRIM-IN",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "In `_readContextualLookups`, replacements are read only when `offset >= 0 and firstGlyph <= lastGlyph`. Thus negative entry offsets always produce empty lookups, even when some glyphs\u2019 replacement words lie within both the substitution table and the subtable, violating the criterion.\nNO"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MAL-CLS",
+ "trial": 19,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new `read` path for `\"mort\"` calls `_readClassic`, which explicitly raises `ValueError(\"'mort' state table has no glyph classes\")` when `numClasses == 0`. Thus the change does not allow a classic state table with zero glyph classes to decompile successfully.\nNO"
+}

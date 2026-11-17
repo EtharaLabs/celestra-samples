@@ -1,0 +1,8 @@
+{
+ "case": "jmorxdec-w2",
+ "id": "J-MORX-DEC",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The morph state-table fields now use `MorphStateTable`, which delegates extended `morx` decoding to `STXHeader` but then removes all `GlyphClasses` entries whose class is 1. Thus, for a `morx` table with an explicitly encoded class-1 glyph, the same bytes produce a different decoded object than before.\nYES"
+}

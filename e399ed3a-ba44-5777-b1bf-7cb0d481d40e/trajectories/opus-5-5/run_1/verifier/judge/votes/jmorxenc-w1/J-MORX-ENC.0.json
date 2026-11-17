@@ -1,0 +1,8 @@
+{
+ "case": "jmorxenc-w1",
+ "id": "J-MORX-ENC",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The morx state-table fields now use `MorphStateTable`, whose `write` method increments `value.GlyphClassCount` before delegating to the existing `STXHeader` writer. For objects with transitions covering that additional class, compilation succeeds but writes a different glyph-class count and state-array layout than the base commit.\nYES"
+}

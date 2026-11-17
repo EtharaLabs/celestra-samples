@@ -1,0 +1,8 @@
+{
+ "case": "alternate",
+ "id": "J-MAL-CLS",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The change routes classic `mort` state tables to `ClassicStateHeader.read`, which explicitly raises `ValueError(\"mort state table has no glyph classes\")` when `GlyphClassCount == 0`. Thus it does not allow decompilation to return a table for that case.\nNO"
+}

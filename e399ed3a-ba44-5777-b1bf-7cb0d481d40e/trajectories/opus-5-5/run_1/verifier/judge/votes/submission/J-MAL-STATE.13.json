@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MAL-STATE",
+ "trial": 13,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "For `mort`, the converter\u2019s `read` method calls `_readClassic`, which explicitly raises `ValueError` when `stateOffset > entryOffset`. Thus a classic state table whose state array starts after its entry table is rejected, not returned.\nNO"
+}

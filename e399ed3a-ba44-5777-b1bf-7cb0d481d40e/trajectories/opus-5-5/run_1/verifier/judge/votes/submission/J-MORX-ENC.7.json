@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MORX-ENC",
+ "trial": 7,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new binary-writing path is guarded by `writer.tableTag == \"mort\"`; extended `morx` tables retain the original write path. The other changes add classic-table support, XML handling, and value equality, without changing how the same extended `morx` objects are serialized.\nNO"
+}

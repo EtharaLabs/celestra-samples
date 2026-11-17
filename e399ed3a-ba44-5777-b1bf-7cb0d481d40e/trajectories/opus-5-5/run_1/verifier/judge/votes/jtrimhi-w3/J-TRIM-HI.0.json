@@ -1,0 +1,8 @@
+{
+ "case": "jtrimhi-w3",
+ "id": "J-TRIM-HI",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "`MortSubtableConverter` gives the decoder a reader containing only the subtable body. For classic contextual substitutions, `lastGlyph` limits the replacement word\u2019s start to at most `len(reader.data) - 2`, so the complete two-byte word ends at or before the subtable\u2019s end.\nYES"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MORX-ENC",
+ "trial": 2,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The new `_AATValue.__eq__` changes equality for `LigAction` objects from identity to attribute equality. Consequently, shared ligature-action compilation can deduplicate separately instantiated but equal action sequences that base_commit treated as distinct, changing action data and indices for some extended `morx` tables even though the new classic-table branch is not taken.\nYES"
+}

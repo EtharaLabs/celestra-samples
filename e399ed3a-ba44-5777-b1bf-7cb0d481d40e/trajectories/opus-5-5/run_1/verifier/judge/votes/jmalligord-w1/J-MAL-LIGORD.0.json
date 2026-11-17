@@ -1,0 +1,8 @@
+{
+ "case": "jmalligord-w1",
+ "id": "J-MAL-LIGORD",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new classic ligature reader computes the component count as `(ligatureOffset - componentOffset) // 2`. When the component table starts after the ligature table, this is negative (or the preceding parity check raises), so reading the component array fails rather than returning a table. The added dispatch support does not resolve that ordering case.\nNO"
+}

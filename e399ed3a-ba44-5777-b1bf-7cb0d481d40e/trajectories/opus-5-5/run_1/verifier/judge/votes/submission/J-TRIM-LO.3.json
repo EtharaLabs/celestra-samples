@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-TRIM-LO",
+ "trial": 3,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The contextual decoder converts entry offsets to signed 16-bit values and bounds the first glyph by `max(0, (substOffset + 1) // 2 - offset)`. Consequently, every replacement word it reads starts at `2 * (offset + glyphID) >= substOffset`, for both negative and positive offsets; if no glyph meets the bounds, it reads none.\nYES"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "alternate",
+ "id": "J-MORX-ENC",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "For `morx`, the new `MorphStateTable` converter delegates writing to `STXHeader`, the same converter used before the change. The added classic encoding applies only to `mort`, and the XML-reading changes do not change compilation bytes for the same objects.\n\nNO"
+}

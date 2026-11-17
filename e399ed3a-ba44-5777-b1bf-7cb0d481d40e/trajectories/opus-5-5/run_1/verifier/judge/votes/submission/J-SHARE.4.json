@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-SHARE",
+ "trial": 4,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The change adds classic mort binary-format conversion paths, but reuses the existing AATStateTable, AATState, and morph action classes. It also extends the shared STXHeader XML methods rather than adding separate mort-specific copies of them.\nNO"
+}

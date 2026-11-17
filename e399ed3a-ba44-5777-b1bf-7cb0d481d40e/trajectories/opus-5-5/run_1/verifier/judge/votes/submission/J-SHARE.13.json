@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-SHARE",
+ "trial": 13,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The change adds classic mort binary-reading and compilation paths, but they use the existing AATStateTable, AATState, and morph action classes shared with morx. It extends the existing state-table XML methods rather than adding separate copies for mort.\nNO"
+}

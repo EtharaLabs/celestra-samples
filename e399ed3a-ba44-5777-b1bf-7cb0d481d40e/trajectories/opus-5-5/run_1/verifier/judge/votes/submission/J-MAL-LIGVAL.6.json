@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MAL-LIGVAL",
+ "trial": 6,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new classic mort ligature-reading path always calls `_readClassicLigComponents`, which explicitly raises `ValueError(\"'mort' component table has odd values\")` if any component value is odd. Thus the change does not allow the specified subtable to decompile successfully.\nNO"
+}

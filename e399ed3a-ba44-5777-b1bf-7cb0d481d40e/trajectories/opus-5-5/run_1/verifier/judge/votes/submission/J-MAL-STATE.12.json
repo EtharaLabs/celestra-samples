@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MAL-STATE",
+ "trial": 12,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new classic mort reader explicitly raises `ValueError` when `stateOffset > entryOffset`, which is exactly the layout in the criterion. The new mort dispatch routes state-table decoding through that reader, so the change does not enable such a table to decompile successfully.\nNO"
+}

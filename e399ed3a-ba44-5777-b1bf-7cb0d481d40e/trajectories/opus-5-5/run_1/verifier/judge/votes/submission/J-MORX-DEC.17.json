@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MORX-DEC",
+ "trial": 17,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new decoding path is gated on `reader.tableTag == \"mort\"`, and the converter mapping change applies only to `MortSubtable`; extended `morx` decoding retains its original path. The shared object classes gain equality methods, but their decoded attributes and construction are unchanged, so this does not make the same `morx` bytes decode into different objects.\nNO"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "jshare-w2",
+ "id": "J-SHARE",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The change adds `MortStateTable` and `MortState` in otConverters.py as separate classic-mort copies of the state-table and state data structures, and `StateHeader.read` instantiates them. Although the action classes and state-table XML methods are reused, the separate state classes satisfy the criterion.\nYES"
+}

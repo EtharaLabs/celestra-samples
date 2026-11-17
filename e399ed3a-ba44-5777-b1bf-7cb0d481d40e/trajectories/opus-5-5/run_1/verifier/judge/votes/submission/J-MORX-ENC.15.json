@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MORX-ENC",
+ "trial": 15,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new binary compilation branch is taken only when `writer.tableTag == \"mort\"`; the existing `morx` write path is unchanged. The other changes add classic-table decoding, XML handling, and value equality, but do not change the bytes produced when compiling the same extended `morx` objects.\nNO"
+}
