@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J2",
- "trial": 13,
- "model": "gpt-6.1-sol",
- "label": "FAIL",
- "response": "The submission uses largely general mechanisms: it tracks active input sets dynamically, restarts each from its own final state, selects sensitivities by name, and applies the chain rule when mapping states between models. It does not appear to special-case test model names, parameter names, input counts, or `t_eval` lengths.\n\nHowever, its restart scheduling is not general for arbitrary discontinuity times:\n\n- For constant-period modulo expressions on solvers without `t_eval` discontinuity support, `_set_up_events` still generates only **200 events when `t_eval` is absent**. This occurs during step setup, so a step crossing more than 200 resets will miss subsequent restarts.\n- When `t_eval` is supplied, those constant-period events are generated only through the setup-time final time. Reusing the setup for a longer solve can therefore omit later resets. Restart times should instead be derived from the current integration window.\n- Modulo reset handling always uses the time immediately before a multiple and the multiple itself. That does not reflect negative-time `fmod` semantics, where the new branch begins immediately *after* the negative multiple. Thus the scheduling is not correct for arbitrary discontinuity times.\n\nThese are substantive restrictions on deriving restarts from solver semantics, even though there is no obvious test-specific naming or branching.\n\nFAIL"
-}

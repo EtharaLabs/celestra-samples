@@ -1,8 +1,0 @@
-{
- "case": "test-fitted",
- "id": "J2",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "FAIL",
- "response": "The submission violates the criterion in `_integrate_segments` by guarding restart-state updates with a fixed input-set count:\n\n```python\nif len(restarts) <= 2:\n    model.y0_list = [...]\n    if model.calculate_sensitivities:\n        model.y0S_list = [...]\n```\n\nWhen three or more input sets remain active, neither their final states nor their final state sensitivities are transferred to the next segment. The solver instead proceeds to consistent initialization with stale initial data. This can produce incorrect continuation across a discontinuity even for a simple ODE, and it also breaks sensitivity propagation.\n\nThe threshold of two is not derived from general solver semantics. Every active input set must restart from its own preceding segment\u2019s final state and requested sensitivities, regardless of how many sets remain. Thus, despite the otherwise general implementation, this explicit fixed-count special case fails the criterion.\n\nFAIL"
-}

@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J3",
- "trial": 1,
- "model": "gpt-6.1-sol",
- "label": "FAIL",
- "response": "The submission does not preserve the required failure behaviour. Although it raises `pybamm.SolverError` for time- or state-dependent Modulo periods and for missing named state sensitivities, several new paths silently continue when they cannot handle a condition:\n\n- **Invalid Modulo periods:** `Modulo._t_discon` takes the absolute value of the period and returns no discontinuities for zero or non-finite values. `_set_up_events` similarly treats zero and non-finite constant periods as producing no events. Thus negative periods are silently normalized, and zero or NaN periods are silently ignored rather than raising `SolverError`. An infinite positive period legitimately has no resets, but that does not justify accepting the other cases.\n- **Failed sensitivity mapping:** `_set_sens_initial_conditions_from` catches `pybamm.ModelError` from `build_initial_state_mapper` and falls back to variable-based mapping. It also selects that fallback when a required mapper input is unavailable, instead of reporting that the mapping cannot be handled.\n- **Failed algebraic sensitivity initialization:** `_consistent_algebraic_sensitivities` returns the original `y0S` for incompatible shapes, mismatched Jacobian counts, caught linear-solve failures, or non-finite results. These paths continue with unchanged sensitivities rather than raising the solver\u2019s own error.\n\nThese are explicit fallback and silent-continuation behaviours prohibited by the criterion.\n\nFAIL"
-}

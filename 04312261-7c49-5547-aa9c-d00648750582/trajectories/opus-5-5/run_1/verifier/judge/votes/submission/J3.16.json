@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J3",
- "trial": 16,
- "model": "gpt-6.1-sol",
- "label": "FAIL",
- "response": "The submission does not preserve the required failure behaviour.\n\n- In `IDAKLUSolver._consistent_algebraic_sensitivities`, unsupported sensitivity shapes, a mismatch between parameter Jacobians and sensitivity entries, failed linear solves, and non-finite results all cause `return y0S`. This silently retains the supplied sensitivities instead of raising `pybamm.SolverError` when consistent restart sensitivities cannot be computed.\n- Modulo period handling silently accepts invalid periods. It applies `abs()` to negative periods and treats zero and NaN periods as having no resets, either returning an empty discontinuity list or setting `num_events = 0`. These cases should raise a solver error rather than continue without discontinuities. Non-scalar periods also raise `pybamm.ShapeError`, not the solver\u2019s own error.\n- Sensitivity mapping catches `pybamm.ModelError` from `build_initial_state_mapper` and switches to variable-based mapping; missing mapping inputs trigger the same fallback rather than an explicit solver failure.\n\nThe submission does explicitly reject time-dependent periods and missing state sensitivities, but those checks do not compensate for the silent fallback paths above.\n\nFAIL"
-}

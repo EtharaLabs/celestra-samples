@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J2",
- "trial": 12,
- "model": "gpt-6.1-sol",
- "label": "FAIL",
- "response": "The submission introduces largely general restart machinery: it tracks an arbitrary number of active input sets, restarts each from its own final state, selects sensitivities by name, and applies chain-rule state mapping. It does not branch on particular model names, input names, or test-specific `t_eval` lengths.\n\nHowever, discontinuity handling is still not general. For constant modulo periods on solvers without `t_eval` discontinuity support, `_set_up_events` retains a fixed `num_events = 200` when `t_eval` is absent. This is an arbitrary restart limit, not a consequence of solver semantics. A step spanning more than 200 periods can therefore miss required restarts.\n\nThat same branch expands events only through the setup-time `tf` when it is available. Subsequent solves or steps extending beyond that window can miss discontinuities because these constant-period events are not regenerated from the current integration interval. Unlike input-dependent periods, they are not handled dynamically by the new segmentation machinery.\n\nThus, despite substantial general-purpose improvements and no obvious test-name special-casing, the submission does not derive every restart for arbitrary discontinuity times and integration windows.\n\nFAIL"
-}
