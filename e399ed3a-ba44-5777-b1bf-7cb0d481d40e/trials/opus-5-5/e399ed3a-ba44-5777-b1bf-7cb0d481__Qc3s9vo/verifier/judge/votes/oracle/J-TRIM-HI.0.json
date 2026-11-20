@@ -1,0 +1,8 @@
+{
+ "case": "oracle",
+ "id": "J-TRIM-HI",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "`MortSubtableConverter.read` confines the decoder\u2019s data to the subtable\u2019s declared length. For contextual substitutions, `_readContextualLookups` limits the last glyph to `(available - 2) // 2 - offset`, ensuring that every replacement word read ends at or before the subtable boundary, including when offsets are negative or the remaining length is odd.\nYES"
+}

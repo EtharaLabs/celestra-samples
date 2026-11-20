@@ -1,0 +1,8 @@
+{
+ "case": "jmorxdec-w3",
+ "id": "J-MORX-DEC",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The morx state-table fields now use `MorphStateTable` instead of `STXHeader`. Although it delegates binary reading to `STXHeader`, its `read` then overwrites `GlyphClassCount` with a value derived from `GlyphClasses`; whenever that differs from the encoded count, the same morx bytes produce a different decoded object than before.\nYES"
+}

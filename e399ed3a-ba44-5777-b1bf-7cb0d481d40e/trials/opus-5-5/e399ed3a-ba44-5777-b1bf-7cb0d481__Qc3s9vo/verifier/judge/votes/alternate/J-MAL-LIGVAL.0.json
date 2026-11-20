@@ -1,0 +1,8 @@
+{
+ "case": "alternate",
+ "id": "J-MAL-LIGVAL",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new classic ligature reader explicitly checks `if any(component % 2 for component in rawComponents)` and raises `ValueError(\"invalid mort ligature component value\")`. Since `mort` ligature subtables are dispatched to this reader, a component table containing an odd value still raises rather than returning a table.\nNO"
+}

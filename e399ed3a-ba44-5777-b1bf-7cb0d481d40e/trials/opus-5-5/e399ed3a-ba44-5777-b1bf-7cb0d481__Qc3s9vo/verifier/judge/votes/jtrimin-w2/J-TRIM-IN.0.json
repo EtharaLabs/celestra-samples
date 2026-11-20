@@ -1,0 +1,8 @@
+{
+ "case": "jtrimin-w2",
+ "id": "J-TRIM-IN",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "`_readContextualLookups` computes inclusive bounds but reads replacements only when `firstGlyph < lastGlyph`. If exactly one glyph\u2019s replacement word lies within both bounds, `firstGlyph == lastGlyph`, so that valid replacement is skipped, for either negative or positive entry offsets.\nNO"
+}

@@ -24,7 +24,7 @@ PyBaMM splits an integration into segments at discontinuities, such as `pybamm.t
 - Changing `calculate_sensitivities` between `step()` calls works as it does for `solve()`. A `RuntimeError` for using a solver with a second model leaves `model.calculate_sensitivities` unchanged.
 - However often a model is set up, `model.events` holds each discontinuity event once.
 
-The tests also exercise existing behaviour that must stay as it is:
+Existing behaviour must stay as it is:
 - `Simulation` keeps both experiment model modes, `experiment_model_mode="legacy"` and `"unified"`, with the same results.
 - The unified experiment's step inputs keep their names, such as "Experiment step index", "Experiment step value", and "start time", alongside the user's own inputs (for example "user input").
 - Experiment steps keep their termination reasons, such as "experiment time limit reached", "experiment voltage limit reached", "experiment capacity limit reached", and "Event exceeded in initial conditions", and their messages, such as "Step time must be >0", "Nominal capacity changed", "Rest for padding", and "no experiment is attached to the simulation".
@@ -32,6 +32,6 @@ The tests also exercise existing behaviour that must stay as it is:
 - Expression-tree objects still accept a domain name such as "domain".
 - A solver's `on_extrapolation` still accepts settings such as "ignore".
 
-The tests also call `BaseSolver._get_discontinuity_start_end_indices(model, y0, inputs, t_eval)`, which must keep its signature and keep returning `(start_indices, end_indices, t_eval)`. It must not modify the caller's `t_eval`, and it must accept an integer `t_eval`.
+Other code calls `BaseSolver._get_discontinuity_start_end_indices(model, y0, inputs, t_eval)`, which must keep its signature and keep returning `(start_indices, end_indices, t_eval)`. It must not modify the caller's `t_eval`, and it must accept an integer `t_eval`.
 
-Fix this in the library source under `/app/pybamm/packages/pybamm/src/pybamm`, and keep every other behaviour of PyBaMM unchanged. Your work is graded from the final contents of `/app/pybamm/packages/pybamm/src/pybamm` only, against tests that are not in this environment. Changes elsewhere in the repository, including to `pybammsolvers`, the tests, and the configuration, are not graded.
+Fix this in the library source under `/app/pybamm/packages/pybamm/src/pybamm`, and keep every other behaviour of PyBaMM unchanged. Only your changes under `/app/pybamm/packages/pybamm/src/pybamm` are kept; changes elsewhere in the repository, including to `pybammsolvers` and the configuration, are discarded.

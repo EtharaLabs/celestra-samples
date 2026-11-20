@@ -1,0 +1,8 @@
+{
+ "case": "unchanged-solve-model",
+ "id": "JSM-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The change wraps `solve_model` rather than updating its callback invocation. Because `functools.wraps` exposes the unchanged original method through `solve_model.__wrapped__`, callers can bypass the snapshot conversion; for a flat-built multi-period model, that path can still pass the network\u2019s MultiIndex to `extra_functionality`.\nNO"
+}

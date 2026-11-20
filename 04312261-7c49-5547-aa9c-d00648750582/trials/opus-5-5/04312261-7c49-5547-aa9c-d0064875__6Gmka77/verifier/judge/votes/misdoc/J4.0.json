@@ -1,0 +1,8 @@
+{
+ "case": "misdoc",
+ "id": "J4",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission fails the criterion because two edited sensitivity docstrings directly contradict their implementations:\n\n- **`_restart_state_sensitivities`** says it returns sensitivities at the *initial* state, selected by column position, and that `sensitivity_names` is ignored. The code actually reads `solution.last_state._all_sensitivities` and selects sensitivities **by name in the supplied order**.\n- **`_set_sens_initial_conditions_from`** says sensitivities are copied unchanged with the reference subtracted, and that reference and scale never depend on inputs. The code explicitly differentiates both reference and scale with respect to the requested inputs and applies\n  `(dvar_dp - dreference_dp - y0 * dscale_dp) / scale_value`.\n  Thus, the docstring misrepresents how sensitivities are carried across a change of model.\n\nThe descriptions of per-input segment restarts, Modulo discontinuity expansion, and the documented `SolverError` conditions otherwise align with the code. However, the sensitivity documentation errors are substantive and sufficient to fail the criterion.\n\nFAIL"
+}

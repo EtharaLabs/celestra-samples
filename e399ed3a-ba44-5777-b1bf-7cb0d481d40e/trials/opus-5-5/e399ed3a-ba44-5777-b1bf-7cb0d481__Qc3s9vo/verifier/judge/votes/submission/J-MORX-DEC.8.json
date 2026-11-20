@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MORX-DEC",
+ "trial": 8,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new state-table decoding branch is taken only when `reader.tableTag == \"mort\"`; extended `morx` tables retain the existing decoding path. The other changes affect compilation, XML handling, equality, or `mort` dispatch, not the objects decoded from `morx` bytes.\nNO"
+}

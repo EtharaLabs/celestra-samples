@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JCM-cov",
+ "trial": 19,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "`create_model` leaves `sns` as the MultiIndex returned by `as_index` and passes it unchanged to the variable and constraint builders, including both loss-constraint modes. Although it flattens the model parameter and component data when requested, it never converts the snapshot index passed to those builders, so the criterion fails for multi-period networks with `\"flat\"` or `\"auto\"` under v1 semantics.\nNO"
+}

@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JAD-cov",
- "trial": 1,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The diff does not introduce a fixed snapshot representation into `_as_dynamic` for static attributes. Instead, snapshot flattening is conditional on `uses_flat_snapshots(self.n)`, and model construction sets that context according to the resolved `optimization.model_snapshot_index` option.\nNO"
-}

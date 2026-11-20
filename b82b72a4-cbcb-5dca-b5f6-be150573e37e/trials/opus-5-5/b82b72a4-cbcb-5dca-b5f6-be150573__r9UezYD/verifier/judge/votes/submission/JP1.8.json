@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JP1",
+ "trial": 8,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The change moves span creation and lifetime management to `_make_api_call`, but leaves the `before-sign` propagation handler and its registration order unchanged. The diff does not change which propagation headers are emitted or how existing request headers are merged; changes to span or trace IDs do not count.\nNO"
+}

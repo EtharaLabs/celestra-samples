@@ -1,0 +1,8 @@
+{
+ "case": "wrapped-exception",
+ "id": "JF2",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The API-call exception path finishes the client span once and exits; successful non-streaming calls finish it once after instrumentation. Streaming completion uses a shared `finished` guard across read/close paths, and instrumentation failure disables those callbacks before the caller finishes the client span, so the diff does not establish a double finish.\nNO"
+}

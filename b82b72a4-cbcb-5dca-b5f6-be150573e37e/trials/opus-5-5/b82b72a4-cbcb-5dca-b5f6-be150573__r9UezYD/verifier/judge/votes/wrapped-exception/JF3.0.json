@@ -1,0 +1,8 @@
+{
+ "case": "wrapped-exception",
+ "id": "JF3",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "If `_instrument_streaming_body` raises, `capture_internal_exceptions()` suppresses the error, leaving `streaming_body_instrumented` false, so the wrapper immediately finishes the client span while returning the unread body. This can happen, for example, when the streaming body lacks the unconditionally accessed `readinto` method.\n\nYES"
+}

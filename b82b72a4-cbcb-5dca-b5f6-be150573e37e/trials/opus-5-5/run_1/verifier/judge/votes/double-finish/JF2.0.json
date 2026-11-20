@@ -1,8 +1,0 @@
-{
- "case": "double-finish",
- "id": "JF2",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The streaming-body `finish_span` function removes its `finished` guard and now finishes the client span on every invocation. The new `readlines` wrapper calls it unconditionally after each successful call, so calling `readlines()` twice on the returned streaming body finishes the same client span twice.\nYES"
-}

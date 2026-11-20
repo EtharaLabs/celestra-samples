@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J-TRIM-HI",
- "trial": 1,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "`MortSubtableConverter.read` limits each subtable\u2019s reader to its declared length. The contextual decoder then bounds replacement indices by `len(data) // 2 - offset`, ensuring that every replacement word it reads ends at or before that subtable\u2019s end, including when its byte length is odd.\n\nYES"
-}

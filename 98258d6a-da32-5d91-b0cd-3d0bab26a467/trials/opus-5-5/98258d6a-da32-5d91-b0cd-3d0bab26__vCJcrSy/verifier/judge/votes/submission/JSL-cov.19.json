@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JSL-cov",
+ "trial": 19,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "With `optimization.model_snapshot_index=\"flat\"` and MultiIndex network snapshots, model creation enters `_flat_snapshots_context(n, True)` but still passes the original MultiIndex `sns` to `define_secant_loss_constraints`. Within that context, component-array reads (`c.da`) flatten snapshot-indexed line data, so the function reads that data in the flat representation rather than the MultiIndex representation of its supplied snapshots.\n\nYES"
+}

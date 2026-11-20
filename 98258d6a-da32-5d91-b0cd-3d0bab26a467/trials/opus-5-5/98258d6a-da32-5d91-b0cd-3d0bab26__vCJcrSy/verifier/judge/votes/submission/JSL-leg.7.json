@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JSL-leg",
+ "trial": 7,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The secant function now restricts `upper_limit`, `slope`, and `offset` to the names present in the loss variable. For a network containing branches excluded from that variable, legacy alignment could previously introduce additional branch labels into the constraints; the new selections remove them. This change is independent of flattening snapshots and can occur with the default/`\"auto\"` or `\"multiindex\"` setting under legacy semantics.\nYES"
+}

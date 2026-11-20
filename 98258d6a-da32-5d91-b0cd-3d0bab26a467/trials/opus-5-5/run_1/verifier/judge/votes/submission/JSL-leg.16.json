@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JSL-leg",
- "trial": 16,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "Under legacy semantics, both the default `\"auto\"` setting and `\"multiindex\"` preserve the existing snapshot representation, and the secant-loss function and its supplied snapshots are unchanged. The piecewise-helper changes broadcast existing breakpoint values and mask missing breakpoints; the diff does not establish different secant loss constraints in this setting.\nNO"
-}

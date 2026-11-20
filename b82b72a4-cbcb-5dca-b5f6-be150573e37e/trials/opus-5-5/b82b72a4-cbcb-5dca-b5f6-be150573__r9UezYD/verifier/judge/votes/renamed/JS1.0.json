@@ -1,0 +1,8 @@
+{
+ "case": "renamed",
+ "id": "JS1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The boto3 wrapper starts an `OP.HTTP_CLIENT` span in `_start_client_span`. When that call makes an HTTP request through the stdlib integration, the stdlib code still starts another `OP.HTTP_CLIENT` span under the boto3 span; setting `active=False` does not prevent its creation.\nYES"
+}

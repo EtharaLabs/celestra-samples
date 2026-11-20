@@ -18,8 +18,9 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ARG TARGETOS
 ARG TARGETARCH
 COPY requirements-tools.txt binary.txt sdist.txt /req/
-RUN case "$TARGETARCH" in amd64) arch=x86_64 ;; arm64) arch=aarch64 ;; *) exit 1 ;; esac \
- && test "$TARGETOS" = linux \
+# Kaniko leaves TARGETARCH and TARGETOS empty and builds for its own platform, so fall back to that.
+RUN case "${TARGETARCH:-$(dpkg --print-architecture)}" in amd64) arch=x86_64 ;; arm64) arch=aarch64 ;; *) exit 1 ;; esac \
+ && test "${TARGETOS:-linux}" = linux \
  && pip download --no-cache-dir --require-hashes --only-binary=:all: --no-deps \
       --python-version 3.12 --implementation cp --abi cp312 --abi abi3 --abi none \
       --platform "manylinux_2_28_$arch" --platform "manylinux_2_17_$arch" \
@@ -44,11 +45,12 @@ ENV LITELLM_LOCAL_MODEL_COST_MAP=True
 RUN groupadd -g 10001 grader && useradd -u 10001 -g 10001 -m -d /home/grader grader \
  && chage -d "$(date -u -d "@$SOURCE_DATE_EPOCH" +%F)" grader \
  && rm -rf /root/.cache
-RUN --mount=type=bind,from=wheels,source=/dist,target=/dist \
-    --mount=type=bind,target=/ctx \
-    pip install --no-cache-dir --no-index --find-links /dist --require-hashes --no-deps -r /ctx/requirements-tools.txt \
+# Kaniko ignores RUN --mount, so these files are copied in and removed by the step that uses them.
+COPY --from=wheels /dist /dist
+COPY . /ctx
+RUN pip install --no-cache-dir --no-index --find-links /dist --require-hashes --no-deps -r /ctx/requirements-tools.txt \
  && pip install --no-cache-dir --no-index --find-links /dist --require-hashes --no-build-isolation -r /ctx/requirements.txt \
- && rm -rf /root/.cache
+ && rm -rf /root/.cache /dist /ctx
 COPY --from=source /src /grading/repo
 RUN pip install --no-cache-dir --no-deps --no-build-isolation --no-index --config-settings=editable_mode=compat -e /grading/repo \
  && rm -rf /root/.cache
@@ -57,8 +59,9 @@ RUN pip install --no-cache-dir --no-deps --no-build-isolation --no-index --confi
 # The .sh files are matched with find, not a shell glob, which skips dotfiles: that way a
 # wrapper's moved original (.trinity-bundle-test.sh) is carried too, because Harbor runs a
 # verifier built from tests/Dockerfile as bundled and never uploads tests/ into it.
-RUN --mount=type=bind,target=/ctx \
-    mkdir /tests \
+# Kaniko ignores RUN --mount, so these files are copied in and removed by the step that uses them.
+COPY . /ctx
+RUN mkdir /tests \
  && cp -R /ctx/graded /ctx/judge /ctx/judge-controls /tests/ \
  && find /ctx -maxdepth 1 -name '*.sh' -exec cp -t /tests/ {} + \
  && cp /ctx/run_graded.py /ctx/score.py /ctx/runner_guard.py /ctx/reward.toml /ctx/test_output.py /ctx/judge.toml /ctx/combine.py /tests/ \
@@ -68,9 +71,10 @@ RUN --mount=type=bind,target=/ctx \
  && find /tests -exec touch -h -d "@$SOURCE_DATE_EPOCH" {} + \
  && mkdir -p /logs/verifier \
  && chown -R 10001:10001 /grading/repo /logs \
- && rm -rf /root/.cache
+ && rm -rf /root/.cache /ctx
 WORKDIR /grading/repo
-USER 10001:10001
+# test.sh drops to uid 10001 itself; the image ends as root so Harbor's sandbox can start.
+USER root
 LABEL org.opencontainers.image.source="https://github.com/fonttools/fonttools" \
       org.opencontainers.image.revision="984a5cf614f4b05f0cdd57fc5b5628fd81518805" \
       org.opencontainers.image.licenses="MIT" \

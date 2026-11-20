@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JTR-cov",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The transmission inner function converts dynamic efficiency with `_to_model`, but leaves snapshot weights as `n.snapshot_weightings.generators.loc[sns]`, which retains the network\u2019s MultiIndex even when `sns` contains flat tuple labels. The added weight conversion only covers the `\"sum\"` aggregation path, so the required representation is not guaranteed for every transmission expression.\nNO"
-}

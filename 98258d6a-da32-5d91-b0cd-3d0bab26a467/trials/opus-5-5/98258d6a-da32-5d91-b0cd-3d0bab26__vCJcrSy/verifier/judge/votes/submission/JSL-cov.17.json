@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JSL-cov",
+ "trial": 17,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "With `optimization.model_snapshot_index=\"flat\"` and multi-period snapshots, `create_model` calls `define_secant_loss_constraints` inside `_flat_snapshots_context(n, True)` while still passing the original MultiIndex `sns`. That context makes snapshot-indexed component data (`c.da`) flat, so the function reads its per-snapshot line data in the flat representation rather than the MultiIndex representation of the snapshots it receives.\nYES"
+}

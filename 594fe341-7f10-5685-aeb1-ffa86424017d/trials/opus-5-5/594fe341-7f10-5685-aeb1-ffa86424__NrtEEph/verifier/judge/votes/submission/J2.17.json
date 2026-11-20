@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J2",
+ "trial": 17,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets this generality criterion.\n\n- **Per-call schemas are derived dynamically.** `_decision_schema` builds its members from the configured allowed decisions, removes duplicates, and handles both single-decision and discriminated-union schemas. It does not assume a particular tested decision set.\n- **Tool names and arguments are not hard-coded.** The edit branch pins `name` to the actual tool name passed in, and derives argument validation and schema presentation from the actual tool. No particular tool name or argument name receives fixture-specific treatment.\n- **Provider validation is schema-driven.** `interrupt` uses `TypeAdapter(response_schema)` for Python schemas and validates resume values through that adapter. JSON Schema dictionaries are surfaced without enforcement, consistent with the intended API. This is not restricted to HITL decisions or to particular model classes.\n- **Schema-kind distinctions are functional rather than test-specific.** The handling of Pydantic tool schemas, other tool schemas, and schema-less `Tool` instances follows their runtime representations; it does not recognize particular schemas from the tests.\n\nThe implementation differs from the reference in its dynamic type construction and resume-error plumbing, but those differences do not introduce the special-casing prohibited by this criterion.\n\nPASS"
+}

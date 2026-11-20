@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JF2",
+ "trial": 18,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The error path finishes the client span once, while a successful non-streaming call finishes it once after the call returns. Streaming responses defer finishing to callbacks sharing a `finished` guard; if instrumentation fails, the fallback disables those callbacks before the caller finishes the client span.\nNO"
+}

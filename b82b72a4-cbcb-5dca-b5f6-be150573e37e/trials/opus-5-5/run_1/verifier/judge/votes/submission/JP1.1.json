@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JP1",
- "trial": 1,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The trace-header injection handler and its `before-sign` registration are unchanged, including the ordering that governs merging with existing headers. The diff changes span creation, activation, and lifetime, but does not establish a change in which propagation headers are present or how they are merged; changes to trace or span IDs do not count.\nNO"
-}

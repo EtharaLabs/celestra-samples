@@ -1,0 +1,8 @@
+{
+ "case": "alternate",
+ "id": "J-TRIM-HI",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "`MortSubtableConverter.read` bounds the state-table reader\u2019s data to the current subtable. `_readContextualLookups` then limits the last glyph to `(available - 2) // 2 - offset`, ensuring every two-byte replacement word ends at or before that subtable\u2019s end, including when offsets are negative.\nYES"
+}

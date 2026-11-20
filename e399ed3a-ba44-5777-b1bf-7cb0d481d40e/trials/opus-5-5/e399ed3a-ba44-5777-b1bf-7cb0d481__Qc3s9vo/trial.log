@@ -1,0 +1,8 @@
+Skipping image OS validation for hb__6bf790fdc54af186ed4379b21f9daf08: docker inspect returned 1
+Agent 'openhands-sdk' exposes no native web search or fetch tools for Harbor to disable; continuing. Sandbox network policy still applies.
+Running command: chown 10001 /installed-agent/instruction.txt
+Command outputs captured
+Running command: /opt/openhands-sdk-venv/bin/python /installed-agent/run_agent.py     --instruction-file=/installed-agent/instruction.txt     --logs-dir="$AGENT_LOGS_DIR"     --trajectory-path="$TRAJECTORY_PATH"     2>&1 | stdbuf -oL tee /logs/agent/openhands_sdk.txt
+Command outputs captured
+Collecting main service artifacts
+Skipping image OS validation for hb__62776d5a6ce4a6c86f0cab910ec104c9: docker inspect returned 1

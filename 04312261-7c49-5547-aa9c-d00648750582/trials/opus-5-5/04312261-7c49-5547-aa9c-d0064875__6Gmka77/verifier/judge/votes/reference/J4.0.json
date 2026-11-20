@@ -1,0 +1,8 @@
+{
+ "case": "reference",
+ "id": "J4",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets the criterion. Its added and edited documentation accurately describes the implementation:\n\n- **Segment restarts:** `_integrate_segments` documents that each input set restarts from its own final state and sensitivities only if it reaches the segment\u2019s end. The comments correctly explain that sets stopped by an event or failure are not restarted, and the original initial states and sensitivities are restored afterward.\n- **Sensitivities across model changes:** The `state_mapper` documentation distinguishes CasADi forward-mode differentiation from variable-name matching. The comments and scaling documentation agree with the implemented chain rule, including input-dependent reference and scale.\n- **Modulo discontinuities:** The helper docstrings explain expansion over the integration window, rounding around reset times, positive- versus negative-time `fmod` behavior, and the absence of resets for an infinite period. The setup comments correctly state that periods are retained with evaluators and expanded at solve time.\n- **Errors:** The documented `SolverError` conditions match the checks for invalid modulo periods, incompatible discontinuity schedules across input sets, unavailable restart sensitivities, and incompatible sensitivity sets when saving or continuing a solution. The documentation also correctly distinguishes the different-model `RuntimeError`.\n\nPASS"
+}

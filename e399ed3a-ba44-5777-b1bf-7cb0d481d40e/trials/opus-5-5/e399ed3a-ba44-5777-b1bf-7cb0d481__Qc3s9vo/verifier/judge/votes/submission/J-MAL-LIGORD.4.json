@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MAL-LIGORD",
+ "trial": 4,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new classic mort reader routes ligature subtables to `_readClassicLigatureTables`, which explicitly raises `ValueError` whenever `componentOffset > ligatureOffset`. Thus, a component table starting after its ligature table still causes an exception rather than returning a table.\nNO"
+}

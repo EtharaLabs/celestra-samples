@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JIC-cov",
+ "trial": 1,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not touch `pypsa/statistics/expressions.py` or its `installed_capex` implementation. The new snapshot-representation handling is in component arrays and optimization code; it does not introduce a fixed snapshot representation for `installed_capex` investment-period weighting.\nNO"
+}

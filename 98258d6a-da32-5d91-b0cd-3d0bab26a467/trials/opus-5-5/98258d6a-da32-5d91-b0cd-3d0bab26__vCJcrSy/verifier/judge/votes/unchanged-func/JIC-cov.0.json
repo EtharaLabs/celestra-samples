@@ -1,0 +1,8 @@
+{
+ "case": "unchanged-func",
+ "id": "JIC-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not alter `installed_capex` or its investment-period weighting in `pypsa/statistics/expressions.py`; changes there only relabel dynamic port-efficiency data during expression evaluation. The snapshot-layout machinery follows the selected option, and the explicit conversion to a MultiIndex for capital-cost weighting occurs in `optimization/optimize.py`, not in `installed_capex`.\nNO"
+}

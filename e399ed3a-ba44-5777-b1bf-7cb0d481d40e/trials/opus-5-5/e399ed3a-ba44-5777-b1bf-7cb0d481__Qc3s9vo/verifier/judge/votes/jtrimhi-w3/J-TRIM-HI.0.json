@@ -1,0 +1,8 @@
+{
+ "case": "jtrimhi-w3",
+ "id": "J-TRIM-HI",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "`MortSubtableConverter.read` confines decoding to a byte slice ending at the declared subtable end. The classic contextual state table starts at position zero in that slice, and `_readContextualLookups` caps the last glyph so its replacement word starts no later than `len(reader.data) - 2`, ensuring the complete word lies within the subtable.\nYES"
+}

@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JF2",
- "trial": 15,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "YES: a streaming-body setup failure can finish the client span through the streaming cleanup path and then re-raise. `_sentry_make_api_call` suppresses that instrumentation exception, leaving `body_instrumented` false, so it calls `_finish_span(span)` again.\n\nYES"
-}

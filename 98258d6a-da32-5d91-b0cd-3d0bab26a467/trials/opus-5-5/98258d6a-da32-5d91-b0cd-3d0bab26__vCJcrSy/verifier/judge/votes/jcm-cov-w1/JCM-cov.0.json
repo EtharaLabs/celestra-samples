@@ -1,0 +1,8 @@
+{
+ "case": "jcm-cov-w1",
+ "id": "JCM-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "`create_model` builds a `SnapshotWindow` with the selected representation but never assigns `window.model_index` back to `sns`. Consequently, `n.model.parameters` and the unchanged builder calls still receive the original MultiIndex snapshots even when `\"flat\"` (or `\"auto\"` under v1 semantics) requires flat tuple labels.\nNO"
+}

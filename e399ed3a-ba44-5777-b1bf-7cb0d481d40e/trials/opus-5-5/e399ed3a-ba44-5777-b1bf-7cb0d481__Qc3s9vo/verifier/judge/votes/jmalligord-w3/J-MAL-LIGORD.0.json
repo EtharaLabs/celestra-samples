@@ -1,0 +1,8 @@
+{
+ "case": "jmalligord-w3",
+ "id": "J-MAL-LIGORD",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The change registers mort ligature subtables and dispatches them to the new classic `StateHeader` reader. When the component offset exceeds the ligature offset, it clamps the component offset, producing an empty component list rather than raising; a subtable with no ligature actions can then finish decompiling successfully. Thus the criterion holds for some such subtables, even though ones with actions may still fail bounds checks.\nYES"
+}

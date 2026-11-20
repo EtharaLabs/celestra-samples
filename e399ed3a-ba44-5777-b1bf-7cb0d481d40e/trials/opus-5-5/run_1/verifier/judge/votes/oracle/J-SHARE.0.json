@@ -1,8 +1,0 @@
-{
- "case": "oracle",
- "id": "J-SHARE",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The classic mort converter reuses `AATStateTable`, `AATState`, and the existing morph-action classes rather than defining separate copies. `StateHeader` inherits from `STXHeader`, and `MorphStateTable` explicitly delegates XML reading and writing to the extended converter, so the state-table TTX code is also reused.\nNO"
-}

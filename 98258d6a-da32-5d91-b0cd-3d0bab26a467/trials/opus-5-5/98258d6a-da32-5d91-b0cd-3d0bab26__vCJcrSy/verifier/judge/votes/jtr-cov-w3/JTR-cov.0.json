@@ -1,0 +1,8 @@
+{
+ "case": "jtr-cov-w3",
+ "id": "JTR-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The transmission inner function unconditionally rebuilds `sns` using `pd.Index(..., tupleize_cols=False)`, converting a flow variable\u2019s MultiIndex snapshots into flat tuple labels. It passes those flattened labels to `_port_coefficients` even when `\"multiindex\"` or legacy `\"auto\"` selects a MultiIndex representation, so the criterion does not hold for every configuration.\nNO"
+}

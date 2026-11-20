@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J1",
+ "trial": 17,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission fails the scope requirement. While its LangChain changes stay within `HumanInTheLoopMiddleware` and its supporting types/helpers, the LangGraph changes extend substantially beyond `interrupt`, `Interrupt`, and the SDK interrupt type:\n\n- `_internal/_scratchpad.py` adds a separate `mapped_resume` state field.\n- `pregel/_algo.py` changes how mapped resume values are staged.\n- `errors.py` introduces a new `ResumeRejected` exception.\n- `pregel/_runner.py` and `pregel/_loop.py` add propagation and handling for that exception.\n- `pregel/debug.py` introduces a serialization helper and rewrites existing interrupt rendering.\n\nThese are active changes rather than dead code, but they broaden the fix into resume bookkeeping, exception propagation, and debug serialization. The criterion explicitly requires confinement to the interrupt API/types and the HITL middleware; the submission instead introduces a cross-cutting execution mechanism. That scope violation is sufficient to fail, regardless of whether those additions improve behavior.\n\nFAIL"
+}

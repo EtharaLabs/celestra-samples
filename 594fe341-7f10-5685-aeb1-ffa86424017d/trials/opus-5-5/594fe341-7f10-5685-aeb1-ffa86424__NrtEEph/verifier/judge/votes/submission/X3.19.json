@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X3",
+ "trial": 19,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets the boundary-consistency criterion.\n\n- **Validation is owned by LangGraph.** `interrupt()` constructs the `TypeAdapter`, validates answers, and returns the validated result. The middleware supplies a typed decision schema and uses the returned decision; it does not independently parse or normalize the answer.\n- **Both resume delivery paths converge.** A value supplied directly or through the interrupt-ID map reaches the same validation and storage logic. The new `mapped_resume` staging area prevents keyed answers from being treated as accepted replay history before validation.\n- **Storage and replay are consistent.** Successful answers are stored as the original value `v`, while callers receive the validated `answer`. Replayed values pass through the same adapter again. This applies equally to middleware interrupts and ordinary graph interrupts.\n- **Invalid answers are not accepted into history.** Validation failures preserve a pending interrupt and ultimately surface the `ValidationError`. The code also removes a rejected historical answer and its positional successors.\n- **The consumer preserves reviewer arguments.** Its argument wrapper checks edited arguments without replacing them with Pydantic-normalized values, leaving execution-time tool validation intact.\n\nThe middleware\u2019s call to `_process_decision()` retains existing decision dispatch and allowed-decision checks, but does not introduce a competing schema-validation or storage mechanism.\n\nPASS"
+}

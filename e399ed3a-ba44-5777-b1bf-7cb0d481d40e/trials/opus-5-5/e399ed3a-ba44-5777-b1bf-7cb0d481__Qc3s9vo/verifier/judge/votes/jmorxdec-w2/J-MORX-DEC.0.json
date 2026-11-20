@@ -1,0 +1,8 @@
+{
+ "case": "jmorxdec-w2",
+ "id": "J-MORX-DEC",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The morx state-table fields now use `MorphStateTable`, whose `read` method delegates to the original extended decoder but then removes all `GlyphClasses` entries with class value 1. Thus, for an extended morx table containing such entries, the same bytes produce a different decoded state-table object than in the base commit.\nYES"
+}

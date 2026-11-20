@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X1",
+ "trial": 2,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission puts answer validation in LangGraph\u2019s `interrupt`: it constructs a `TypeAdapter` and validates resume values before accepting them. LangChain also correctly passes its decision type via `response_schema=_decision_schema(...)`.\n\nHowever, LangChain then passes the returned decision to `_process_decision(decision, tool_call, config)`. That existing method checks whether the decision type is among the configured allowed decisions and raises `ValueError` for an unexpected decision. Consequently, the per-call path re-checks an answer that LangGraph has already validated rather than relying solely on the provider\u2019s check.\n\nThis violates the criterion\u2019s explicit requirement that the middleware not validate the returned answer again.\n\nFAIL"
+}

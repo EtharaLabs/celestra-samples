@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J-MORX-ENC",
- "trial": 10,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The binary-writing changes are gated on the table tag being `\"mort\"`; extended `\"morx\"` tables retain the existing compilation path. The other changes add classic-table support, value equality, or XML handling, but do not show a change to the bytes emitted when compiling the same morx objects.\nNO"
-}

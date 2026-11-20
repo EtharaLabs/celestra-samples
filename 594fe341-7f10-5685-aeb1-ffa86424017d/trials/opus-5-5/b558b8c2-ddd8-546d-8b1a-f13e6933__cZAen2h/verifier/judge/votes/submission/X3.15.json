@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "X3",
- "trial": 15,
- "model": "gpt-6.1-sol",
- "label": "FAIL",
- "response": "The submission does not meet the boundary-consistency criterion.\n\nThe critical problem is in LangGraph\u2019s replay path. When an earlier answer is replayed, it validates only the answer at the current interrupt index, but publishes the entire resume list:\n\n```python\nv = _validate_resume(adapter, scratchpad.resume[idx])\nconf[CONFIG_KEY_SEND]([(RESUME, scratchpad.resume)])\n```\n\nThat list can include answers for later interrupts that have not yet been validated. Consequently, replaying an earlier valid answer can persist a later invalid answer before execution reaches that later interrupt and rejects it. The reference avoids this by publishing only the validated prefix, `scratchpad.resume[: idx + 1]`.\n\nThe added `InvalidResumeError` handling does not close this gap: `_discard_null_resume()` retracts a non-keyed null-task resume value, not unvalidated entries already published in a task\u2019s resume list. Thus the storage and retry behavior can differ between direct and keyed resumes, and an invalid answer can remain in persisted replay data.\n\nThe middleware does delegate schema validation to `interrupt()`, but that is insufficient when the provider can persist answers before their validation point. This affects plain graphs as well as middleware consumers.\n\nFAIL"
-}

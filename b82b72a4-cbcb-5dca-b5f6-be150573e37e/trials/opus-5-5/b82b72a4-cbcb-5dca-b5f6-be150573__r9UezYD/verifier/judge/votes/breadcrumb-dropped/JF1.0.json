@@ -1,0 +1,8 @@
+{
+ "case": "breadcrumb-dropped",
+ "id": "JF1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "Non-streaming responses finish the client span immediately, and exceptions escaping the API call after retries finish it before being re-raised. For streaming responses, the completion callback now finishes both the streaming span and the client span, and is invoked when the body is consumed or closed early; instrumentation failures also fall back to finishing the client span.\nYES"
+}

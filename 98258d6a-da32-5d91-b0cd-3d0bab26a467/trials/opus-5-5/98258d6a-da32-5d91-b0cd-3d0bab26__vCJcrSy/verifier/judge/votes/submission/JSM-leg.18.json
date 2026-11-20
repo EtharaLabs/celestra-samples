@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JSM-leg",
+ "trial": 18,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "Under legacy semantics with `\"auto\"` or `\"multiindex\"`, `_as_model_snapshots` returns its input unchanged. If `create_model` builds a model over only a subset of the network\u2019s snapshots, `solve_model` still passes all of `n.snapshots` through the new callback helper, rather than the model\u2019s stored snapshots, so the callback receives the wrong snapshot set.\nYES"
+}

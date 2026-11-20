@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J-MAL-LIGLEN",
- "trial": 12,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The new classic mort ligature-reading path calls `_readClassicLigComponents`, which explicitly raises `ValueError(\"'mort' component table has odd length\")` when `ligatureOffset - componentOffset` is odd. Thus the change does not permit a ligature subtable with an odd-length component table to decompile successfully.\nNO"
-}

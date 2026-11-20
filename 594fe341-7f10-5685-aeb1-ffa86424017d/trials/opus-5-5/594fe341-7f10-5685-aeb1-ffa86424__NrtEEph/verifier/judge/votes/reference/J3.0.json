@@ -1,0 +1,8 @@
+{
+ "case": "reference",
+ "id": "J3",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets the criterion.\n\n- **Unbuildable schemas propagate errors:** `TypeAdapter(response_schema)` and `adapter.json_schema()` are called without exception handling that would fall back to an unchecked interrupt.\n- **Invalid answers propagate validation errors:** Both previously recorded resume values and newly supplied values pass through `adapter.validate_python(v)`. Validation happens before returning the answer and, for new answers, before appending it to the resume list or sending the resume write. There is no fallback to the original value or a default decision when validation fails.\n- **Missing tool-call IDs raise:** `_tool_approval_request` explicitly raises `ValueError` for an ID of `None`; an absent `id` key also raises rather than silently skipping approval.\n- **Middleware preserves these failures:** Both synchronous and asynchronous per-call wrappers invoke `_resolve_per_call` without catching schema-building, validation, or missing-ID errors.\n\nRaw JSON-schema dictionaries remain display-only, as in the reference; this is an explicit API distinction, not a fallback after failed validation.\n\nPASS"
+}

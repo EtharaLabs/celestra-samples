@@ -1,0 +1,8 @@
+{
+ "case": "approach-a",
+ "id": "JIT-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not modify `pypsa/optimization/abstract.py` or its iterative optimisation calls. The new conversion in `model_snapshots` is conditional on the selected layout, flattening a MultiIndex only when that layout is `\"flat\"`, rather than forcing iteration inputs into a fixed representation irrespective of the option.\nNO"
+}

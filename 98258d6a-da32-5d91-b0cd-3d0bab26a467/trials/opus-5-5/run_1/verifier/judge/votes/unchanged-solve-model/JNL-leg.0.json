@@ -1,8 +1,0 @@
-{
- "case": "unchanged-solve-model",
- "id": "JNL-leg",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "Under legacy semantics, both the default `\"auto\"` setting and explicit `\"multiindex\"` preserve the original snapshot index: `model_snapshots` returns `sns` unchanged. The diff does not modify `optimize_and_run_non_linear_powerflow` or introduce a change to its snapshot selection; changes to optimization expressions and constraints do not themselves change which snapshots are optimized or power-flowed.\nNO"
-}

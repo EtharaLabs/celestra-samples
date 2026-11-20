@@ -1,0 +1,8 @@
+{
+ "case": "baggage-overwrite",
+ "id": "JP1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The change replaces reading existing `baggage` headers with `existing_values = []` in `_sentry_before_sign`. Thus, when propagation supplies baggage, existing third-party baggage is discarded instead of preserved and merged as in the base commit.\nYES"
+}

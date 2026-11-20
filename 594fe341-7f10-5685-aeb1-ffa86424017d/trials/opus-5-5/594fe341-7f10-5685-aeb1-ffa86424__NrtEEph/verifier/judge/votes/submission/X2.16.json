@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X2",
+ "trial": 16,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission makes `response_schema` optional on `interrupt`, `Interrupt`, and the SDK\u2019s interrupt `TypedDict`. It also preserves the old `Interrupt` representation when no schema is supplied.\n\nHowever, the LangGraph change is not minimal and isolated to the optional schema feature. It introduces a new exception and changes scratchpad construction, mapped-resume handling, runner exception aggregation, and root-loop exception handling.\n\nIn particular, those resume-path changes apply even when no schema is supplied: previously, an ID-addressed resume value was appended to the task\u2019s resume list during scratchpad creation; now it is held separately in a new, required `mapped_resume` field and consumed inside `interrupt`. Thus the existing no-schema path is also being redesigned, rather than left intact with optional schema processing added around it.\n\nThe optional SDK field satisfies that part of the criterion, but the broader execution-engine changes do not satisfy the requirement that the LangGraph change be minimal and preserve the existing no-schema path.\n\nFAIL"
+}

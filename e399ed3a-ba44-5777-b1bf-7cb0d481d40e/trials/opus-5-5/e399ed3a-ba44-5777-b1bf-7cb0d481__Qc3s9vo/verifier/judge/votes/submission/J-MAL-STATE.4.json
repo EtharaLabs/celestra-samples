@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MAL-STATE",
+ "trial": 4,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new classic `mort` reading path explicitly raises `ValueError` when `stateArrayOffset > entryTableOffset`. Thus, although the change adds classic state-table support, it still rejects every such table whose state array starts after its entry table.\nNO"
+}

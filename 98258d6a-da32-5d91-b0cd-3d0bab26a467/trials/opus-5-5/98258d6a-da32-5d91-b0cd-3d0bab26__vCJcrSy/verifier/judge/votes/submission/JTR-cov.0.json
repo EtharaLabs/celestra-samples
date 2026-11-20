@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JTR-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The change handles ordinary snapshot subsets and both snapshot representations, but not every network. For stochastic networks, dynamic port efficiencies can have MultiIndex columns for scenarios and component names; `_model_snapshot_array` assumes a single `name` column dimension and calls `values.columns.rename(\"name\")`, which fails for a MultiIndex. Thus the transmission function does not reliably obtain aligned efficiencies for every network.\nNO"
+}

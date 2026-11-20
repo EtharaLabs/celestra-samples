@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JNL-leg",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "Under legacy semantics, both the default/\u201cauto\u201d setting and \u201cmultiindex\u201d retain the original snapshot representation, and model creation still normalizes the request with the unchanged `as_index` call. The diff does not modify `optimize_and_run_non_linear_powerflow` or its snapshot forwarding; the other optimization changes affect formulations rather than which snapshots are requested for optimization or power flow.\nNO"
-}

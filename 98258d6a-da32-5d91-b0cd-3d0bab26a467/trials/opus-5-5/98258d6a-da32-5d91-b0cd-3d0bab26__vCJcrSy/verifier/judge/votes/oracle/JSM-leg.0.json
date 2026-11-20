@@ -1,0 +1,8 @@
+{
+ "case": "oracle",
+ "id": "JSM-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "Under legacy semantics, both `\"auto\"` and `\"multiindex\"` make `SnapshotWindow.build` retain the build snapshots unchanged as both `network_index` and `model_index`. `solve_model` passes that stored `model_index` to `extra_functionality`, so it supplies the model\u2019s build snapshots in the network\u2019s own labelling, including when the model uses only a subset of snapshots.\nNO"
+}

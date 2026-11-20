@@ -1,0 +1,8 @@
+{
+ "case": "jtr-leg-w1",
+ "id": "JTR-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The transmission inner function previously multiplied the selected operational variable by `efficiency[idx]`, but now returns the selected variable without applying efficiency, despite still computing it. For example, a transmitting Link with port-1 efficiency 0.8 and nonzero flow now contributes the full flow rather than 0.8 times that flow. This difference also occurs under legacy semantics with the default snapshot-index option.\nYES"
+}

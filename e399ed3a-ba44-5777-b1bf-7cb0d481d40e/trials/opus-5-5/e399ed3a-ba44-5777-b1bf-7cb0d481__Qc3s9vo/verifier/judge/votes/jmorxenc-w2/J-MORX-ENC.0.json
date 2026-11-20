@@ -1,0 +1,8 @@
+{
+ "case": "jmorxenc-w2",
+ "id": "J-MORX-ENC",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The morph state-table fields now use `MorphStateTable` instead of `STXHeader`. Its write method selects the legacy `StateHeader` for `\"morx\"` as well as `\"mort\"`, so a morx state table can be compiled with legacy 16-bit headers and byte-sized state entries rather than the original extended encoding, producing different bytes for the same objects.\nYES"
+}

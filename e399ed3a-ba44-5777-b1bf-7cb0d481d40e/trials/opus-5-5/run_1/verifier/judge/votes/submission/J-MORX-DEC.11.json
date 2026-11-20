@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J-MORX-DEC",
- "trial": 11,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "NO: The new binary-decoding path is selected only when `reader.tableTag == \"mort\"`; extended `morx` tables retain the original decoding path. The shared classes gain value-based equality, but that does not change the objects\u2019 decoded types or contents, and the XML changes do not affect binary decompilation.\nNO"
-}

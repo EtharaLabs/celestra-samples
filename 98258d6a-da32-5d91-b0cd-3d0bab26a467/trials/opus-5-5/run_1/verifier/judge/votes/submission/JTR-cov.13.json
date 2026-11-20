@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JTR-cov",
- "trial": 13,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The inner function converts a time-dependent efficiency to the model representation, but leaves `weights = n.snapshot_weightings.generators.loc[sns]` unconverted. For flat tuple-labelled flows, that selection still returns MultiIndex-indexed weights; the later conversion in the `\"sum\"` aggregation path does not establish the required behavior for every transmission expression.\nNO"
-}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-TRIM-IN",
+ "trial": 1,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The decoder interprets entry offsets as signed 16-bit word offsets and reads glyph replacements from `max(0, ceil(substOffset / 2) - offset)` up to `min(numGlyphs, size // 2 - offset)`. These bounds include every glyph whose replacement word is within the substitution table and the subtable, for either sign of offset; the new subtable-specific reader prevents reading into subsequent subtables.\nYES"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JSM-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "`solve_model` passes the current `n.snapshots` through `_as_model_snapshots`, rather than obtaining snapshots from the built model. If a model is built with flat multi-period snapshots and the network\u2019s snapshots are subsequently changed to a single-level index, that helper leaves the single-level index unchanged, so the callback receives a different representation from the model\u2019s tuple-labelled snapshot index.\n\nNO"
+}

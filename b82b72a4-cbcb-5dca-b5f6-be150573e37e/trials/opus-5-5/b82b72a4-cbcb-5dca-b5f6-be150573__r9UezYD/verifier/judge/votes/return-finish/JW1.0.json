@@ -1,0 +1,8 @@
+{
+ "case": "return-finish",
+ "id": "JW1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The client-call wrapper and streamed-body wrappers re-raise failures with bare `raise`, preserving the original exception object. The diff shows no replacement, wrapping, or suppression of botocore exceptions on these failure paths.\nNO"
+}

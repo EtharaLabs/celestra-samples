@@ -1,0 +1,8 @@
+{
+ "case": "renamed",
+ "id": "JP1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The before-sign handler retains the same propagation conditions, header replacement behavior, and baggage-merging logic. The changes move span creation and lifecycle management, but do not change which propagation headers are added or how they are merged with existing request headers.\nNO"
+}

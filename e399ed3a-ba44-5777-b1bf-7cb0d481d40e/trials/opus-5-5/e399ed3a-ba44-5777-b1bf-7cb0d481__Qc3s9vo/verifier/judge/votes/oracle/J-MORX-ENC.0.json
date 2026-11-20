@@ -1,0 +1,8 @@
+{
+ "case": "oracle",
+ "id": "J-MORX-ENC",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The morx state-table fields now use `MorphStateTable`, but its write method delegates to the unchanged `STXHeader.write` for the `\"morx\"` tag. The new binary-writing logic applies only to `\"mort\"`; the shared XML-reading changes do not change compilation bytes for the same objects.\nNO"
+}

@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JW1",
- "trial": 10,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The client-call wrapper catches the botocore exception and uses a bare `raise`, preserving the original exception object. The streamed-body changes add span finalization but show no replacement or suppression of the exception raised by the read.\nNO"
-}

@@ -1,0 +1,8 @@
+{
+ "case": "presign-propagates",
+ "id": "JP1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The change removes the early return for signature versions ending in `-query` or `-presign-post` from `_sentry_before_sign`. Such requests can now receive trace propagation headers when their URL passes the propagation check, whereas the base version skips adding those headers.\nYES"
+}

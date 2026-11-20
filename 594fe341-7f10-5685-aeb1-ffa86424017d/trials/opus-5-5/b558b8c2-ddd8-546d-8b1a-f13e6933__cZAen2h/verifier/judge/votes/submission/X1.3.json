@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "X1",
- "trial": 3,
- "model": "gpt-6.1-sol",
- "label": "FAIL",
- "response": "The submission does not meet the criterion.\n\nLangGraph does perform the provider-side check: `interrupt` builds a `TypeAdapter` and calls `_validate_resume` before returning a resumed answer. LangChain also correctly supplies its decision type through `response_schema=_decision_schema(...)`.\n\nHowever, LangChain then checks the returned decision again. In `_resolve`, the decision from `_review` is passed to the existing `_process_decision`:\n\n```python\n_, tool_message = self._process_decision(decision, request.tool_call, config)\n```\n\nThat method retains its allowed-decision checks and its error path for unexpected or disallowed decisions. Thus, the per-call path reuses middleware-side answer validation after the provider has already validated the answer. The criterion requires the middleware to rely on the provider\u2019s check and merely apply the returned decision.\n\nFAIL"
-}

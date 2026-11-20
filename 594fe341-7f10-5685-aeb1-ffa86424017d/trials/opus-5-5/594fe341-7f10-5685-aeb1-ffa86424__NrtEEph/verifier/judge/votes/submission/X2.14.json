@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X2",
+ "trial": 14,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission does not meet the minimality and backwards-compatibility criterion.\n\nThe public additions are optional: `interrupt` and `Interrupt` default `response_schema` to `None`, and the SDK declares it with `NotRequired`. The custom representation and debug serialization also preserve the old display when no schema is supplied.\n\nHowever, the LangGraph change goes substantially beyond adding optional schema handling. It redesigns resume bookkeeping across the scratchpad, task preparation, runner, loop, and exception hierarchy. Crucially, that bookkeeping change applies even to callers that supply no schema:\n\n- Previously, `_algo.py` appended an ID-mapped answer directly to `task_resume_write`.\n- The submission holds that answer separately in `mapped_resume` until an interrupt consumes it.\n- Consequently, replaying an earlier interrupt no longer sends the same resume list as before. If execution fails before reaching the interrupt intended to consume the mapped answer, its persistence can differ from the previous implementation\u2014even though neither interrupt declares a schema.\n\nThus the no-schema path is not simply preserved with validation disabled; its resume-state behavior has changed. Combined with the broad runtime redesign, this fails the requirement that the LangGraph change be minimal and that existing no-schema callers see exactly the previous behavior.\n\nFAIL"
+}

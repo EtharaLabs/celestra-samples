@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MORX-ENC",
+ "trial": 5,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new classic-state-table compilation path runs only when the writer\u2019s table tag is `\"mort\"`, not `\"morx\"`. The other changes affect object equality, XML parsing, or the stored `StructLength` after compilation; they do not change the bytes emitted when compiling the same extended morx objects.\nNO"
+}

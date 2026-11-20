@@ -1,0 +1,8 @@
+{
+ "case": "alternate",
+ "id": "J-MORX-ENC",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new MorphStateTable converter delegates morx compilation to the original STXHeader.write, whose byte-writing logic is unchanged. The other changes affect mort encoding or XML handling, not compilation of the same extended morx objects.\nNO"
+}

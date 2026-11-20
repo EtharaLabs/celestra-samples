@@ -1,0 +1,8 @@
+{
+ "case": "schemaless-break",
+ "id": "X2",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission makes `response_schema` optional in LangGraph\u2019s `interrupt`, `Interrupt.__init__`, and `Interrupt.from_ns`, preserving calls that omit the keyword.\n\nHowever, in the SDK\u2019s interrupt `TypedDict`, it adds:\n\n```python\nresponse_schema: dict[str, Any] | None\n```\n\nThis makes the key **required**, even though its value may be `None`. Existing interrupt objects containing only `value` and `id` therefore no longer satisfy the SDK type. Optionality of the value is not optionality of the field; the field needs `NotRequired[...]` to preserve compatibility.\n\nThus, the submission violates the requirement that the new field be optional everywhere.\n\nFAIL"
+}

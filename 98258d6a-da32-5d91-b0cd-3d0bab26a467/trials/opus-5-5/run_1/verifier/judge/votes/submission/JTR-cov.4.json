@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JTR-cov",
- "trial": 4,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The inner `func` converts time-dependent efficiency with `_to_model`, but obtains weights using only `n.snapshot_weightings.generators.loc[sns]`. Selecting a pandas MultiIndex with flat tuple labels still returns MultiIndex-indexed weights, so the inner function does not consistently take both inputs in the selected flat representation.\nNO"
-}

@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JF3",
- "trial": 4,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The wrapper finishes the client span when `_instrument_streaming_body` returns false, and that function only looks for a `\"Body\"` entry. A boto3 Lambda `invoke` response instead exposes its streaming body as `\"Payload\"`, so its client span is finished when the API method returns even if that stream is still unread.\nYES"
-}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-TRIM-LO",
+ "trial": 6,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The classic contextual decoder sign-extends entry offsets and computes the first eligible glyph as `max(0, ceil(substOffset / 2) - offset)`. Consequently, every replacement word it reads has byte position `2 * (offset + glyphID) >= substOffset`, for both negative and positive entry offsets; earlier words are excluded.\nYES"
+}

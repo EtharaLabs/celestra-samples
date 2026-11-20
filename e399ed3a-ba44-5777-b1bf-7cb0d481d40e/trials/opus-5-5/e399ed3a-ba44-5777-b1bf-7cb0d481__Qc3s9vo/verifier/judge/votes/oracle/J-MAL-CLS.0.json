@@ -1,0 +1,8 @@
+{
+ "case": "oracle",
+ "id": "J-MAL-CLS",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new `MorphStateTable` converter routes classic `mort` state tables to `StateHeader.read`, which explicitly raises `ValueError(\"mort state table has no glyph classes\")` when `GlyphClassCount` is zero. Thus the change does not allow such a state table to decompile successfully.\nNO"
+}

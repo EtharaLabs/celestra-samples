@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J2",
- "trial": 9,
- "model": "gpt-6.1-sol",
- "label": "FAIL",
- "response": "The submission largely uses general solver semantics: it tracks an arbitrary number of active input sets, restarts each from its own final state, selects sensitivities by name, and applies the chain rule when mapping states between models. It does not appear to special-case particular input names or test models.\n\nHowever, discontinuity handling is not general for all solve windows. In `_set_up_events`, constant modulo periods for solvers without `t_eval` discontinuity support still use:\n\n```python\nelif tf is None:\n    num_events = 200\n```\n\nThose events are generated during setup rather than expanded from the current integration window at each solve or step. Consequently, later steps can exceed the fixed 200-reset horizon, and a subsequent solve with a longer window can exceed the events generated for the original setup. Required restarts are then omitted.\n\nThis is a fixed numerical restriction on discontinuity handling, inconsistent with the criterion\u2019s requirement that restarts derive from general semantics for any discontinuity times. The otherwise generic restart machinery does not remove that restriction.\n\nFAIL"
-}

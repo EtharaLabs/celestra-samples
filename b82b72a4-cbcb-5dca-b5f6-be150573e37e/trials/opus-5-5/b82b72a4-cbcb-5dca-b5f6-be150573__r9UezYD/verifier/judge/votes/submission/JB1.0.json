@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JB1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The request-created handler still records one breadcrumb per event, using the same URL, query, fragment, and HTTP-method fields in each tracing mode. The changes move span creation and finishing to the API-call wrapper but do not change the breadcrumb registration, data construction, or recording call.\nNO"
+}

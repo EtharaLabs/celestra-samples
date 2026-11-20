@@ -1,8 +1,0 @@
-{
- "case": "jit-cov-w1",
- "id": "JIT-cov",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The changed iteration call unconditionally constructs `pd.Index(..., tupleize_cols=False, name=\"snapshot\")` before passing snapshots to `n.optimize`. For a network with MultiIndex snapshots, this forces them into a flat index of tuples even when `optimization.model_snapshot_index=\"multiindex\"`, rather than passing the MultiIndex through for the selected representation to handle.\nYES"
-}

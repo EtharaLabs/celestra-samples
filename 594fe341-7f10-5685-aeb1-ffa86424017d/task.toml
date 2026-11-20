@@ -21,6 +21,8 @@ platforms = ["linux/amd64", "linux/arm64"]
 timeout_sec = 3600
 network_mode = "no-network"
 environment_mode = "separate"
+# test.sh starts as root only to make the submission readable, then grades as uid 10001.
+user = "root"
 
 [verifier.environment]
 network_mode = "no-network"

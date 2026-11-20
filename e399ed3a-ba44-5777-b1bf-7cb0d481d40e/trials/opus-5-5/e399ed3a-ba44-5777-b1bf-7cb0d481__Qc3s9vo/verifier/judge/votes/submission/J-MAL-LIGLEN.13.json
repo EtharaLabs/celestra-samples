@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MAL-LIGLEN",
+ "trial": 13,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new classic ligature reader explicitly checks `(ligatureOffset - componentOffset) % 2` and raises `ValueError` if the component table has an odd byte length. Thus, although the change adds classic `mort` ligature support, it does not allow the case specified by the criterion to decompile successfully.\nNO"
+}

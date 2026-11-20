@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JF2",
+ "trial": 1,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The exception path finishes the client span and re-raises, so it cannot also reach normal completion. On success, either the caller finishes the span or streaming-body handlers do so behind a shared `finished` guard; instrumentation failure disables those handlers\u2019 finishing before leaving the caller to finish the client span.\nNO"
+}

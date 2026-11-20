@@ -1,0 +1,8 @@
+{
+ "case": "jsl-cov-w2",
+ "id": "JSL-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The change replaces `snapshot=sns` in the secant-loss active-data lookup with `pd.Index(list(sns), tupleize_cols=False, name=\"snapshot\")`, forcing flat tuple labels even when `sns` is a MultiIndex. Thus, for a multi-period network using `\"multiindex\"` (or `\"auto\"` under legacy semantics), it reads per-snapshot line activity using a fixed flat representation rather than the supplied representation.\nYES"
+}

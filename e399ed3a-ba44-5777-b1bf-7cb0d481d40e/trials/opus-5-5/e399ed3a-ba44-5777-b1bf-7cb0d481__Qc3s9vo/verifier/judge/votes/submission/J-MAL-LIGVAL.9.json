@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MAL-LIGVAL",
+ "trial": 9,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new classic ligature decompiler calls `_readClassicLigatureTables`, which explicitly raises `ValueError(\"'mort' component table holds an odd value\")` if any component value is odd. Thus the added support still rejects the tables described in the criterion.\nNO"
+}

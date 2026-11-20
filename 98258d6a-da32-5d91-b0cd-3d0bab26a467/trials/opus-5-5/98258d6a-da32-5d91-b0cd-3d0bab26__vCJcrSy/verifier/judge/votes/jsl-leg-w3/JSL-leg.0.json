@@ -1,0 +1,8 @@
+{
+ "case": "jsl-leg-w3",
+ "id": "JSL-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The diff changes `define_secant_loss_constraints` from adding `lhs >= offset` to adding `lhs <= offset` for both secant signs. This reverses the inequality for active secant-loss constraints regardless of snapshot representation, including under legacy semantics with the default, `\"auto\"`, or `\"multiindex\"` option.\nYES"
+}

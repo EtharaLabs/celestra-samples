@@ -1,8 +1,0 @@
-{
- "case": "read-chunk-finish",
- "id": "JF3",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The wrapped `StreamingBody.read()` unconditionally calls `finish_span()` after every successful read, which finishes both the streaming span and the boto3 client span. Thus a partial read, such as `read(1)` on a larger body, ends the client span while response bytes remain unread.\nYES"
-}

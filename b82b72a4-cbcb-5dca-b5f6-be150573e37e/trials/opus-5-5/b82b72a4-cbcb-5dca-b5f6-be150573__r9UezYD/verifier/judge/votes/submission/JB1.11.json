@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JB1",
+ "trial": 11,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The breadcrumb remains recorded by the `request-created` handler once per emitted request, including retries. Both streaming and non-streaming branches construct the same URL and method data as before and call the unchanged `add_http_breadcrumb(None, breadcrumb)`; the changes relocate span management rather than alter breadcrumb recording.\nNO"
+}

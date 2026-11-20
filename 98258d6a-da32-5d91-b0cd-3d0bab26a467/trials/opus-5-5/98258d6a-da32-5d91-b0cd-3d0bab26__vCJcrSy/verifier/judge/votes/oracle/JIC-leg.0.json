@@ -1,0 +1,8 @@
+{
+ "case": "oracle",
+ "id": "JIC-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "Under legacy semantics, both `\"auto\"` and `\"multiindex\"` retain the MultiIndex snapshot representation, so the new flattening logic does not alter component arrays. The diff leaves `installed_capex` unchanged, and the statistics aggregation change only affects objects with xarray-style dimensions, not its pandas-based period weighting. Thus the diff does not establish a different reported period-weighted installed capex.\n\nNO"
+}

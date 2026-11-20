@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JCM-cov",
+ "trial": 4,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "`create_model` computes `flat_snapshots` and converts the snapshots stored in `n.model.parameters`, but never converts `sns` itself before passing it to the variable and constraint builders. Thus, for a multi-period network with `\"flat\"` (or `\"auto\"` under v1 semantics), those builders still receive a MultiIndex; the component-data context does not change that argument.\nNO"
+}

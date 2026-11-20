@@ -1,8 +1,0 @@
-{
- "case": "jfx-leg-w1",
- "id": "JFX-leg",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The change adds `.fillna(0)` to _from_xarray\u2019s return path for arrays with dimensions `{\"name\"}` or `{\"name\", \"snapshot\"}`. Thus, for a non-stochastic component and an array containing NaN on that path, the base commit preserves NaN while the submitted change returns zero, regardless of legacy semantics or the specified snapshot-index options.\nYES"
-}

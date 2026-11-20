@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J2",
+ "trial": 13,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission uses general solver semantics rather than test-specific cases:\n\n- Segment integration tracks an arbitrary list of active input sets, independently removing sets that terminate and restarting the remaining sets from their own final solutions.\n- Restart states and sensitivities are extracted from each solution, with sensitivities selected by the requested parameter names rather than hard-coded names or column positions.\n- Cross-model sensitivity mapping uses the chain rule through the state mapper, including its direct dependence on inputs.\n- DAE algebraic sensitivities are reconstructed by differentiating the algebraic equations and solving the resulting linear system.\n- Modulo discontinuities are generated from the evaluated period and actual integration window, rather than a fixed event count or particular `t_eval` length.\n\nThere are numerical and validation differences from the reference\u2014for example, handling discontinuities extremely close to segment boundaries\u2014but these are general implementation choices, not branches tailored to particular graded models, parameter sets, or test shapes. The submission meets the criterion of deriving restarts generically without test-specific special-casing.\n\nPASS"
+}

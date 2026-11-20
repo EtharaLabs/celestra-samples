@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JP1",
+ "trial": 9,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The change retains the same `before-sign` propagation handler, still registered last to preserve existing baggage, and does not modify its header-selection or merging logic. The changes move span creation and lifetime management to the API-call wrapper; differences in span or trace IDs do not count under the criterion.\nNO"
+}

@@ -1,8 +1,0 @@
-{
- "case": "test-fitted",
- "id": "J2",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "FAIL",
- "response": "The submission fails the generality requirement in LangChain\u2019s `_edit_args`:\n\n```python\nschema = tool.tool_call_schema if tool is not None and tool.name == \"send_email\" else None\n```\n\nThis explicitly special-cases the tool name `\"send_email\"`. Every other tool receives a generic object schema for edited arguments, even if it has a Pydantic argument schema. Consequently, its argument requirements and types are neither exposed in the per-call response schema nor validated by the provider before saving the answer. Simply renaming an otherwise identical tool changes this behavior.\n\nThe LangGraph provider uses general `TypeAdapter` validation, but that cannot compensate for the middleware discarding schemas based on tool name. Thus, the combined change does not satisfy the criterion.\n\nFAIL"
-}

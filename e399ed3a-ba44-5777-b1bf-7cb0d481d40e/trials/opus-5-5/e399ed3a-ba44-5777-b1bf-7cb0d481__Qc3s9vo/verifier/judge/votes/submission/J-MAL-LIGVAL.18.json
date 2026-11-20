@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MAL-LIGVAL",
+ "trial": 18,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new classic mort ligature reader explicitly checks `if any(c % 2 for c in components)` and raises `ValueError(\"'mort' component table holds an odd value\")`. Thus, although the change adds classic mort ligature support, it does not allow a subtable with an odd component value to decompile successfully.\nNO"
+}

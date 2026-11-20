@@ -1,0 +1,32 @@
+{
+    "task": {
+        "path": "/tmp/harbor_task.qafcidcm/594fe341-7f10-5685-aeb1-ffa86424017d"
+    },
+    "trial_name": "594fe341-7f10-5685-aeb1-ffa86424__NrtEEph",
+    "trials_dir": "/home/ec2-user/depmig-work/harness-second/output/2026-11-19__19-49-05",
+    "environment_build_timeout_multiplier": 4.0,
+    "agent": {
+        "name": "crossrepo_harness.adapters.reasoning_openhands_sdk:ReasoningOpenHandsSDK",
+        "model_name": "anthropic/claude-opus-5-5",
+        "extra_allowed_hosts": [
+            "cc-bridge-internal"
+        ],
+        "kwargs": {
+            "config": {
+                "log_completions": true,
+                "log_completions_folder": "/logs/agent/completions"
+            }
+        },
+        "env": {
+            "LLM_BASE_URL": "http://cc-bridge-internal:8765",
+            "LLM_API_KEY": "${LLM_API_KEY}",
+            "LLM_DROP_PARAMS": "true"
+        }
+    },
+    "environment": {
+        "type": "docker",
+        "force_build": true,
+        "delete": false
+    },
+    "job_id": "eb8797a8-b1c4-45db-ab82-43d4733e6eea"
+}

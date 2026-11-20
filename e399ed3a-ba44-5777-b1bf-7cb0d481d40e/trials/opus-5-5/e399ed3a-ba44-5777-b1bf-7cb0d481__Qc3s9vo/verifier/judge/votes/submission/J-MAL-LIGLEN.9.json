@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MAL-LIGLEN",
+ "trial": 9,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new classic ligature reader explicitly raises `ValueError` when `(ligatureOffset - componentOffset) % 2` is nonzero, i.e. when the component table has an odd byte length. Thus the added decompilation support still rejects the tables described by the criterion.\nNO"
+}

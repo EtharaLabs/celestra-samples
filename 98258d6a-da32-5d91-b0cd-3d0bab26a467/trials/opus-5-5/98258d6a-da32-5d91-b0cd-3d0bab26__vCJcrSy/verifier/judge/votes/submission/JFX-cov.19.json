@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JFX-cov",
+ "trial": 19,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "`_from_xarray` now calls `_unflatten_snapshots` for every snapshot-indexed array attached to a network, without consulting `optimization.model_snapshot_index`. For a flat tuple-labelled array with suitable auxiliary coordinates and the option set to `\"flat\"`, this restores a MultiIndex before conversion, imposing the MultiIndex representation rather than retaining the selected flat representation.\nYES"
+}

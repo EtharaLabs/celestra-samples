@@ -1,8 +1,0 @@
-{
- "case": "jic-cov-w1",
- "id": "JIC-cov",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The change makes `installed_capex` obtain weighting periods from `self._n.model.parameters.snapshots.to_index().unique(level=\"period\")`, assuming a MultiIndex with a named `period` level. For a multi-period model built with `optimization.model_snapshot_index = \"flat\"`, snapshots instead have flat tuple labels, so this weighting code relies on the fixed MultiIndex representation rather than the selected representation.\nYES"
-}

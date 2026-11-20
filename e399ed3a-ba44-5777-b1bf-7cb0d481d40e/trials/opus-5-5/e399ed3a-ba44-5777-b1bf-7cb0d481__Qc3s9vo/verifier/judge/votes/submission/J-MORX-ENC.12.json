@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MORX-ENC",
+ "trial": 12,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new state-table compilation path is used only when `writer.tableTag == \"mort\"`; extended `morx` tables retain the existing write path. The XML class-count change affects object construction, and assigning `StructLength` after compilation updates the object without changing the bytes already written. The diff therefore does not establish different compiled `morx` bytes for the same objects.\nNO"
+}

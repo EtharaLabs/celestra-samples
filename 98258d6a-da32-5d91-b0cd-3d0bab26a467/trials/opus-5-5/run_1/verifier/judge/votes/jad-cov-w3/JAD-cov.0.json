@@ -1,8 +1,0 @@
-{
- "case": "jad-cov-w3",
- "id": "JAD-cov",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "In `_as_dynamic`, the change unconditionally converts `res.index` to a `(period, timestep)` `MultiIndex` whenever the network has periods, without consulting the snapshot-index option. Thus, for a multi-period component with a static attribute and `optimization.model_snapshot_index = \"flat\"`, the dynamic frame is built on a fixed MultiIndex representation instead of the selected flat representation; the later flattening in `_as_xarray` does not change this behavior of `_as_dynamic`.\nYES"
-}

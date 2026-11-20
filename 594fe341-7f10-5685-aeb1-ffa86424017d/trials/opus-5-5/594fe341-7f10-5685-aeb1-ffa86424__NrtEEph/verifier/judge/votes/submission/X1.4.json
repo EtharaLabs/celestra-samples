@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X1",
+ "trial": 4,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission puts provider-side validation in LangGraph\u2019s `interrupt`: it builds a `TypeAdapter` and validates resume values before accepting them. LangChain also passes its decision type through `response_schema`.\n\nHowever, LangChain\u2019s `_review` then calls:\n\n```python\n_, tool_message = self._process_decision(decision, tool_call, config)\n```\n\nThat existing method checks the decision type against the configured `allowed_decisions` and raises for unexpected decisions. Thus, the per-call path checks the returned decision again after LangGraph has already validated it against the allowed-decision schema.\n\nThe criterion requires the middleware to rely on the provider\u2019s checking, without revalidating the returned answer. Reusing the existing checking method still violates that requirement.\n\nFAIL"
+}

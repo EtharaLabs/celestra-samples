@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J2",
- "trial": 7,
- "model": "gpt-6.1-sol",
- "label": "FAIL",
- "response": "The submission builds decision schemas dynamically from the allowed decisions, tool name, and tool argument schema; it does not hard-code the tools or arguments used in tests.\n\nHowever, the provider\u2019s validation is not generic across caller-supplied response schemas. `_validate_resume` catches every Pydantic `ValidationError` and reconstructs it as `InvalidResumeError` using `error.__reduce__()` followed by `from_exception_data`.\n\nThat reconstruction does not support arbitrary custom Pydantic error types. For example, a response model can have a validator that raises:\n\n```python\nraise PydanticCustomError(\"review_denied\", \"This response is not permitted\")\n```\n\n`TypeAdapter.validate_python` correctly produces a `ValidationError`, but its serialized error details contain the custom string error type `\"review_denied\"`. Passing those details to `from_exception_data` raises a `KeyError` for the unknown error type rather than preserving the validation error.\n\nConsequently, an ordinary caller-provided Pydantic response schema can escape the intended validation-error/control-flow path. The provider therefore does not uphold the criterion for any response schema the caller passes.\n\nFAIL"
-}

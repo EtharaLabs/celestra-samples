@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JSM-cov",
+ "trial": 4,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "`solve_model` passes the current `n.snapshots` through `_as_model_snapshots`, rather than obtaining snapshots from the built model. That helper only flattens a MultiIndex for a flat model; it cannot restore the model\u2019s representation if the network\u2019s snapshot structure has changed since model creation (for example, from single-period snapshots to a MultiIndex). Thus some call paths can pass snapshots in a different representation from the model\u2019s.\nNO"
+}

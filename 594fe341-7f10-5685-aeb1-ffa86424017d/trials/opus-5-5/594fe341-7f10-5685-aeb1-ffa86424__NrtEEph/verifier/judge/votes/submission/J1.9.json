@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J1",
+ "trial": 9,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission fails the focus and scope requirement. While its LangChain changes stay within `human_in_the_loop.py` and reuse existing decision-processing logic, its LangGraph changes extend substantially beyond `interrupt`, `Interrupt`, and the SDK interrupt type:\n\n- It changes `PregelScratchpad` and resume-value handling in `pregel/_algo.py`, adding a separate `mapped_resume` mechanism.\n- It introduces a new `ResumeRejected` exception in `errors.py` and modifies both the runner and loop to propagate and handle it.\n- It rewrites debug serialization in `pregel/debug.py`, adding `_interrupt_payload` to omit unset schemas.\n\nThese are active changes rather than dead code, but they broaden the fix into execution-engine resume bookkeeping, exception propagation, and debug-output behavior. That violates the criterion\u2019s explicit confinement, regardless of whether those changes improve other behavior. The reference demonstrates that the requested validation can be implemented without this broader machinery.\n\nFAIL"
+}

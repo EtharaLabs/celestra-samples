@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JFX-leg",
- "trial": 17,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "`_from_xarray` now unconditionally calls `unflatten_snapshots`, independently of the semantics or snapshot-index option. For an input with a flat object-valued `snapshot` index of `(period, timestep)` tuples, this replaces that index with a pandas MultiIndex before the unchanged conversion logic runs, changing the returned index compared with the base commit.\n\nYES"
-}

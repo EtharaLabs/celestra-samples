@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JAD-leg",
- "trial": 12,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The added `da = unflatten_snapshots(da)` is unconditional, rather than guarded by the model snapshot option or linopy semantics. For input with a flat, tuple-labelled `snapshot` index, it restores a `(period, timestep)` MultiIndex before dynamic-frame construction, unlike the base implementation, so such input can produce a different frame even under legacy semantics.\nYES"
-}

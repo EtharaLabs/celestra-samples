@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JSM-leg",
- "trial": 8,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "Under legacy semantics, `\"auto\"` resolves to `\"multiindex\"`, so the new context does not flatten snapshots and `_to_model` returns the index unchanged. `solve_model` already passed `n.snapshots` before this change; thus any mismatch when the model was built over a subset is pre-existing, not introduced by the change.\nNO"
-}

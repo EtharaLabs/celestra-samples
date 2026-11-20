@@ -1,8 +1,0 @@
-{
- "case": "oracle",
- "id": "J-TRIM-LO",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The contextual decoder sets `firstGlyph = max(0, (substitutionTableOffset + 1) // 2 - offset)`, ensuring every replacement word read starts at or after the substitution table. This bound applies equally to negative and positive entry offsets; if no glyph satisfies the bounds, no replacements are read.\nYES"
-}

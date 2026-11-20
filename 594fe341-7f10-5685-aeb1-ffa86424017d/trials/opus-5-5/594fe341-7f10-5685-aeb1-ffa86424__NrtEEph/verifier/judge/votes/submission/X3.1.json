@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X3",
+ "trial": 1,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets the boundary-consistency criterion.\n\n- **Validation is owned by LangGraph.** The middleware constructs the decision type and passes it to `interrupt(response_schema=...)`; it does not independently parse or normalize the resume value. Plain graphs use the same provider-side validation.\n- **Both resume forms converge before validation.** Previously recorded answers, interrupt-ID-mapped answers, and ordinary resume values all reach the same `TypeAdapter.validate_python` call.\n- **Storage and replay use consistent representations.** The provider stores the original value `v`, returns the validated `answer`, and validates the stored original again on replay. This behavior does not depend on whether the answer was supplied directly or by interrupt ID.\n- **Rejected answers are not accepted into resume history.** New values are appended only after successful validation. The added `ResumeRejected` handling surfaces the validation error while retaining a pending interrupt.\n- **The middleware preserves reviewer arguments deliberately.** Its argument wrap validator checks the tool\u2019s schema but returns the supplied arguments, leaving execution-time tool validation to the tool.\n\nThe implementation differs from the reference in its scratchpad and error-handling machinery, but those differences do not establish a violation of the specified provider/consumer agreement.\n\nPASS"
+}

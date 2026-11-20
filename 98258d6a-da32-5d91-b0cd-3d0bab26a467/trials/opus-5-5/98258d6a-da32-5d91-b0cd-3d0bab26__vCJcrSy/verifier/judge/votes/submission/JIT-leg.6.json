@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JIT-leg",
+ "trial": 6,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not modify `optimize_transmission_expansion_iteratively` or its snapshot-selection logic. Under legacy semantics, `\"auto\"` resolves to `\"multiindex\"`, so the new representation handling does not change which snapshots are passed to an iteration\u2019s optimisation; the other changes affect model construction and results, not that snapshot argument.\nNO"
+}

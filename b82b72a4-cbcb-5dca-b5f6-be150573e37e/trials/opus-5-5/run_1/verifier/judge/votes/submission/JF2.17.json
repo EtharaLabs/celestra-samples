@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JF2",
- "trial": 17,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "YES: if streaming-body instrumentation fails after installing a body wrapper, the exception is suppressed by `capture_internal_exceptions()` and `body_instrumented` remains false, so the call\u2019s span is finished immediately. A later read or close through that wrapper can invoke its guarded completion callback, which finishes the same client span again; its local `finished` flag does not track the earlier fallback finish.\nYES"
-}

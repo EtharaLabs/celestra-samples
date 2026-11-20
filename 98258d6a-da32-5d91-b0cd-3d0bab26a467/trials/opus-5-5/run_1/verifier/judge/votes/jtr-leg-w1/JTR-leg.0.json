@@ -1,8 +1,0 @@
-{
- "case": "jtr-leg-w1",
- "id": "JTR-leg",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The transmission inner function previously multiplied branch flow by `efficiency[idx]`, but the change computes efficiency without applying it: `p = var.loc[:, idx]`. Thus, for example, a Link with non-unit output efficiency and nonzero flow produces a different transmission expression at its output port, including under legacy semantics with the default, `\"auto\"`, or `\"multiindex\"` setting.\nYES"
-}

@@ -1,0 +1,8 @@
+{
+ "case": "jnl-leg-w3",
+ "id": "JNL-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The diff changes the non-linear power-flow call from `n.pf(snapshots=snapshots, ...)` to `n.pf(snapshots=n.snapshots, ...)`. Thus, for a request specifying a proper subset of the network\u2019s snapshots, the changed function power-flows all network snapshots rather than just the requested subset, regardless of the snapshot-index option under legacy semantics.\nYES"
+}

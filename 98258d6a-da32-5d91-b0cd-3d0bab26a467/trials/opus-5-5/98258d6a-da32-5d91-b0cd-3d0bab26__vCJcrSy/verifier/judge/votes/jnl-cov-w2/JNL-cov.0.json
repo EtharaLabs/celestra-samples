@@ -1,0 +1,8 @@
+{
+ "case": "jnl-cov-w2",
+ "id": "JNL-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The change replaces passing `snapshots` unchanged with `pd.Index(list(snapshots), tupleize_cols=False, name=\"snapshot\")`, unconditionally forcing a flat index. For a network with MultiIndex snapshots and `optimization.model_snapshot_index = \"multiindex\"` under legacy linopy semantics, this converts an accepted MultiIndex into flat tuple labels before passing it to optimisation, regardless of the selected representation.\nYES"
+}

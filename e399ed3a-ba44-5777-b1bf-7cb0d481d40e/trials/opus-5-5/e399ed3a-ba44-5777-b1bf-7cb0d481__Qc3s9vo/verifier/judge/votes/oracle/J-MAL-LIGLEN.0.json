@@ -1,0 +1,8 @@
+{
+ "case": "oracle",
+ "id": "J-MAL-LIGLEN",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new classic ligature reader explicitly raises `ValueError(\"invalid mort ligature component table\")` when `(ligatureOffset - componentOffset) % 2` is nonzero. Thus a component table with an odd byte length is rejected rather than successfully decompiled.\nNO"
+}

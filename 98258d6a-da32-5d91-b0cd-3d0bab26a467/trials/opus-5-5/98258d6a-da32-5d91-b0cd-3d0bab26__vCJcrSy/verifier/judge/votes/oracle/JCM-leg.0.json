@@ -1,0 +1,8 @@
+{
+ "case": "oracle",
+ "id": "JCM-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "Under legacy semantics, `use_flat_snapshot_index` returns false for both `\"auto\"` (the default) and `\"multiindex\"`. Consequently, `SnapshotWindow.build` preserves the original `sns` as `model_index`, so the new assignment in `create_model` hands the variable and constraint builders the same snapshots as before.\nNO"
+}

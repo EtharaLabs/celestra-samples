@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JNL-leg",
- "trial": 13,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "Under legacy semantics, `\"auto\"` resolves to `\"multiindex\"`, so the new flattening machinery does not change snapshot labels or selection. The diff leaves `optimize_and_run_non_linear_powerflow` unchanged, retains the same `as_index` selection for model creation, and preserves the model snapshot index when assigning results; it therefore does not establish different optimization or power-flow snapshots for the same request.\nNO"
-}

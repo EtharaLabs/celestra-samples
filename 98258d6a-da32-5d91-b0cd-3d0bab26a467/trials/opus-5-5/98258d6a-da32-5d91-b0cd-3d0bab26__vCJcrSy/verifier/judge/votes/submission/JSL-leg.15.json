@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JSL-leg",
+ "trial": 15,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "Under legacy semantics, the default and `\"auto\"` resolve to `\"multiindex\"`, so snapshot representation is unchanged. The secant-function edits only select coefficient and upper-limit arrays by the loss variables\u2019 existing asset names, making legacy label alignment explicit; they do not change the snapshots used or the resulting secant constraints.\n\nNO"
+}

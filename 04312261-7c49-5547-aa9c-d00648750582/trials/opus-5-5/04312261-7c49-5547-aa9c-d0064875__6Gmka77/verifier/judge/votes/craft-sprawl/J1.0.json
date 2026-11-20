@@ -1,0 +1,8 @@
+{
+ "case": "craft-sprawl",
+ "id": "J1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission largely follows the reference\u2019s coherent changes to segment integration, discontinuity handling, sensitivity initialisation, and Modulo reset times. However, it also adds `_restart_state_sensitivities_by_loop` in `base_solver.py`, which duplicates the existing `_restart_state_sensitivities` helper.\n\nThe added method performs the same named-column extraction and stacking using loops, and no code in the submitted diff calls it. It therefore introduces both dead code and duplicated logic rather than reusing the existing helper. This directly violates the criterion, even though the remaining changes are appropriately scoped.\n\nFAIL"
+}

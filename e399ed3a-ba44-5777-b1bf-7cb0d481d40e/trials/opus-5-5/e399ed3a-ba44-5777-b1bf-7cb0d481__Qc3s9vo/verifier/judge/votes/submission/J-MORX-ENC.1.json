@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MORX-ENC",
+ "trial": 1,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new binary state-table compilation logic is used only when `writer.tableTag == \"mort\"`, leaving the extended `morx` write path unchanged. The glyph-class counting change affects XML reading, not compilation of the same objects, and assigning the computed `StructLength` after compilation does not change the bytes written. The added equality methods likewise do not change the binary encoding.\nNO"
+}

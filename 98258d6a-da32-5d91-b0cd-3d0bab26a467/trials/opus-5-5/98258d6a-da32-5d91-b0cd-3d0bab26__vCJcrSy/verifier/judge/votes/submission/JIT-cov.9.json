@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JIT-cov",
+ "trial": 9,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not modify `optimize_transmission_expansion_iteratively` or `abstract.py`, so it adds no fixed-representation coercion to the snapshots passed by that routine. The new model-building conversions instead select flat or MultiIndex snapshots according to `optimization.model_snapshot_index`.\nNO"
+}

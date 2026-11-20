@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-TRIM-HI",
+ "trial": 4,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The new `MortSubtableConverter` restricts each subtable\u2019s reader to that subtable\u2019s declared bytes. For contextual substitutions, `limit = min(numGlyphs, size // 2 - offset)` permits only complete replacement words within that boundary, and `_readClassicArray` additionally rejects reads past the reader\u2019s data.\nYES"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "jsl-leg-w2",
+ "id": "JSL-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The diff changes the secant offset in `define_secant_loss_constraints` from `-4 * atol * (a_factors * b_factors)` to `-2 * atol * (a_factors * b_factors)`. For a network with nonzero tolerance and factor product, this changes the resulting secant constraints, independently of snapshot representation or linopy semantics.\nYES"
+}

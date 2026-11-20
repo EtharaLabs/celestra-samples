@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J2",
+ "trial": 12,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets this criterion. Its restart logic is expressed in terms of general solver data and operations:\n\n- It tracks active input sets dynamically, preserving each set\u2019s own final state and stopping sets independently when they terminate.\n- It derives restart states from each solution\u2019s final state and selects sensitivities using the model\u2019s requested sensitivity names.\n- State mapping propagates sensitivities through the chain rule, using derivatives of the mapper rather than model-specific formulas.\n- Algebraic sensitivity initialization follows differentiation of the model\u2019s algebraic equations.\n- Discontinuity handling derives times from event expressions, modulo periods, and the integration window rather than particular input names or fixed evaluation-grid lengths.\n\nThere are no added branches keyed to particular test models, parameter values, named inputs, or a fixed number of input sets. Numerical edge-case correctness is a separate concern; the submitted approach is general solver-semantic logic rather than test-specific special-casing.\n\nPASS"
+}

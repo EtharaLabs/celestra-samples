@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JAD-leg",
- "trial": 1,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The diff does not change `_as_dynamic` or its dynamic-frame construction logic. The changes in `array.py` instead unflatten inputs in `_from_xarray` and conditionally flatten xarray output; under legacy semantics, `\"auto\"` resolves to `\"multiindex\"`, so the new model-building context does not enable flattening.\nNO"
-}

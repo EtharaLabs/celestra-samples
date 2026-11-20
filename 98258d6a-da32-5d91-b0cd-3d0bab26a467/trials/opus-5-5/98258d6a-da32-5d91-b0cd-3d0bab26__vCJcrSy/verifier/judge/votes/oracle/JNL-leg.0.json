@@ -1,0 +1,8 @@
+{
+ "case": "oracle",
+ "id": "JNL-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not change `optimize_and_run_non_linear_powerflow` or its snapshot selection. Under legacy semantics with `\"auto\"` or `\"multiindex\"`, `SnapshotWindow.build` retains the original snapshot index, and the optimization entry point passes the same request to model creation; the other changes do not establish a different set of optimized or power-flow snapshots.\nNO"
+}

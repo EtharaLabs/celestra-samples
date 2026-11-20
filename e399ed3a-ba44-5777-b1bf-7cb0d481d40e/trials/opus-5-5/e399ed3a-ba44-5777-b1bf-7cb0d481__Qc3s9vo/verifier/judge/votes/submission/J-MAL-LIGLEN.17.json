@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MAL-LIGLEN",
+ "trial": 17,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new classic mort ligature reader explicitly raises `ValueError` when `(ligatureOffset - componentOffset) % 2` is nonzero, rejecting a component table with an odd byte length. Thus the added decompilation support does not allow the specified case to return a table.\nNO"
+}

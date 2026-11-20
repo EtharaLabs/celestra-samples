@@ -1,0 +1,8 @@
+{
+ "case": "jad-leg-w2",
+ "id": "JAD-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The diff changes `_as_dynamic` to initialize `static_to_dynamic` with zeros instead of repeating `static_values` across snapshots. Thus, for a component with a nonzero static attribute included in `diff` (no corresponding dynamic column), the resulting dynamic frame contains zeros where the base commit contains that static value. This change is unconditional and applies under legacy semantics with the default, `\"auto\"`, or `\"multiindex\"` option.\nYES"
+}

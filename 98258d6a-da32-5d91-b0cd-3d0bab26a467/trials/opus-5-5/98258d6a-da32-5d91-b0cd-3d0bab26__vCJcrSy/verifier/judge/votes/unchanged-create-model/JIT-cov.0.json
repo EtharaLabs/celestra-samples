@@ -1,0 +1,8 @@
+{
+ "case": "unchanged-create-model",
+ "id": "JIT-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not modify `optimize_transmission_expansion_iteratively` or `abstract.py`. The new model-building wrapper chooses snapshot conversion according to `optimization.model_snapshot_index`, and the `as_index` change preserves flat tuple labels rather than forcing them into a MultiIndex; these changes do not impose a fixed representation on an iteration\u2019s optimisation input.\nNO"
+}

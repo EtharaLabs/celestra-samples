@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JF2",
+ "trial": 17,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The call wrapper finishes the client span on an exception or when no streaming body is instrumented; successful streaming instrumentation instead defers finishing to the body callbacks. Those callbacks share a `finished` guard, and instrumentation setup failure disables them before the caller finishes the client span, so the diff does not show a path that finishes it twice.\nNO"
+}

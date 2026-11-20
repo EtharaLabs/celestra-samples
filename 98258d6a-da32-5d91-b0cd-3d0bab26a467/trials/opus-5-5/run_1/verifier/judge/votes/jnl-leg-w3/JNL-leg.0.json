@@ -1,8 +1,0 @@
-{
- "case": "jnl-leg-w3",
- "id": "JNL-leg",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The power-flow call in `optimize_and_run_non_linear_powerflow` changes from `snapshots=snapshots` to `snapshots=n.snapshots`. Thus, for a successful request selecting a proper subset of a network\u2019s snapshots, base_commit power-flows only that subset whereas the change power-flows all network snapshots, including under legacy semantics with the default option.\nYES"
-}

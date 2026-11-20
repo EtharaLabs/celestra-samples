@@ -1,8 +1,0 @@
-{
- "case": "breadcrumb-dropped",
- "id": "JB1",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The original `_sentry_request_created` called `add_http_breadcrumb` for each request when the integration was enabled. The change moves that logic into `_add_request_breadcrumb`, but never calls this helper, so the boto3 breadcrumb is now missing for requests that previously recorded one.\nYES"
-}

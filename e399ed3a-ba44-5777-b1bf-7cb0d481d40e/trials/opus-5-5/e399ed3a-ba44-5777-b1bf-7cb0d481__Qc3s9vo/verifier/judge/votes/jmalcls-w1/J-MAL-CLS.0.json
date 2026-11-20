@@ -1,0 +1,8 @@
+{
+ "case": "jmalcls-w1",
+ "id": "J-MAL-CLS",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The new `MortSubtableConverter` dispatches classic mort state tables to `StateHeader.read`. That reader uses `max(table.GlyphClassCount, 1)` to avoid division by zero, and with zero glyph classes its transition loop is empty, so the divisions in `_readTransition` are never reached. Thus a suitably formed zero-class state table can decompile and return successfully.\nYES"
+}

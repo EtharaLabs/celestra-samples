@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JIC-cov",
- "trial": 4,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The diff does not modify `pypsa/statistics/expressions.py` or its `installed_capex` investment-period weighting. The new component-array flattening is controlled by snapshot contexts that follow the model\u2019s selected representation; the diff shows no fixed-representation override for that weighting.\nNO"
-}

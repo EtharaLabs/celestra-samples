@@ -1,0 +1,8 @@
+{
+ "case": "jmalligval-w3",
+ "id": "J-MAL-LIGVAL",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The change registers mort ligature subtables and routes their state tables through the new classic-format reader in `otConverters.py`. That reader explicitly clears the low bit of each component value before dividing by two, so an odd component value need not raise an exception and an otherwise suitable table can decompile successfully.\nYES"
+}

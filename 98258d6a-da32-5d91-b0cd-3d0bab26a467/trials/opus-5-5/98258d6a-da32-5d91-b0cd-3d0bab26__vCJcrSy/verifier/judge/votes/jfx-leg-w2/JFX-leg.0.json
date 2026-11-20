@@ -1,0 +1,8 @@
+{
+ "case": "jfx-leg-w2",
+ "id": "JFX-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The diff changes `_from_xarray` for arrays with dimensions `{\"name\", \"snapshot\"}` from transposing to `(\"snapshot\", \"name\")` to transposing to `(\"name\", \"snapshot\")` before calling `to_pandas()`. Thus, for a non-stochastic component and a two-dimensional array, it now returns a DataFrame with names as rows and snapshots as columns instead of the reverse, regardless of legacy semantics or the snapshot-index option.\nYES"
+}

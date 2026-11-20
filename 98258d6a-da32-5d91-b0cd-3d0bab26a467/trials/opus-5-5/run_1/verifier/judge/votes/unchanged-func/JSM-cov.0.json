@@ -1,8 +1,0 @@
-{
- "case": "unchanged-func",
- "id": "JSM-cov",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "Both callback sites in `optimize.py`, including `solve_model`, now obtain snapshots through `built_snapshots(n)`, which reads the current model\u2019s stored snapshot labels rather than the network\u2019s snapshots or the current layout option. Model creation stores the labels after `model_snapshots` selects their representation, so callbacks receive that same representation even on separate calls to `solve_model`.\nYES"
-}

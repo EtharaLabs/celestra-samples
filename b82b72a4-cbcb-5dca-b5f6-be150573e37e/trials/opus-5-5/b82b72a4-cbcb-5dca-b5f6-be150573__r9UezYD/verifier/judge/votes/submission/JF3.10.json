@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JF3",
+ "trial": 10,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "If `_instrument_streaming_body` raises while installing its wrappers, `capture_internal_exceptions()` suppresses the exception and leaves `body_instrumented` false. `_sentry_make_api_call` then finishes the client span immediately and returns the result, even though its streaming body can still be unread. Thus the change retains a path that finishes the client span prematurely.\n\nYES"
+}

@@ -1,8 +1,0 @@
-{
- "case": "reference",
- "id": "X2",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "PASS",
- "response": "The submission meets the criterion.\n\n- `interrupt(value)` remains valid: the new `response_schema` argument is keyword-only and defaults to `None`. Without a schema, no `TypeAdapter` is created and resume values are returned unchanged.\n- `Interrupt` and `Interrupt.from_ns` retain their existing arguments, with the new schema keyword defaulting to `None`. Existing deprecated-keyword handling is preserved.\n- The generic response type defaults to `Any`, so existing unparameterized uses of `Interrupt` remain supported.\n- The SDK adds `response_schema` as `NotRequired[dict[str, Any]]`; existing interrupt dictionaries containing only `value` and `id` remain valid.\n- The LangGraph changes are localized to the interrupt API and SDK schema, without unrelated restructuring.\n\nPASS"
-}

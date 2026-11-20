@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JH1",
- "trial": 19,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The change preserves URL parsing and the attribute keys and values in both tracing modes: streaming uses the same URL attributes and HTTP request method, while non-streaming uses the same AWS request URL, query, fragment, and HTTP method. The differences shown concern span ownership and lifetime, including retry overwrites, which the criterion excludes.\nNO"
-}

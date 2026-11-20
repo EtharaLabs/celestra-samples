@@ -1,0 +1,8 @@
+{
+ "case": "alternate",
+ "id": "J-TRIM-LO",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The contextual decoder sets `firstGlyph = max(0, (substitutionTableOffset + 1) // 2 - offset)`, ensuring that every replacement it reads starts at byte offset `2 * (offset + glyphID) >= substitutionTableOffset`. This bound applies equally to negative and positive entry offsets, and an empty valid range produces no replacements.\nYES"
+}

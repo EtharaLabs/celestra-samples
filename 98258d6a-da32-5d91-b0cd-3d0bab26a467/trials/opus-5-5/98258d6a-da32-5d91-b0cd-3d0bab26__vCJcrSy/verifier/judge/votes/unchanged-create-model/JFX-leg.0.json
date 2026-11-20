@@ -1,0 +1,8 @@
+{
+ "case": "unchanged-create-model",
+ "id": "JFX-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The new `_from_xarray` branch unconditionally converts a flat, tuple-valued `snapshot` index into a MultiIndex using the component\u2019s snapshot level names. This can change the returned index structure for such an input, and the branch is not gated on linopy semantics or `optimization.model_snapshot_index`, so it also applies under legacy semantics with the specified settings.\nYES"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-SHARE",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The change reuses AATStateTable, AATState, and the existing morph action classes for classic mort, adding classic-specific binary reading and compilation methods rather than separate copies of those classes. It also extends the existing shared state-table XML methods instead of duplicating them for mort.\nNO"
+}

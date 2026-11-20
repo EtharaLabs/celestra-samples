@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MAL-CLS",
+ "trial": 15,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new `mort` read path calls `_readClassic`, which explicitly raises `ValueError(\"'mort' state table has no glyph classes\")` when the header\u2019s glyph-class count (`stateSize`) is zero. Thus the change does not allow such a state table to decompile successfully.\nNO"
+}

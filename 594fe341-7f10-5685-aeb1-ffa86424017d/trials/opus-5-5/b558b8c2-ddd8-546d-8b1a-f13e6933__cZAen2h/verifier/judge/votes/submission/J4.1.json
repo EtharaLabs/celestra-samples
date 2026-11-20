@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J4",
- "trial": 1,
- "model": "gpt-6.1-sol",
- "label": "FAIL",
- "response": "The submission does not fully meet the documentation criterion.\n\n- **Per-call answer keys are not documented.** The new `InterruptMode`, `ToolApprovalRequest`, and constructor documentation describe single-decision answers, but never explain that clients must key those answers by **interrupt ID**, rather than tool-call ID or position. The `_decided` comment describes an internal cache keyed by runtime identity, not the client-facing resume mapping.\n- **Some wording conflates shown schemas with enforced schemas.** `InterruptMode` says the interrupt carries JSON Schema and that each answer is \u201cvalidated against that schema.\u201d The implementation instead validates against a Python type using Pydantic; raw JSON Schema is display-only. The new `Interrupt.response_schema` and SDK field descriptions similarly call it the schema of answers the interrupt \u201caccepts,\u201d without distinguishing display from enforcement.\n- **The resume return description remains inconsistent.** The added argument documentation correctly says that a typed schema causes `interrupt` to return the validated object, but the edited docstring\u2019s `Returns` section still unconditionally describes returning the value originally provided. Validation can transform that value.\n\nThe submission does correctly document that invalid answers are not recorded, and its helper documentation distinguishes enforced Pydantic argument schemas from display-only schemas. Those strengths do not resolve the missing keying instructions and misleading public descriptions.\n\nFAIL"
-}

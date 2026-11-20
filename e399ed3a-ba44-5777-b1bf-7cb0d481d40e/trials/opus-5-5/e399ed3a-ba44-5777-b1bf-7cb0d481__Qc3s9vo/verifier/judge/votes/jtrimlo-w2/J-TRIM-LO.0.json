@@ -1,0 +1,8 @@
+{
+ "case": "jtrimlo-w2",
+ "id": "J-TRIM-LO",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The lower bound `firstGlyph = max(0, substitutionTableOffset // 2 - offset - 1)` is off by one: for an even substitution-table offset, it can permit reading the word immediately before that table. This applies to both negative and positive entry offsets, and a nonzero value in that word is recorded as a replacement.\nNO"
+}

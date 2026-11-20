@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J2",
- "trial": 10,
- "model": "gpt-6.1-sol",
- "label": "PASS",
- "response": "The submission uses general solver state and metadata to construct restarts, rather than identifying particular test cases:\n\n- It tracks active input sets dynamically and restarts each from its own final segment state. Input sets that terminate early are removed independently.\n- It retrieves state sensitivities by the requested parameter names, rather than assuming particular names or a fixed sensitivity layout.\n- Cross-model sensitivity mapping applies the chain rule to the state mapper, with a variable-based fallback that accounts for input-dependent scales and references.\n- Discontinuity processing uses event expressions, modulo periods, inputs, and the integration interval\u2014not particular models, parameter values, or `t_eval` lengths.\n- Algebraic sensitivity initialization is derived from the algebraic equations and their Jacobians.\n\nThere are potential numerical and coverage limitations, including the retained 200-event fallback for some constant-modulo setup paths. However, these are implementation limitations rather than evidence of test-specific restart logic. The submitted restart machinery is a general, semantics-based implementation and does not special-case the graded examples.\n\nPASS"
-}

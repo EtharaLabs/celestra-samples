@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X2",
+ "trial": 9,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission does **not** meet the minimal-change requirement.\n\nAlthough `response_schema` defaults to `None` and the SDK field is `NotRequired`, the LangGraph changes go well beyond adding optional schema support. They introduce a new required scratchpad member, change how mapped resume values are staged, add a new exception class, and modify runner aggregation and loop exit handling.\n\nCrucially, the resume-staging changes also apply when **no schema is supplied**. Previously, `_algo.py` appended an ID-mapped answer to `task_resume_write` before replay, and an earlier `interrupt()` would emit that complete resume list. The submission keeps that answer separately in `mapped_resume` until its interrupt consumes it. Earlier interrupts therefore emit a different `RESUME` write, potentially changing persisted resume state if execution exits before reaching the next interrupt. This is not simply optional validation layered onto the existing no-schema path.\n\nThe custom representation and debug serialization preserve some existing output shapes, and the SDK addition is optional, but those measures do not make the broader execution changes minimal or leave no-schema callers with exactly the previous behavior.\n\nFAIL"
+}

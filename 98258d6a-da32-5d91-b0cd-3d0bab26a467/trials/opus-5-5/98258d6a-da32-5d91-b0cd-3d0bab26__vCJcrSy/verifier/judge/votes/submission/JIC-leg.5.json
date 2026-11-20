@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JIC-leg",
+ "trial": 5,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not modify `pypsa/statistics/expressions.py` or its `installed_capex` calculation. Under legacy semantics, `\"auto\"` resolves to `\"multiindex\"`, so the new flattening machinery does not change component snapshot data on that path; the changes to optimization expressions do not alter the statistical calculation\u2019s period weighting.\nNO"
+}

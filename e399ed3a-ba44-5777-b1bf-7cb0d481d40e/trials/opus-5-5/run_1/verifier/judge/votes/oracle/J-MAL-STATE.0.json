@@ -1,8 +1,0 @@
-{
- "case": "oracle",
- "id": "J-MAL-STATE",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "For `mort`, the new dispatcher uses `StateHeader.read`, which computes `stateDataLength = entryTableOffset - stateArrayOffset`. If the state array starts after the entry table, this is negative and explicitly raises `ValueError(\"mort state-array offset follows its entry table\")`, so the change does not enable the specified decompilation.\nNO"
-}

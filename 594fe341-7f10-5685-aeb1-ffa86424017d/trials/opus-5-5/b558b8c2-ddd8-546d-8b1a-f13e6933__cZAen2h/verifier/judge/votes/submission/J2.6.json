@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J2",
- "trial": 6,
- "model": "gpt-6.1-sol",
- "label": "FAIL",
- "response": "The submission does not fully meet the criterion. Although its decision construction and provider validation are generally dynamic, its JSON-schema embedding logic is not independent of argument names.\n\nIn `_rewrite_refs`, keys named `const`, `default`, `enum`, or `examples` are never traversed, regardless of their position in the schema. Those names identify data-valued keywords in a schema object, but they can also be ordinary tool argument names inside `properties`.\n\nFor example, a JSON-schema tool can legitimately have:\n```json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"default\": {\"$ref\": \"#/$defs/Item\"}\n  },\n  \"$defs\": {\n    \"Item\": {\"type\": \"integer\"}\n  }\n}\n```\n\n`_ShownArgsSchema` removes the original `$defs` and registers those definitions through Pydantic, requiring references to be rewritten. However, `_rewrite_refs` skips the entire property schema for the argument named `default`, leaving its reference untouched. That can produce an unresolved reference or fail JSON-schema generation. The same argument under a non-special name takes the intended rewriting path.\n\nThus, valid tool schemas behave differently based on argument names, violating the requirement that the per-call schema hold for any tool and argument names.\n\nFAIL"
-}

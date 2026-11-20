@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JSM-cov",
+ "trial": 17,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "`solve_model` still passes `n.snapshots`, and `_as_model_snapshots` returns that index unchanged whenever the model is not flat. If a model is built with MultiIndex snapshots and the network\u2019s snapshots are subsequently changed to a single-level index before calling `solve_model`, the callback receives the single-level index rather than the model\u2019s MultiIndex representation. Thus the conversion does not guarantee the criterion for every network and call path.\nNO"
+}

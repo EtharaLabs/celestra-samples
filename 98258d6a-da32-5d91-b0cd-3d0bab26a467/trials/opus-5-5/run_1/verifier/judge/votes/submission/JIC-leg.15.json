@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JIC-leg",
- "trial": 15,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "NO. The diff does not modify `pypsa/statistics/expressions.py`, and the shared statistics filtering changes merely replace `obj.loc[names]` with a helper whose default implementation performs the same selection. Under legacy semantics, default/`auto` resolves to `multiindex`, so the new flat-snapshot machinery does not change the period-weighted installed-capex calculation.\nNO"
-}

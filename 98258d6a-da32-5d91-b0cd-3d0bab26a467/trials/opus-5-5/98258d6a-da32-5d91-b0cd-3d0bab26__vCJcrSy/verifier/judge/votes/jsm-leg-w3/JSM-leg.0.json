@@ -1,0 +1,8 @@
+{
+ "case": "jsm-leg-w3",
+ "id": "JSM-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "Under legacy semantics, a multi-period model built with the default `\"auto\"` or `\"multiindex\"` retains the network\u2019s MultiIndex snapshot labels. However, `solve_model` now passes `n.snapshots.get_level_values(\"timestep\")` to `extra_functionality` for networks with investment periods, dropping the period labels and also ignoring any build-window subset.\nYES"
+}

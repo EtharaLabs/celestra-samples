@@ -1,8 +1,0 @@
-{
- "case": "unchanged-solve-model",
- "id": "JIT-leg",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The diff does not modify `optimization/abstract.py` or the iterative routine\u2019s snapshot selection and forwarding. Under legacy semantics, both `\"auto\"` (the default) and `\"multiindex\"` resolve to the multiindex layout, so `model_snapshots` returns the supplied snapshots unchanged; the other changes do not alter which snapshots that routine passes to an iteration\u2019s optimisation.\nNO"
-}

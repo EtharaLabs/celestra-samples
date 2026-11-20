@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J2",
+ "trial": 12,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets the criterion: its schema generation and provider-side validation are driven by caller inputs rather than test-specific values.\n\n- **Tool names are dynamic.** The edit schema pins `edited_action.name` using `Literal[tool_name]`, so the same mechanism applies to any tool name.\n- **Argument schemas come from the tool.** `_edited_args_type` inspects `tool.tool_call_schema`; it does not hard-code argument names or types. Pydantic-backed schemas are validated, while other tool schemas are surfaced with an object-validation fallback.\n- **Decision sets are configurable.** `_decision_schema` deduplicates the supplied allowed decisions and dynamically constructs either a single decision type or a discriminated union. It does not assume a particular tested subset or ordering.\n- **Provider validation is general.** `interrupt` uses `TypeAdapter(response_schema)` for non-dictionary schemas, supporting the Python schema forms Pydantic accepts rather than recognizing only HITL decisions or particular model classes. Dictionary JSON schemas are surfaced without enforcement, consistent with the reference behavior.\n- **Validation precedes acceptance.** Resume answers are validated before being appended and persisted, with rejected answers leaving an interrupt pending.\n\nThe special handling for schema-less `Tool` instances is based on tool representation, not fixture names or argument names. Nothing in the diff indicates test-specific schema construction or validation.\n\nPASS"
+}

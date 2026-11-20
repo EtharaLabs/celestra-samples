@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JTR-cov",
- "trial": 8,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The inner `func` still obtains weights with `n.snapshot_weightings.generators.loc[sns]` without converting them to the model\u2019s snapshot representation. For investment-period networks using flat snapshots, that selection retains the source MultiIndex rather than the flow variable\u2019s flat tuple index; conversion later in one aggregation path does not make the inner function satisfy the criterion.\nNO"
-}

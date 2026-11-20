@@ -1,0 +1,8 @@
+{
+ "case": "renamed",
+ "id": "JF2",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "NO: The API-call exception path finishes the client span once and re-raises, while successful calls either finish it directly or delegate finishing to the streaming-body wrappers. Those wrappers share a `finished` guard, and instrumentation failure sets that guard before the caller finishes the client span, preventing a later duplicate finish.\nNO"
+}

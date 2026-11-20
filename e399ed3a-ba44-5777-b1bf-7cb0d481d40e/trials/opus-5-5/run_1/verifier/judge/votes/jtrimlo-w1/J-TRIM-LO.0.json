@@ -1,8 +1,0 @@
-{
- "case": "jtrimlo-w1",
- "id": "J-TRIM-LO",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "`_readContextualLookups` receives `substitutionTableOffset` but never uses it to bound replacement reads. Its lower bound, `firstGlyph = max(0, -offset)`, only ensures that `2 * (offset + glyphID)` is nonnegative, not that it reaches the substitution table; thus both negative and positive offsets can read earlier words as replacements.\nNO"
-}

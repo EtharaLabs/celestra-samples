@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J-MORX-ENC",
- "trial": 9,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The new `_AATValue.__eq__` gives `LigAction` value-based equality instead of identity-based equality. Consequently, the shared ligature-action compiler can deduplicate distinct but equal action sequences that previously remained separate, changing the action data and indices written for an extended `morx` ligature subtable despite the unchanged `morx` write branch.\nYES"
-}

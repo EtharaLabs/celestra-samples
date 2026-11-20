@@ -1,0 +1,8 @@
+{
+ "case": "unchanged-func",
+ "id": "JCM-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The only added reassignment of `sns` in `create_model` is through `model_snapshots(n, sns)`. Under legacy semantics, `\"auto\"` resolves to `\"multiindex\"`, and that layout returns `sns` unchanged; explicit `\"multiindex\"` does the same. Thus the builders receive the same snapshots as before, regardless of other changes to their internal calculations.\nNO"
+}

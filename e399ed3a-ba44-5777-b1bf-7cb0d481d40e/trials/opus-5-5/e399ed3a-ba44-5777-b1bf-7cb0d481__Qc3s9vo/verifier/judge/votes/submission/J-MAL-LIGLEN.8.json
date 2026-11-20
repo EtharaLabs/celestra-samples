@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MAL-LIGLEN",
+ "trial": 8,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new classic ligature reader explicitly checks `(ligatureOffset - componentOffset) % 2` and raises `ValueError` if the component table has an odd byte length. Thus the added decompilation path rejects the case in the criterion rather than returning a table.\nNO"
+}

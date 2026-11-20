@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J-MORX-DEC",
- "trial": 4,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The new decoding path is selected only when `reader.tableTag == \"mort\"`; the existing `morx` read path and its subtable converter remain unchanged. The shared object classes gain value-based equality, but this does not change the objects or field values decoded from `morx` bytes.\nNO"
-}

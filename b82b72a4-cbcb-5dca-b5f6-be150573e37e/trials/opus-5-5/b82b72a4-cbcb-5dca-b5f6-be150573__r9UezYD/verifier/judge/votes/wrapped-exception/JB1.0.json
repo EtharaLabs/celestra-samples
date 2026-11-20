@@ -1,0 +1,8 @@
+{
+ "case": "wrapped-exception",
+ "id": "JB1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The breadcrumb remains recorded once per `request-created` event, including retries. `_add_request_breadcrumb` preserves the original URL fields and method keys in both streaming and non-streaming modes; the span-lifecycle changes do not add or remove breadcrumb calls.\nNO"
+}

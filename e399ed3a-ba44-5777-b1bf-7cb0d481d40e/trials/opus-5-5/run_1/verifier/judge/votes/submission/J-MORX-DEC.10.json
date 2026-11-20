@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J-MORX-DEC",
- "trial": 10,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The new decoding logic is gated on `reader.tableTag == \"mort\"`, and the converter mapping changes only `MortSubtable`; extended `morx` tables retain their original decoding path. The shared object classes gain equality methods, but this does not change the decoded types or field values.\nNO"
-}

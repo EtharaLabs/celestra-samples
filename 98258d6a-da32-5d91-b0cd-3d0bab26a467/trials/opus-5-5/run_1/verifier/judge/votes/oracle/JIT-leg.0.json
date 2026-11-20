@@ -1,8 +1,0 @@
-{
- "case": "oracle",
- "id": "JIT-leg",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The diff does not change `optimize_transmission_expansion_iteratively` or its snapshot-selection logic. Under legacy semantics with the default, `\"auto\"`, or `\"multiindex\"`, `SnapshotWindow.build` retains the supplied snapshot index unchanged; the optimization-wrapper changes do not introduce a different iteration snapshot selection.\nNO"
-}

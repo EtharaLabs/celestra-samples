@@ -1,0 +1,8 @@
+{
+ "case": "before-sign-span",
+ "id": "JS1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The patched `_make_api_call` starts a client span through `_start_client_span(ctx)`. For the same call, `_sentry_before_sign` starts another client span through `_start_client_span(...)` when trace propagation is enabled and the request is not presigned, rather than reusing the existing span.\nYES"
+}

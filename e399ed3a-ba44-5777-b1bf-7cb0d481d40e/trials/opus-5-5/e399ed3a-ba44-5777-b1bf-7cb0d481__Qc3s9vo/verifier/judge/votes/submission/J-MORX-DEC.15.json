@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MORX-DEC",
+ "trial": 15,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The binary-reading changes in `otConverters.py` apply only to `mort`; for `morx`, the existing decompilation path remains unchanged. The shared object equality additions change how decoded objects compare, not what is decoded from the bytes, and the other shared changes concern compilation or XML input.\nNO"
+}

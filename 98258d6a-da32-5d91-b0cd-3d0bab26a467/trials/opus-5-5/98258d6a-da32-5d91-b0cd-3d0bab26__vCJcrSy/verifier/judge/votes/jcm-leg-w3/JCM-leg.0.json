@@ -1,0 +1,8 @@
+{
+ "case": "jcm-leg-w3",
+ "id": "JCM-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "Under legacy semantics, the new snapshot representation selection leaves the snapshot index unchanged for `\"auto\"` and `\"multiindex\"`. However, `create_model` now passes `sns[::2]` to `define_secant_loss_constraints`, whereas base_commit passes all of `sns`; a network with multiple snapshots and secant transmission losses therefore gives that constraint builder different snapshots.\nYES"
+}

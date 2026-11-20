@@ -1,8 +1,0 @@
-{
- "case": "jcm-leg-w3",
- "id": "JCM-leg",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The secant-loss branch in `create_model` now calls `define_secant_loss_constraints(n, sns[::2], ...)` instead of passing all of `sns`. For a supported network with multiple snapshots and secant transmission losses, this hands the constraint builder only every other snapshot, even under legacy semantics with the default, `\"auto\"`, or `\"multiindex\"` setting.\nYES"
-}

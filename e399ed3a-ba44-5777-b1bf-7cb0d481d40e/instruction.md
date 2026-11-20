@@ -61,5 +61,5 @@ both formats; there is no network access, so work from what you know of them and
 8. **Nothing else changes.** Non-contextual `mort` subtables keep their current TTX and bytes, and
    the binary encoding fontTools reads and writes for `morx` tables stays as it is.
 
-Only your changes under `Lib/fontTools` are graded. Changes to `Tests/` and to
-`Lib/fontTools/misc/testTools.py` are discarded before grading.
+Only your changes under `Lib/fontTools` are kept, except those to
+`Lib/fontTools/misc/testTools.py`; changes elsewhere in the repository are discarded.

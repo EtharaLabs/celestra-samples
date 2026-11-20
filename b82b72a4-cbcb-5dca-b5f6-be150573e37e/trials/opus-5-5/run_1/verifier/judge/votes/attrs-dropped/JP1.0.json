@@ -1,8 +1,0 @@
-{
- "case": "attrs-dropped",
- "id": "JP1",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The before-sign handler retains the same propagation guards, header generation call, replacement of non-baggage headers, and merging of existing baggage. The changes move span creation and lifecycle management, but do not change which propagation headers are added or how they are merged; differences in span or trace IDs do not count.\nNO"
-}

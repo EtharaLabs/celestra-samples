@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JF3",
+ "trial": 7,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The wrapper keeps the client span open when `_instrument_streaming_body` successfully instruments a streamed response. The body\u2019s read and close wrappers then finish both spans on consumption, closure, or error, rather than finishing the client span merely because the API call returned.\nNO"
+}

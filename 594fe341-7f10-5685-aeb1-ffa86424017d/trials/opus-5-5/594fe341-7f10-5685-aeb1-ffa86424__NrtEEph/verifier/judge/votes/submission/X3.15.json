@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X3",
+ "trial": 15,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission largely aligns the boundary: LangGraph performs type-based validation, the middleware supplies a decision schema, and both scalar and ID-keyed answers are appended to the resume history in their original form while `interrupt()` returns the validated result.\n\nHowever, it does not consistently enforce validation before persistence during replay. After validating the answer at index `idx`, it writes the **entire** resume history:\n\n```python\nconf[CONFIG_KEY_SEND]([(RESUME, scratchpad.resume)])\n```\n\nThat includes later answers that have not yet been revalidated. If execution fails or changes course before reaching those later interrupts, that unchecked suffix can be persisted. The submission truncates the history when a later answer raises `ValidationError`, but that only helps if execution actually reaches that validation.\n\nThe reference instead writes only `scratchpad.resume[: idx + 1]` on replay, ensuring every answer written by that execution has passed its interrupt\u2019s validation. Separating ID-keyed input into `mapped_resume` improves the fresh-answer path, but does not fix this replay-path inconsistency. Consequently, the submission does not fully satisfy the required validation/storage/replay boundary invariant.\n\nFAIL"
+}

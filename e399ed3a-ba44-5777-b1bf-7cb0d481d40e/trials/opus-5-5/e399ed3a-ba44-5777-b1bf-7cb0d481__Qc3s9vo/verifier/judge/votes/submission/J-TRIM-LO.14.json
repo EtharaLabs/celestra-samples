@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-TRIM-LO",
+ "trial": 14,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "`_readClassicSubstitutions` sign-extends entry offsets and starts each lookup at `max(0, ceil(substOffset / 2) - offset)`. Thus every replacement word read has byte position `2 * (offset + glyphID) >= substOffset`, for both negative and positive offsets; if no glyph meets the bounds, nothing is read.\nYES"
+}

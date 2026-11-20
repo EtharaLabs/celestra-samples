@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JTR-leg",
+ "trial": 18,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The transmission inner function changes its flow expression from `var.loc[:, idx] * efficiency[idx]` to `var.loc[:, idx] * -efficiency.sel(name=idx)`, reversing the sign for a nonzero branch flow at the same port. This change is unconditional, so it also applies under legacy semantics with the default, `\"auto\"`, or `\"multiindex\"` snapshot-index setting.\nYES"
+}

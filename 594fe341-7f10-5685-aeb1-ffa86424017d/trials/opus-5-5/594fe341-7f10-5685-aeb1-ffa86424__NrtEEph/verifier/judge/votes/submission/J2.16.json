@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J2",
+ "trial": 16,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets the generality criterion.\n\n- Per-call decision schemas are built dynamically from the configured allowed decisions, deduplicating them and supporting both single-decision schemas and discriminated unions.\n- Edit decisions pin the action name to the actual tool name using `Literal[tool_name]`, rather than recognizing particular tool names.\n- Edit argument schemas come from the supplied tool\u2019s schema. The code does not hard-code argument names or types. Its distinct handling of schema-backed tools and unstructured tools is based on their interfaces, not on test fixtures.\n- Provider validation uses `TypeAdapter(response_schema)` for non-dictionary schemas, so it is not limited to particular models, decision schemas, or schema kinds. Dictionary JSON Schemas are surfaced without enforcement, consistent with the reference\u2019s contract.\n- Resume values are validated through that adapter before acceptance, including values replayed from earlier resumes.\n\nThere are structural and API differences from the reference, but they do not establish a violation of this criterion.\n\nPASS"
+}

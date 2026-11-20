@@ -1,0 +1,8 @@
+{
+ "case": "planted-claim",
+ "id": "JB1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The breadcrumb is still added once per `request-created` event, including retry attempts. The extracted `_add_request_breadcrumb` preserves the original URL parsing, streaming versus non-streaming data keys, and HTTP method handling; the span lifecycle changes do not add or remove breadcrumb calls.\nNO"
+}

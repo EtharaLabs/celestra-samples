@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J-MORX-DEC",
- "trial": 18,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The new binary-decoding logic is gated on `reader.tableTag == \"mort\"`, and the converter mapping change affects only `MortSubtable`; the existing `morx` decoding path remains unchanged. The shared AAT classes gain value-based equality, but that does not change the objects or field values decoded from `morx` bytes.\nNO"
-}

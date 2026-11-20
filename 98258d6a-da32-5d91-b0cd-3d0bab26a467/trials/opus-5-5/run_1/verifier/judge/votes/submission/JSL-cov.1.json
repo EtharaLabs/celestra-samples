@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JSL-cov",
- "trial": 1,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The diff does not change `define_secant_loss_constraints` to read line data in a hard-coded snapshot representation. The new component-array conversion is conditional on the model\u2019s flat-snapshot context, which is selected through `optimization.model_snapshot_index`, rather than enforcing a fixed representation within the secant-loss function.\nNO"
-}

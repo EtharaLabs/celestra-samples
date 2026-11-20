@@ -1,0 +1,8 @@
+{
+ "case": "attrs-dropped",
+ "id": "JH1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The change moves URL, query, fragment, and method assignment into `_set_request_attributes`, but nothing in the diff calls that function. `_sentry_request_created` now only adds a breadcrumb and associates the current span with the request, so the request-derived span attributes previously recorded are missing in both tracing modes.\nYES"
+}

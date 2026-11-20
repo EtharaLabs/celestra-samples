@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JP1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff changes when client spans are created, activated, and finished, but leaves the trace-header injection and existing-header merging logic unchanged. The `before-sign` handler is still registered last, so the span-lifecycle changes do not establish a difference in which propagation headers are present or how they are merged.\nNO"
+}

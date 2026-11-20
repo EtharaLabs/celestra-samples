@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JB1",
- "trial": 10,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The breadcrumb is still recorded by the same `request-created` handler, with the same integration guard and the same URL and HTTP-method data in both streaming and non-streaming modes. The changes move span lifecycle management to `_make_api_call` but do not change the breadcrumb emission or its data.\nNO"
-}

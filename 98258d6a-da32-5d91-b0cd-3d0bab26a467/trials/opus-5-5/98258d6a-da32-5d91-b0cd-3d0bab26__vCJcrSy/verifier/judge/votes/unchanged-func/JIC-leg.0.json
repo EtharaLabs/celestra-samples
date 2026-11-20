@@ -1,0 +1,8 @@
+{
+ "case": "unchanged-func",
+ "id": "JIC-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "Under legacy semantics, the default/\u201cauto\u201d layout resolves to \u201cmultiindex\u201d, so the new flattening/evaluation machinery does not relabel data. The changes in `statistics/expressions.py` only wrap dynamic port-efficiency data, not installed-capex costs or period weighting; the altered optimization-expression aggregation is a separate accessor. Thus the diff does not change the period-weighted `installed_capex` specified in the criterion.\n\nNO"
+}

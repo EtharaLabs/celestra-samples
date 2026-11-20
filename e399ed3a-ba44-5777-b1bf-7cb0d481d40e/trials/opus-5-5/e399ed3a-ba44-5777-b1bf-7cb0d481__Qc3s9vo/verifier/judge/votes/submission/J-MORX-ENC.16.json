@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MORX-ENC",
+ "trial": 16,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The change gives `AATAction` subclasses structural equality through `_AATObject.__eq__`. The unchanged extended-state-table compiler uses equality to find existing transitions, so distinct transition objects with identical attributes can now share an entry where previously they produced separate entries, changing the compiled `morx` bytes.\nYES"
+}

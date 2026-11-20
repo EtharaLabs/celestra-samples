@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JAD-leg",
- "trial": 5,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "Under legacy semantics, the default `\"auto\"` resolves to `\"multiindex\"`, so the new flat-snapshot conversion is not activated; explicitly selecting `\"multiindex\"` likewise leaves it inactive. The diff does not alter `_as_dynamic`\u2019s dynamic-frame construction, and the other optimization changes do not change that construction for the same component data and snapshots.\nNO"
-}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JIT-leg",
+ "trial": 16,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not modify `pypsa/optimization/abstract.py` or its iterative routine\u2019s snapshot selection and optimisation calls. Under legacy semantics, both `\"auto\"` and `\"multiindex\"` retain the existing MultiIndex representation; the model-building changes do not change which snapshots that routine passes for an iteration.\nNO"
+}

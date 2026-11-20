@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-TRIM-IN",
+ "trial": 17,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The new subtable reader bounds decoding to each subtable\u2019s bytes. For contextual substitutions, the decoder sign-extends entry offsets and reads every glyph in the range bounded below by the substitution-table start and above by the subtable end, correctly handling both negative and positive offsets.\nYES"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JFX-leg",
+ "trial": 19,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The new `_from_xarray` unconditionally calls `_unflatten_snapshots` for snapshot-indexed arrays attached to a network, without checking semantics or the option. For an array whose snapshot index is a flat object index of tuples with auxiliary `period` and `timestep` coordinates, this converts the index into a MultiIndex before pandas conversion, whereas the base function leaves it flat. Thus the same input can produce a different result even under legacy semantics with the default or `\"multiindex\"` setting.\nYES"
+}

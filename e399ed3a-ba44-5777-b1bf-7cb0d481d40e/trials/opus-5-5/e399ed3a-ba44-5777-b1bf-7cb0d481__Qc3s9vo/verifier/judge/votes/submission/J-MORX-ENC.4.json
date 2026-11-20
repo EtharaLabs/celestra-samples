@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MORX-ENC",
+ "trial": 4,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new state-table compilation path is guarded by `writer.tableTag == \"mort\"`, so extended `morx` tables retain their existing serialization path. The other changes affect XML parsing, object equality, or storing the already-computed `StructLength`; none changes the bytes compiled for the same `morx` objects.\n\nNO"
+}

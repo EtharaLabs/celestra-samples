@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MORX-DEC",
+ "trial": 11,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new binary-reading logic is restricted to `mort`: the state-table reader takes the new path only when `reader.tableTag == \"mort\"`, and the converter registration changes only `MortSubtable`. Extended `morx` decoding remains unchanged; the added equality methods affect object comparisons, not what is decoded from bytes, and the other shared changes concern writing or XML.\nNO"
+}

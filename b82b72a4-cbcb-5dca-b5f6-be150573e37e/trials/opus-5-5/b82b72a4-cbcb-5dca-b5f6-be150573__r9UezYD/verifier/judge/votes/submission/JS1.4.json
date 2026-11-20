@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JS1",
+ "trial": 4,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The patched `_make_api_call` starts one client span, and `request-created` handlers reuse that span through `_client_span` rather than starting additional spans for requests or retries. The streaming-body changes extend and finish that same client span, without adding another client-span start.\nNO"
+}

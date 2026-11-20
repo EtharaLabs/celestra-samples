@@ -1,8 +1,0 @@
-{
- "case": "eof-leak",
- "id": "JF1",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The successful `sentry_streaming_body_read` path no longer calls `finish_span()`, even when `read()` consumes the entire body or reaches EOF. Raw-stream closure during that read also skips finishing because `read_in_progress` is true, so consuming the body without explicitly closing it can leave the client span open.\nNO"
-}

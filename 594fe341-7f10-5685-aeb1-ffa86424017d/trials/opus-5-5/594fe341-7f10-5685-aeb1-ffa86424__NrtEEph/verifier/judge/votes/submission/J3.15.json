@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J3",
+ "trial": 15,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets the criterion.\n\n- **Unbuildable schemas fail loudly:** `TypeAdapter(response_schema)` and JSON Schema generation are not wrapped in a fallback that accepts unchecked answers. Their errors propagate.\n- **Invalid answers fail loudly:** Answers are validated before being appended to the accepted resume values. A validation failure becomes `ResumeRejected`, preserving the pending interrupt; the root graph loop explicitly raises its underlying `ValidationError` to the caller. It does not substitute an unchecked resume or a default decision.\n- **Missing tool-call IDs fail loudly:** For a gated per-call review, `_review` explicitly raises `ValueError` when the call\u2019s ID is absent or `None`, before issuing the interrupt or executing the tool.\n- **Both execution modes preserve these checks:** The synchronous and asynchronous tool wrappers invoke the same review path without catching these failures and silently continuing.\n\nPASS"
+}

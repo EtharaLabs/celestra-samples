@@ -1,8 +1,0 @@
-{
- "case": "attrs-no-method",
- "id": "JH1",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "In non-streaming tracing mode, the original code sets `SPANDATA.HTTP_METHOD` on the span when `request.method` is not `None`. The replacement `_set_request_attributes` omits that assignment for non-streamed spans, so the method attribute is missing even though it remains in breadcrumbs.\nYES"
-}

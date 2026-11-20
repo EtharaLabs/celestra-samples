@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J1",
- "trial": 9,
- "model": "gpt-6.1-sol",
- "label": "FAIL",
- "response": "The submission does not meet the focused-scope criterion.\n\n- **It changes LangGraph components outside the permitted scope.** Besides `interrupt`, `Interrupt`, and the SDK interrupt type, it modifies `errors.py`, `pregel/_loop.py`, `pregel/debug.py`, and `prebuilt/tool_node.py`. These changes introduce a new exception class, resume-write cleanup behavior, debug serialization changes, and tool-wrapper exception handling. Even if motivated by the feature, they exceed the criterion\u2019s explicit confinement.\n- **It adds substantial custom schema infrastructure.** `_rewrite_refs`, `_ShownArgsSchema`, and the associated Pydantic core-schema/reference manipulation introduce a bespoke schema-embedding mechanism, rather than a narrow extension of the surrounding middleware code.\n- **It introduces additional decision lifecycle state.** The `_decided` cache keyed by runtime identity, together with `weakref.finalize` cleanup, adds retry-related behavior and lifecycle machinery beyond the focused interrupt integration.\n\nThe submission does reuse existing decision-processing logic and shares resolution between sync and async wrappers, but those strengths do not offset the explicit out-of-scope changes and expanded machinery.\n\nFAIL"
-}

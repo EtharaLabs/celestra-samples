@@ -1,0 +1,8 @@
+{
+ "case": "jfx-cov-w3",
+ "id": "JFX-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The added code in `_from_xarray` unconditionally replaces any snapshot index with `pd.Index(..., tupleize_cols=False)`, forcing MultiIndex snapshots into flat tuple labels. Although it retrieves the snapshot window, it never uses it to select the representation, so this also happens when `optimization.model_snapshot_index=\"multiindex\"` selects a MultiIndex.\nYES"
+}

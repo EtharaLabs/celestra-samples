@@ -1,0 +1,8 @@
+{
+ "case": "approach-a",
+ "id": "JCM-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "Under legacy semantics, the default `\"auto\"` resolves to `\"multiindex\"`, and explicitly selecting `\"multiindex\"` does likewise. In either case, the newly added `model_snapshots(n, sns)` returns `sns` unchanged, so `create_model` hands the builders the same snapshots as before; changes inside builders do not satisfy this criterion.\nNO"
+}

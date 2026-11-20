@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-TRIM-LO",
+ "trial": 7,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The decoder sign-extends entry offsets and sets the first eligible glyph ID to `max(0, ceil(substOffset / 2) - offset)`. Thus every replacement it reads begins at byte position `2 * (offset + glyphID) >= substOffset`, for both negative and positive offsets; if no glyph qualifies, it reads no replacements.\nYES"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "reference",
+ "id": "X1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets the criterion.\n\n- LangGraph\u2019s `interrupt` constructs a `TypeAdapter` for a Python `response_schema` and validates answers on both resume paths before returning them. For new answers, validation occurs before appending or saving the answer.\n- LangChain\u2019s `_resolve_per_call` builds the tool-specific decision type and passes it directly to `interrupt(value, response_schema=response_schema)`.\n- After `interrupt` returns, the middleware only dispatches the validated decision to approval, editing, or message handling. It does not validate the answer again or duplicate LangGraph\u2019s checking.\n- The schema\u2019s wrap validator is part of the type supplied to LangGraph, not a separate post-return validation step in the middleware.\n\nPASS"
+}

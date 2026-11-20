@@ -1,0 +1,8 @@
+{
+ "case": "unchanged-create-model",
+ "id": "JNL-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The new branch in `as_index` applies even under legacy semantics with `\"auto\"` or `\"multiindex\"`: a plain tuple-valued Index now denotes full snapshot pairs rather than timestep labels. For example, a network can contain snapshots `(2030, \"a\")` and `(2030, (2030, \"a\"))`; requesting a plain Index containing `(2030, \"a\")` selects the former after the change, rather than the latter under the old timestep-only interpretation. This changes the snapshots passed through `optimize_and_run_non_linear_powerflow` despite that function itself being unchanged.\nYES"
+}

@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JP1",
- "trial": 8,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "NO header-injection or header-merging logic is changed: the same `_sentry_before_sign` handler remains registered last, preserving its existing propagation checks and handling of request headers. The diff changes span creation and lifetime, but does not establish a change in which propagation headers are present or how they are merged.\nNO"
-}

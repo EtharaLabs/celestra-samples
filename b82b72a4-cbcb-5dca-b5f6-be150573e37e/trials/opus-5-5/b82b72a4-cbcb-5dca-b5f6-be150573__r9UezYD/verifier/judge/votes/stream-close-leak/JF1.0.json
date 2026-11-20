@@ -1,0 +1,8 @@
+{
+ "case": "stream-close-leak",
+ "id": "JF1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "Non-streaming responses and raised errors finish the client span, and consuming a streamed body can finish it too. However, both close wrappers now call `finish_span` only if closing raises an exception; a successful early close leaves the client span open.\nNO"
+}

@@ -1,8 +1,0 @@
-{
- "case": "return-finish",
- "id": "JF2",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The client span is finished once on either the exception path or the successful-return path, and those paths are mutually exclusive. Streaming-body completion and instrumentation failure finish the separate `streaming_span`, not the call\u2019s client span; `_activate_client_span` only restores scope state without finishing it.\nNO"
-}

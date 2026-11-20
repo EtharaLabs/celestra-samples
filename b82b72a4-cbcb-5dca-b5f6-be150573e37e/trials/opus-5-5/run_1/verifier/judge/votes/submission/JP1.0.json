@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JP1",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The change moves span creation and cleanup from botocore event handlers to the API-call wrapper, but does not change the trace-header propagation handler or its registration. The differences concern span lifetime and which span supplies trace IDs, not which propagation headers are added or how existing headers are merged.\nNO"
-}

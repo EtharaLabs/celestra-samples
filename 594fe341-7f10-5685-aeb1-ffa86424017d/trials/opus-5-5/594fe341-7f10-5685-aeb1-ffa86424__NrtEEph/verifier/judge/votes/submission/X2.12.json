@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X2",
+ "trial": 12,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission does not meet the minimal, backwards-compatible LangGraph criterion.\n\nThe new parameters have defaults, and the SDK\u2019s `response_schema` field is correctly marked `NotRequired`. The custom `Interrupt.__repr__` also preserves the old representation when no schema is supplied.\n\nHowever, the LangGraph change goes beyond an optional schema extension. It changes resume handling for **all interrupts**, including those without schemas:\n\n- Previously, `_algo.py` appended an ID-addressed resume value directly to `task_resume_write`. The submission instead stores it separately in a new required `PregelScratchpad.mapped_resume` field.\n- `interrupt()` now consumes that separate value only after replaying existing answers. Consequently, replayed interrupts send different `RESUME` writes: the old implementation\u2019s resume list already included the newly mapped answer, whereas the submission\u2019s list does not include it until that answer is consumed.\n- The submission also introduces a new exception and changes runner and loop exception handling, rather than keeping the change localized to the optional schema functionality.\n\nThus, although the public schema additions are optional, the existing no-schema resume path is not left unchanged, and the LangGraph change is not minimal.\n\nFAIL"
+}

@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J2",
- "trial": 8,
- "model": "gpt-6.1-sol",
- "label": "FAIL",
- "response": "The submission uses generic decision construction and `TypeAdapter` validation rather than hard-coding tested tools or decision combinations. However, its JSON-schema handling is not correct for arbitrary argument names.\n\nIn `_rewrite_refs`, keys such as `\"default\"`, `\"const\"`, and `\"enum\"` are always treated as schema keywords whose values should not be traversed. Those same strings can also be ordinary argument names within a schema\u2019s `properties` mapping.\n\nFor example, a JSON-schema tool could have:\n```json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"default\": {\"$ref\": \"#/definitions/Item\"}\n  },\n  \"definitions\": {\n    \"Item\": {\"type\": \"string\"}\n  }\n}\n```\n\n`_ShownArgsSchema` removes the original `definitions` container and registers its definitions with Pydantic, intending to rewrite their references. But `_rewrite_refs` skips the entire schema for the argument named `\"default\"`, leaving `#/definitions/Item` unchanged. That reference no longer points to the relocated definition, so schema generation can fail or produce an unresolved reference.\n\nThus, although the implementation is broadly generic, it does not preserve the per-call schema for arbitrary argument names and tool schemas, as the criterion requires.\n\nFAIL"
-}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JTR-cov",
+ "trial": 13,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The conversion is not valid for every network. In stochastic networks, dynamic port-efficiency data can have MultiIndex columns for scenarios and component names, but `_model_snapshot_array` treats all columns as a single `\"name\"` dimension and calls `values.columns.rename(\"name\")`, which is invalid for a MultiIndex. Thus transmission cannot reliably apply efficiency and weighting at the flow\u2019s snapshot labels for these networks.\nNO"
+}

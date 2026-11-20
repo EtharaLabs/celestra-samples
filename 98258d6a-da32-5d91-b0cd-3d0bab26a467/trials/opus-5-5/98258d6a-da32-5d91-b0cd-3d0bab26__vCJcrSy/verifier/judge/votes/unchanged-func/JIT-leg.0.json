@@ -1,0 +1,8 @@
+{
+ "case": "unchanged-func",
+ "id": "JIT-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not modify `optimize_transmission_expansion_iteratively` or its snapshot arguments to optimisation calls. Under legacy semantics, both the default `\"auto\"` and explicit `\"multiindex\"` preserve the supplied snapshot index, so the new layout handling does not change which snapshots an iteration passes.\nNO"
+}

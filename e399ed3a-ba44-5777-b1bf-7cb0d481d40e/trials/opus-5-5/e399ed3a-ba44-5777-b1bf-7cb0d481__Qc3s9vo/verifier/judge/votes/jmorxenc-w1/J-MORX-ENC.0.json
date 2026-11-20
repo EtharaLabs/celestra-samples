@@ -1,0 +1,8 @@
+{
+ "case": "jmorxenc-w1",
+ "id": "J-MORX-ENC",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The morph state-table fields now use `MorphStateTable`, whose `write` method increments `value.GlyphClassCount` for `morx` before delegating to `STXHeader.write`. This changes the encoded class count (and potentially state-array layout) relative to the original direct `STXHeader` path, so some extended morx tables compile to different bytes for the same input objects.\nYES"
+}

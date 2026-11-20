@@ -1,0 +1,8 @@
+{
+ "case": "planted-claim",
+ "id": "JP1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The propagation handler retains the same integration, presigning, and URL checks, and the same header replacement and baggage-merging logic. The changes to span creation and activation do not establish a difference in which propagation headers are present or how existing headers are merged.\nNO"
+}

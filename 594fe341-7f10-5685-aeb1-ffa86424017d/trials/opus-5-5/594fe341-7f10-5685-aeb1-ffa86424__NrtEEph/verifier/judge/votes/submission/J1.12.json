@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J1",
+ "trial": 12,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission does not meet the confinement requirement. Beyond `interrupt`, `Interrupt`, the SDK interrupt type, and `HumanInTheLoopMiddleware`, it changes LangGraph\u2019s scratchpad, error hierarchy, Pregel algorithm, loop, runner, and debug serialization.\n\nThese are substantive changes to surrounding execution logic: it introduces `mapped_resume`, adds a `ResumeRejected` exception, changes how task-specific resume values are stored, and adds exception propagation and aggregation behavior across the runner and loop. It also rewrites debug interrupt serialization to omit an unset schema. Even if these changes support the proposed implementation, they exceed the explicitly required scope of this focused fix.\n\nThe middleware largely reuses existing decision-processing and edit helpers, but that does not offset the broader LangGraph rewrites. The criterion is therefore not satisfied.\n\nFAIL"
+}

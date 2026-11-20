@@ -1,0 +1,8 @@
+{
+ "case": "planted-claim",
+ "id": "JF3",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "If streaming-body instrumentation raises, `_instrument_streaming_body` re-raises and `capture_internal_exceptions()` suppresses it, leaving `streaming_body_instrumented` false. The caller then immediately finishes the client span and returns the response with its body still unread; accessing `body.readinto` on a botocore version without that method is one such failure path.\n\nYES"
+}

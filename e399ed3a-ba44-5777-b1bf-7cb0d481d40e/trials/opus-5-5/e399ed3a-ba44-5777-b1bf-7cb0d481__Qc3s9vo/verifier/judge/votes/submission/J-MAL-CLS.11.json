@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MAL-CLS",
+ "trial": 11,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new classic `mort` reader explicitly checks `stateSize`, the glyph-class count, and raises `ValueError(\"'mort' state table has no glyph classes\")` when it is zero. Thus the added decompilation path does not allow such a state table to return successfully.\nNO"
+}

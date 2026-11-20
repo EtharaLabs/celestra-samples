@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MAL-STATE",
+ "trial": 17,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new `mort` read path calls `_readClassic`, which explicitly raises `ValueError` when `stateArrayOffset > entryTableOffset`. Thus, the change does not allow decompilation of a classic state table whose state array starts after its entry table.\nNO"
+}

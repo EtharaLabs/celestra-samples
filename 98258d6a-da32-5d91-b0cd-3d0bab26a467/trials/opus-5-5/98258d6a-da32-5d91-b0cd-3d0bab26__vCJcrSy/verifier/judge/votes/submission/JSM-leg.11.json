@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JSM-leg",
+ "trial": 11,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "With legacy semantics and `\"auto\"` or `\"multiindex\"`, `_as_model_snapshots` returns its input unchanged. If `create_model` builds over a subset of the network\u2019s snapshots, `solve_model` nevertheless passes all `n.snapshots` through `_call_extra_functionality`, so the callback receives more snapshots than the model was built over.\nYES"
+}

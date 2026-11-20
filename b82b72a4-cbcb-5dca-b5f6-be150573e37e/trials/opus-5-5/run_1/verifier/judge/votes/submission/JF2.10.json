@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JF2",
- "trial": 10,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "YES: If streaming-body instrumentation finishes the client span during error cleanup and then raises, `capture_internal_exceptions()` suppresses that exception, leaving `body_instrumented` false. The subsequent `if not body_instrumented` branch calls `_finish_span(span)` again.\nYES"
-}

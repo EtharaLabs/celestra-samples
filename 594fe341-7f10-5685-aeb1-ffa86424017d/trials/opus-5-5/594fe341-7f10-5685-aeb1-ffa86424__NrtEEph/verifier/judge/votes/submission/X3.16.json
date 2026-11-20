@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X3",
+ "trial": 16,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets the boundary criterion.\n\n- **LangGraph owns schema validation.** `interrupt()` constructs the `TypeAdapter` and validates both new answers and replayed answers. The middleware supplies the decision schema and consumes the result; it does not independently parse the answer through another adapter.\n- **Scalar and interrupt-ID answers converge before acceptance.** Scalar answers come from `get_null_resume()`, while keyed answers are held in `mapped_resume`. Both enter the same validation block before being appended to the task\u2019s accepted resume list.\n- **Storage and replay use a consistent representation.** The provider stores the original answer `v`, not the potentially coerced `answer`. On replay, it validates that stored value again and returns the validated result. This applies equally to plain graphs and middleware-generated interrupts.\n- **Invalid answers are not accepted into resume history.** Validation failures raise `ResumeRejected`; the runner and loop preserve the pending interrupt and expose the underlying `ValidationError`. If an existing replay entry fails validation, its resume-history suffix is removed.\n- **The middleware preserves reviewer-supplied edit arguments.** Its argument wrapper checks the tool-facing schema while retaining the original arguments, so provider validation does not silently replace what the tool will receive.\n\nThe separate staging of keyed answers differs from the reference\u2019s implementation, but still establishes the required common validation and storage boundary.\n\nPASS"
+}

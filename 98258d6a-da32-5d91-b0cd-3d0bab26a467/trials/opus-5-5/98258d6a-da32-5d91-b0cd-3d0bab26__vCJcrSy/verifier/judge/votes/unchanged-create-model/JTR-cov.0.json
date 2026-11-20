@@ -1,0 +1,8 @@
+{
+ "case": "unchanged-create-model",
+ "id": "JTR-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The transmission function obtains `sns` from the flow variable\u2019s own snapshot index and uses `model_view(..., sns)` for both time-dependent port efficiencies and generator snapshot weightings. That helper selects the matching network snapshots and relabels them as flat tuples when required, while preserving MultiIndex labels otherwise; model construction resolves `\"auto\"` according to linopy\u2019s semantics.\nYES"
+}

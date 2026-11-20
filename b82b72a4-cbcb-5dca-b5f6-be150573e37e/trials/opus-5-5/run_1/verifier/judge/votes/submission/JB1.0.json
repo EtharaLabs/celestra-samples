@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JB1",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The change still registers the breadcrumb handler for every `request-created` event and calls `add_http_breadcrumb` once with the same URL and method data in both streaming and non-streaming modes. The changes move span creation and completion around the API call, without changing breadcrumb recording.\nNO"
-}

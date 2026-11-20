@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JSM-cov",
+ "trial": 2,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "`solve_model` takes callback snapshots from the current `n.snapshots`, not the model\u2019s stored snapshots, and `_as_model_snapshots` only converts MultiIndexes to flat indexes. If a model is built with MultiIndex snapshots and the network\u2019s snapshots are subsequently replaced with a single-level index before calling `solve_model`, the callback receives that single-level index unchanged, despite the model retaining its MultiIndex representation.\nNO"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JIC-leg",
+ "trial": 2,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff changes optimization expressions, not `installed_capex` in `pypsa/statistics/expressions.py` or its period-weighting logic. Under legacy semantics, `\"auto\"` resolves to `\"multiindex\"`, so the new flat-snapshot handling does not change the component data used by that statistic; changes to optimized capacities also do not alter installed nominal capacities.\nNO"
+}

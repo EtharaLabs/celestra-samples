@@ -1,8 +1,0 @@
-{
- "case": "oracle",
- "id": "JIT-cov",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The diff does not modify `optimize_transmission_expansion_iteratively` or `abstract.py`. The new snapshot conversion in `create_model` is selected through `optimization.model_snapshot_index` and `use_flat_snapshot_index`, rather than imposing one fixed representation on snapshots passed by the iterative routine.\nNO"
-}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J1",
+ "trial": 8,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission does not meet the focused-scope criterion.\n\nThe LangGraph changes extend well beyond `interrupt`, `Interrupt`, and the SDK interrupt type. They modify `_internal/_scratchpad.py`, `errors.py`, and several Pregel implementation files (`_algo.py`, `_loop.py`, `_runner.py`, and `debug.py`). These introduce a new `mapped_resume` mechanism, a `ResumeRejected` exception, special runner and loop handling, and custom debug serialization. That is a broader rewrite of resume and error propagation than the criterion permits, even though it serves the same feature.\n\nThe LangChain changes are confined to `HumanInTheLoopMiddleware` and its supporting definitions, and reuse existing decision-processing logic. However, that does not offset the explicit scope violation in LangGraph.\n\nFAIL"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "unchanged-create-model",
+ "id": "JCM-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The new `as_index` tuple-index branch applies even under legacy semantics and `\"multiindex\"`, changing how tuple-valued timestep inputs are interpreted. For example, a network can contain snapshots `(2020, \"x\")` and `(2020, (2020, \"x\"))`: a plain tuple-valued Index containing `(2020, \"x\")` previously selected the latter as a timestep, but now is accepted as the former\u2019s complete snapshot label. The `create_model` wrapper preserves that interpretation and passes different snapshots to the builders.\nYES"
+}

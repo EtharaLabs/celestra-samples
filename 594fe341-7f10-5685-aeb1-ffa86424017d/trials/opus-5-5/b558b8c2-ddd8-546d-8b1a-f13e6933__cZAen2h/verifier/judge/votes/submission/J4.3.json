@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J4",
- "trial": 3,
- "model": "gpt-6.1-sol",
- "label": "FAIL",
- "response": "The submission does not fully meet the criterion.\n\n- **Per-call answer keying is not documented.** The new `InterruptMode`, `ToolApprovalRequest`, and constructor documentation describe single-decision answers, but never explain that callers must key those answers by **interrupt ID**. The comment about `_decided` being keyed by a `ToolRuntime` object's ID describes an internal cache, not the external resume-answer mapping.\n- **The edited `interrupt` docstring is inconsistent about its return value.** Its new argument documentation correctly says that a Python-type schema produces a validated object, but its `Returns` section still unconditionally says it returns the originally provided value. Validation can produce a different object.\n- The submission does correctly document the distinction between unenforced JSON Schema dictionaries and validated Python types, and it states that invalid resume answers are not recorded. Those strengths do not resolve the omissions above.\n\nFAIL"
-}

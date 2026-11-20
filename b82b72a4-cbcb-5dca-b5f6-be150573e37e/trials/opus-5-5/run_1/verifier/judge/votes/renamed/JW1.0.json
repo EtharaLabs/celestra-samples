@@ -1,8 +1,0 @@
-{
- "case": "renamed",
- "id": "JW1",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The client-call wrapper and streamed-body wrappers use bare `raise` after catching the original exception, preserving its identity. The diff shows no replacement exception being constructed or original botocore exception being suppressed on these failure paths.\nNO"
-}

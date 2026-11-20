@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JF2",
+ "trial": 12,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The call\u2019s exception path finishes the client span once and re-raises; a successful non-streaming call also finishes it once. Streaming responses defer finishing to `finish_spans`, whose `finished` guard prevents repeated finishes from reads, closes, or errors, and instrumentation setup failure leaves client-span finishing to the caller.\nNO"
+}

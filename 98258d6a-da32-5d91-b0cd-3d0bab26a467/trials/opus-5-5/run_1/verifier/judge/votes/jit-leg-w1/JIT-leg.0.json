@@ -1,8 +1,0 @@
-{
- "case": "jit-leg-w1",
- "id": "JIT-leg",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The call in `abstract.py` changes from `n.optimize(snapshots, **kwargs)` to passing `(n.snapshots if snapshots is None else snapshots)[:1]`. Thus, for a request containing multiple snapshots, an iteration now optimizes only the first snapshot rather than the full requested set, regardless of legacy semantics or the specified snapshot-index options.\nYES"
-}

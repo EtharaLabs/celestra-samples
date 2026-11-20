@@ -1,0 +1,8 @@
+{
+ "case": "oracle",
+ "id": "J-MAL-LIGVAL",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new `mort` ligature reader explicitly checks every raw component value and raises `ValueError(\"invalid mort ligature component value\")` if any is odd. Thus, although the change adds classic `mort` ligature support, it does not allow the specified table to decompile successfully.\nNO"
+}

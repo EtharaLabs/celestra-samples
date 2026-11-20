@@ -1,0 +1,8 @@
+{
+ "case": "unchanged-solve-model",
+ "id": "JAD-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The new block in `_as_dynamic` runs independently of optimization semantics or the layout option. For a DataArray whose snapshot index is a plain index of tuples, it replaces that index with a MultiIndex using the network\u2019s snapshot-level names, changing the resulting dynamic frame\u2019s index structure compared with the base commit, including under legacy semantics.\nYES"
+}

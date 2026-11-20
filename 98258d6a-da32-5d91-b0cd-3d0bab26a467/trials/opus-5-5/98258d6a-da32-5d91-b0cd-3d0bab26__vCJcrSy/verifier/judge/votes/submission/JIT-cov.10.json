@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JIT-cov",
+ "trial": 10,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not modify `optimize_transmission_expansion_iteratively` or `abstract.py`. The new model-building code resolves the selected snapshot option and converts snapshots accordingly; it does not introduce an iteration-specific coercion to a fixed representation before passing snapshots to optimisation.\nNO"
+}

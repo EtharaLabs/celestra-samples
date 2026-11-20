@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-TRIM-HI",
+ "trial": 2,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "`MortSubtableConverter` confines decoding to a reader containing only the subtable\u2019s declared bytes. For contextual substitutions, the exclusive glyph limit is capped at `size // 2 - offset`, so every replacement word ends at or before the subtable\u2019s end, including when its length is odd.\nYES"
+}

@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J-TRIM-HI",
- "trial": 14,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "`MortSubtableConverter` limits each subtable reader to the subtable\u2019s declared bytes. `_readClassicSubstitutions` then bounds replacement indices by `len(data) // 2 - offset`, so every replacement word read ends at or before that subtable\u2019s end, including when the remaining byte count is odd.\nYES"
-}

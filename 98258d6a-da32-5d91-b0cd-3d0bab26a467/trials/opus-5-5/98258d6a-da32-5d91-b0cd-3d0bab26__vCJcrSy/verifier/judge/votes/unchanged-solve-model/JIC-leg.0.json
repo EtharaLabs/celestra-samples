@@ -1,0 +1,8 @@
+{
+ "case": "unchanged-solve-model",
+ "id": "JIC-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not change `installed_capex` in `pypsa/statistics/expressions.py` or its period-weighted installed-capacity calculation. Under legacy semantics, default/`\"auto\"` still selects the MultiIndex layout, and the change to abstract time-series mean weighting preserves grouping by period for that layout; changes to optimization expressions do not alter this statistic.\nNO"
+}

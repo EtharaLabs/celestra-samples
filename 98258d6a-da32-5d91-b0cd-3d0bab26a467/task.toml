@@ -38,12 +38,12 @@ user = "root"
 network_mode = "no-network"
 build_timeout_sec = 1800
 cpus = 2
-memory_mb = 4096
+memory_mb = 8192
 storage_mb = 10240
 gpus = 0
 
 [agent]
-timeout_sec = 10800
+timeout_sec = 18000
 network_mode = "no-network"
 user = "10001"
 
@@ -51,7 +51,7 @@ user = "10001"
 network_mode = "no-network"
 build_timeout_sec = 1800
 cpus = 4
-memory_mb = 4096
+memory_mb = 8192
 storage_mb = 10240
 gpus = 0
 

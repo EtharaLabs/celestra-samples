@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-TRIM-IN",
+ "trial": 16,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The change bounds each `mort` subtable with its own reader and interprets contextual entry offsets as signed 16-bit word offsets. For each nonzero offset, it decodes the full glyph range whose replacement words begin at or after the substitution-table offset and end within the subtable, handling negative and positive offsets alike.\nYES"
+}

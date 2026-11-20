@@ -1,0 +1,8 @@
+{
+ "case": "breadcrumb-no-query",
+ "id": "JB1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "In non-streaming mode, the original breadcrumb included `SPANDATA.HTTP_QUERY` for a parsed request URL. The new `_add_request_breadcrumb` omits that field, so a botocore request with query parameters produces different breadcrumb data.\nYES"
+}

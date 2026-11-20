@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MAL-STATE",
+ "trial": 14,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new `mort` read path calls `_readClassic`, which explicitly raises `ValueError` when `stateArrayOffset > entryTableOffset`. Thus, although the change adds classic state-table support, it rejects the ordering required by the criterion rather than allowing decompilation to return a table.\nNO"
+}

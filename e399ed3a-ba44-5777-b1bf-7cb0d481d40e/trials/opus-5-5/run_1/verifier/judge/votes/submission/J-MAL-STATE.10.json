@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J-MAL-STATE",
- "trial": 10,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The new `mort` read path calls `_readClassic`, which explicitly raises `ValueError` when `stateOffset > entryOffset`. Thus a classic state table whose state array starts after its entry table is rejected rather than returned, regardless of the added support for other classic layouts.\nNO"
-}

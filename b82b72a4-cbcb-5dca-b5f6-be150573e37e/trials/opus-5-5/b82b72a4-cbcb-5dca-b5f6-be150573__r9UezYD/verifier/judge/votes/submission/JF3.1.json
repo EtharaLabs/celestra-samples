@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JF3",
+ "trial": 1,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The client span now remains open when `_instrument_streaming_body` successfully wraps a streamed response body. It is finished together with the streaming span when reading completes, the body is closed, or an error occurs, rather than automatically when `_make_api_call` returns.\n\nNO"
+}

@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JCM-cov",
- "trial": 4,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "`create_model` computes `flat` and converts snapshots for `n.model.parameters`, but leaves `sns` itself unchanged as the MultiIndex returned by `as_index`. It passes that unchanged `sns` to the variable and constraint builders, including the transmission-loss builders; `flat_snapshots_context` changes component-data access, not the index argument. Thus, with `\"flat\"` (or `\"auto\"` under v1 semantics), the builders do not receive the required flat tuple-label index.\nNO"
-}

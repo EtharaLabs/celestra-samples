@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JSM-cov",
+ "trial": 11,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "`solve_model` still starts from `n.snapshots`, and `_as_model_snapshots` only converts a MultiIndex to flat tuples when the existing model is detected as flat. If a model is built with ordinary single-period snapshots and the network is subsequently changed to multi-period snapshots before calling `solve_model`, the callback receives the new MultiIndex unchanged, not the representation used to build the model. Thus the guarantee does not hold for every network and call path.\n\nNO"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MORX-DEC",
+ "trial": 6,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The binary-reading changes apply only to `mort`: the new state-table decoding branch is guarded by `reader.tableTag == \"mort\"`, and the new subtable converter is registered only for `MortSubtable`. The `morx` decoding path remains unchanged; the added equality methods, XML handling, and compilation changes do not change which objects it decodes from the same bytes.\nNO"
+}

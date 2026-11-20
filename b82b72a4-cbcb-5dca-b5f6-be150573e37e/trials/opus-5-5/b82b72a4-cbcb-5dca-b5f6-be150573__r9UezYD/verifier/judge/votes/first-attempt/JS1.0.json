@@ -1,0 +1,8 @@
+{
+ "case": "first-attempt",
+ "id": "JS1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The `_make_api_call` wrapper leaves `span` as `None` and immediately delegates to the original call, so it never starts a span or reaches streaming-body instrumentation. The request-created handler starts a boto3 client span only for the first attempt; subsequent attempts reuse the current span rather than starting another.\nNO"
+}

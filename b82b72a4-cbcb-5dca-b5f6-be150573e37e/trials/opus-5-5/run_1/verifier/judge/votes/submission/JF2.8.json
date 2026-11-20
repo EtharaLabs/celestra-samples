@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JF2",
- "trial": 8,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "YES: if streaming-body instrumentation raises after finishing the client span, its exception propagates into `capture_internal_exceptions()` and is suppressed. The assignment to `body_instrumented` never completes, so it remains `False`, and `_sentry_make_api_call` calls `_finish_span(span)` again.\n\nYES"
-}

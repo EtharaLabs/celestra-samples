@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X3",
+ "trial": 2,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets the boundary criterion.\n\n- **Validation is owned by LangGraph.** The middleware supplies a Python response type to `interrupt()` rather than parsing the resumed decision itself. LangGraph uses `TypeAdapter` for typed schemas; JSON-schema dictionaries remain descriptive only.\n- **Both resume routes converge before acceptance.** An id-keyed answer is staged in `mapped_resume`, while a direct resume is obtained from `get_null_resume()`. Both then pass through the same validation block before being appended to the accepted resume history.\n- **Storage and replay have consistent semantics.** LangGraph stores the submitted value, not its Pydantic-normalized replacement, and returns the validated result. Replaying a stored answer validates that original value again. This applies equally to plain graphs and middleware interrupts.\n- **Rejected answers are not accepted into history.** Validation failures keep the interrupt pending and surface a `ValidationError` through the new rejection mechanism. If an existing replayed answer fails, its history entry and subsequent entries are removed.\n- **The consumer respects that contract.** Its per-tool decision schema restricts allowed decisions, pins edited tool names, and checks tool argument structure while preserving the reviewer\u2019s original arguments for tool execution. Sync and async middleware paths use the same review logic.\n\nThe additional scratchpad and rejection machinery differs from the reference implementation, but preserves the required provider\u2013consumer agreement.\n\nPASS"
+}

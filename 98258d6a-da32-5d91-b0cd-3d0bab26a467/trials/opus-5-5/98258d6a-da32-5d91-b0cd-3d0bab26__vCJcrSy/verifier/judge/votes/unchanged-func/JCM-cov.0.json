@@ -1,0 +1,8 @@
+{
+ "case": "unchanged-func",
+ "id": "JCM-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "`create_model` now applies `model_snapshots(n, sns)` before creating the model, assigning its snapshot parameters, and calling the variable and constraint builders. That helper resolves `\"auto\"` using linopy\u2019s semantics and converts MultiIndex snapshots to flat tuple labels only when the selected layout is `\"flat\"`; the conversion is outside the transmission-losses conditional.\nYES"
+}

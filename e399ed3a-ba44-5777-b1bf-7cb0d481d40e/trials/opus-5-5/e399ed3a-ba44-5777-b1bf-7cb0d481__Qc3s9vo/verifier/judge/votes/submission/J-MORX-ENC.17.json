@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MORX-ENC",
+ "trial": 17,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The new `_AATObject.__eq__` gives AAT actions structural equality rather than identity equality. The extended state-table writer in `otConverters.py` can therefore deduplicate distinct transition objects with identical fields that previously produced separate entries, changing the entry table and its indices for a morx table containing such transitions.\nYES"
+}

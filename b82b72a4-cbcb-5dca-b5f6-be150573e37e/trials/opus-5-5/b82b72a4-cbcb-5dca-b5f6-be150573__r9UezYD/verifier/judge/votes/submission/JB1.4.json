@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JB1",
+ "trial": 4,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The breadcrumb is still recorded once by the `request-created` handler for each request, using the same URL parsing, streaming-mode URL attributes, and HTTP method fields. The changes move span creation and completion to the API-call wrapper but do not change the breadcrumb data or its recording frequency.\nNO"
+}

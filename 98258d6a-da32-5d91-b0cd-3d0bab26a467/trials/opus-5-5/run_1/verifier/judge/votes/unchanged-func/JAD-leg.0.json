@@ -1,8 +1,0 @@
-{
- "case": "unchanged-func",
- "id": "JAD-leg",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "Under legacy semantics, both `\"auto\"` (the default) and `\"multiindex\"` select the existing MultiIndex layout, so model creation does not enable flattening. The array changes handle tuple-labelled DataArrays and optionally flatten array results; they do not change `_as_dynamic`\u2019s construction of dynamic frames in the specified configurations.\nNO"
-}

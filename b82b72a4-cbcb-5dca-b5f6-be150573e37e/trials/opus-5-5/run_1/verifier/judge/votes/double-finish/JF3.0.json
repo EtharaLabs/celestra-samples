@@ -1,8 +1,0 @@
-{
- "case": "double-finish",
- "id": "JF3",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The change defers finishing only when a top-level response value is a `StreamingBody`. Boto3 calls returning an `EventStream`, such as Bedrock's `invoke_model_with_response_stream`, do not satisfy that check, so `_finish_span(span)` runs before the returned stream has been consumed.\nYES"
-}

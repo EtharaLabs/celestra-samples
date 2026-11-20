@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J-TRIM-LO",
- "trial": 12,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The contextual decoder sets `first = max(0, (substOffset + 1) // 2 - offset)`, so every replacement word it reads has byte position `2 * (offset + g) >= substOffset`. This bound applies equally to signed negative offsets and positive offsets, and an empty valid range produces no replacements.\nYES"
-}

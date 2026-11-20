@@ -1,0 +1,8 @@
+{
+ "case": "jmalcls-w3",
+ "id": "J-MAL-CLS",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The change routes classic `mort` state tables to the new `StateHeader.read` converter. After reading the four 16-bit header fields, it immediately returns the table if `GlyphClassCount == 0`, avoiding further parsing and division by zero; the added `mort` lookup mappings make this path reachable during decompilation.\nYES"
+}

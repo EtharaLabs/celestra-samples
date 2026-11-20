@@ -1,0 +1,8 @@
+{
+ "case": "unchanged-create-model",
+ "id": "JFX-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The new code in `_from_xarray` always converts a tuple-valued snapshot index into a pandas MultiIndex using `stack`, without consulting the selected layout. Thus, with `optimization.model_snapshot_index=\"flat\"`, a flat snapshot-indexed array is converted using a fixed MultiIndex representation rather than the selected flat representation.\nYES"
+}

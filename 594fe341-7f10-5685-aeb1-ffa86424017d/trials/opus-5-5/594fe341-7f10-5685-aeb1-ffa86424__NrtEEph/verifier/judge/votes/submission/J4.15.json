@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J4",
+ "trial": 15,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission does not fully meet the documentation criterion.\n\nIt correctly documents that JSON Schema dictionaries are surfaced but not enforced by `interrupt`, that Python-type schemas validate resume values, that `interrupt` returns the validated object, and that an invalid answer is not kept.\n\nHowever, the per-call middleware documentation says only that each pause \u201cis resumed with a single decision.\u201d It never explains that those decisions must be keyed by **interrupt ID**, rather than tool-call ID or position. The internal scratchpad comment about an answer addressed by interrupt ID does not establish this user-facing per-call response contract.\n\nThe `_decision_schema` docstring also overstates validation: it says edit arguments \u201cmust fit the tool\u2019s arguments as the model sees them,\u201d without qualifying that JSON-schema tool arguments are only shown, not enforced. That qualification appears in another helper\u2019s docstring, but this edited docstring remains misleading on its own.\n\nFAIL"
+}

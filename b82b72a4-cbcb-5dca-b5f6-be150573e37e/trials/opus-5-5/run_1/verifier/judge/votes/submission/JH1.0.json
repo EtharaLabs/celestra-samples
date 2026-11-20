@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JH1",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The change preserves URL parsing and attribute derivation in both tracing modes: streaming mode still uses `get_url_attributes` and `HTTP_REQUEST_METHOD`, while non-streaming mode retains `aws.request.url`, `HTTP_QUERY`, `HTTP_FRAGMENT`, and `HTTP_METHOD` with the same values and conditions. The differences shown concern span ownership and lifetime, including retry overwrites, which the criterion excludes.\nNO"
-}

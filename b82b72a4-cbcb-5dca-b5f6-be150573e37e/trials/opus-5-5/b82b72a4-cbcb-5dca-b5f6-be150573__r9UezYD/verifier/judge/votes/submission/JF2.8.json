@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JF2",
+ "trial": 8,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The wrapper finishes the client span on a call error or a non-streaming return, while a successfully instrumented streaming body defers finishing to its callbacks. Those callbacks share a `finished` guard, and instrumentation failure disables them before the wrapper finishes the client span, preventing duplicate finishes along those paths.\nNO"
+}

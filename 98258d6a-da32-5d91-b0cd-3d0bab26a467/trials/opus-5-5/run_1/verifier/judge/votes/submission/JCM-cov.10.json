@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JCM-cov",
- "trial": 10,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "`create_model` determines whether flat snapshots are requested, but never converts `sns` itself: it still passes the original MultiIndex to the variable and constraint builders, including the loss builders. Only the model parameter is explicitly converted via `_snapshots_parameter`; the context manager changes component-data access, not the `sns` arguments. Thus the required representation is not used consistently when `\"flat\"` is selected or `\"auto\"` resolves to flat.\nNO"
-}

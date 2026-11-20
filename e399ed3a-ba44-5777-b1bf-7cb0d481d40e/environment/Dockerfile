@@ -19,8 +19,9 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ARG TARGETOS
 ARG TARGETARCH
 COPY requirements-tools.txt binary.txt sdist.txt /req/
-RUN case "$TARGETARCH" in amd64) arch=x86_64 ;; arm64) arch=aarch64 ;; *) exit 1 ;; esac \
- && test "$TARGETOS" = linux \
+# Kaniko leaves TARGETARCH and TARGETOS empty and builds for its own platform, so fall back to that.
+RUN case "${TARGETARCH:-$(dpkg --print-architecture)}" in amd64) arch=x86_64 ;; arm64) arch=aarch64 ;; *) exit 1 ;; esac \
+ && test "${TARGETOS:-linux}" = linux \
  && pip download --no-cache-dir --require-hashes --only-binary=:all: --no-deps \
       --python-version 3.12 --implementation cp --abi cp312 --abi abi3 --abi none \
       --platform "manylinux_2_28_$arch" --platform "manylinux_2_17_$arch" \
@@ -36,8 +37,9 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ARG TARGETOS
 ARG TARGETARCH
 COPY agent-tools.txt agent-binary.txt agent-sdist.txt /req/
-RUN case "$TARGETARCH" in amd64) arch=x86_64 ;; arm64) arch=aarch64 ;; *) exit 1 ;; esac \
- && test "$TARGETOS" = linux \
+# Kaniko leaves TARGETARCH and TARGETOS empty and builds for its own platform, so fall back to that.
+RUN case "${TARGETARCH:-$(dpkg --print-architecture)}" in amd64) arch=x86_64 ;; arm64) arch=aarch64 ;; *) exit 1 ;; esac \
+ && test "${TARGETOS:-linux}" = linux \
  && pip download --no-cache-dir --require-hashes --only-binary=:all: --no-deps \
       --python-version 3.12 --implementation cp --abi cp312 --abi abi3 --abi none \
       --platform "manylinux_2_28_$arch" --platform "manylinux_2_17_$arch" \
@@ -60,20 +62,22 @@ RUN groupadd -g 10001 agent && useradd -u 10001 -g 10001 -m -d /home/agent agent
  && chage -d "$(date -u -d "@$SOURCE_DATE_EPOCH" +%F)" agent \
  && rm -rf /root/.cache
 # Pin lists arrive through a bind mount, so no layer holds them with the build context's mtimes.
-RUN --mount=type=bind,from=wheels,source=/dist,target=/dist \
-    --mount=type=bind,target=/ctx \
-    pip install --no-cache-dir --no-index --find-links /dist --require-hashes --no-deps -r /ctx/requirements-tools.txt \
+# Kaniko ignores RUN --mount, so these files are copied in and removed by the step that uses them.
+COPY --from=wheels /dist /dist
+COPY . /ctx
+RUN pip install --no-cache-dir --no-index --find-links /dist --require-hashes --no-deps -r /ctx/requirements-tools.txt \
  && pip install --no-cache-dir --no-index --find-links /dist --require-hashes --no-build-isolation -r /ctx/requirements.txt \
- && rm -rf /root/.cache
+ && rm -rf /root/.cache /dist /ctx
 COPY --from=source --chown=10001:10001 /src /app/fonttools
 RUN pip install --no-cache-dir --no-deps --no-build-isolation --no-index --config-settings=editable_mode=compat -e /app/fonttools \
  && chown -R 10001:10001 /app/fonttools \
  && rm -rf /root/.cache
-# The agent under test (openhands-sdk==1.27.0) as the benchmark harness runs it: Harbor finds
+# The agent under test (openhands-sdk==1.58.2) as the benchmark harness runs it: Harbor finds
 # /opt/openhands-sdk-venv ready and skips its networked install.
-RUN --mount=type=bind,from=agent-wheels,source=/dist,target=/agentdist \
-    --mount=type=bind,target=/ctx \
-    printf 'deb [check-valid-until=no] http://snapshot.debian.org/archive/debian/20261020T213255Z bookworm main\ndeb [check-valid-until=no] http://snapshot.debian.org/archive/debian/20261020T213255Z bookworm-updates main\ndeb [check-valid-until=no] http://snapshot.debian.org/archive/debian-security/20261020T213255Z bookworm-security main\n' > /etc/apt/sources.list \
+# Kaniko ignores RUN --mount, so these files are copied in and removed by the step that uses them.
+COPY --from=agent-wheels /dist /agentdist
+COPY . /ctx
+RUN printf 'deb [check-valid-until=no] http://snapshot.debian.org/archive/debian/20261020T213255Z bookworm main\ndeb [check-valid-until=no] http://snapshot.debian.org/archive/debian/20261020T213255Z bookworm-updates main\ndeb [check-valid-until=no] http://snapshot.debian.org/archive/debian-security/20261020T213255Z bookworm-security main\n' > /etc/apt/sources.list \
  && rm -f /etc/apt/sources.list.d/debian.sources \
  && apt-get -o Acquire::Check-Valid-Until=false update -qq \
  && apt-get install -y -qq --no-install-recommends curl=7.88.1-10+deb12u15 \
@@ -81,7 +85,7 @@ RUN --mount=type=bind,from=agent-wheels,source=/dist,target=/agentdist \
  && python -m venv --without-pip /opt/openhands-sdk-venv \
  && pip --python /opt/openhands-sdk-venv/bin/python install --no-cache-dir --no-index --find-links /agentdist --require-hashes --no-deps -r /ctx/agent-tools.txt \
  && pip --python /opt/openhands-sdk-venv/bin/python install --no-cache-dir --no-index --find-links /agentdist --require-hashes --no-deps --no-build-isolation -r /ctx/agent-requirements.txt \
- && rm -rf /root/.cache
+ && rm -rf /root/.cache /agentdist /ctx
 WORKDIR /app/fonttools
 LABEL org.opencontainers.image.source="https://github.com/fonttools/fonttools" \
       org.opencontainers.image.revision="984a5cf614f4b05f0cdd57fc5b5628fd81518805" \

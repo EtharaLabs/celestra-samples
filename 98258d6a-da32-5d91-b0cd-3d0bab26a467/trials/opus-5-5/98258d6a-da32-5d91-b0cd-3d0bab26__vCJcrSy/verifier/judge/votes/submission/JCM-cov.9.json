@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JCM-cov",
+ "trial": 9,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "For multi-period snapshots with `\"flat\"` (or `\"auto\"` under v1 semantics), `create_model` stores a flattened snapshot parameter but never converts `sns` itself from the MultiIndex returned by `as_index`. It continues passing that unchanged MultiIndex to the variable and constraint builders, including the loss builders; the component-data context does not change those arguments.\nNO"
+}

@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JSM-leg",
- "trial": 13,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "Under legacy semantics, `\"auto\"` resolves to `\"multiindex\"`, so `_to_model` leaves `n.snapshots` unchanged. If `create_model` builds a model over only a subset of the network snapshots, `solve_model` nevertheless passes the full `n.snapshots` to `extra_functionality`, rather than the subset stored in the model parameters.\n\nYES"
-}

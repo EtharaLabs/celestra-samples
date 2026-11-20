@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JAD-leg",
+ "trial": 13,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not change `_as_dynamic` or its dynamic-frame construction logic. The new flattening is applied to the resulting xarray view only within a flat-snapshot context; under legacy semantics, the default/`\"auto\"` and `\"multiindex\"` settings do not activate that context. Changes to optimization constraints and expressions do not establish a different frame built by `_as_dynamic` for the same input.\nNO"
+}

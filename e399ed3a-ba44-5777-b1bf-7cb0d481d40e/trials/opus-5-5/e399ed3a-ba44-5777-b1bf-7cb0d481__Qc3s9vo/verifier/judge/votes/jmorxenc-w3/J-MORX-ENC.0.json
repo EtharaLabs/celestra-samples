@@ -1,0 +1,8 @@
+{
+ "case": "jmorxenc-w3",
+ "id": "J-MORX-ENC",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The morx state-table fields now use `MorphStateTable`, whose `write` method removes empty entries from `value.PerGlyphLookups` before invoking the original extended converter. For a contextual morx table containing an empty lookup alongside a nonempty lookup, this changes the lookup data and offsets compiled from the same input objects compared with the base commit.\nYES"
+}

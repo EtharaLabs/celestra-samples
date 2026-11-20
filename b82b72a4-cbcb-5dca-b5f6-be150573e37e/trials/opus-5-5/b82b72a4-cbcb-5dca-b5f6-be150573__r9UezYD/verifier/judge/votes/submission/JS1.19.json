@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JS1",
+ "trial": 19,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The wrapper calls `_start_client_span` once per `_make_api_call`, and its streaming and non-streaming span creation branches are mutually exclusive. Request-created handlers reuse that span rather than starting new client spans, including for retries.\nNO"
+}

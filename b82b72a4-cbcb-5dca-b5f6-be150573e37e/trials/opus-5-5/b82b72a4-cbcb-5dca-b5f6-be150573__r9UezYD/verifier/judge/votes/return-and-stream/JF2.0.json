@@ -1,0 +1,8 @@
+{
+ "case": "return-and-stream",
+ "id": "JF2",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "For a successful call returning a streaming body, `sentry_patched_make_api_call` unconditionally calls `_finish_span(span)` after instrumenting the body, ignoring `streaming_body_instrumented`. When the body is subsequently consumed or closed, the installed wrapper calls `_finish_span(span, error)` on that same client span again; its local `finished` guard does not cover the earlier finish in the client-call wrapper.\nYES"
+}

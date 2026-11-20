@@ -1,0 +1,8 @@
+{
+ "case": "unchanged-solve-model",
+ "id": "JTR-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "Under legacy semantics, `\"auto\"` resolves to `\"multiindex\"`, so the new `model_view` calls perform the same snapshot selections as the original `.loc[sns]` calls. Renaming the branch-selection index to `\"name\"` does not change the selected branches or coefficients, and the relevant time-weighting calculation remains equivalent. Thus the inner transmission function does not report a different value for the same input.\nNO"
+}

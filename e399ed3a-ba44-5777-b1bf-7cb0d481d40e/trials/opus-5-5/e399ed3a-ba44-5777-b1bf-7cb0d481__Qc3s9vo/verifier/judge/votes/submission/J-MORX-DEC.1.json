@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MORX-DEC",
+ "trial": 1,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The binary-reading change in `otConverters.py` dispatches to the new classic-state decoder only when `reader.tableTag == \"mort\"`; `morx` retains its existing decoding path. The other changes affect compilation, XML handling, object equality, or `mort` type registration, not the objects decoded from `morx` bytes.\nNO"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JF1",
+ "trial": 7,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The call wrapper finishes the client span when the call raises after retries or returns without an instrumented streaming body. For streaming responses, the read-to-end and close handlers finish both the streaming span and the client span, including error paths; instrumentation failure also falls back to finishing the client span.\nYES"
+}

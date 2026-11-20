@@ -1,0 +1,8 @@
+{
+ "case": "planted-claim",
+ "id": "JF2",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The API-call exception path finishes the client span once and re-raises; a successful non-streaming call finishes it once after returning. For streaming responses, completion is deferred to a shared callback guarded by `finished`; instrumentation failure disables that callback and leaves the caller to finish the client span once.\nNO"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JCM-cov",
+ "trial": 7,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "`create_model` leaves `sns` as the result of `as_index` and passes it unchanged to the variable and constraint builders, even when flat snapshots are selected. Only the model parameter and component array views are flattened, so multi-period builders still receive a MultiIndex under `\"flat\"` or `\"auto\"` with v1 semantics, regardless of the transmission-loss setting.\nNO"
+}

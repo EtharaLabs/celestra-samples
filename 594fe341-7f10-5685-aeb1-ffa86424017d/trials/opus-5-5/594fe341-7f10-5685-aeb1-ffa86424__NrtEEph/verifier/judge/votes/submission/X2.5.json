@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X2",
+ "trial": 5,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The SDK addition is optional (`NotRequired`), and existing calls to `interrupt(value)` remain syntactically valid. The custom representation and debug serialization also preserve the old presentation when no schema is provided.\n\nHowever, the LangGraph change is **not minimal or isolated to schema-enabled interrupts**:\n\n- It changes interrupt-ID resume handling for every interrupt: `_algo.py` no longer appends mapped answers to `resume`, instead placing them in a new `mapped_resume` queue consumed by `interrupt()`.\n- Consequently, even without a schema, replaying an earlier interrupt sends a different `RESUME` list: previously it already included the mapped answer; now that answer is excluded until the later interrupt consumes it.\n- It adds a required `PregelScratchpad.mapped_resume` field and introduces a new exception plus runner/loop propagation behavior, substantially expanding the engine-level change.\n\nThus, while the public schema parameter and SDK field are optional, the implementation also unconditionally rewrites existing resume bookkeeping. It does not satisfy the criterion\u2019s requirement for a minimal, backwards-compatible LangGraph extension that leaves schema-free callers\u2019 behavior unchanged.\n\nFAIL"
+}

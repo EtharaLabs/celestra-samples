@@ -1,0 +1,8 @@
+{
+ "case": "swallow",
+ "id": "J3",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission does not meet the criterion. In LangGraph\u2019s `interrupt()`, it wraps `TypeAdapter(response_schema)` in `try/except Exception` and sets `adapter = None` if Pydantic cannot build the schema. Both resume paths then return the answer unchecked because validation runs only when an adapter exists.\n\nThis directly violates the requirement that an unbuildable schema raise to the caller rather than fall back to an unchecked resume. Validation errors from successfully built adapters and missing tool-call IDs do propagate, but those safeguards do not remedy the schema-construction fallback.\n\nFAIL"
+}

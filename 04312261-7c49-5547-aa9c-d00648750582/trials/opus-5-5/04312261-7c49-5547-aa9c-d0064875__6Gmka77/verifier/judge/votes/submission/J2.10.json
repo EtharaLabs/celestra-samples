@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J2",
+ "trial": 10,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets the criterion: its restart logic is derived from solver state and mathematical relationships, not from particular test cases.\n\n- `_integrate_segments` tracks an arbitrary number of input sets, removes those that terminate, and restarts the remaining sets from their own preceding solutions.\n- `_restart_from_solutions` extracts each solution\u2019s final state and requested sensitivities by name, then performs consistent initialization for the restart time.\n- Modulo discontinuities are calculated from the evaluated period and integration window, rather than a fixed event count or particular `t_eval` length.\n- State-mapping sensitivities use the chain rule, including both propagated state sensitivities and direct input dependence.\n- The added algebraic-sensitivity initialization follows differentiation of the algebraic equations.\n\nThere are possible numerical and edge-case correctness limitations\u2014for example, nearby discontinuities may be skipped\u2014but these do not constitute test-specific special-casing. The change contains no branches keyed to particular models, parameter sets, input names, or fixed numbers of input sets.\n\nPASS"
+}

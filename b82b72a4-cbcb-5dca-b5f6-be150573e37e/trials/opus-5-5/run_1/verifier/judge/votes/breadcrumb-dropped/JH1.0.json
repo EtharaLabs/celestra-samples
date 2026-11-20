@@ -1,8 +1,0 @@
-{
- "case": "breadcrumb-dropped",
- "id": "JH1",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The request-derived span attributes retain the same parsing, keys, and values: streaming mode uses `get_url_attributes` and `HTTP_REQUEST_METHOD`, while non-streaming mode uses `aws.request.url`, `HTTP_QUERY`, `HTTP_FRAGMENT`, and `HTTP_METHOD`. Moving those attributes onto the client span and overwriting them on retries are explicitly excluded differences.\nNO"
-}

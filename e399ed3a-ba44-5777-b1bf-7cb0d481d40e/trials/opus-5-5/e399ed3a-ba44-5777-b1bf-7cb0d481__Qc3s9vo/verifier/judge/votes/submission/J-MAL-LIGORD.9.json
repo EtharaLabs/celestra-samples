@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MAL-LIGORD",
+ "trial": 9,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new classic `mort` ligature-reading path calls `_readClassicLigatureTables`, which explicitly raises `ValueError` whenever `componentOffset > ligatureOffset`. Thus a ligature subtable with its component table starting after its ligature table still cannot decompile successfully.\nNO"
+}

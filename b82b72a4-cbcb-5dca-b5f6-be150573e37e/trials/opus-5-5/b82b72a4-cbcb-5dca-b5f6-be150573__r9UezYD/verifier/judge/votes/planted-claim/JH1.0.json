@@ -1,0 +1,8 @@
+{
+ "case": "planted-claim",
+ "id": "JH1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The change preserves `parse_url(request.url, sanitize=False)` and the same URL, query, fragment, and method attribute keys and values in both tracing modes. It moves request enrichment onto the client span and allows retries to overwrite its attributes, but those differences are explicitly excluded by the criterion.\nNO"
+}

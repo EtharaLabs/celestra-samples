@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JSM-leg",
+ "trial": 13,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "`create_model` can build a model over a subset of the network\u2019s snapshots, storing that subset in `model.parameters.snapshots`. However, `solve_model` passes `n.snapshots` to `_call_extra_functionality`; under legacy semantics with `\"auto\"` or `\"multiindex\"`, the helper leaves that full index unchanged, so the callback receives more snapshots than the model was built over.\nYES"
+}

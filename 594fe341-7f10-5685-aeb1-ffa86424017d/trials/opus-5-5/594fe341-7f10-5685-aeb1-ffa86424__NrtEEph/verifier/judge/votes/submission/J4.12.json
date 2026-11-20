@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J4",
+ "trial": 12,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission does not fully meet the documentation criterion.\n\nIts LangGraph documentation correctly distinguishes JSON Schema dictionaries, which are only surfaced, from Python types validated through Pydantic. It also explains that `interrupt` returns the validated object on resume and that invalid answers are not kept.\n\nHowever, the per-call middleware documentation only says that each interrupt is resumed \u201cwith a single decision.\u201d It never explains that those decisions must be keyed by **interrupt ID**, rather than tool-call ID or position. The internal `mapped_resume` comment mentions interrupt-ID addressing, but does not document how callers should answer per-call approvals.\n\nAdditionally, `_decision_schema` states without qualification that edit arguments \u201cmust fit the tool's arguments as the model sees them,\u201d even though the non-Pydantic path only displays the tool\u2019s schema and accepts arbitrary object fields. The helper\u2019s documentation partially clarifies that distinction, but the broader statement remains misleading.\n\nFAIL"
+}

@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "X3",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "FAIL",
- "response": "The submission does not fully meet the criterion. It centralizes initial resume validation in LangGraph and has the middleware supply a Python response schema, but its replay path can persist answers that have not yet passed validation during that replay.\n\nIn `interrupt()`, the existing-resume branch validates only the current entry:\n\n```python\nv = _validate_resume(adapter, scratchpad.resume[idx])\n```\n\nbut then republishes the entire resume list:\n\n```python\nconf[CONFIG_KEY_SEND]([(RESUME, scratchpad.resume)])\n```\n\nThat includes later entries whose corresponding interrupts have not yet been reached or validated. If a later entry fails validation\u2014for example, because the schema encountered on replay differs\u2014the earlier interrupt has already emitted that entry as part of its resume write. Raising `InvalidResumeError` afterward does not retract that write. `_discard_null_resume()` addresses an unkeyed null-task resume, not this task-level replay-list write.\n\nThe replay path should publish only the validated prefix, `scratchpad.resume[: idx + 1]`. Without that restriction, \u201cvalidated before being stored\u201d is not maintained consistently across fresh answers and replayed answers, including in plain graphs with multiple interrupts. The middleware\u2019s use of the provider\u2019s validator does not repair this provider-level discrepancy.\n\nFAIL"
-}

@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JSM-cov",
- "trial": 17,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "`solve_model` still takes callback snapshots from `n.snapshots`, rather than the model\u2019s stored snapshots. If a model is built with a single-level snapshot index and the network subsequently gains investment periods, `n.snapshots` becomes a MultiIndex; `_model_snapshot_context` selects non-flat mode for that model, and `_to_model` passes the MultiIndex through unchanged. Thus the callback can receive a different representation from the one used to build the model.\nNO"
-}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JW1",
+ "trial": 19,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The client-call and streamed-body wrappers catch failures and use bare `raise`, preserving the original exception object. Span finalization runs inside `capture_internal_exceptions()`, so the diff does not show an instrumentation error replacing a botocore failure.\nNO"
+}

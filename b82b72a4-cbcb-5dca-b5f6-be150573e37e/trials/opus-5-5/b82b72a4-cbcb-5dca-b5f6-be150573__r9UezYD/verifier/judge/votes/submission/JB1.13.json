@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JB1",
+ "trial": 13,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The change still registers one `request-created` handler and calls `add_http_breadcrumb` once per event. Both tracing modes retain the same URL, query/fragment, and HTTP-method breadcrumb data; the changes to span creation and completion do not change that breadcrumb recording.\n\nNO"
+}

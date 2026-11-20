@@ -1,0 +1,8 @@
+{
+ "case": "jsm-cov-w2",
+ "id": "JSM-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "`solve_model` always converts `self._window.model_index` into a flat `pd.Index` with `tupleize_cols=False` before passing it to `extra_functionality`. For a multi-period model built using the supported `\"multiindex\"` representation, this changes its MultiIndex into a flat index of tuples, so the callback receives a different representation from the model\u2019s.\nNO"
+}

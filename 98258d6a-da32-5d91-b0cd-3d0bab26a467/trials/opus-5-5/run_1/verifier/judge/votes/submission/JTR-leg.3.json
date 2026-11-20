@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JTR-leg",
- "trial": 3,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The transmission inner function unconditionally changes `var.loc[:, idx] * efficiency[idx]` to `-var.sel(name=idx) * efficiency[idx]`. This negates the expression even under legacy semantics with default/`auto` or `multiindex` snapshots, so a branch with nonzero weighted flow yields a different value for the same input.\nYES"
-}

@@ -1,8 +1,0 @@
-{
- "case": "oracle",
- "id": "J-TRIM-HI",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "`MortSubtableConverter.read` confines the decoder\u2019s data to the declared subtable body. `_readContextualLookups` caps the last glyph at `(available - 2) // 2 - offset`, ensuring that every two-byte replacement word ends at or before that body\u2019s end, including for odd lengths and negative offsets.\nYES"
-}

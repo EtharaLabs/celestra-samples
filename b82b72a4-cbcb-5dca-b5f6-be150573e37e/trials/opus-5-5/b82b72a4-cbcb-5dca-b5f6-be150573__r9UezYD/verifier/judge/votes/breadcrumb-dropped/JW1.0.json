@@ -1,0 +1,8 @@
+{
+ "case": "breadcrumb-dropped",
+ "id": "JW1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "NO: The client-call and streamed-body error handlers re-raise with bare `raise`, preserving the original exception object rather than constructing or substituting another exception. The diff does not show a failing botocore exception being swallowed or replaced.\nNO"
+}

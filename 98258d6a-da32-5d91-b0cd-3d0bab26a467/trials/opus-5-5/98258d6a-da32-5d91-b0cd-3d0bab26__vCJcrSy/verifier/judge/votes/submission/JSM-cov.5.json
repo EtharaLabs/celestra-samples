@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JSM-cov",
+ "trial": 5,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "`solve_model` still takes snapshots from `n.snapshots`, rather than the stored model snapshots. Its new helper only flattens a MultiIndex when the model is flat; it does not otherwise restore the model\u2019s representation. Thus, if the network\u2019s snapshots are changed to a simple index after building a MultiIndex model, `extra_functionality` receives that simple index instead of the representation used to build the model.\nNO"
+}

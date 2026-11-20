@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J2",
+ "trial": 8,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission implements restart handling through general solver mechanisms rather than test-specific cases:\n\n- It tracks active input sets dynamically, preserving each set\u2019s solution and restarting only those that reached the segment\u2019s end. There is no fixed input-set count.\n- Each restart takes its state and requested, name-selected sensitivities from that input set\u2019s final solution.\n- Discontinuity segments are derived from model expressions, input values, and the integration window, not particular input names or `t_eval` lengths.\n- Cross-model sensitivity mapping uses the chain rule on the state mapper. Algebraic sensitivity initialization likewise derives from the differentiated algebraic equations.\n- There are no branches keyed to particular tested models, parameter sets, or names such as `t_switch`, `a`, or `b`.\n\nThere may be numerical edge cases or broader correctness issues in the implementation, but its restart strategy is general and does not special-case the graded tests.\n\nPASS"
+}

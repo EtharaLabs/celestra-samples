@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JIT-cov",
+ "trial": 7,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not modify `optimize_transmission_expansion_iteratively` or add any forced snapshot conversion to its iteration calls. The new model-building code resolves `optimization.model_snapshot_index` and converts MultiIndex snapshots to the flat representation only when selected, rather than imposing a fixed representation on the snapshots passed by the iterative routine.\nNO"
+}

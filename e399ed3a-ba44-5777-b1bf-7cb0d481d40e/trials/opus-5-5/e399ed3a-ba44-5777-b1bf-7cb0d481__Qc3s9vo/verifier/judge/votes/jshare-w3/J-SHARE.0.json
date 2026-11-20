@@ -1,0 +1,8 @@
+{
+ "case": "jshare-w3",
+ "id": "J-SHARE",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The new `StateHeader` class in `otConverters.py` adds separate `xmlWrite` and `xmlRead` implementations duplicating the state-table TTX logic used by `STXHeader`. `MorphStateTable` selects this classic-mort implementation for XML writing when `_MortClassic` is set, so the change adds a separate copy rather than fully reusing the extended implementation.\nYES"
+}

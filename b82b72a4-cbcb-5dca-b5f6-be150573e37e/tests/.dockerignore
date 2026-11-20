@@ -1,7 +1,6 @@
 *
 !binary.txt
 !combine.py
-!*.sh
 !graded
 !judge
 !judge-controls
@@ -13,4 +12,5 @@
 !run_graded.py
 !score.py
 !sdist.txt
+!*.sh
 !test_output.py

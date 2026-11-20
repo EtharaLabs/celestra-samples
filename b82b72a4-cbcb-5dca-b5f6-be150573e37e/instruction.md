@@ -1,6 +1,6 @@
 # boto3 client spans follow botocore's requests instead of the client call
 
-The repository at `/app/sentry-python` is the Sentry Python SDK, installed in editable mode with its test dependencies, including boto3 and botocore 1.43.105. There is no network access.
+The repository at `/app/sentry-python` is the Sentry Python SDK, installed in editable mode with its dependencies, including boto3 and botocore 1.43.105. There is no network access.
 
 With the boto3 integration enabled, the span the SDK records for an AWS client call (named `aws.<service>.<Operation>`, for example `aws.s3.GetObject`, with op `http.client`) starts when botocore creates an HTTP request and ends when botocore reports the result. That does not match one client call:
 
@@ -16,4 +16,4 @@ Make the boto3 integration record exactly one client span per client method call
 - While the call runs, the client span is the current span, so the HTTP span the stdlib integration records for the request is its child. As soon as the call returns, the caller's current span is current again, even while the body is still open, and spans started afterwards are never children of the client span or the stream span.
 - Breadcrumbs, the HTTP request data recorded on the span, and trace propagation headers are still recorded for each request as they are now.
 
-Fix this in the library source under `/app/sentry-python/sentry_sdk`, keeping every other behaviour of the SDK unchanged. Your work is graded from the final contents of `/app/sentry-python/sentry_sdk` only, against tests that are not in this environment. Changes elsewhere in the repository, including to its tests and configuration, are not graded.
+Fix this in the library source under `/app/sentry-python/sentry_sdk`, keeping every other behaviour of the SDK unchanged. Only your changes under `/app/sentry-python/sentry_sdk` are kept; changes elsewhere in the repository, including to its configuration, are discarded.

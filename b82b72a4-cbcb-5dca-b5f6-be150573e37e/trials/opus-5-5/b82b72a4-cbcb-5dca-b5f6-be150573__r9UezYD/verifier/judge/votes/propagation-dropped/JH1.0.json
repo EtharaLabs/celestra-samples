@@ -1,0 +1,8 @@
+{
+ "case": "propagation-dropped",
+ "id": "JH1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The request attributes retain the same derivation in both tracing modes: streamed spans use `get_url_attributes` and `HTTP_REQUEST_METHOD`, while legacy spans use `aws.request.url`, `HTTP_QUERY`, `HTTP_FRAGMENT`, and `HTTP_METHOD` with the same parsed values. The diff moves this enrichment to the client span and allows retries to overwrite it, but those differences are explicitly excluded by the criterion.\nNO"
+}

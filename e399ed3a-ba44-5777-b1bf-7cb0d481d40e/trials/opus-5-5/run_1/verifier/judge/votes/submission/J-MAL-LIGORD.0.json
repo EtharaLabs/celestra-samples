@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J-MAL-LIGORD",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The ligature branch of `_readClassic` unconditionally calls `_readClassicLigComponents`, which explicitly raises `ValueError` when `componentOffset > ligatureOffset`. Thus the new decoding support still rejects every ligature subtable with the specified table ordering.\nNO"
-}

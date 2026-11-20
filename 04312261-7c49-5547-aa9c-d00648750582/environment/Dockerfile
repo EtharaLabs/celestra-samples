@@ -19,8 +19,9 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ARG TARGETOS
 ARG TARGETARCH
 COPY tools.txt binary.txt sdist.txt /req/
-RUN case "$TARGETARCH" in amd64) arch=x86_64 ;; arm64) arch=aarch64 ;; *) exit 1 ;; esac \
- && test "$TARGETOS" = linux \
+# Kaniko leaves TARGETARCH and TARGETOS empty and builds for its own platform, so fall back to that.
+RUN case "${TARGETARCH:-$(dpkg --print-architecture)}" in amd64) arch=x86_64 ;; arm64) arch=aarch64 ;; *) exit 1 ;; esac \
+ && test "${TARGETOS:-linux}" = linux \
  && pip download --no-cache-dir --require-hashes --only-binary=:all: --no-deps \
       --python-version 3.12 --implementation cp --abi cp312 --abi abi3 --abi none \
       --platform "manylinux_2_28_$arch" --platform "manylinux_2_17_$arch" \
@@ -62,19 +63,21 @@ RUN groupadd -g 10001 agent && useradd -u 10001 -g 10001 -m -d /home/agent agent
  && chage -d "$(date -u -d "@$SOURCE_DATE_EPOCH" +%F)" agent \
  && rm -rf /root/.cache
 COPY tools.txt requirements.txt /tmp/req/
-RUN --mount=type=bind,from=wheels,source=/dist,target=/dist \
-    pip install --no-cache-dir --no-index --find-links /dist --require-hashes --no-deps -r /tmp/req/tools.txt \
+# Kaniko ignores RUN --mount, so these files are copied in and removed by the step that uses them.
+COPY --from=wheels /dist /dist
+RUN pip install --no-cache-dir --no-index --find-links /dist --require-hashes --no-deps -r /tmp/req/tools.txt \
  && pip install --no-cache-dir --no-index --find-links /dist --require-hashes --no-build-isolation -r /tmp/req/requirements.txt \
  && find /usr/local/lib/python3.12/site-packages /usr/local/share -type f \( -name '*.orig' -o -name '*.rej' \) -delete \
  && rm -r /tmp/req \
- && rm -rf /root/.cache
+ && rm -rf /root/.cache /dist
 COPY --from=source --chown=10001:10001 /src /app/pybamm
 RUN pip install --no-cache-dir --no-deps --no-build-isolation --no-index -e /app/pybamm/packages/pybamm \
  && chown -R 10001:10001 /app/pybamm \
  && rm -rf /root/.cache
-RUN --mount=type=bind,from=solvers,source=/wheels,target=/built \
-    pip install --no-cache-dir --no-deps --no-index /built/*.whl \
- && rm -rf /root/.cache
+# Kaniko ignores RUN --mount, so these files are copied in and removed by the step that uses them.
+COPY --from=solvers /wheels /built
+RUN pip install --no-cache-dir --no-deps --no-index /built/*.whl \
+ && rm -rf /root/.cache /built
 WORKDIR /app/pybamm
 LABEL org.opencontainers.image.source="https://github.com/pybamm-team/PyBaMM" \
       org.opencontainers.image.revision="fe6784fb08d386950d546f75c95849a7edeb5fa8" \

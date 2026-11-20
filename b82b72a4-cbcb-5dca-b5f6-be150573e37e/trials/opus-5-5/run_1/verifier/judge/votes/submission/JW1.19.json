@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JW1",
- "trial": 19,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The client-call exception handler passes the caught exception to `_finish_span` and then uses a bare `raise`, preserving the original exception object. The streaming-body change only adds span finalization; the diff shows no replacement or reconstruction of botocore exceptions.\nNO"
-}

@@ -1,8 +1,0 @@
-{
- "case": "jtr-leg-w3",
- "id": "JTR-leg",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The transmission inner function now passes `_normalized_weights(weights)` to time aggregation instead of the original generator snapshot weights. With sum aggregation, two snapshots of unit weight and a nonzero constant branch flow therefore produce half the base commit\u2019s value. This normalization also applies under legacy semantics with the default, `\"auto\"`, or `\"multiindex\"` setting.\nYES"
-}

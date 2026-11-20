@@ -1,8 +1,0 @@
-{
- "case": "renamed",
- "id": "JH1",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The change preserves request-derived HTTP attributes in both tracing modes: it still parses URLs with `sanitize=False`, uses the same URL/query/fragment keys and values, and records the method under the same mode-specific key. Moving these assignments to the client span and overwriting them on retries are explicitly excluded by the criterion.\nNO"
-}

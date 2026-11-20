@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JCM-leg",
- "trial": 5,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "Under legacy semantics, `\"auto\"` (the default) resolves to `\"multiindex\"`, so `flat` is false for all the specified option settings. `create_model` still obtains `sns` through the unchanged `as_index` call and passes that same `sns` to the variable and constraint builders; the new context does not flatten snapshots when `flat` is false. Changes inside builders do not establish a change in the snapshots handed to them.\nNO"
-}

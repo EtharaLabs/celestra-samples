@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JNL-cov",
- "trial": 3,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The diff does not modify `pypsa/optimization/abstract.py` or `optimize_and_run_non_linear_powerflow`. The new model-building code selects flat or MultiIndex snapshots according to `optimization.model_snapshot_index`, rather than introducing a fixed representation forced by that wrapper.\nNO"
-}

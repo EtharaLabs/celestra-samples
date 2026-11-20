@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J-MORX-ENC",
- "trial": 11,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "YES. Adding value-based equality to `LigAction` changes comparisons of ligature action sequences: distinct instances with identical attributes now compare equal. This can change action-sequence deduplication during extended `morx` compilation, producing different action data and indices for the same objects.\nYES"
-}

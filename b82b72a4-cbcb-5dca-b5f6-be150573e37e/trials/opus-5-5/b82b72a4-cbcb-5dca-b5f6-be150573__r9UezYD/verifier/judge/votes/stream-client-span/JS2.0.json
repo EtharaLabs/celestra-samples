@@ -1,0 +1,8 @@
+{
+ "case": "stream-client-span",
+ "id": "JS2",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The change starts the client span in the patched `BaseClient._make_api_call`, before calling the original method, rather than in a per-attempt botocore hook. The `request-created` hook now only enriches and stores the existing span, so retries share that span instead of starting one per attempt.\nNO"
+}

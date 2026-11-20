@@ -1,0 +1,8 @@
+{
+ "case": "jic-cov-w2",
+ "id": "JIC-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The change replaces `has_investment_periods` in `installed_capex` with a check that the model snapshot index is specifically a `pd.MultiIndex`. For a multi-period network using `optimization.model_snapshot_index = \"flat\"`, this check is false, so investment-period objective weighting is skipped even though investment periods exist; weighting is thus tied to the fixed MultiIndex representation.\nYES"
+}

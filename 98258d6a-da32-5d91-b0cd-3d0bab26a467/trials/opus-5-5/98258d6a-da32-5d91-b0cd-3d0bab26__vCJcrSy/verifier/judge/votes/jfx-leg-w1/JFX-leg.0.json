@@ -1,0 +1,8 @@
+{
+ "case": "jfx-leg-w1",
+ "id": "JFX-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The diff adds `.fillna(0)` to the pandas conversion in `_from_xarray` for arrays with dimensions `{\"name\"}` or `{\"name\", \"snapshot\"}`. Thus, a non-stochastic component and an array containing NaN in either shape now return zero where the base commit returned NaN, independently of legacy semantics or the specified snapshot-index options.\nYES"
+}

@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JP1",
- "trial": 14,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The trace-header injection handler and its registration order are unchanged, including the propagation checks and merging with existing headers. The change moves span creation and cleanup to the API-call wrapper, but does not change which propagation headers are added or how they are merged; differences in span or trace IDs do not count.\nNO"
-}

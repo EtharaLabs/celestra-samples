@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JSM-leg",
+ "trial": 5,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "Under legacy semantics, `\"auto\"` resolves to `\"multiindex\"`, and `_as_model_snapshots` returns its argument unchanged for such models. Thus `solve_model` still passes `n.snapshots`, exactly as before; any mismatch when a model was built over a subset already existed and is not introduced by this change.\nNO"
+}

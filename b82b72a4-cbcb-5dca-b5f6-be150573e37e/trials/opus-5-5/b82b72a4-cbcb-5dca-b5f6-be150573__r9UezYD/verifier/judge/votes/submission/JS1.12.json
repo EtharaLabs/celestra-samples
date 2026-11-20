@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JS1",
+ "trial": 12,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The wrapper calls `_start_client_span` once per boto3 API call. Request-created events, including those for retries, reuse the span stored in `_client_span` rather than starting additional client spans; the old event-based span creation is removed.\nNO"
+}

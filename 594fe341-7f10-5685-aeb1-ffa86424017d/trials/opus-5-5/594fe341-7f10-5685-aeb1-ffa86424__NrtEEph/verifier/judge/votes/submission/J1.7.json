@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J1",
+ "trial": 7,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission fails the scope requirement. Although the LangChain changes remain in `human_in_the_loop.py` and reuse existing decision-processing and edit helpers, the LangGraph changes extend well beyond `interrupt`, `Interrupt`, and the SDK interrupt type.\n\nSpecifically, it:\n- Adds `mapped_resume` to `PregelScratchpad` and changes resume routing in `pregel/_algo.py`.\n- Introduces a new `ResumeRejected` exception in `errors.py`.\n- Changes exception aggregation in `pregel/_runner.py` and root-loop exception handling in `pregel/_loop.py`.\n- Adds a debug serialization helper and rewrites interrupt serialization in `pregel/debug.py`.\n\nThese are substantive changes to execution infrastructure and serialization, not merely supporting edits within the permitted interrupt API surface. They therefore violate the explicit requirement that the fix be confined to the named components, regardless of whether they improve behavior.\n\nFAIL"
+}

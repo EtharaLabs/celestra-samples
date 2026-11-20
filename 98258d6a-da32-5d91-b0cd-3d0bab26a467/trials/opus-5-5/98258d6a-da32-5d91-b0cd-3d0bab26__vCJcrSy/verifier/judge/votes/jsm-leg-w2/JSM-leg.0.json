@@ -1,0 +1,8 @@
+{
+ "case": "jsm-leg-w2",
+ "id": "JSM-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "In `solve_model`, the callback now receives `n.investment_periods` whenever the network has investment periods, rather than the model\u2019s snapshot index. For a multi-period network under legacy semantics with `\"auto\"` or `\"multiindex\"`, the model is built over `(period, timestep)` snapshots, so passing only investment-period labels violates the criterion.\nYES"
+}

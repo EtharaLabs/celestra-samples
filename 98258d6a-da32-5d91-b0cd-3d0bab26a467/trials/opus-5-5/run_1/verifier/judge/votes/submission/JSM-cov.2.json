@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JSM-cov",
- "trial": 2,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "`solve_model` converts `n.snapshots`, not the snapshots stored in the model, and `_to_model` only flattens indexes when the model uses flat snapshots. For example, if a model is built with a plain snapshot index and the network is subsequently given investment periods (making `n.snapshots` a MultiIndex), `solve_model` passes that MultiIndex unchanged to `extra_functionality`, although the model was built with a plain index.\nNO"
-}

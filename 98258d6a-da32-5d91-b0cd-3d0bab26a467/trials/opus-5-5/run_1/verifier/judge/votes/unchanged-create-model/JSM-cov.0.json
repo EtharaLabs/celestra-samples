@@ -1,8 +1,0 @@
-{
- "case": "unchanged-create-model",
- "id": "JSM-cov",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "`solve_model` now obtains the snapshots passed to `extra_functionality` from `built_snapshots(n)`, which reads the current model\u2019s stored snapshot index rather than the network\u2019s snapshots or the current layout option. This preserves MultiIndex snapshots and supplies flat tuple labels for flat-built models, including models built over a subset of network snapshots.\nYES"
-}

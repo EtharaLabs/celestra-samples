@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X2",
+ "trial": 15,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission does not meet the minimal, backwards-compatible criterion.\n\nThe SDK addition is optional (`NotRequired`), and `interrupt(value)` still works without a schema. The custom `Interrupt.__repr__` and debug serialization also deliberately preserve the old appearance when no schema is supplied.\n\nHowever, the LangGraph change goes substantially beyond an optional schema extension. It changes scratchpad construction, ID-addressed resume handling, runner exception aggregation, and loop exit handling, and introduces a new exception class.\n\nIn particular, these changes affect **schema-less interrupts too**: previously, an ID-addressed answer was appended to `task_resume_write` during scratchpad construction; now it is held separately in `mapped_resume` until an interrupt consumes it. Consequently, replaying earlier interrupts can emit different `RESUME` writes, and failures before reaching the addressed interrupt can leave different persisted resume state. This is not an unchanged legacy path with optional validation layered on top.\n\nAdditionally, `PregelScratchpad.mapped_resume` is a new required constructor field with no default, so existing scratchpad construction sites outside those updated by the submission are no longer compatible.\n\nThus, while the public schema arguments and SDK member are optional, the overall LangGraph change is neither minimal nor confined to schema-enabled callers.\n\nFAIL"
+}

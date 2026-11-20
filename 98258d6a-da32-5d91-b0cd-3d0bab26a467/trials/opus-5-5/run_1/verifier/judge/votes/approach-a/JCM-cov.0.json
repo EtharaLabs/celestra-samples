@@ -1,8 +1,0 @@
-{
- "case": "approach-a",
- "id": "JCM-cov",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "`create_model` unconditionally applies `model_snapshots(n, sns)` before assigning snapshots to `n.model.parameters` and passing `sns` to the builders, independently of `transmission_losses`. That helper converts a MultiIndex to flat tuple labels for `\"flat\"` (including `\"auto\"` with v1 semantics) and preserves the MultiIndex for `\"multiindex\"` (including legacy `\"auto\"`).\nYES"
-}

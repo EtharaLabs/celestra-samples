@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JCM-cov",
- "trial": 9,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "For investment-period networks, `sns` remains the MultiIndex returned by `as_index`; `create_model` converts only the value stored in model parameters via `_snapshots_parameter(sns, flat)`. It still passes the unchanged `sns` to variable and constraint builders, including loss builders, even when `\"flat\"` is selected. The context manager changes component-data representation, not those snapshot arguments.\nNO"
-}

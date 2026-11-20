@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JSM-leg",
+ "trial": 10,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "With legacy semantics and `\"auto\"` or `\"multiindex\"`, a model can be built over only a subset of `n.snapshots`. `solve_model` passes the full `n.snapshots` to `_call_extra_functionality`, and `_as_model_snapshots` returns it unchanged for a non-flat model, so the callback receives snapshots beyond those the model was built over.\nYES"
+}

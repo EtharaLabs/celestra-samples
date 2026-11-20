@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JTR-cov",
+ "trial": 7,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The transmission function derives `sns` from the flow variable\u2019s own snapshot index, then selects dynamic port efficiencies and generator snapshot weights at those labels. `_model_snapshot_array` converts both efficiencies and aggregation weights to the model\u2019s snapshot representation, and model creation resolves `\"auto\"` to flat tuples under v1 semantics and a MultiIndex under legacy semantics.\nYES"
+}

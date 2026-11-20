@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-TRIM-IN",
+ "trial": 9,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The decoder sign-extends entry offsets and reads replacements for the full glyph range bounded by `ceil(substOffset / 2) - offset` and `floor(size / 2) - offset`, clipped to valid glyph IDs. The dedicated subtable reader bounds `size` to that subtable, so this includes every replacement word inside both bounds for negative and positive offsets alike.\nYES"
+}

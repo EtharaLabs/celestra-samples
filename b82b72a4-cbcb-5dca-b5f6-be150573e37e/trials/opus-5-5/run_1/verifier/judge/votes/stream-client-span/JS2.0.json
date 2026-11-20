@@ -1,8 +1,0 @@
-{
- "case": "stream-client-span",
- "id": "JS2",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The client span is started by `_start_client_span` in the patched `BaseClient._make_api_call`, wrapping the entire API call rather than each request attempt. The `request-created` hook only enriches and associates the existing span; it no longer starts one.\nNO"
-}

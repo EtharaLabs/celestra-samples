@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JIT-cov",
+ "trial": 17,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not modify `optimize_transmission_expansion_iteratively` or add a fixed snapshot conversion to its iteration calls. Instead, model construction resolves `optimization.model_snapshot_index` and conditionally uses flat snapshots, so the added representation handling follows the selected option rather than forcing one representation for an iteration\u2019s input.\nNO"
+}

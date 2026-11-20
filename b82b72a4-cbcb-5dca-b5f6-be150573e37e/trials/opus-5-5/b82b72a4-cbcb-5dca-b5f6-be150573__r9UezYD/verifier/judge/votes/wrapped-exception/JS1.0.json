@@ -1,0 +1,8 @@
+{
+ "case": "wrapped-exception",
+ "id": "JS1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The `_make_api_call` wrapper starts an `OP.HTTP_CLIENT` span via `_start_client_span`. During that call, the stdlib HTTP instrumentation can also start an `OP.HTTP_CLIENT` span under the active boto3 span; the change only adjusts that child\u2019s activation, not whether it is created. Thus a boto3 call using that HTTP path starts more than one client span.\nYES"
+}

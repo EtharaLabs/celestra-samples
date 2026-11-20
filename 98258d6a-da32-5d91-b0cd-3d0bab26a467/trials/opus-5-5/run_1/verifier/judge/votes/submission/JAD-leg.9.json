@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JAD-leg",
- "trial": 9,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "`_as_dynamic` now unconditionally calls `unflatten_snapshots(da)`, independently of linopy semantics or the snapshot-index option. For an input with an object-valued `snapshot` index containing `(period, timestep)` tuples, this converts the index to a pandas MultiIndex before building the dynamic frame, whereas the base implementation preserves the flat tuple index.\nYES"
-}

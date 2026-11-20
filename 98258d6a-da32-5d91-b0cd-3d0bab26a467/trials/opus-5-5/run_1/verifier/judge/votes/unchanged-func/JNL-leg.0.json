@@ -1,8 +1,0 @@
-{
- "case": "unchanged-func",
- "id": "JNL-leg",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "Under legacy semantics, both the default `\"auto\"` and explicit `\"multiindex\"` preserve the snapshot index passed into model creation. The diff does not touch `optimize_and_run_non_linear_powerflow` or change which snapshots it requests for optimization or power flow; changes to constraints and results do not themselves change snapshot selection.\nNO"
-}

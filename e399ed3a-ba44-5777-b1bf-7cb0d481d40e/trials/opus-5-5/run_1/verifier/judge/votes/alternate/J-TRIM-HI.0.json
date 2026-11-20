@@ -1,8 +1,0 @@
-{
- "case": "alternate",
- "id": "J-TRIM-HI",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "`MortSubtableConverter.read` gives the subtable decoder a reader bounded to that subtable\u2019s payload. `_readContextualLookups` limits the last glyph to `(available - 2) // 2 - offset`, ensuring every replacement word\u2019s two bytes end at or before the subtable boundary, including for negative offsets and odd payload lengths.\nYES"
-}

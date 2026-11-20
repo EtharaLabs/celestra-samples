@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JAD-cov",
+ "trial": 2,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not alter `_as_dynamic` or its construction of dynamic frames for static attributes. The added snapshot conversion is conditional on `_flat_snapshots_context`, which model creation sets from the resolved `optimization.model_snapshot_index` option, rather than forcing a fixed representation.\n\nNO"
+}

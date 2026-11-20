@@ -1,8 +1,0 @@
-{
- "case": "unchanged-create-model",
- "id": "JTR-leg",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "Under legacy semantics, both `\"auto\"` and `\"multiindex\"` retain the existing snapshot layout, so the new `model_view` calls select the same efficiency data and snapshot weights as before. The other change inside transmission\u2019s inner `func` only renames the branch-selection index to `\"name\"`; it does not change the selected branches or their numerical contributions. Thus the diff does not establish a different value for that inner expression.\nNO"
-}

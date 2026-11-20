@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JAD-cov",
+ "trial": 18,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not alter `_as_dynamic` or hard-code a snapshot representation for its static-attribute frames. The added flattening is conditional on a network context, and model construction sets that context according to the resolved `optimization.model_snapshot_index` option rather than a fixed representation.\nNO"
+}

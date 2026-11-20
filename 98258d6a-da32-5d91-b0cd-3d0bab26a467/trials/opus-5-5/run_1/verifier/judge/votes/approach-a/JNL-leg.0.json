@@ -1,8 +1,0 @@
-{
- "case": "approach-a",
- "id": "JNL-leg",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "Under legacy semantics, the default/\u201cauto\u201d layout resolves to \u201cmultiindex\u201d, and explicit \u201cmultiindex\u201d likewise leaves the requested snapshot index unchanged. The diff does not modify `optimize_and_run_non_linear_powerflow` or its snapshot selection; the other optimization changes affect model expressions or results, not which snapshots that routine optimizes or power-flows.\nNO"
-}

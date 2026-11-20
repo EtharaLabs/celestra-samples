@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JF3",
+ "trial": 8,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The wrapper finishes the client span whenever `_instrument_streaming_body` fails or returns false. In particular, if installing the body wrappers raises an exception, it is suppressed and `_finish_span(span)` runs before returning the result, even though the streamed body may remain unread.\nYES"
+}

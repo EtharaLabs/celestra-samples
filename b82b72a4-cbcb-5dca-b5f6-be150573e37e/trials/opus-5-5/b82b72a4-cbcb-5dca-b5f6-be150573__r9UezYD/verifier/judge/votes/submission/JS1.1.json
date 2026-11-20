@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JS1",
+ "trial": 1,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The patched `_make_api_call` starts at most one client span through `_start_client_span`, whose streaming and non-streaming branches are mutually exclusive. Request-created events now reuse that span from `_client_span` rather than starting new ones, including for retries.\nNO"
+}

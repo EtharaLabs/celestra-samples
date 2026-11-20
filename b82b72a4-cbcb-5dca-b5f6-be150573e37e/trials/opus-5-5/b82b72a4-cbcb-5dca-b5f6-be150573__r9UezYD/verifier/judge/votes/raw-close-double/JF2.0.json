@@ -1,0 +1,8 @@
+{
+ "case": "raw-close-double",
+ "id": "JF2",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "In `sentry_raw_stream_close`, a successful raw-stream close calls `_finish_span(span)` directly, then calls `finish_span()` when no read is in progress. That helper also calls `_finish_span(span)`, so closing an instrumented streaming response can finish the client span twice; its `finished` guard does not cover the direct call.\n\nYES"
+}

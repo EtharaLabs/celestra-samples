@@ -1,0 +1,8 @@
+{
+ "case": "return-finish",
+ "id": "JS1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The patched `_make_api_call` starts an `HTTP_CLIENT` span and activates it while executing the boto3 call. The stdlib HTTP instrumentation can then start another `HTTP_CLIENT` span beneath it; the added `active` setting controls activation, not whether that second span is created.\nYES"
+}

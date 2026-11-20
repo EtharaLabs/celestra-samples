@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JSM-leg",
+ "trial": 17,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "For a model built over only a subset of `n.snapshots`, `solve_model` passes the full `n.snapshots` to `_call_extra_functionality`. Under legacy semantics with `\"auto\"` or `\"multiindex\"`, the model is not flat, so `_as_model_snapshots` returns that full index unchanged rather than the model\u2019s snapshot subset.\nYES"
+}

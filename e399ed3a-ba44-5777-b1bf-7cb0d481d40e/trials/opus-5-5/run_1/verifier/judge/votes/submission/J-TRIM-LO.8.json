@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J-TRIM-LO",
- "trial": 8,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The decoder converts entry offsets to signed values and sets the first eligible glyph to `max(0, ceil(substOffset / 2) - offset)`. Thus every replacement word it reads starts at `2 * (offset + glyph) >= substOffset`, for both negative and positive offsets; if no eligible glyphs remain, it reads none.\nYES"
-}

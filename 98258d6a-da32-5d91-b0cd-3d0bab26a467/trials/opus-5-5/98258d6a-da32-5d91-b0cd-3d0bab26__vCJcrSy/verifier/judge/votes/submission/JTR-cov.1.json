@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JTR-cov",
+ "trial": 1,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new snapshot conversion handles ordinary networks, but `_model_snapshot_array` assumes every efficiency DataFrame has a single-level component-name column index. In stochastic networks, dynamic efficiencies can have `(scenario, name)` MultiIndex columns; calling `values.columns.rename(\"name\")` fails rather than constructing the efficiency array at the flow\u2019s snapshot labels. Thus the requirement does not hold for every network.\nNO"
+}

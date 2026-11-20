@@ -1,0 +1,8 @@
+{
+ "case": "oracle",
+ "id": "JS2",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The client span is started by `_start_client_span(ctx)` in the patched `BaseClient._make_api_call`, wrapping the API call and its retries. The `request-created` hook only enriches an existing span and stores it in the request context; it does not start a span per attempt.\nNO"
+}

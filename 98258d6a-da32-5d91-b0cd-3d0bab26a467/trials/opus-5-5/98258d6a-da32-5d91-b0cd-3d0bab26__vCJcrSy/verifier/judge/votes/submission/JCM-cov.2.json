@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JCM-cov",
+ "trial": 2,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "`create_model` computes `flat_snapshots` and stores a flattened snapshot parameter, but never converts `sns` itself from the MultiIndex returned by `as_index`. It therefore still passes MultiIndex snapshots to the variable and constraint builders when `\"flat\"` is selected (including `\"auto\"` under v1 semantics); the component-data context does not change those arguments. This violates the criterion regardless of the transmission-loss setting.\nNO"
+}

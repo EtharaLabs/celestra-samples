@@ -1,0 +1,8 @@
+{
+ "case": "jmalligord-w2",
+ "id": "J-MAL-LIGORD",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new classic ligature reader rejects component offsets more than two bytes after the ligature offset, and rejects odd differences. The only remaining later offset, exactly two bytes after, produces a component-array count of \u22121 in `readUShortArray`, which raises rather than returning a table. Thus the added support does not allow the specified table ordering to decompile successfully.\n\nNO"
+}

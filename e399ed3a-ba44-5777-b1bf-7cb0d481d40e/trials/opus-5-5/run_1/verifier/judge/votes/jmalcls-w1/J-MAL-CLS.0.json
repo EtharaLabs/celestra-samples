@@ -1,8 +1,0 @@
-{
- "case": "jmalcls-w1",
- "id": "J-MAL-CLS",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The change routes classic `mort` state tables to the new `StateHeader.read`, which computes the number of states using `max(table.GlyphClassCount, 1)`. With a zero glyph-class count, the transition loop is empty, so the divisions by the glyph-class count in `_readTransition` are never reached; a suitably formed subtable can therefore decompile successfully.\nYES"
-}

@@ -1,0 +1,8 @@
+{
+ "case": "oracle",
+ "id": "JF1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The patched `_make_api_call` finishes the client span on non-streaming responses and on exceptions, including errors after retries. For streaming responses, the body wrappers finish both the streaming span and the client span when reading reaches the end or when the body or underlying raw stream is closed; instrumentation failure falls back to finishing the client span immediately.\nYES"
+}

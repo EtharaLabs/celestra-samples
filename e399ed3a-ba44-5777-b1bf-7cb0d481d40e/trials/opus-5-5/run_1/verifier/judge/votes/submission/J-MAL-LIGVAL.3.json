@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J-MAL-LIGVAL",
- "trial": 3,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The new classic mort ligature decoding path calls `_readClassicLigComponents`, which explicitly raises `ValueError` if any component value is odd (`if any(c % 2 for c in components)`). Thus, the change does not allow a ligature subtable with an odd component-table value to decompile successfully.\nNO"
-}

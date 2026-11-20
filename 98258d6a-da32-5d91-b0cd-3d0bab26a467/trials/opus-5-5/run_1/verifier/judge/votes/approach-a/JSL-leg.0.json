@@ -1,8 +1,0 @@
-{
- "case": "approach-a",
- "id": "JSL-leg",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "Under legacy semantics, both \u201cauto\u201d (the default) and \u201cmultiindex\u201d preserve the original snapshot index and do not activate flattening of component arrays. The diff does not modify `define_secant_loss_constraints`, nor show a change to the snapshot-dependent inputs it uses under those settings, so it does not establish different secant loss constraints.\nNO"
-}

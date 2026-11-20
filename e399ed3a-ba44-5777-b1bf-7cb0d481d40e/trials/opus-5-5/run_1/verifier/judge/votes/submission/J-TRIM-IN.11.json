@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J-TRIM-IN",
- "trial": 11,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The decoder converts nonzero entry offsets to signed 16-bit values, handling negative and positive offsets alike. `_readClassicSubstitutions` reads every glyph whose replacement word begins at or after `substOffset` and fits within the subtable, and `MortSubtableConverter` bounds the reader to that subtable\u2019s bytes.\nYES"
-}

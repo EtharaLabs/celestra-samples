@@ -1,0 +1,8 @@
+{
+ "case": "boundary-split",
+ "id": "X3",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission does not meet the criterion because it stores different representations depending on how an answer arrives.\n\nIn LangGraph\u2019s new-resume (`get_null_resume`) branch, it changes the reference\u2019s `scratchpad.resume.append(v)` to `scratchpad.resume.append(validated)`. But answers already in `scratchpad.resume`, including answers supplied by interrupt ID, are validated and returned without replacing the stored raw value.\n\nThis matters on replay: the stored answer is passed through `adapter.validate_python` again. For a schema with a non-idempotent validator\u2014for example, an integer validator that adds one\u2014a direct answer of `1` returns and stores `2`, then returns `3` on replay. An ID-keyed answer retained as raw `1` returns `2` on each validation instead.\n\nThe middleware\u2019s edit schema happens to preserve the submitted answer using `_as_sent`, which can mask this discrepancy there. It does not fix the provider\u2019s behavior for plain graphs with other response schemas. Consequently, storage and replay are not consistent across the required boundary and resume forms.\n\nFAIL"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J3",
+ "trial": 4,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets the criterion.\n\n- **Unbuildable schemas fail loudly.** `TypeAdapter(response_schema)` and JSON-schema generation are not wrapped in a fallback that discards the schema or accepts an unchecked answer.\n- **Invalid answers raise to the caller.** Answers are validated before being added to accepted resume values. A `ValidationError` is wrapped in `ResumeRejected` to preserve the pending interrupt, propagated through the runner, and re-raised as the original validation error at the root graph boundary. It is not replaced by a default decision or unchecked resume.\n- **Missing tool-call IDs raise.** For gated per-call reviews, `_review` explicitly raises `ValueError` when the ID is absent or `None`, before issuing an interrupt or executing the tool.\n- **Middleware does not suppress these failures.** Both synchronous and asynchronous wrappers call `_review` without catching schema, validation, or missing-ID errors.\n\nThe additional exception machinery preserves the pending interrupt while still exposing invalid answers as caller-visible failures, which is consistent with the criterion.\n\nPASS"
+}

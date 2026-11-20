@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J3",
+ "trial": 11,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets the criterion:\n\n- `TypeAdapter(response_schema)` and JSON-schema generation are not protected by fallback handlers, so an unsupported or unbuildable schema raises rather than disabling validation.\n- Resume answers are validated before being appended to the accepted resume list. Validation failures become `ResumeRejected` internally, but the runner preserves that failure and the root graph raises the original `ValidationError` to the caller. No unchecked answer or default decision replaces it.\n- Per-call review explicitly raises `ValueError` when a gated tool call\u2019s ID is missing or `None`.\n- The middleware does not catch these failures and proceed with tool execution or silently skip review.\n\nThe internal exception wrapping therefore preserves loud failure rather than suppressing it.\n\nPASS"
+}

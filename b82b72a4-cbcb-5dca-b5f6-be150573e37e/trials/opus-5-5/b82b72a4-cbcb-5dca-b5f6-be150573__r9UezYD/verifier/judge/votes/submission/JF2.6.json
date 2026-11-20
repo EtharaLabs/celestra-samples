@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JF2",
+ "trial": 6,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "NO: The call wrapper finishes the client span on failure or when no streaming body is instrumented; otherwise, completion is delegated to the body wrappers. Those wrappers share a `finished` guard, and instrumentation failure sets that guard before the caller finishes the client span, preventing a second finish.\nNO"
+}

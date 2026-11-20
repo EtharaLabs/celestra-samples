@@ -1,8 +1,0 @@
-{
- "case": "jsl-leg-w2",
- "id": "JSL-leg",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The diff changes the secant loss offset from `-4 * atol * (a_factors * b_factors)` to `-2 * atol * (a_factors * b_factors)`. For a network with a secant segment where that product is nonzero, this changes the resulting constraint constant, independently of snapshot representation or linopy semantics.\nYES"
-}

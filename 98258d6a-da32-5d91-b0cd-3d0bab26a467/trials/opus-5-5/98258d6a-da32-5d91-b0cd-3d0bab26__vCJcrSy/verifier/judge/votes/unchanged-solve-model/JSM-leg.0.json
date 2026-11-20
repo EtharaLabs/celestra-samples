@@ -1,0 +1,8 @@
+{
+ "case": "unchanged-solve-model",
+ "id": "JSM-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "Under legacy semantics, both `\"auto\"` and `\"multiindex\"` leave the model\u2019s snapshot index unchanged. The new `solve_model` wrapper passes `built_snapshots(n)` to the callback, which reads the snapshots recorded when the model was built, rather than using a potentially different supplied snapshot selection.\nNO"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JSL-cov",
+ "trial": 7,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "With `optimization.model_snapshot_index=\"flat\"` and multi-period snapshots, model creation enters `_flat_snapshots_context(n, True)` but still passes the original MultiIndex `sns` to `define_secant_loss_constraints`. The context forces snapshot-indexed component data (`c.da`, including line data) into flat tuple-index form, so those reads use the configured flat representation rather than the representation of the supplied snapshots.\nYES"
+}

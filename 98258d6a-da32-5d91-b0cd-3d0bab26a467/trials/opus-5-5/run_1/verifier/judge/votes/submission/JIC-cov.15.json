@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JIC-cov",
- "trial": 15,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The diff does not modify `pypsa/statistics/expressions.py` or introduce a fixed snapshot representation for `installed_capex` weighting. The new snapshot-conversion contexts instead follow the model\u2019s selected representation, so the diff does not establish the claimed behavior.\nNO"
-}

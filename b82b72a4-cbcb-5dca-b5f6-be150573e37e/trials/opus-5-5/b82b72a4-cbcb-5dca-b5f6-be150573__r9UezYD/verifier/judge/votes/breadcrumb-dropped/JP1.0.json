@@ -1,0 +1,8 @@
+{
+ "case": "breadcrumb-dropped",
+ "id": "JP1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The before-sign handler retains the same propagation eligibility checks, header replacement behavior, and baggage merging logic. The changes to span creation, activation, and lifetime do not establish a difference in which propagation headers are present or how they merge with existing headers.\nNO"
+}

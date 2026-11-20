@@ -1,0 +1,8 @@
+{
+ "case": "oracle",
+ "id": "J-MORX-DEC",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new MorphStateTable converter dispatches to the unchanged STXHeader.read for \u201cmorx\u201d, so extended state tables retain their existing binary decoding. The changes to STXHeader affect XML handling only, while the new binary decoding logic and lookup registrations apply to \u201cmort\u201d, not \u201cmorx\u201d.\nNO"
+}

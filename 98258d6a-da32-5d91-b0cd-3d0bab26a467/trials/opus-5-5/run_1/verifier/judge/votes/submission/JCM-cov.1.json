@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JCM-cov",
- "trial": 1,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "`create_model` retains `sns` from `as_index` and passes it unchanged to all variable and constraint builders, including both transmission-loss constraint paths. For investment-period networks this remains a MultiIndex even when `\"flat\"` is selected (explicitly or through `\"auto\"`); the context changes component data representation and the parameter conversion, but does not flatten the `sns` argument passed to builders.\nNO"
-}

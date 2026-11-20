@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J-MAL-STATE",
- "trial": 2,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The new `read` dispatch routes classic `mort` state tables to `_readClassic`, which explicitly raises `ValueError` whenever `stateOffset > entryOffset`. Thus the change still rejects the layout specified by the criterion rather than returning a table.\nNO"
-}

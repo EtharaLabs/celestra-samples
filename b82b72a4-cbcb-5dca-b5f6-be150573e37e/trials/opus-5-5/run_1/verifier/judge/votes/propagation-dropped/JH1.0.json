@@ -1,8 +1,0 @@
-{
- "case": "propagation-dropped",
- "id": "JH1",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The change preserves the request-derived HTTP attribute names and values: streaming mode still uses `get_url_attributes` and `HTTP_REQUEST_METHOD`, while non-streaming mode retains `aws.request.url`, `HTTP_QUERY`, `HTTP_FRAGMENT`, and `HTTP_METHOD`. Moving those attributes to the client span and overwriting them on retries are explicitly excluded by the criterion.\nNO"
-}

@@ -1,8 +1,0 @@
-{
- "case": "oracle",
- "id": "JNL-leg",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "Under legacy semantics, the default/`\"auto\"` and `\"multiindex\"` settings retain the original snapshot index: `SnapshotWindow.build` stores the same `sns` as both its network and model indices. The diff does not change `optimize_and_run_non_linear_powerflow` or its power-flow snapshot selection, and moving snapshot normalization into model creation does not select different snapshots.\nNO"
-}

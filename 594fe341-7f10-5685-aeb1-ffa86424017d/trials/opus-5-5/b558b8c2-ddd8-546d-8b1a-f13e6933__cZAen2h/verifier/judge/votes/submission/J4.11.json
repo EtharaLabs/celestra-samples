@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J4",
- "trial": 11,
- "model": "gpt-6.1-sol",
- "label": "FAIL",
- "response": "The submission does not fully meet the documentation criterion.\n\n- **Per-call answer keying is not documented.** The new `InterruptMode`, `ToolApprovalRequest`, and initializer documentation say that each call receives a single decision, but never explain that clients must submit those decisions keyed by **interrupt ID**, rather than tool-call ID or position. The `_decided` comment describes an internal cache keyed by `ToolRuntime` identity, not the client-facing resume format.\n- **Some schema wording overstates enforcement.** `InterruptMode` says each answer is \u201cvalidated against that schema,\u201d referring to the published JSON Schema. However, JSON-schema tool argument constraints are only displayed: `_ShownArgsSchema` accepts any arguments object. Although `_decision_schema` documents this distinction more accurately, the broader public-facing wording does not preserve it.\n\nThe submission does correctly explain that invalid answers are not recorded and that a Python-type response schema causes `interrupt` to return the validated object on resume. Those strengths do not resolve the missing keying guidance and misleading enforcement wording.\n\nFAIL"
-}

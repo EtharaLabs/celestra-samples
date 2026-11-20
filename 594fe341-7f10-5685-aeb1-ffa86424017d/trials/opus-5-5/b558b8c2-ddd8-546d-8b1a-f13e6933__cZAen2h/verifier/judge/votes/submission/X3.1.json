@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "X3",
- "trial": 1,
- "model": "gpt-6.1-sol",
- "label": "FAIL",
- "response": "The submission centralizes schema validation in LangGraph and passes a typed decision schema from the middleware. It also preserves the raw newly supplied answer while returning its validated form, which is consistent with the intended boundary behavior.\n\nHowever, the replay path republishes the **entire** stored resume list after validating only the current entry:\n\n```python\nv = _validate_resume(adapter, scratchpad.resume[idx])\nconf[CONFIG_KEY_SEND]([(RESUME, scratchpad.resume)])\n```\n\nFor a task with multiple interrupt answers, that write includes later answers that have not yet been revalidated during this execution. If validation of a later answer fails, an earlier interrupt has already emitted that answer as part of the persisted resume list. Making the validation exception a `GraphBubbleUp` does not undo those earlier writes.\n\nThe required boundary behavior is to emit only the validated prefix, `scratchpad.resume[: idx + 1]`. The submission does not do that, so it does not consistently enforce validation before recording replayed answers. Its handling of fresh scalar answers and its middleware integration do not fix this provider-level replay discrepancy.\n\nFAIL"
-}

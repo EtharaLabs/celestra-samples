@@ -1,0 +1,8 @@
+{
+ "case": "jtr-cov-w1",
+ "id": "JTR-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The transmission function obtains `sns` from the flow variable but passes `n.snapshots` to `_port_coefficients` instead. For time-varying efficiencies in a flat multi-period build, this selects with the network\u2019s MultiIndex rather than the flow variable\u2019s flat tuple index, so the required alignment is not guaranteed, even though snapshot weights are restricted during aggregation.\nNO"
+}

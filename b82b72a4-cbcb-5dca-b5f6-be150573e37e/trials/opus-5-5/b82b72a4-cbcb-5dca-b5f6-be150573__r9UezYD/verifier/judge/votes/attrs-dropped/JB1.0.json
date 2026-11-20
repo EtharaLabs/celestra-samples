@@ -1,0 +1,8 @@
+{
+ "case": "attrs-dropped",
+ "id": "JB1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The breadcrumb remains recorded once per `request-created` event, including retry attempts. `_add_request_breadcrumb` preserves the original URL, query, fragment, and HTTP-method data in both streaming and non-streaming modes; the span lifecycle changes do not change that breadcrumb recording.\nNO"
+}

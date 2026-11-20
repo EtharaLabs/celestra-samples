@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JP1",
+ "trial": 16,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The change moves span creation and cleanup to the API-call wrapper, but leaves the `before-sign` propagation handler and its registration order unchanged. The diff does not change which propagation headers are emitted or how they merge with existing headers; changes to the span supplying their values do not count.\nNO"
+}

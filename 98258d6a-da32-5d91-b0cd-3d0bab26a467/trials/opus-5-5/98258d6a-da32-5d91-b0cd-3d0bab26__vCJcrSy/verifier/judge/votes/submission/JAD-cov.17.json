@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JAD-cov",
+ "trial": 17,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not change `_as_dynamic` to build static-attribute dynamic frames on a fixed snapshot representation. The added flattening in `array.py` is conditional on a context that model creation sets according to the resolved `optimization.model_snapshot_index` option, rather than being unconditional.\nNO"
+}

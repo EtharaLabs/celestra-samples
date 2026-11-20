@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X2",
+ "trial": 10,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission makes the public additions optional: `interrupt(value)` remains valid, `Interrupt.response_schema` defaults to `None`, and the SDK field is `NotRequired`. It also preserves the old schema-free `Interrupt` representation and omits unset schemas from debug payloads.\n\nHowever, the LangGraph change is **not minimal**. Beyond adding the optional schema and validation, it introduces a new `ResumeRejected` exception protocol, adds a required `mapped_resume` scratchpad field, changes how ID-addressed resume values are staged, and modifies the runner and loop\u2019s exception handling. These are substantial changes to core resume machinery, including paths used when no schema is provided.\n\nThe reference demonstrates that the feature can be implemented without introducing that additional engine-wide protocol. Although the submission satisfies the optional-field portion, its broader LangGraph redesign does not satisfy the criterion as a whole.\n\nFAIL"
+}

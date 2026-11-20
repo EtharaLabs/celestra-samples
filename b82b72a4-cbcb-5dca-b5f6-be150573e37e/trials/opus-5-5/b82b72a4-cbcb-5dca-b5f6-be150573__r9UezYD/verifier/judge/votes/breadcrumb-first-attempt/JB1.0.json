@@ -1,0 +1,8 @@
+{
+ "case": "breadcrumb-first-attempt",
+ "id": "JB1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The base implementation adds a breadcrumb on every `request-created` event. The change only adds one when `request.context[\"retries\"][\"attempt\"]` is 1 (or absent), so subsequent retry attempts no longer record the breadcrumbs they previously did.\nYES"
+}

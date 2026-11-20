@@ -1,0 +1,8 @@
+{
+ "case": "unchanged-create-model",
+ "id": "JSM-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "Under legacy semantics, `\"auto\"` resolves to `\"multiindex\"`, so model construction preserves the network\u2019s snapshot labels. `solve_model` now obtains the callback snapshots from `n.model.parameters.snapshots.to_index()` via `built_snapshots`, which preserves a MultiIndex and reflects the actual model snapshot subset rather than all network snapshots.\nNO"
+}

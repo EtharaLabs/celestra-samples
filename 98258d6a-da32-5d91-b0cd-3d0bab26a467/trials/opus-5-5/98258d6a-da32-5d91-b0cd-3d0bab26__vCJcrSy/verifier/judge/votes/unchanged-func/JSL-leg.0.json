@@ -1,0 +1,8 @@
+{
+ "case": "unchanged-func",
+ "id": "JSL-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "Under legacy semantics, both the default `\"auto\"` setting and `\"multiindex\"` preserve the original snapshot index and disable flattening. The diff shows no change to the secant-loss construction that would alter its constraints in those layouts; the other constraint edits do not establish such a change.\nNO"
+}

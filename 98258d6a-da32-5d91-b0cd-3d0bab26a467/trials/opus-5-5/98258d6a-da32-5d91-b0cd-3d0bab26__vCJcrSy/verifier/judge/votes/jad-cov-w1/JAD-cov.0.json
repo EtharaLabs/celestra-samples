@@ -1,0 +1,8 @@
+{
+ "case": "jad-cov-w1",
+ "id": "JAD-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The change replaces `_as_dynamic`\u2019s snapshot index with `pd.Index(list(...), tupleize_cols=False, name=\"snapshot\")`, unconditionally flattening MultiIndex snapshots into tuple labels. Thus, for a multi-period component\u2019s static attribute when `optimization.model_snapshot_index=\"multiindex\"` is supported, the dynamic frame uses a flat index instead of the selected MultiIndex representation.\nYES"
+}

@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JIC-leg",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The diff does not change `pypsa/statistics/expressions.py` or its installed-capex calculation. The shared statistics changes only replace `.loc[names]` with a helper whose default implementation performs the same selection; the new behavior in optimization expressions does not alter this statistic\u2019s period weighting.\nNO"
-}

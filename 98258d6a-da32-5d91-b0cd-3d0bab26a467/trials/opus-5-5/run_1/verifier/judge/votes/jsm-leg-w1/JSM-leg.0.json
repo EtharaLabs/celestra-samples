@@ -1,8 +1,0 @@
-{
- "case": "jsm-leg-w1",
- "id": "JSM-leg",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "In `solve_model`, the callback now receives `self._window.model_index[1:]`, which unconditionally omits the first snapshot the model was built over. Under legacy semantics with `\"auto\"` or `\"multiindex\"`, `SnapshotWindow.build` keeps the network\u2019s snapshot labels unchanged, so this is an incomplete subset even on an ordinary single-period network.\nYES"
-}

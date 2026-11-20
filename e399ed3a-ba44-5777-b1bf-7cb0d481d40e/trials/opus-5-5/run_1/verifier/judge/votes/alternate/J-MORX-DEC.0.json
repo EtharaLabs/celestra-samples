@@ -1,8 +1,0 @@
-{
- "case": "alternate",
- "id": "J-MORX-DEC",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The new MorphStateTable converter dispatches \"morx\" reads to STXHeader, the same converter previously used directly, without changing its binary read behavior. The other changes affect legacy \"mort\" decoding or XML handling, not the objects decoded from extended morx bytes.\nNO"
-}

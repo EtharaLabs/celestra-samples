@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JIT-cov",
- "trial": 2,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The diff does not modify `optimization/abstract.py` or add an unconditional snapshot conversion to the iterative optimisation calls. Model construction instead chooses flattening conditionally from `optimization.model_snapshot_index`, preserving the MultiIndex when that representation is selected; this does not force iteration inputs into a fixed representation.\nNO"
-}

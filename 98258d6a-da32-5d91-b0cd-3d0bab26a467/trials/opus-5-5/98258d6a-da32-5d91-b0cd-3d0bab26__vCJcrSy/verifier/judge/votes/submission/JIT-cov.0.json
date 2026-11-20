@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JIT-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not modify `optimization/abstract.py` or add a fixed snapshot conversion to `optimize_transmission_expansion_iteratively`. The changed model-building code instead selects the snapshot representation through `_resolve_model_snapshot_index()` and converts model parameters accordingly; it does not force that iterative routine\u2019s optimisation inputs into one fixed representation.\nNO"
+}

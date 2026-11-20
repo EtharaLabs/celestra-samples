@@ -1,8 +1,0 @@
-{
- "case": "approach-a",
- "id": "JFX-leg",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The new code in `_from_xarray` converts any plain tuple-valued `snapshot` index into a pandas MultiIndex using the component\u2019s snapshot level names; the base code does not perform that conversion. This is unconditional on semantics and `optimization.model_snapshot_index`, so a tuple-indexed array for a multi-period component can now return a differently indexed result even under legacy semantics with `\"auto\"` or `\"multiindex\"`.\n\nYES"
-}

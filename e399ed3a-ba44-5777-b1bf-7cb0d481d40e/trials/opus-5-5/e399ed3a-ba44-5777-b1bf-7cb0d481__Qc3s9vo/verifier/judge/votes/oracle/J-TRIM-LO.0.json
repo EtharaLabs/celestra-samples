@@ -1,0 +1,8 @@
+{
+ "case": "oracle",
+ "id": "J-TRIM-LO",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The classic contextual decoder sets `firstGlyph = max(0, (substitutionTableOffset + 1) // 2 - offset)` and reads replacement words starting at `stateTablePos + 2 * (offset + firstGlyph)`. Thus every replacement word starts at or after the substitution table\u2019s offset, regardless of whether the entry offset is negative or positive; an empty valid glyph range causes no read.\nYES"
+}

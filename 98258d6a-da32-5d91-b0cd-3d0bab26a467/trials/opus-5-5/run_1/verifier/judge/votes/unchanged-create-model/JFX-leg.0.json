@@ -1,8 +1,0 @@
-{
- "case": "unchanged-create-model",
- "id": "JFX-leg",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The new block in `_from_xarray` unconditionally converts a plain, tuple-valued snapshot index into a MultiIndex using the component\u2019s snapshot level names. Thus, for a tuple-indexed input array and a multi-period component, the subsequent conversion returns different snapshot indexing than the base version; this behavior is not gated on semantics or `optimization.model_snapshot_index`.\nYES"
-}

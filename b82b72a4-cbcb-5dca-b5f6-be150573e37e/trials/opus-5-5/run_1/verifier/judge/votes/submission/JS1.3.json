@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JS1",
- "trial": 3,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "NO: `_sentry_make_api_call` starts one client span around the underlying call, and `request-created` now updates that span rather than starting another, including on retries. The additional streaming-body span instruments reading the response, not another client call.\nNO"
-}

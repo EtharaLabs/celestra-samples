@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JH1",
+ "trial": 4,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The URL parsing and streaming-mode URL attribute derivation are unchanged, as are the method keys and values. In non-streaming mode, the same URL, query, fragment, and method attributes are now copied from the breadcrumb dictionary onto the client span instead of being set individually; the span relocation and retry overwrites are explicitly excluded by the criterion.\n\nNO"
+}

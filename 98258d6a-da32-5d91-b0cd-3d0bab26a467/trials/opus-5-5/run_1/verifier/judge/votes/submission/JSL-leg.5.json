@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JSL-leg",
- "trial": 5,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The diff does not change `define_secant_loss_constraints` or the snapshots passed to it. Under legacy semantics, the default/`\"auto\"` option resolves to `\"multiindex\"`, so the new context does not flatten snapshots or component data; the secant-loss call therefore retains the original snapshot representation and behavior.\nNO"
-}

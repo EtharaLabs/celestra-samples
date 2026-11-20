@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X2",
+ "trial": 7,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The SDK addition is backwards compatible: `response_schema` is `NotRequired`, so existing interrupt dictionaries remain valid. The public `interrupt` and `Interrupt` parameters also default to `None`, and the submission explicitly preserves the old no-schema representation and debug payloads.\n\nHowever, the LangGraph change is not minimal. Instead of adding optional schema handling locally, it changes the general resume machinery across `_scratchpad.py`, `_algo.py`, `_runner.py`, `_loop.py`, and `errors.py`:\n\n- It adds a required `mapped_resume` scratchpad field.\n- It changes ID-addressed resumes from values appended during task preparation to values consumed inside `interrupt`.\n- It introduces a new exception and special exception aggregation and root-loop handling.\n\nThese changes apply to the shared execution machinery, including runs that supply no schema; they are not isolated behind the new optional feature. That is a substantial expansion of scope beyond an additive, optional schema extension. Preserving the SDK shape and ordinary no-schema output does not satisfy the criterion\u2019s minimal-change requirement.\n\nFAIL"
+}

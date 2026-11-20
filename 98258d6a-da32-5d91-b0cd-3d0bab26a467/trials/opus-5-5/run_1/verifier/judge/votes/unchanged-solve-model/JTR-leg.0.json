@@ -1,8 +1,0 @@
-{
- "case": "unchanged-solve-model",
- "id": "JTR-leg",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "Under legacy semantics, the default and `\"auto\"` select the unchanged MultiIndex layout, and `model_view` reduces to the original `.loc[sns]` selection. The other direct change in the transmission inner function only renames the branch-selection index to `\"name\"`; it does not change the selected branches, efficiencies, weights, or numerical expression. Thus the diff does not make that inner function report a different value for the same input.\nNO"
-}

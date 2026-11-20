@@ -1,0 +1,8 @@
+{
+ "case": "test-fitted",
+ "id": "J2",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission fails the criterion because `_integrate_segments` explicitly limits restart-state updates to at most two continuing input sets:\n\n```python\nif len(restarts) <= 2:\n    model.y0_list = [...]\n    if model.calculate_sensitivities:\n        model.y0S_list = [...]\n```\n\nWhen three or more input sets reach a discontinuity, the solver skips copying their final states and requested sensitivities into the restart initial conditions. It nevertheless proceeds to consistent initialization and the next segment, using stale initial conditions rather than each input set\u2019s preceding final state.\n\nThis fixed-count branch has no basis in general solver restart semantics and directly violates the requirement to handle any number of input sets without special-casing a fixed number.\n\nFAIL"
+}

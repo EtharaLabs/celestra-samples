@@ -1,0 +1,8 @@
+{
+ "case": "jmalligval-w2",
+ "id": "J-MAL-LIGVAL",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The change routes classic `mort` ligature subtables to the new `StateHeader` reader. Its odd-value check examines only `rawComponents[1:]`, so an odd first component is accepted and integer-divided by two; an otherwise valid subtable can therefore decompile successfully.\n\nYES"
+}

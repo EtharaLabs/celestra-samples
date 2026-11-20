@@ -1,0 +1,8 @@
+{
+ "case": "renamed",
+ "id": "JW1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The API-call wrapper and streamed-body consumption wrapper catch the original exception and use a bare `raise`, which re-raises the same exception object. The diff does not show either path replacing or suppressing botocore\u2019s exception.\nNO"
+}

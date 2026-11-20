@@ -1,0 +1,8 @@
+{
+ "case": "jmalliglen-w1",
+ "id": "J-MAL-LIGLEN",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The change dispatches classic `mort` ligature subtables to the new `StateHeader` reader. That reader uses `(ligatureOffset - componentOffset) // 2` for the component count, ignoring any trailing odd byte rather than rejecting an odd byte length, so a suitably formed subtable can decompile successfully.\nYES"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MORX-DEC",
+ "trial": 12,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new decoding path is guarded by `reader.tableTag == \"mort\"`, so extended `morx` tables continue through the unchanged binary-reading logic. The other changes affect compilation, XML parsing, object equality, or `mort` dispatch, not the objects decoded from `morx` bytes.\n\nNO"
+}

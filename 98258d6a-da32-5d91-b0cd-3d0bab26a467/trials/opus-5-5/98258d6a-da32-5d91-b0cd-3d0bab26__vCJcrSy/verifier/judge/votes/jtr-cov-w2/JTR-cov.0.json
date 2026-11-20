@@ -1,0 +1,8 @@
+{
+ "case": "jtr-cov-w2",
+ "id": "JTR-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The transmission method overwrites the window\u2019s correctly represented weighting coordinates with `self._n.snapshots` via `assign_coords`. For flat multi-period builds this restores a MultiIndex instead of the flow variable\u2019s flat tuple labels, and for models built on only a subset of network snapshots it can cause a coordinate-length mismatch. Thus, although efficiency selection uses the variable\u2019s snapshot labels, snapshot weighting does not satisfy the criterion for every network.\nNO"
+}

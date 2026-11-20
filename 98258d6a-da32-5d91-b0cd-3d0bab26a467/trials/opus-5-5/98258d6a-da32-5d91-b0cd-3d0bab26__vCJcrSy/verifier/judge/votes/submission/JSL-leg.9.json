@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JSL-leg",
+ "trial": 9,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "Under legacy semantics, `\"auto\"` resolves to `\"multiindex\"`, so the new flat-snapshot handling does not change the snapshots used. The secant-function edits only select coefficient arrays to match the loss variable\u2019s component names; legacy label alignment and the existing activity mask already restrict the effective constraints to those components. The secant formulas and snapshot selection are unchanged.\nNO"
+}

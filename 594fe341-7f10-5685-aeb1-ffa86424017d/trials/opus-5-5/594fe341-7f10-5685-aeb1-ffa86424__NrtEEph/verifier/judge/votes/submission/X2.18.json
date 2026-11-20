@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X2",
+ "trial": 18,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission preserves several compatibility details: `response_schema` defaults to `None`, the SDK field is `NotRequired`, and schema-less interrupts retain their previous representation and debug payload shape.\n\nHowever, the LangGraph change is not minimal. It also restructures resume handling across `_scratchpad.py`, `_algo.py`, `_runner.py`, and `_loop.py`, introducing a new `ResumeRejected` exception and changing how ID-addressed resume values are stored and consumed\u2014even for interrupts without a schema.\n\nIn particular, `PregelScratchpad` gains a **required** `mapped_resume` constructor field with no default. That is an additional non-optional requirement, rather than a narrowly optional schema extension. Existing scratchpad construction outside the updated `_algo.py` site would no longer work unchanged.\n\nThus, although the public schema field is optional, the submission does not satisfy the criterion\u2019s combination of minimal scope and optional additions everywhere.\n\nFAIL"
+}

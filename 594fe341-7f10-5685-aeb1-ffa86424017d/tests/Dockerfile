@@ -44,8 +44,9 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ARG TARGETOS
 ARG TARGETARCH
 COPY requirements-tools.txt binary.txt requirements-sdist.txt /req/
-RUN case "$TARGETARCH" in amd64) arch=x86_64 ;; arm64) arch=aarch64 ;; *) exit 1 ;; esac \
- && test "$TARGETOS" = linux \
+# Kaniko leaves TARGETARCH and TARGETOS empty and builds for its own platform, so fall back to that.
+RUN case "${TARGETARCH:-$(dpkg --print-architecture)}" in amd64) arch=x86_64 ;; arm64) arch=aarch64 ;; *) exit 1 ;; esac \
+ && test "${TARGETOS:-linux}" = linux \
  && pip download --no-cache-dir --require-hashes --only-binary=:all: --no-deps \
       --python-version 3.12 --implementation cp --abi cp312 --abi abi3 --abi none \
       --platform "manylinux_2_28_$arch" --platform "manylinux_2_17_$arch" \
@@ -71,11 +72,12 @@ RUN groupadd -g 10001 grader && useradd -u 10001 -g 10001 -m -d /home/grader gra
  && chage -d "$(date -u -d "@$SOURCE_DATE_EPOCH" +%F)" grader \
  && rm -rf /root/.cache
 COPY requirements-tools.txt requirements.txt /tmp/req/
-RUN --mount=type=bind,from=wheels,source=/dist,target=/dist \
-    pip install --no-cache-dir --no-index --find-links /dist --require-hashes --no-deps -r /tmp/req/requirements-tools.txt \
+# Kaniko ignores RUN --mount, so these files are copied in and removed by the step that uses them.
+COPY --from=wheels /dist /dist
+RUN pip install --no-cache-dir --no-index --find-links /dist --require-hashes --no-deps -r /tmp/req/requirements-tools.txt \
  && pip install --no-cache-dir --no-index --find-links /dist --require-hashes --no-deps --no-build-isolation -r /tmp/req/requirements.txt \
  && rm -r /tmp/req \
- && rm -rf /root/.cache
+ && rm -rf /root/.cache /dist
 COPY --from=source-langgraph /src /grading/langgraph
 RUN pip install --no-cache-dir --no-deps --no-build-isolation --no-index -e /grading/langgraph/libs/checkpoint -e /grading/langgraph/libs/checkpoint-sqlite -e /grading/langgraph/libs/checkpoint-postgres -e /grading/langgraph/libs/sdk-py -e /grading/langgraph/libs/prebuilt -e /grading/langgraph/libs/langgraph \
  && rm -rf /root/.cache
@@ -92,7 +94,8 @@ RUN chmod 0755 /tests/*.sh \
  && chown -R 10001:10001 /grading/langgraph /grading/langchain /logs \
  && rm -rf /root/.cache
 WORKDIR /grading
-USER 10001:10001
+# test.sh drops to uid 10001 itself; the image ends as root so Harbor's sandbox can start.
+USER root
 LABEL org.opencontainers.image.source="https://github.com/langchain-ai/langgraph, https://github.com/langchain-ai/langchain" \
       org.opencontainers.image.revision="230927fb3a9ac9b2893a30322b4dfea7cdea9a8f, f295bfef22e9aeb02ad0f79b49883f4b446e4641" \
       org.opencontainers.image.licenses="MIT" \

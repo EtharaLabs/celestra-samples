@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JSL-cov",
+ "trial": 2,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "With `optimization.model_snapshot_index=\"flat\"` on a multi-period network, model construction calls `define_secant_loss_constraints` with the original MultiIndex `sns` inside `_flat_snapshots_context(n, True)`. That context forces snapshot-indexed component data, including per-snapshot line data, into a flat tuple index rather than the representation of the snapshots passed to the function.\nYES"
+}

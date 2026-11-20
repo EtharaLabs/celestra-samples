@@ -1,8 +1,0 @@
-{
- "case": "jtr-leg-w2",
- "id": "JTR-leg",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The transmission inner function changes `p = var.loc[:, idx] * efficiency[idx]` to `p = -var.loc[:, idx] * efficiency.sel(name=idx)`, introducing a sign reversal. For a branch with nonzero flow at a selected port, this changes the reported expression value even under legacy semantics with the default, `\"auto\"`, or `\"multiindex\"` snapshot representation.\nYES"
-}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JSM-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "For a model built over a strict subset of `n.snapshots`, `solve_model` calls `_call_extra_functionality(extra_functionality, n.snapshots)`, passing the full network index. Under legacy semantics with `\"auto\"` or `\"multiindex\"`, `_as_model_snapshots` returns that index unchanged, so the callback receives more snapshots than the model was built over.\nYES"
+}

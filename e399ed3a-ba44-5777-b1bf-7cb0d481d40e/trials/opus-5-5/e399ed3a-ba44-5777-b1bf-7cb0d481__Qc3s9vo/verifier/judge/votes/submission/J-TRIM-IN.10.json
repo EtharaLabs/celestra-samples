@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-TRIM-IN",
+ "trial": 10,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The new subtable reader bounds decoding to each subtable\u2019s bytes. `_readClassicSubstitutions` converts entry offsets to signed values and reads every glyph in the range from `ceil(substOffset / 2) - offset` to `floor(size / 2) - offset`, clipped to the font\u2019s glyph range, so both negative and positive offsets include all replacement words within the required bounds.\nYES"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JP1",
+ "trial": 18,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "Trace spans are now created only inside the wrapped `BaseClient._make_api_call`; `request-created` merely retrieves that call\u2019s span. A request sent through botocore\u2019s lower-level request machinery outside that wrapper therefore no longer gets the span that the original request-created handler supplied for propagation, so it can lose propagation headers.\n\nYES"
+}

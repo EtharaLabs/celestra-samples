@@ -1,0 +1,8 @@
+{
+ "case": "jcm-leg-w2",
+ "id": "JCM-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The secant-loss branch in `create_model` now passes `n.snapshots` to `define_secant_loss_constraints`, where base_commit passed `sns`. For a build over a strict subset of network snapshots with secant transmission losses enabled, this hands that constraint builder the full snapshot index instead of the requested subset, even under legacy semantics with `\"auto\"` or `\"multiindex\"`.\nYES"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J2",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets the criterion.\n\n- Per-call decision schemas are generated from the actual `allowed_decisions`, deduplicated while preserving order. Single-decision configurations and discriminated unions are handled generically.\n- Edit schemas pin the action name using `Literal[tool_name]` and derive argument validation from the actual tool\u2019s `tool_call_schema`. No particular tool names or argument names are hard-coded.\n- The fallback for tools without an enforceable Pydantic argument schema publishes the tool\u2019s schema while accepting object arguments. The explicit handling of schema-less `Tool` instances concerns their representation, not names or fixtures used by tests.\n- LangGraph delegates validation to `TypeAdapter(response_schema)` for non-dictionary schemas, rather than implementing validation for a fixed selection of schema kinds. JSON Schema dictionaries are surfaced without enforcement, consistent with the reference behavior.\n- Resume validation is applied before accepting a new answer, and replayed answers are also validated. This logic does not depend on HITL-specific payloads or decision sets.\n\nPASS"
+}

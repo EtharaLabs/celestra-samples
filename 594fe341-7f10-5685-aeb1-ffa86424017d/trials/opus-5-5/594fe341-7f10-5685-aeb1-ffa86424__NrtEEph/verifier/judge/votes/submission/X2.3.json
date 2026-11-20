@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X2",
+ "trial": 3,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission does not meet the **minimal LangGraph change** requirement.\n\nAlthough `response_schema` defaults to `None` and the SDK field is correctly marked `NotRequired`, the implementation substantially rewrites interrupt handling beyond the optional schema extension:\n\n- It adds a required `mapped_resume` field to `PregelScratchpad` and changes how ID-addressed resume values are staged and consumed\u2014even for interrupts without a schema.\n- It introduces `ResumeRejected` and modifies the runner and loop\u2019s exception aggregation and propagation.\n- It changes debug serialization and adds custom interrupt representation logic.\n\nIn particular, the resume-handling changes are unconditional: schema-free callers also use the new staging and consumption path. This is not a minimal, isolated extension to the existing behavior. Preserving the old representation and making the public field optional do not offset the broader engine changes.\n\nFAIL"
+}

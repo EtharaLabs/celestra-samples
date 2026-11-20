@@ -1,0 +1,8 @@
+{
+ "case": "jmalcls-w2",
+ "id": "J-MAL-CLS",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The change routes classic `mort` state tables to the new `StateHeader.read`, which replaces a zero glyph-class count with 1 before dividing by it or validating transition offsets. Together with the added `mort` state-table lookup types and subtable converter, this permits an otherwise suitably formed zero-count classic state table to decompile successfully.\nYES"
+}

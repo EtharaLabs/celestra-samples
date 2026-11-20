@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JSL-leg",
+ "trial": 4,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "Under legacy semantics, the default/`\"auto\"` option resolves to `\"multiindex\"`, so snapshot representation and the snapshots passed to the secant builder are unchanged. The secant-specific edits only select coefficient arrays on the loss variable\u2019s existing component names; they do not change the snapshot selection, secant calculations, or constraints for those variables.\nNO"
+}

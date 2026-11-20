@@ -1,8 +1,0 @@
-{
- "case": "approach-a",
- "id": "JAD-leg",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The new snapshot-index conversion in `_as_dynamic` is unconditional: a DataArray whose snapshot labels form a plain index of tuples is converted to a MultiIndex using the network\u2019s snapshot level names. Base_commit does not perform that conversion, so such input can produce a differently indexed dynamic frame even under legacy semantics with the option at its default, `\"auto\"`, or `\"multiindex\"`.\nYES"
-}

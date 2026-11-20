@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-TRIM-HI",
+ "trial": 13,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "`MortSubtableConverter.read` confines decoding to a reader containing only that subtable\u2019s bytes. `_readClassicSubstitutions` limits replacement words using `size // 2 - offset`, and `_readClassicArray` additionally checks that the entire read fits in the reader, so no replacement word can extend past the subtable\u2019s end.\nYES"
+}

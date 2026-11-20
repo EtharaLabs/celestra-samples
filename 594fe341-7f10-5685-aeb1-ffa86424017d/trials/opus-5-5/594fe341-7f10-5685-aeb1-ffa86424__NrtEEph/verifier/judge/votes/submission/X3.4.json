@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X3",
+ "trial": 4,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets the boundary criterion.\n\n- **Validation is owned by LangGraph.** The middleware supplies a Python decision schema to `interrupt()` and uses the returned decision. It does not independently parse or normalize the answer. Its subsequent `_process_decision` call handles the decision\u2019s meaning rather than providing a competing schema-validation path.\n- **Both resume transports converge before validation and storage.** `interrupt()` selects an answer from replay history, the interrupt-ID-mapped answer, or the unkeyed resume value, then applies the same `TypeAdapter.validate_python()` call.\n- **Storage and return semantics are consistent.** After successful validation, LangGraph stores the original answer `v` and returns the validated `answer`. Replay validates that original value again using the same mechanism. These semantics also apply to plain graphs, rather than being implemented only in the middleware.\n- **Invalid answers are not accepted into resume history.** Newly supplied answers are appended only after validation succeeds. The added rejection handling keeps the interrupt pending while surfacing the validation error.\n- **Middleware edits preserve reviewer arguments.** The argument wrap validator checks the tool argument schema but returns the supplied arguments, avoiding an extra middleware-specific normalization before tool execution.\n\nThe submission differs from the reference in its rejection plumbing and schema construction, but those differences do not establish a provider\u2013consumer disagreement under this criterion.\n\nPASS"
+}

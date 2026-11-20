@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X1",
+ "trial": 7,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission implements answer validation in LangGraph\u2019s `interrupt` using `TypeAdapter.validate_python`, and LangChain passes its decision type through `response_schema`.\n\nHowever, LangChain then calls `_process_decision(decision, tool_call, config)` on the returned answer. That method retains the existing checks that the decision type is in `allowed_decisions` and raises for unexpected decisions. Thus the per-call middleware checks decision validity again after LangGraph has already validated it.\n\nBuilding the decision schema in LangChain is consistent with the criterion; reusing the validating `_process_decision` after `interrupt` is not. The middleware should dispatch the already-validated decision without repeating those checks.\n\nFAIL"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JF3",
+ "trial": 18,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The wrapper keeps the client span open when a streaming body is successfully instrumented. That span is finished by the body\u2019s read/close handlers upon completion, closure, or error, rather than simply when `_make_api_call` returns; the diff does not establish a boto3 call whose unread streaming body bypasses this handling.\nNO"
+}

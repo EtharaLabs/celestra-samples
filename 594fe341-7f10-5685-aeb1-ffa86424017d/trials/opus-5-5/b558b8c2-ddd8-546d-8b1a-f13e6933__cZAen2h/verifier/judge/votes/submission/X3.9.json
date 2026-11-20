@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "X3",
- "trial": 9,
- "model": "gpt-6.1-sol",
- "label": "FAIL",
- "response": "The submission does not meet the criterion because it can persist a keyed answer before validating that answer.\n\nIn LangGraph\u2019s replay branch, it does:\n\n```python\nv = _validate_resume(adapter, scratchpad.resume[idx])\nconf[CONFIG_KEY_SEND]([(RESUME, scratchpad.resume)])\n```\n\nOnly the answer at `idx` has been validated, but the entire resume list is written. When a task replays an earlier interrupt before reaching its currently pending interrupt, that list can already contain the new, interrupt-ID-keyed answer. Replaying the earlier interrupt therefore saves the later answer before its schema is checked. If the later answer fails validation, it may already be present in the task\u2019s persisted resume history.\n\nThe unkeyed path behaves differently: it validates the new answer before appending and writing it. Consequently, keyed and unkeyed answers do not have the same storage and replay guarantees.\n\nThe added `InvalidResumeError` handling does not close this gap: `_discard_null_resume()` retracts an unkeyed null-task write, not an unchecked keyed answer included in a task\u2019s full resume-list write. The middleware\u2019s decision cache likewise cannot fix the provider\u2019s behavior for plain graphs.\n\nWriting only the validated prefix during replay\u2014as the reference does with `scratchpad.resume[: idx + 1]`\u2014is essential to this boundary guarantee.\n\nFAIL"
-}

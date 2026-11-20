@@ -1,0 +1,8 @@
+{
+ "case": "jmalligord-w1",
+ "id": "J-MAL-LIGORD",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new classic ligature reader derives the component count as `(ligatureOffset - componentOffset) // 2`, assuming the component table precedes the ligature table. When the component table starts later, an odd difference explicitly raises `ValueError`, while an even difference produces a negative array length rather than supporting that layout.\nNO"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JP1",
+ "trial": 14,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The change keeps the same `before-sign` handler and its registration order, with no changes to trace-header selection or merging with existing request headers. It changes span creation, reuse, and lifetime, but differences in span or trace IDs do not count under the criterion.\nNO"
+}

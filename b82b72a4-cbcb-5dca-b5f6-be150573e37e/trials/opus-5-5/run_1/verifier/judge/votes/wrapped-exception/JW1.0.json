@@ -1,8 +1,0 @@
-{
- "case": "wrapped-exception",
- "id": "JW1",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "When a span is created, `sentry_patched_make_api_call` catches exceptions from botocore\u2019s original call and raises a new `RuntimeError` chained from the original error. Thus, the caller receives a different exception object, even though the original remains available as its cause.\nYES"
-}

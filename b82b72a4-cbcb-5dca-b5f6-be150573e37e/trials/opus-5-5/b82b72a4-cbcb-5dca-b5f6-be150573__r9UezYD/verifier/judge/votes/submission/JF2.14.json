@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JF2",
+ "trial": 14,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The wrapper finishes the client span once on a call error or a successful non-streaming response. For streaming responses, finishing is deferred to `finish_spans`, whose `finished` guard prevents repeated finishes; if instrumentation installation fails, it finishes only the streaming span and leaves the client span for the wrapper to finish. The old after-call finishing handlers are removed.\n\nNO"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X3",
+ "trial": 8,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets the boundary criterion.\n\n- **LangGraph owns schema validation.** `interrupt()` constructs the `TypeAdapter` and validates answers before returning them. The middleware supplies a decision type as `response_schema`; it does not independently parse the answer against that schema.\n- **Scalar and ID-keyed answers converge on the same handling.** Although they are retrieved differently, both reach the same validation block. Successful answers are appended to `scratchpad.resume` as the original value `v`, while `interrupt()` returns the validated `answer`.\n- **Replay follows the same representation contract.** Previously accepted answers are retrieved from `scratchpad.resume` and validated again against the supplied type. Thus storage contains the submitted value, not a differently normalized object depending on the resume route.\n- **Rejected answers are not accepted into resume history.** New answers are appended only after validation succeeds. The submission also handles rejection during replay by removing the rejected answer and its suffix, preserving the pending interrupt and ultimately surfacing the validation error.\n- **The middleware preserves that contract.** Its edit-argument wrapper checks tool arguments while retaining the reviewer\u2019s original arguments for execution. The subsequent decision dispatch does not introduce a competing schema parser. Plain graphs use the same provider implementation.\n\nThe submission differs from the reference in its rejection machinery and typing API, but those differences do not establish a violation of this criterion.\n\nPASS"
+}

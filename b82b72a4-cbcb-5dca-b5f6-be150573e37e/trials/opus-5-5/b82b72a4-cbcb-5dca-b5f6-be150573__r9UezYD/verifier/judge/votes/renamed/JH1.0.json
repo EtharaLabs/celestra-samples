@@ -1,0 +1,8 @@
+{
+ "case": "renamed",
+ "id": "JH1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The change retains the same URL parsing (`sanitize=False`), URL-attribute helper, and method keys and values in both tracing modes. Legacy URL, query, and fragment fields are also preserved; the differences concern span ownership and retry updates, which the criterion excludes.\nNO"
+}

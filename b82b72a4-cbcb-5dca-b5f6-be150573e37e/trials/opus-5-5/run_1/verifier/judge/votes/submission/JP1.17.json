@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JP1",
- "trial": 17,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The diff leaves `_sentry_before_sign` and its registration order unchanged, so the propagation-header selection and existing-header merging logic remain the same. The changes move span creation and lifetime management around the client call, which can change propagated identifiers but do not establish a difference in which headers are present or how they are merged.\n\nNO"
-}

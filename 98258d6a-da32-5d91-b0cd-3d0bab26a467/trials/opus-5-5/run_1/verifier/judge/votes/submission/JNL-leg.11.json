@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JNL-leg",
- "trial": 11,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "Under legacy semantics, both `\"auto\"` and `\"multiindex\"` retain the existing snapshot representation, and model construction still uses the same `as_index` selection. The new snapshot-reading helper leaves existing MultiIndexes unchanged, and the diff does not modify `optimize_and_run_non_linear_powerflow` or its snapshot forwarding, so it does not establish different snapshots being optimized or power-flowed.\nNO"
-}

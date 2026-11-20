@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J2",
- "trial": 13,
- "model": "gpt-6.1-sol",
- "label": "FAIL",
- "response": "The schema construction is generally tool-agnostic: it derives edit argument types from the actual tool, pins the edited name dynamically, and builds decision branches from the configured allowed decisions. There are no hardcoded test tool or argument names.\n\nHowever, the provider does not handle every caller-supplied response schema correctly. `_validate_resume` catches a `ValidationError` and reconstructs it through `InvalidResumeError.from_validation_error`, which passes the serialized errors from `error.__reduce__()` to `from_exception_data`.\n\nThat reconstruction is not valid for arbitrary Pydantic errors. For example, a response model\u2019s validator can raise `PydanticCustomError(\"custom_rule\", \"...\")`. Its serialized error contains the custom error-type string, but `from_exception_data` cannot resolve an arbitrary custom string as a built-in error type. Reconstruction raises a `KeyError` instead of propagating the validation error through the intended `InvalidResumeError` path. Consequently, the provider\u2019s validation and invalid-resume handling do not hold for arbitrary response schemas.\n\nFAIL"
-}

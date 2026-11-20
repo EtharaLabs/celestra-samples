@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JS1",
+ "trial": 9,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "`_sentry_make_api_call` starts one client span before invoking the original boto3 call. Request-created events, including retries, reuse that span through `_client_span` rather than starting new client spans; streaming-body handling may add a separate streaming span, not another client span.\n\nNO"
+}

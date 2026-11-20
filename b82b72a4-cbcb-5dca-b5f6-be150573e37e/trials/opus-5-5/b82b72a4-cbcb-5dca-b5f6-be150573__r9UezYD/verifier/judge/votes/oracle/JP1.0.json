@@ -1,0 +1,8 @@
+{
+ "case": "oracle",
+ "id": "JP1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The before-sign handler retains the same propagation eligibility checks, header generation call, replacement behavior for non-baggage headers, and merging behavior for baggage. The changes to span creation and lifecycle do not show a change to which propagation headers are present or how existing headers are merged.\nNO"
+}

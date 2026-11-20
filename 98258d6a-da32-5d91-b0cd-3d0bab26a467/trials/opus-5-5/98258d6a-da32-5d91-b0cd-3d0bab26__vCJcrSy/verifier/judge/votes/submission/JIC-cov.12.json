@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JIC-cov",
+ "trial": 12,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not touch `pypsa/statistics/expressions.py` or `installed_capex`, and it shows no change that forces that function\u2019s investment-period weighting into a fixed snapshot representation. The new model-building context instead chooses flat versus MultiIndex snapshots according to the option.\n\nNO"
+}

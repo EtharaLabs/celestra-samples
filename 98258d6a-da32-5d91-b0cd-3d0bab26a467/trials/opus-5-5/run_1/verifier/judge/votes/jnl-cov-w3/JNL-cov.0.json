@@ -1,8 +1,0 @@
-{
- "case": "jnl-cov-w3",
- "id": "JNL-cov",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The change in `abstract.py` explicitly converts snapshots to `pd.Index(..., tupleize_cols=False, name=\"snapshot\")` whenever linopy uses v1 semantics, without consulting `optimization.model_snapshot_index`. Thus, for a network with MultiIndex snapshots and the option set to `\"auto\"` or `\"flat\"`, it forces flat tuple labels before optimisation rather than passing the MultiIndex that `SnapshotWindow.build` accepts and converts itself.\nYES"
-}

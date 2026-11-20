@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MAL-CLS",
+ "trial": 19,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new `mort` decompilation path calls `_readClassic`, which reads the glyph-class count as `stateSize` and explicitly raises `ValueError` when it is zero. Thus the change does not allow a classic state table with zero glyph classes to decompile successfully.\n\nNO"
+}

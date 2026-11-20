@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J3",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets the criterion:\n\n- **Unbuildable schemas fail loudly.** `TypeAdapter(response_schema)` and `adapter.json_schema()` are not wrapped in fallback handling. Errors constructing or publishing a schema propagate rather than disabling validation.\n- **Invalid answers raise to the caller.** Answers are validated before being appended to the accepted resume list. A `ValidationError` is temporarily wrapped in `ResumeRejected`, but the runner preserves that exception and the root graph loop re-raises its underlying validation error. It is not replaced with an unchecked resume or default decision.\n- **Missing tool-call IDs raise.** For a gated per-call review, `_review` explicitly raises `ValueError` when `tool_call.get(\"id\") is None`, before requesting approval or executing the tool.\n- **Middleware does not bypass failed validation.** Both synchronous and asynchronous wrappers call `_review` without catching validation or schema errors. The argument validator\u2019s conditional check does not silently accept an invalid tool name: that name independently fails its literal-field validation.\n\nPASS"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X1",
+ "trial": 5,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission centralizes schema validation in LangGraph\u2019s `interrupt`, using `TypeAdapter.validate_python`, and the middleware passes its decision type through `response_schema`.\n\nHowever, the middleware then calls `_process_decision(decision, tool_call, config)` on the returned answer. That existing method checks whether the decision type is allowed by the tool\u2019s configuration and raises `ValueError` for unexpected or disallowed decisions. Thus, the per-call path still validates an answer that `interrupt` has already checked against the allowed-decision schema.\n\nConstructing the schema in LangChain is consistent with the criterion; rechecking the returned decision through `_process_decision` is not.\n\nFAIL"
+}

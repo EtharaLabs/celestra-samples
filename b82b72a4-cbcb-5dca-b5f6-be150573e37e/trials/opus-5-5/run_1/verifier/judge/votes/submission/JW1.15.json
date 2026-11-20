@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JW1",
- "trial": 15,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The client-call wrapper catches `BaseException` and uses a bare `raise`, which preserves the original exception object. The diff likewise shows no replacement of exceptions from streamed-body reads; adding span finalization does not itself establish that a different exception reaches the caller.\nNO"
-}

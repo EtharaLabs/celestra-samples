@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JSM-leg",
- "trial": 17,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "Under legacy semantics, `\"auto\"` resolves to `\"multiindex\"`, so `_to_model` leaves the snapshot index unchanged. If `create_model` builds a model over a subset of the network\u2019s snapshots, `solve_model` nevertheless passes all of `n.snapshots` to `extra_functionality`, rather than the model\u2019s stored snapshots. Thus the submitted code has a call path that violates the criterion, although this subset mismatch also existed before the change.\nYES"
-}

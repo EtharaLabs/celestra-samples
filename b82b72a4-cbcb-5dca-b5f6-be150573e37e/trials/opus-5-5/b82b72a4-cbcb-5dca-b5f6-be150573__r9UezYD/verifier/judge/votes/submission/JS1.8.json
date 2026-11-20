@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JS1",
+ "trial": 8,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "`_sentry_make_api_call` invokes `_start_client_span` once per call, and its streaming and non-streaming branches are mutually exclusive. The request-created handler now reuses that span rather than starting another, so repeated requests or retries do not create additional client spans.\nNO"
+}

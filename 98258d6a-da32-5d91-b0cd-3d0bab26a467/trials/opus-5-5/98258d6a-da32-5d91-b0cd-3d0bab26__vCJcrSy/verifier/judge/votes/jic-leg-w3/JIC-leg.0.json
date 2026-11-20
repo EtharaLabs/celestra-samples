@@ -1,0 +1,8 @@
+{
+ "case": "jic-leg-w3",
+ "id": "JIC-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The change replaces period-specific multiplication in `installed_capex` (`df.multiply(weights, level=\"period\")`) with multiplication by the mean investment-period weight. With unequal period weights and nonzero installed capex, this produces different period-weighted results, independently of the snapshot-index option or legacy semantics.\nYES"
+}

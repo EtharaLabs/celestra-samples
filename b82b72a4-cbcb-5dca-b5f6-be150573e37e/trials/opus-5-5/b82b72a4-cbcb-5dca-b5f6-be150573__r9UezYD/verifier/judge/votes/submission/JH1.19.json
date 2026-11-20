@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JH1",
+ "trial": 19,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The change preserves the HTTP attribute derivation: streaming mode still uses `get_url_attributes` and `HTTP_REQUEST_METHOD`, while non-streaming mode still records the parsed URL, query, fragment, and `HTTP_METHOD` under the same keys and conditions. Moving those attributes to the client-call span and allowing retries to overwrite them are explicitly excluded by the criterion.\nNO"
+}

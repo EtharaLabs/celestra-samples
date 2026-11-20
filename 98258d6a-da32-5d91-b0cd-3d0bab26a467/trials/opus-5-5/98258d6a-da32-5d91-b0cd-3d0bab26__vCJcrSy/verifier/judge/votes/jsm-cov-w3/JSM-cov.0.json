@@ -1,0 +1,8 @@
+{
+ "case": "jsm-cov-w3",
+ "id": "JSM-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "`solve_model` reconstructs a `pd.MultiIndex` whenever `n.has_periods` is true, even if the model was built with flat tuple snapshot labels. Thus, a multi-period model built with the `'flat'` option (or `'auto'` under v1 semantics) passes snapshots to `extra_functionality` in a different representation from the model\u2019s.\nNO"
+}

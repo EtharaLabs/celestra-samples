@@ -1,8 +1,0 @@
-{
- "case": "baggage-overwrite",
- "id": "JP1",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The change replaces reading existing `baggage` header values with `existing_values = []` before merging propagation baggage. Thus, when a botocore request already carries third-party baggage and Sentry emits baggage, the change discards that existing baggage instead of preserving it as the base commit does.\nYES"
-}

@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JH1",
- "trial": 12,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The change preserves URL parsing and the URL, query, fragment, and method attribute keys and values in both tracing modes. It moves those writes to the client-call span and allows retries to update that span, but those differences are explicitly excluded by the criterion.\nNO"
-}

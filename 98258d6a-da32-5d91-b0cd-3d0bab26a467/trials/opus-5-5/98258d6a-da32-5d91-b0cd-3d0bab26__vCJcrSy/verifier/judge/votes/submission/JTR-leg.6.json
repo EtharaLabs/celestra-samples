@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JTR-leg",
+ "trial": 6,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The transmission inner function changes its flow calculation from `var.loc[:, idx] * efficiency[idx]` to `var.loc[:, idx] * -efficiency.sel(name=idx)`. This negates the expression for a branch with nonzero flow and efficiency, so the same input can yield a different value even under legacy semantics with the default or `\"multiindex\"` snapshot option.\nYES"
+}

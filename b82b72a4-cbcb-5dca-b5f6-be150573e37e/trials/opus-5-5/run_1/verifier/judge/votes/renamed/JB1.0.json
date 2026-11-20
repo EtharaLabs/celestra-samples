@@ -1,8 +1,0 @@
-{
- "case": "renamed",
- "id": "JB1",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The breadcrumb is still recorded once per `request-created` event, including retries, and the extracted `_add_request_breadcrumb` preserves the original URL and HTTP-method data for both tracing modes. The changes to span creation, activation, and streaming-body handling do not change that breadcrumb\u2019s contents or frequency.\nNO"
-}

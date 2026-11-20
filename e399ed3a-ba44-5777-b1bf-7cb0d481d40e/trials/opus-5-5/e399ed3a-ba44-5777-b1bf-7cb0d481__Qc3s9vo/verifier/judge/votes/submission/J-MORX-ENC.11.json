@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MORX-ENC",
+ "trial": 11,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new state-table compilation code is used only when `writer.tableTag == \"mort\"`, leaving extended `morx` compilation on its existing path. The other changes add equality/XML behavior or update `StructLength` after serialization; they do not change the bytes written when compiling the same extended `morx` objects.\nNO"
+}

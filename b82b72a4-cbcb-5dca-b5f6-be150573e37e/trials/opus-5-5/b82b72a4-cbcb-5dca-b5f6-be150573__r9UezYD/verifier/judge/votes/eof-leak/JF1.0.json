@@ -1,0 +1,8 @@
+{
+ "case": "eof-leak",
+ "id": "JF1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The streaming `read()` wrapper no longer calls `finish_span()` on EOF or after reading the entire body; it only finishes on an exception. Raw-stream closure during a read is also prevented from finishing the span by `read_in_progress`, so fully consuming a body without explicitly closing it can leave the client span open.\nNO"
+}

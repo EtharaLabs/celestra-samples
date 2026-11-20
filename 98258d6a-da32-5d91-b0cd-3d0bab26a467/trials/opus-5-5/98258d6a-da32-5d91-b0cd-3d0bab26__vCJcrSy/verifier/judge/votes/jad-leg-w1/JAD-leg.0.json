@@ -1,0 +1,8 @@
+{
+ "case": "jad-leg-w1",
+ "id": "JAD-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The diff changes `_as_dynamic`\u2019s snapshot reindexing from `fill_value=np.nan` to `fill_value=0`. When requested snapshots include a row absent from the component\u2019s dynamic data, the new frame fills that row with zeros instead of NaNs; this change is unconditional and therefore also applies under legacy semantics with the default, `\"auto\"`, or `\"multiindex\"` option.\nYES"
+}

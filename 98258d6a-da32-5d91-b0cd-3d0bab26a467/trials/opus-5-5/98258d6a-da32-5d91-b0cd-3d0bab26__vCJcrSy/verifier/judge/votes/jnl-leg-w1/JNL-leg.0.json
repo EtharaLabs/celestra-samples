@@ -1,0 +1,8 @@
+{
+ "case": "jnl-leg-w1",
+ "id": "JNL-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The change in `abstract.py` replaces `snapshots = n.snapshots` with `snapshots = n.snapshots[:-1]` when no snapshots are supplied. Thus, for a network with multiple snapshots, the default request excludes the final snapshot rather than processing all snapshots as in the base commit, regardless of the specified legacy-compatible index option.\nYES"
+}

@@ -1,8 +1,0 @@
-{
- "case": "first-attempt",
- "id": "JS1",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The `_make_api_call` wrapper always leaves `span` as `None`, so it delegates without starting a client span. The request-created handler starts a client span only for the first attempt and retrieves the current span for subsequent attempts; the diff therefore does not show multiple client spans being started for one boto3 call.\nNO"
-}

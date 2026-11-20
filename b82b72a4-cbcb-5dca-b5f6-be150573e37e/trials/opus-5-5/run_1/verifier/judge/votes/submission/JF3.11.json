@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JF3",
- "trial": 11,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The wrapper restores the previous current span when the API method returns, but does not thereby finish the client span. If a streaming body is instrumented, the client span is finished by the body\u2019s completion callback; otherwise it finishes after the API method completes. The diff does not establish a call whose client span finishes prematurely.\nNO"
-}

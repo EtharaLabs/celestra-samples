@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JF2",
+ "trial": 3,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "NO: The call\u2019s exception path finishes the client span and re-raises, while the success path either finishes it immediately or delegates finishing to the streaming-body wrappers. Those wrappers share a `finished` guard, and instrumentation setup failure sets that guard before the caller performs the fallback finish, preventing a second finish.\nNO"
+}

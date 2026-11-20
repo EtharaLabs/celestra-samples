@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J2",
- "trial": 17,
- "model": "gpt-6.1-sol",
- "label": "FAIL",
- "response": "The submission does not fully meet the generality criterion. Its custom JSON Schema reference rewriting depends on argument names.\n\nIn `_rewrite_refs`, keys in `_SCHEMA_VALUE_KEYWORDS` (`const`, `default`, `enum`, and `examples`) have their values left untouched at **every dictionary level**. Those strings are JSON Schema keywords in a schema object, but they can also be ordinary argument names inside `properties`.\n\nFor example, a JSON-schema-backed tool can legitimately use:\n\n```json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"default\": {\"$ref\": \"#/definitions/Value\"}\n  },\n  \"definitions\": {\n    \"Value\": {\"type\": \"string\"}\n  }\n}\n```\n\n`_ShownArgsSchema` removes `definitions` from the main schema and hoists its entries into Pydantic-managed definitions. It therefore needs to rewrite `#/definitions/Value`. However, when `_rewrite_refs` reaches the argument named `default`, it skips that argument\u2019s schema entirely, leaving the old reference unchanged. The resulting schema has a dangling reference, or schema generation fails while resolving it.\n\nRenaming that argument to an ordinary name allows the reference to be rewritten. Thus the per-call schema does not work independently of arbitrary argument names and caller-provided schema structure, even though the implementation has no hard-coded test tool names.\n\nFAIL"
-}

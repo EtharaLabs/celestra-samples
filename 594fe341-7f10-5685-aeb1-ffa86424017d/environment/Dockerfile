@@ -34,8 +34,9 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ARG TARGETOS
 ARG TARGETARCH
 COPY requirements-tools.txt binary.txt requirements-sdist.txt /req/
-RUN case "$TARGETARCH" in amd64) arch=x86_64 ;; arm64) arch=aarch64 ;; *) exit 1 ;; esac \
- && test "$TARGETOS" = linux \
+# Kaniko leaves TARGETARCH and TARGETOS empty and builds for its own platform, so fall back to that.
+RUN case "${TARGETARCH:-$(dpkg --print-architecture)}" in amd64) arch=x86_64 ;; arm64) arch=aarch64 ;; *) exit 1 ;; esac \
+ && test "${TARGETOS:-linux}" = linux \
  && pip download --no-cache-dir --require-hashes --only-binary=:all: --no-deps \
       --python-version 3.12 --implementation cp --abi cp312 --abi abi3 --abi none \
       --platform "manylinux_2_28_$arch" --platform "manylinux_2_17_$arch" \
@@ -58,12 +59,13 @@ RUN groupadd -g 10001 agent && useradd -u 10001 -g 10001 -m -d /home/agent agent
  && chage -d "$(date -u -d "@$SOURCE_DATE_EPOCH" +%F)" agent \
  && rm -rf /root/.cache
 COPY requirements-tools.txt requirements.txt /tmp/req/
-RUN --mount=type=bind,from=wheels,source=/dist,target=/dist \
-    pip install --no-cache-dir --no-index --find-links /dist --require-hashes --no-deps -r /tmp/req/requirements-tools.txt \
+# Kaniko ignores RUN --mount, so these files are copied in and removed by the step that uses them.
+COPY --from=wheels /dist /dist
+RUN pip install --no-cache-dir --no-index --find-links /dist --require-hashes --no-deps -r /tmp/req/requirements-tools.txt \
  && pip install --no-cache-dir --no-index --find-links /dist --require-hashes --no-deps --no-build-isolation -r /tmp/req/requirements.txt \
  && find /usr/local/lib/python3.12/site-packages /usr/local/share -type f \( -name '*.orig' -o -name '*.rej' \) -delete \
  && rm -r /tmp/req \
- && rm -rf /root/.cache
+ && rm -rf /root/.cache /dist
 COPY --from=source-langgraph --chown=10001:10001 /src /app/langgraph
 RUN pip install --no-cache-dir --no-deps --no-build-isolation --no-index -e /app/langgraph/libs/checkpoint -e /app/langgraph/libs/checkpoint-sqlite -e /app/langgraph/libs/checkpoint-postgres -e /app/langgraph/libs/sdk-py -e /app/langgraph/libs/prebuilt -e /app/langgraph/libs/langgraph \
  && chown -R 10001:10001 /app/langgraph \

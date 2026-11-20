@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J4",
- "trial": 8,
- "model": "gpt-6.1-sol",
- "label": "FAIL",
- "response": "The submission does not fully meet the documentation criterion.\n\n- **Per-call answer keying is not documented.** The new `InterruptMode`, `ToolApprovalRequest`, and constructor documentation never explains that clients must resume with a single `Decision` keyed by **interrupt ID**, rather than tool-call ID or a batched `HITLResponse`. The `_decided` comment describes an internal cache keyed by `ToolRuntime` identity, not the client-facing resume format.\n- **Schema enforcement is described too broadly in the middleware docs.** Statements such as \u201cEach answer is validated against that schema\u201d do not distinguish the enforced decision structure and Pydantic argument types from JSON-schema tool arguments that are only displayed. `_decision_schema` partly clarifies the distinction, but the public mode documentation remains misleading.\n- **Some important argument-validation semantics are omitted.** The added documentation does not explain that tool argument validator methods run during tool execution, or how undeclared arguments are handled.\n\nThe LangGraph `interrupt` parameter documentation does correctly distinguish display-only JSON Schema dictionaries from validated Python types, says the validated object is returned, and documents rejected answers not being recorded. Those correct portions do not remedy the missing and overbroad middleware documentation.\n\nFAIL"
-}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X3",
+ "trial": 7,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets the boundary-consistency criterion.\n\n- **LangGraph owns answer validation.** `interrupt()` builds a `TypeAdapter` for Python response types and validates answers there. JSON-schema dictionaries remain descriptive rather than enforced, matching the intended contract.\n- **Both resume routes converge.** Previously stored answers, answers keyed by interrupt ID, and unkeyed resume values all flow through the same validation-and-storage logic. Keyed answers are held separately in `mapped_resume` until an interrupt accepts them.\n- **Storage and replay use the same representation.** After validation, the provider stores the original submitted value `v` and returns the validated `answer`. Replayed values are validated through the same adapter. This applies equally to middleware interrupts and plain-graph interrupts.\n- **Invalid answers are not accepted into resume history.** New answers are appended only after successful validation. The rejection path preserves a pending interrupt and ultimately raises the validation error; it also removes a rejected replay entry and its positional successors.\n- **The middleware consumes that contract.** It supplies a Python decision schema to `interrupt()` rather than independently parsing the answer. Its edit-argument wrapper checks arguments while retaining the reviewer\u2019s submitted arguments, so the provider\u2019s storage/replay behavior does not silently normalize them differently.\n\nThe additional rejection plumbing differs from the reference structurally, but does not introduce a conflicting provider\u2013consumer contract.\n\nPASS"
+}

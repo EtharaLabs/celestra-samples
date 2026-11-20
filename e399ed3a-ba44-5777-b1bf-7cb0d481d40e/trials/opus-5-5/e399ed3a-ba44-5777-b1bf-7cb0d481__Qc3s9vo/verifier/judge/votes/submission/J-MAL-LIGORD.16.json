@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MAL-LIGORD",
+ "trial": 16,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new classic `mort` reader routes ligature subtables to `_readClassicLigatureTables`, which explicitly raises `ValueError` whenever `componentOffset > ligatureOffset`. Thus a subtable with the ordering specified in the criterion still cannot decompile successfully.\nNO"
+}

@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J-TRIM-LO",
- "trial": 18,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The decoder sets the first glyph index to `max(0, (substOffset + 1) // 2 - offset)`. Thus every replacement word read at `2 * (offset + glyphIndex)` starts at or after `substOffset`, regardless of whether the signed entry offset is negative or positive; if no valid range exists, it reads nothing.\nYES"
-}

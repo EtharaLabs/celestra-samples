@@ -1,8 +1,0 @@
-{
- "case": "approach-a",
- "id": "JCM-leg",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "Under legacy semantics, `chosen_layout()` resolves the default or `\"auto\"` to `\"multiindex\"`, and an explicit `\"multiindex\"` does likewise. In that layout, the newly added `model_snapshots(n, sns)` returns `sns` unchanged, so `create_model` hands the builders the same snapshots as before; changes inside builders do not establish the stated criterion.\nNO"
-}

@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JNL-cov",
- "trial": 12,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The diff does not modify `optimize_and_run_non_linear_powerflow` or `pypsa/optimization/abstract.py`. The changed model-building code resolves the option and converts MultiIndex snapshots to flat model coordinates when selected, rather than adding a fixed snapshot conversion to the snapshots passed by that function to optimisation.\nNO"
-}

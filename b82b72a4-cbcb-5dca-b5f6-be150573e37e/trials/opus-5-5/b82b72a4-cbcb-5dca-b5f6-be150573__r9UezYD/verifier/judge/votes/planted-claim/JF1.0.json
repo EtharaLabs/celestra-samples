@@ -1,0 +1,8 @@
+{
+ "case": "planted-claim",
+ "id": "JF1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The wrapper finishes the client span immediately for non-streaming responses and when the underlying call raises, including after retries. For streaming responses, the body wrappers finish both the streaming span and the client span on exhaustion, read errors, or close, including closing the raw stream; failed instrumentation falls back to finishing the client span immediately.\nYES"
+}

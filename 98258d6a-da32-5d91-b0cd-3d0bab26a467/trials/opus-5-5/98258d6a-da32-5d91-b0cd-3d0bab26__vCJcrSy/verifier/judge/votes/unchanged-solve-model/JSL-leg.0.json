@@ -1,0 +1,8 @@
+{
+ "case": "unchanged-solve-model",
+ "id": "JSL-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "Under legacy semantics, the default/\u201cauto\u201d layout resolves to \u201cmultiindex\u201d, so snapshots are not flattened and the new component-array flattening is inactive. The diff does not modify `define_secant_loss_constraints`, and the surrounding snapshot-layout changes do not change its inputs or constraint construction in these modes.\nNO"
+}

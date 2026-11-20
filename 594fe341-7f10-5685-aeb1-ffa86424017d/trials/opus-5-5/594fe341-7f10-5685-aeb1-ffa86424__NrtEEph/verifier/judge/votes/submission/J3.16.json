@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J3",
+ "trial": 16,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets the criterion:\n\n- **Unbuildable schemas raise:** `TypeAdapter(response_schema)` and JSON-schema generation are not wrapped in a fallback that drops validation. Errors propagate.\n- **Invalid answers raise:** Answers are validated before being appended to accepted resume values. A `ValidationError` becomes `ResumeRejected`, which the runner preserves and the root graph loop re-raises as the underlying validation error. It is not replaced with an unchecked answer or a default decision.\n- **Missing tool-call IDs raise:** For gated per-call reviews, `_review` explicitly raises `ValueError` when the ID is missing or `None`, before asking for approval or executing the tool.\n- **Middleware does not suppress these failures:** Both synchronous and asynchronous wrappers call `_review` without catching its errors.\n\nThe conditional argument validator skips argument validation when the edited tool name is invalid, but that name itself fails schema validation, so this does not allow an invalid decision through.\n\nPASS"
+}

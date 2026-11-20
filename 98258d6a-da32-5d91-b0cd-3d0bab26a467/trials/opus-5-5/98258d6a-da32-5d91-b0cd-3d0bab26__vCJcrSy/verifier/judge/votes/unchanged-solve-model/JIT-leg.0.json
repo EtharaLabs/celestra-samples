@@ -1,0 +1,8 @@
+{
+ "case": "unchanged-solve-model",
+ "id": "JIT-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not change `optimize_transmission_expansion_iteratively` or its snapshot selection and forwarding. Under legacy semantics, both `\"auto\"` (the default) and `\"multiindex\"` resolve to the MultiIndex layout, for which `model_snapshots` returns the supplied snapshots unchanged; the other changes do not alter which snapshots an iteration passes to optimisation.\nNO"
+}

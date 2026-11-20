@@ -1,8 +1,0 @@
-{
- "case": "reference",
- "id": "J2",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "PASS",
- "response": "The submission meets the criterion.\n\n- Per-call schemas are constructed dynamically from each tool\u2019s configured allowed decisions, name, and `tool_call_schema`. No tool names or argument names are hard-coded.\n- Edit decisions pin the name using `Literal[name]` and derive argument validation from the actual tool schema. JSON-schema-backed tools and tools without a schema receive generic handling consistent with the reference.\n- Allowed decision sets are assembled dynamically, deduplicated, and handled as either a single branch or a discriminated union.\n- LangGraph uses `TypeAdapter(response_schema)` for caller-provided Python schemas, both to publish JSON Schema and to validate resume values. Validation runs on both previously stored and newly supplied resume values, before the corresponding resume write.\n- Raw JSON Schema dictionaries are surfaced without validation, as intended; this distinction is based on schema representation, not test-specific schema contents.\n\nThe submitted implementation matches the reference\u2019s relevant generic behavior and contains no test-specific special cases.\n\nPASS"
-}

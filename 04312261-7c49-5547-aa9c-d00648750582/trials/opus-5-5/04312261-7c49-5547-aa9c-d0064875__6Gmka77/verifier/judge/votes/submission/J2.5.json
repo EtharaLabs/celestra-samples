@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J2",
+ "trial": 5,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission derives restart behavior from solver state and model metadata rather than recognizable test cases:\n\n- It tracks an arbitrary number of active input sets, independently retaining or stopping each based on its termination status.\n- Each restart uses the corresponding solution\u2019s final state and sensitivities selected by the requested parameter names.\n- Modulo reset times are calculated from the evaluated period and integration window, not a fixed event count or particular `t_eval` length.\n- State-mapping sensitivities use the chain rule, and algebraic sensitivity consistency is derived from the model\u2019s algebraic equations.\n- There are no newly introduced branches keyed to particular models, parameter values, or input names.\n\nSome numerical and API choices differ from the reference\u2014for example, handling discontinuities near segment boundaries and validating modulo periods. Those may affect correctness in edge cases, but they do not indicate test-specific restart logic. Against the stated criterion of deriving restarts generically rather than special-casing graded cases, the submission meets it.\n\nPASS"
+}

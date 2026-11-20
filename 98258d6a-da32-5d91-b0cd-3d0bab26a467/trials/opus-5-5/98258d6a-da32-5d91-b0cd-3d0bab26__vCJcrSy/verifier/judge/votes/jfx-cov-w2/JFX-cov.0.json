@@ -1,0 +1,8 @@
+{
+ "case": "jfx-cov-w2",
+ "id": "JFX-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The change makes `_from_xarray` unconditionally replace any snapshot coordinate with `c.n_save.snapshots[: da.sizes[\"snapshot\"]]`; it retrieves the snapshot window but never uses it to resolve the representation. For multi-period snapshots with `optimization.model_snapshot_index = 'flat'`, this forces the network\u2019s MultiIndex onto an array rather than respecting the selected flat snapshot representation.\nYES"
+}

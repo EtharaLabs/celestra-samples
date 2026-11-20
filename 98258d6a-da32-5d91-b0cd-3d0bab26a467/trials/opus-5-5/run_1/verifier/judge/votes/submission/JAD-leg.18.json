@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JAD-leg",
- "trial": 18,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The diff does not change `_as_dynamic` or its dynamic-frame construction. Under legacy semantics, the default/`\"auto\"` resolves to `\"multiindex\"`, so the new accessor-side flattening is inactive; the added unflattening affects xarray conversion, not `_as_dynamic`\u2019s frame-building logic.\nNO"
-}

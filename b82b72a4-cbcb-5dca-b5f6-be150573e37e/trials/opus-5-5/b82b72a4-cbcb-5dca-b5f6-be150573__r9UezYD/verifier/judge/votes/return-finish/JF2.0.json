@@ -1,0 +1,8 @@
+{
+ "case": "return-finish",
+ "id": "JF2",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "After instrumenting a streaming response, `sentry_patched_make_api_call` unconditionally calls `_finish_span(span)`, ignoring `streaming_body_instrumented`. The streaming-body completion callback still finishes the client span as well, so consuming or closing the body causes that span to be finished again.\nYES"
+}

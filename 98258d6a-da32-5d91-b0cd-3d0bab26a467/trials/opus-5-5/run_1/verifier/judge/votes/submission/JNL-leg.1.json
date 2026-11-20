@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JNL-leg",
- "trial": 1,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The diff does not change `optimize_and_run_non_linear_powerflow` or its snapshot-selection logic. Under legacy semantics, the default/`\"auto\"` resolves to `\"multiindex\"`, preserving the existing snapshot representation, and model creation still uses the same `as_index` selection; the other changes do not establish a different set of snapshots being optimized or power-flowed.\nNO"
-}

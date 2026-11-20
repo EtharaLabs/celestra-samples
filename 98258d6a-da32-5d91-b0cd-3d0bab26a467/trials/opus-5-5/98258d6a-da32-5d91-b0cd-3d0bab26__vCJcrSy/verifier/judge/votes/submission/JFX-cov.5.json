@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JFX-cov",
+ "trial": 5,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The added `_from_xarray` logic calls `_unflatten_snapshots`, which inspects the array\u2019s actual snapshot index: it leaves an existing MultiIndex unchanged and restores a MultiIndex from flat tuple labels when possible. This supports both model representations when converting back to network pandas data, rather than assuming a fixed input representation contrary to the option.\nNO"
+}

@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "X1",
- "trial": 16,
- "model": "gpt-6.1-sol",
- "label": "FAIL",
- "response": "The submission does not meet the criterion.\n\nIt correctly passes a decision type to `interrupt(..., response_schema=_decision_schema(...))`, and LangGraph validates resume values through `_validate_resume`.\n\nHowever, after `interrupt` returns, LangChain\u2019s `_resolve` passes that decision to `_process_decision`:\n\n```python\n_, tool_message = self._process_decision(decision, request.tool_call, config)\n```\n\nThat existing method checks whether the decision type is allowed by the tool\u2019s configuration and raises for unexpected or disallowed decisions. Thus, the per-call path checks decision admissibility again after LangGraph has already validated it against the supplied schema.\n\nThe middleware should directly apply the validated decision, rather than route it through the batched decision-validation method.\n\nFAIL"
-}

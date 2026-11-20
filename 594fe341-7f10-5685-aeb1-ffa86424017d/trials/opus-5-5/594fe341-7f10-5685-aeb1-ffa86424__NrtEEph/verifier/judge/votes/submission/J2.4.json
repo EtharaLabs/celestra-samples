@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J2",
+ "trial": 4,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets the criterion. Its schema construction is driven by the actual call and configuration:\n\n- The edit action\u2019s name is constrained using `Literal[tool_name]`, not a fixed list of tool names.\n- Edit argument schemas come from the supplied tool\u2019s `tool_call_schema` or its converted tool definition; argument names are not hard-coded.\n- Decision unions are built from the configured allowed decisions, with deduplication and support for a single decision.\n- LangGraph uses `TypeAdapter(response_schema)` for arbitrary Pydantic-supported response types. It does not restrict validation to HITL decisions or to particular schema shapes. JSON Schema dictionaries are surfaced without validation, consistent with the reference\u2019s contract.\n\nThe branch for schema-less `Tool` instances distinguishes an actual tool representation; it is not a special case for a test tool or argument name. Similarly, the fixed decision tags are the middleware\u2019s public decision protocol, rather than a restriction to particular tested decision combinations.\n\nPASS"
+}

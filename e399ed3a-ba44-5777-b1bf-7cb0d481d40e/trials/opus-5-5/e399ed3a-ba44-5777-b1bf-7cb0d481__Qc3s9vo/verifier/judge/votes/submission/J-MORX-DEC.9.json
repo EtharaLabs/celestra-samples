@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MORX-DEC",
+ "trial": 9,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new binary-reading paths are gated on the `\"mort\"` table tag, and the `\"morx\"` decompilation path remains unchanged. The shared AAT classes gain equality methods, but these do not change the objects or field values decoded from the bytes; the other shared changes affect compilation or XML reading, not binary decompilation.\nNO"
+}

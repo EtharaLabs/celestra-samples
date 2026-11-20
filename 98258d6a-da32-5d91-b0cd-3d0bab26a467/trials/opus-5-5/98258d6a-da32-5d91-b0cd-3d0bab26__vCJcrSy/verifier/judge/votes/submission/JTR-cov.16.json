@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JTR-cov",
+ "trial": 16,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The transmission function derives `sns` from the flow variable\u2019s snapshot labels and uses those labels to select both dynamic port efficiencies and snapshot weightings. `_model_snapshot_array` converts these selected values to flat tuple coordinates or a MultiIndex according to the model, whose representation is chosen by the new option and linopy semantics.\nYES"
+}

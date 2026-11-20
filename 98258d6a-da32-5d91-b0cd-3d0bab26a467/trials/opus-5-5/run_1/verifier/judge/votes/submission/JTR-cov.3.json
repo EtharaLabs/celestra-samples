@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JTR-cov",
- "trial": 3,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The inner function converts time-dependent port efficiencies with `_to_model`, but retrieves snapshot weights using only `n.snapshot_weightings.generators.loc[sns]`. For investment-period networks this leaves the weights MultiIndexed even when `sns` contains flat tuple labels; conversion in a downstream aggregation path does not make the inner function take both inputs in the required representation.\nNO"
-}

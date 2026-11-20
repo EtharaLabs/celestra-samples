@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JF2",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "NO double-finishing path is shown: call failures finish the client span and re-raise, while successful calls either finish it immediately or defer finishing to the streaming-body wrappers. Those wrappers share a `finished` guard; if wrapper installation fails, cleanup finishes only the streaming span and leaves the client span for the caller to finish.\nNO"
+}

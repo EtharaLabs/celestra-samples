@@ -1,0 +1,8 @@
+{
+ "case": "jit-leg-w3",
+ "id": "JIT-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The diff directly changes the iteration\u2019s call from `n.optimize(snapshots, **kwargs)` to `n.optimize(n.snapshots, **kwargs)`. For a request selecting a proper subset of the network\u2019s snapshots, the base commit passes that subset while the change passes the full snapshot index, including under legacy semantics with the default, `\"auto\"`, or `\"multiindex\"` setting.\nYES"
+}

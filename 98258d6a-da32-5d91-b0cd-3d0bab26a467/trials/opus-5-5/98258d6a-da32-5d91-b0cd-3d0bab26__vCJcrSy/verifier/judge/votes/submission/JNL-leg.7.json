@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JNL-leg",
+ "trial": 7,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not modify `optimize_and_run_non_linear_powerflow` or the snapshot-selection logic used to build the optimization model. Under legacy semantics, `\"auto\"` resolves to `\"multiindex\"`, and the new conversions preserve the selected snapshots; changes to constraints or objective expressions do not themselves change which snapshots are optimized or power-flowed.\nNO"
+}

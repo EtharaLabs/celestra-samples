@@ -1,0 +1,8 @@
+{
+ "case": "approach-a",
+ "id": "JFX-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The added code in `_from_xarray` always converts tuple-valued snapshot labels into a `MultiIndex` using `stack`, without consulting the selected layout. Thus, with `optimization.model_snapshot_index=\"flat\"` and a snapshot-indexed array using flat tuple labels, conversion assumes the MultiIndex representation instead of the selected flat representation.\nYES"
+}

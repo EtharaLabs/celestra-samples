@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JSL-cov",
+ "trial": 5,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "With `optimization.model_snapshot_index=\"flat\"` on a multi-period network, `create_model` still passes the original MultiIndex `sns` to `define_secant_loss_constraints`, but now calls it inside `_flat_snapshots_context`. That context makes snapshot-indexed `c.da` reads return the flat representation, so its per-snapshot line data is read in a representation fixed by the context rather than that of the supplied snapshots.\nYES"
+}

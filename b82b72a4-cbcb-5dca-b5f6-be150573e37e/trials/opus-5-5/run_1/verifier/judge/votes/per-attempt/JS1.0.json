@@ -1,8 +1,0 @@
-{
- "case": "per-attempt",
- "id": "JS1",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The patched `_make_api_call` starts a client span through `_start_client_span(ctx)`. During that same call, the registered `_sentry_request_created` handler calls `_start_client_span` again, creating another HTTP client span rather than reusing the first (and potentially more on retries).\nYES"
-}

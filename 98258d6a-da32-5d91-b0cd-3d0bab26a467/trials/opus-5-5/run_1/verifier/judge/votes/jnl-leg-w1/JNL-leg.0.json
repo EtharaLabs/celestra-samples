@@ -1,8 +1,0 @@
-{
- "case": "jnl-leg-w1",
- "id": "JNL-leg",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The change in `pypsa/optimization/abstract.py` replaces `n.snapshots` with `n.snapshots[:-1]` when `snapshots` is omitted. Thus, for a network with multiple snapshots, the same default request excludes the final snapshot instead of using all snapshots, independently of the snapshot-index option or linopy semantics.\nYES"
-}

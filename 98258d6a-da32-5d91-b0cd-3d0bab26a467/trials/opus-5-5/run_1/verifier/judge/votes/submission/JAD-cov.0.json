@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JAD-cov",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The diff does not change `_as_dynamic` or hard-code a snapshot representation for its static-attribute expansion. Instead, it conditionally flattens the resulting array when `uses_flat_snapshots(self.n)` is true, with model creation setting that context according to the resolved option.\nNO"
-}

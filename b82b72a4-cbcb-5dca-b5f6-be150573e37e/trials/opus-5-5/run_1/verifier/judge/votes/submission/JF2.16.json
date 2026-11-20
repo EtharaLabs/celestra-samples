@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JF2",
- "trial": 16,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "If streaming-body instrumentation finishes the client span and then raises during setup, `capture_internal_exceptions()` suppresses that exception while `body_instrumented` remains `False`. The subsequent fallback calls `_finish_span(span)` again; it does not share the streaming callback\u2019s `finished` guard.\nYES"
-}

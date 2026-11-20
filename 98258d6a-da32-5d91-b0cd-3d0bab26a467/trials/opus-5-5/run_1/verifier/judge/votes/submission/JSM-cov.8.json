@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JSM-cov",
- "trial": 8,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "`solve_model` converts `n.snapshots`, not the snapshots stored in the model. If a model is built with flat `(period, timestep)` labels and the network\u2019s snapshots are subsequently changed to a single-level datetime index, `_to_model` leaves that index unchanged, so `extra_functionality` receives a different representation from the model\u2019s.\n\nNO"
-}

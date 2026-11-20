@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JNL-leg",
- "trial": 15,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "Under legacy semantics, the default/\u201cauto\u201d option resolves to \u201cmultiindex\u201d, so the new flattening paths do not apply. The diff does not modify `optimize_and_run_non_linear_powerflow` or change the snapshot selection passed to optimization or power flow; changes to constraints and objective calculations can affect results, but not which snapshots are requested.\nNO"
-}

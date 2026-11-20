@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JH1",
+ "trial": 10,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The change preserves the request-derived HTTP attributes in both tracing modes: streaming still uses `get_url_attributes` and `HTTP_REQUEST_METHOD`, while non-streaming still records the same parsed URL, query, fragment, and `HTTP_METHOD` values. The differences shown concern span ownership and lifecycle, including reuse across retries, which the criterion excludes.\nNO"
+}

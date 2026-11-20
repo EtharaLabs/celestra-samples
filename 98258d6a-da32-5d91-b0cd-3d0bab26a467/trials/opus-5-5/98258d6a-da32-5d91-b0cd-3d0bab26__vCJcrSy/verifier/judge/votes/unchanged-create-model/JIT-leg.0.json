@@ -1,0 +1,8 @@
+{
+ "case": "unchanged-create-model",
+ "id": "JIT-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The new tuple-valued `pd.Index` branch in `as_index` is not restricted to flat mode or v1 semantics: it interprets tuples as complete snapshot labels rather than timestep labels. For example, a multi-period network can contain both `(2030, 0)` and `(2030, (2030, 0))`; a tuple-index request containing `(2030, 0)` now selects the former, whereas the original timestep-expansion path selects the latter. This changes the snapshots passed by the iterative optimizer even under legacy semantics.\n\nYES"
+}

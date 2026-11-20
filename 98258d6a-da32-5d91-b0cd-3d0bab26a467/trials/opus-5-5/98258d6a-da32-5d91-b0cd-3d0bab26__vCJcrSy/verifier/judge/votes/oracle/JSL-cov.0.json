@@ -1,0 +1,8 @@
+{
+ "case": "oracle",
+ "id": "JSL-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not modify `define_secant_loss_constraints` or introduce a fixed snapshot representation for its line-data reads. The shared component-array change instead flattens snapshot data only when the live model window uses the flat representation, so it follows the selected representation rather than imposing a fixed one.\nNO"
+}

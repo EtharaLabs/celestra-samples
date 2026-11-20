@@ -1,8 +1,0 @@
-{
- "case": "unchanged-create-model",
- "id": "JIT-leg",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The diff does not modify `optimize_transmission_expansion_iteratively` or its snapshot selection. Under legacy semantics, both `\"auto\"` and `\"multiindex\"` preserve the existing snapshot layout; the new tuple-index handling accepts additional requests but does not establish a case where the base version also passes snapshots and those snapshots differ.\nNO"
-}

@@ -1,8 +1,0 @@
-{
- "case": "jtrimhi-w2",
- "id": "J-TRIM-HI",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "`_readContextualLookups` uses the inclusive bound `lastGlyph = ... available // 2 - offset`. This permits a replacement word starting at `2 * (available // 2)`, whose end exceeds the subtable boundary; the bound must account for the word\u2019s two-byte length.\n\nNO"
-}

@@ -1,0 +1,8 @@
+{
+ "case": "unchanged-create-model",
+ "id": "JIC-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not modify `installed_capex` in `pypsa/statistics/expressions.py` or its period-weighted installed-capacity calculation. Under legacy semantics, both `\"auto\"` and `\"multiindex\"` retain MultiIndex snapshots, and the shared statistics weighting change groups those snapshots by the same period values as before; the changes to optimization expressions are separate.\nNO"
+}

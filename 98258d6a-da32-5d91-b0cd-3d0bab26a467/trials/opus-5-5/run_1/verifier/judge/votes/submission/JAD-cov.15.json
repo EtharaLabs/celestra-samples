@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JAD-cov",
- "trial": 15,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The diff does not change `_as_dynamic` to force a fixed snapshot representation. Instead, component-array results are conditionally flattened via `uses_flat_snapshots(self.n)`, and model construction sets that context according to the resolved `optimization.model_snapshot_index` option.\n\nNO"
-}

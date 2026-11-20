@@ -1,8 +1,0 @@
-{
- "case": "planted-claim",
- "id": "JF1",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The wrapper finishes the client span when `_make_api_call` raises after retries or returns a response without an instrumented streaming body. For streamed responses, the shared completion callback now finishes both the streaming span and the client span, and is invoked on consumption to EOF or closure, including closure of the underlying raw stream. Instrumentation failures also fall back to finishing the client span immediately.\nYES"
-}

@@ -1,8 +1,0 @@
-{
- "case": "oracle",
- "id": "JS2",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The change starts the boto3 client span in a wrapper around `BaseClient._make_api_call`, before invoking the original method, rather than in a per-attempt botocore hook. The `request-created` hook now only enriches and associates an existing span with the request; it does not start one.\nNO"
-}

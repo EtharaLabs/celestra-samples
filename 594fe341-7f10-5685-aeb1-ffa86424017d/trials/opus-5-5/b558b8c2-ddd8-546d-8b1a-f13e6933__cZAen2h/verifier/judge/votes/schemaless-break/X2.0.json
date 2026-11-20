@@ -1,8 +1,0 @@
-{
- "case": "schemaless-break",
- "id": "X2",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "FAIL",
- "response": "The submission fails the backwards-compatibility requirement for the SDK interrupt type. In `langgraph_sdk/schema.py`, it adds:\n\n```python\nresponse_schema: dict[str, Any] | None\n```\n\nThis makes `response_schema` a required `TypedDict` key. Allowing `None` as its value does not make the key optional. Existing SDK callers constructing interrupt dictionaries with only `value` and `id` would no longer satisfy the type, even though they were valid before.\n\nThe field should be declared `NotRequired[dict[str, Any]]` (or another appropriately optional-key annotation). Although the LangGraph function and constructor keywords default to `None`, the new field is not optional everywhere, as the criterion requires.\n\nFAIL"
-}

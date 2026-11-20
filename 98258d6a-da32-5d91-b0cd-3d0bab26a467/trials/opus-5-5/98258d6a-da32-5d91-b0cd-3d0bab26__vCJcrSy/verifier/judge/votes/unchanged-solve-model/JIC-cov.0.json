@@ -1,0 +1,8 @@
+{
+ "case": "unchanged-solve-model",
+ "id": "JIC-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not modify `installed_capex` in `pypsa/statistics/expressions.py`. The shared component-array change selects flattening from the model\u2019s recorded layout, rather than forcing a fixed snapshot representation, and no change shown makes `installed_capex` use a fixed representation for investment-period weighting.\nNO"
+}

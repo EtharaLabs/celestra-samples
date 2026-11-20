@@ -1,8 +1,0 @@
-{
- "case": "jsl-cov-w1",
- "id": "JSL-cov",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The change replaces `c.da.s_max_pu.sel(snapshot=sns)` in the secant-loss constraints with `.sel(snapshot=n.snapshots)`, hard-coding the network\u2019s snapshot representation rather than using the supplied snapshots. For a multi-period network with `optimization.model_snapshot_index = \"flat\"`, `sns` uses flat tuple labels while `n.snapshots` remains a MultiIndex, so these representations differ.\nYES"
-}

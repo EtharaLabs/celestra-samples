@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-SHARE",
+ "trial": 6,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The change adds classic mort binary read/write helpers within the existing converter, reusing AATStateTable, AATState, and the existing morph action classes. It extends the shared XML methods rather than adding a separate copy of the state-table TTX code.\n\nNO"
+}

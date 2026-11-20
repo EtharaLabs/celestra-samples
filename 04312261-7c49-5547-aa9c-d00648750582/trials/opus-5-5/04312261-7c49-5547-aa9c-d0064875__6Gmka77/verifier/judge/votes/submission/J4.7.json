@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J4",
+ "trial": 7,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission does not fully meet the documentation criterion.\n\nMuch of the new documentation matches the implementation: `_integrate_segments` describes independent continuation and termination per input set, and `_mapped_state_sensitivities` correctly states the chain rule used to carry sensitivities across a model change.\n\nHowever, there are inaccuracies and omissions:\n\n- `_segment_t_interp` says a segment without interpolation times keeps its endpoints because empty `t_interp` requests every step. But when the supplied `t_interp` is empty, the function returns it unchanged; it only supplies endpoints when a **nonempty** interpolation array has no times inside the segment. The docstring does not make that distinction.\n- The new `_modulo_reset_times` docstring does not document its `SolverError` for a nonscalar period. Likewise, `_mapped_state_sensitivities` omits its explicit `SolverError` for nonscalar sensitivity inputs and the missing-sensitivity error propagated from `_state_sensitivities_by_name`.\n- `_get_discontinuity_start_end_indices` claims that every non-breakpoint discontinuity in the window ends one segment and starts another. The implementation deliberately skips discontinuities too close to an endpoint or the preceding restart. A later comment acknowledges this, but the docstring still gives an inaccurate unconditional description.\n\nThese issues concern the accuracy and completeness of the added documentation, rather than whether the implementation follows the reference structure.\n\nFAIL"
+}

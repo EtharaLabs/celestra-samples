@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JNL-leg",
+ "trial": 3,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "Under legacy semantics, both the default `\"auto\"` and explicit `\"multiindex\"` retain the original MultiIndex representation, and model creation still normalizes the same requested snapshots with `as_index`. The diff does not touch `optimize_and_run_non_linear_powerflow` or change which snapshots it passes to optimization or power flow; changes to constraints and snapshot conversions do not establish a different snapshot selection.\nNO"
+}

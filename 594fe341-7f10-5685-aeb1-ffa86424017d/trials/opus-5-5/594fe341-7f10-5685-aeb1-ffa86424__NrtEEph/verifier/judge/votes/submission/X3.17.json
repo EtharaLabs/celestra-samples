@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X3",
+ "trial": 17,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets the boundary criterion.\n\n- **Validation is centralized in LangGraph.** The middleware constructs a typed decision schema and passes it to `interrupt`. LangGraph\u2019s `TypeAdapter` validates the answer before returning it. The middleware does not independently parse or coerce that answer.\n- **Both resume routes use the same acceptance logic.** A direct resume value and an interrupt-ID-keyed value converge on the same validation and storage code in `interrupt`. The keyed answer is held separately in `mapped_resume` until an interrupt accepts it, rather than being prematurely appended to the accepted resume history.\n- **Storage and replay agree.** Both routes store the original answer, `v`, and return the validated answer. On replay, the stored original is validated through the same adapter. Plain graphs and middleware therefore share the same raw-storage/validated-return contract.\n- **Invalid answers are not accepted into history.** Validation precedes appending a new answer. The rejection mechanism preserves the pending interrupt and surfaces the validation error.\n- **Middleware edits preserve argument inputs.** The edit schema checks the tool name and argument structure while retaining the reviewer\u2019s original arguments for subsequent tool execution.\n\nThe additional rejection-handling machinery differs from the reference implementation, but it does not establish a conflicting provider/consumer contract.\n\nPASS"
+}

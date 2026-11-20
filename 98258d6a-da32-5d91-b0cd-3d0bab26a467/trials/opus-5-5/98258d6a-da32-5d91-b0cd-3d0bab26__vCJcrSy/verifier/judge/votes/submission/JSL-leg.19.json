@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JSL-leg",
+ "trial": 19,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "Under legacy semantics, the default/\u201cauto\u201d setting resolves to \u201cmultiindex\u201d, so the new flat-snapshot handling is inactive. The edits to `define_secant_loss_constraints` only select coefficient arrays by the loss variable\u2019s existing asset names, making legacy alignment explicit without changing the snapshots, secant coefficients, or resulting constraints.\nNO"
+}

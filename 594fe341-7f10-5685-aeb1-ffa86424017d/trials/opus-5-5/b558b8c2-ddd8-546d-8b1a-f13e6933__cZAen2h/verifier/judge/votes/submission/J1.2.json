@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J1",
- "trial": 2,
- "model": "gpt-6.1-sol",
- "label": "FAIL",
- "response": "The submission fails the focused-scope requirement. Beyond `interrupt`, `Interrupt`, the SDK interrupt type, and `HumanInTheLoopMiddleware`, it changes several LangGraph components:\n\n- `errors.py` adds a new public `InvalidResumeError` exception.\n- `pregel/_loop.py` adds resume-write cleanup and exception handling.\n- `pregel/debug.py` adds a serialization helper and rewrites interrupt rendering.\n- `prebuilt/tool_node.py` changes wrapper exception handling.\n\nThese are substantive changes outside the explicitly permitted scope, even if motivated by the feature.\n\nWithin the middleware, the submission also introduces considerable additional machinery: custom Pydantic core-schema generation and JSON-reference rewriting, plus runtime-identity decision caching with weak-reference cleanup. This broadens the implementation beyond the focused schema-building and per-call approval path illustrated by the reference. The out-of-scope changes alone are sufficient to fail the criterion; no finding of dead code is necessary.\n\nFAIL"
-}

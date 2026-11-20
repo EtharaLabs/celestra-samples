@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J-TRIM-IN",
- "trial": 3,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The decoder converts entry offsets to signed 16-bit values and reads replacements at `2 * (offset + glyphID)`. Its lower and upper glyph bounds include every complete word within the substitution table and the subtable\u2019s bounded data, for both negative and positive offsets.\nYES"
-}

@@ -1,0 +1,8 @@
+{
+ "case": "oracle",
+ "id": "JIC-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not modify `installed_capex` or introduce a fixed snapshot representation for its investment-period weighting. The new snapshot-window machinery resolves representation using `optimization.model_snapshot_index`; the changes shown in `statistics/expressions.py` only affect `port_efficiency` and imports.\nNO"
+}

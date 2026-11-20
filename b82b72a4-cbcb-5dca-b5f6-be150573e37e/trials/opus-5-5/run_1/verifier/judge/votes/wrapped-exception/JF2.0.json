@@ -1,8 +1,0 @@
-{
- "case": "wrapped-exception",
- "id": "JF2",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The API-call exception path finishes the client span and immediately raises, so it cannot reach the normal completion path. On success, the client span is either finished directly or delegated to the streaming-body wrappers, whose shared `finished` flag prevents repeated finishes; instrumentation failure also sets that flag before the caller finishes the client span.\nNO"
-}

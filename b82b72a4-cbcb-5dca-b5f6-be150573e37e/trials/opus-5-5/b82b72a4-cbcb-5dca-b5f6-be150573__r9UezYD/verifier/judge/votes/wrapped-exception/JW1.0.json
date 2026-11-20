@@ -1,0 +1,8 @@
+{
+ "case": "wrapped-exception",
+ "id": "JW1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "In `_client.py`, the patched `_make_api_call` catches exceptions from botocore and raises a new `RuntimeError` with the original exception as its cause. When instrumentation has created a span, a failing call therefore delivers a different exception object to the caller.\n\nYES"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J1",
+ "trial": 16,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission does not meet the focused-scope criterion.\n\nThe LangChain changes are confined to `HumanInTheLoopMiddleware` and its supporting types and helpers. However, the LangGraph changes extend substantially beyond `interrupt`, `Interrupt`, and the SDK interrupt type:\n\n- `_internal/_scratchpad.py` adds a new `mapped_resume` field.\n- `pregel/_algo.py` changes how task-specific resume values are staged.\n- `errors.py` introduces a new `ResumeRejected` exception.\n- `pregel/_runner.py` and `pregel/_loop.py` add special handling to propagate that exception.\n- `pregel/debug.py` introduces a new interrupt-serialization helper and rewrites existing serialization sites.\n\nThese form a broader rewrite of resume staging, error propagation, and debug rendering rather than a fix confined to the explicitly permitted areas. They may be motivated by the feature, but that does not satisfy this criterion\u2019s scope restriction. The reference demonstrates that schema validation can be added without changing those execution-engine components.\n\nFAIL"
+}

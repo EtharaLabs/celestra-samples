@@ -1,0 +1,8 @@
+{
+ "case": "oracle",
+ "id": "JTR-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The transmission function obtains snapshot labels directly from the flow variable and passes them to `_port_coefficients`, which selects time-varying efficiencies at those labels. Snapshot weights come from the model\u2019s `SnapshotWindow` and are restricted to the expression\u2019s snapshot labels during aggregation; the window and component-array conversion preserve the selected flat or MultiIndex representation.\nYES"
+}

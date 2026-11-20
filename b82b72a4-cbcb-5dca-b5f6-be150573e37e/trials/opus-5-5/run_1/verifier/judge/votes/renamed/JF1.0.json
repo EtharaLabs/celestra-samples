@@ -1,8 +1,0 @@
-{
- "case": "renamed",
- "id": "JF1",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The API-call wrapper finishes the client span for non-streaming responses and for exceptions raised after retries. For streaming responses, the shared completion callback now finishes both the streaming span and the client span, and is invoked when the body is exhausted or closed, including through the raw stream\u2019s close method. If body instrumentation fails, the caller finishes the client span instead.\nYES"
-}

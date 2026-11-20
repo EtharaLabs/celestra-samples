@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JP1",
+ "trial": 13,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The `before-sign` handler and its registration order are unchanged, so header selection and merging with existing request headers remain the same. The changes move span creation and cleanup around the API call, affecting span lifetimes and potentially propagated IDs, not which propagation headers are present or how they are merged.\nNO"
+}

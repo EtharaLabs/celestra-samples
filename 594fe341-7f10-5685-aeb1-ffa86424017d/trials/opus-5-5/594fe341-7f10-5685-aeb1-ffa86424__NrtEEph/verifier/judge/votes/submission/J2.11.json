@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J2",
+ "trial": 11,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets the criterion.\n\n- The per-call decision schema is built from the configured allowed decisions, with duplicates removed and single-decision cases handled generically. The fixed decision names represent the middleware\u2019s actual decision protocol, not test-specific cases.\n- Edit schemas pin the action name using `Literal[tool_name]` and derive argument validation from the supplied tool\u2019s schema. No particular tool name or argument name is hard-coded.\n- The special handling for a plain `Tool` without an explicit argument schema reflects that tool class\u2019s schema behavior; it does not single out tools used by tests.\n- The provider uses `TypeAdapter(response_schema)` for caller-supplied Python schemas, both to generate JSON Schema and to validate answers. JSON Schema dictionaries are surfaced without enforcement, consistently with the reference\u2019s contract. There is no test-specific whitelist of schema kinds.\n- Resume validation is performed through the same generic adapter regardless of the tool or decision schema that produced the interrupt.\n\nPASS"
+}

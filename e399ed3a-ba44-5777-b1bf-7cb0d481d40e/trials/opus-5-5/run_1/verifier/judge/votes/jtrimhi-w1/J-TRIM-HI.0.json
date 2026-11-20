@@ -1,8 +1,0 @@
-{
- "case": "jtrimhi-w1",
- "id": "J-TRIM-HI",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "`MortSubtableConverter.read` confines the state-table reader\u2019s data to the declared subtable boundary. Contextual replacement words are read from subreaders of that bounded data, so even though `available` is unused and `lastGlyph` is not capped, an oversized read cannot obtain replacement bytes beyond the subtable; it can instead fail.\nYES"
-}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JTR-cov",
+ "trial": 11,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The conversion does select efficiency and weights using the flow variable\u2019s snapshots, but it does not cover every network. In stochastic networks, dynamic efficiency can have MultiIndex columns for scenario and asset; `_model_snapshot_array` assumes a single `\"name\"` column dimension and calls `values.columns.rename(\"name\")`, which fails for such columns. Thus transmission cannot reliably apply those efficiencies in the required snapshot representation for all networks.\nNO"
+}

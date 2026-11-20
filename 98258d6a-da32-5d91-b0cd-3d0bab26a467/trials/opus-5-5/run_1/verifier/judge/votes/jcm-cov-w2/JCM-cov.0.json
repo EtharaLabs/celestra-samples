@@ -1,8 +1,0 @@
-{
- "case": "jcm-cov-w2",
- "id": "JCM-cov",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The secant transmission-loss branch passes `as_index(n, snapshots, \"snapshots\")` to `define_secant_loss_constraints` instead of the converted `sns = window.model_index`. Thus, for a multi-period network with `\"flat\"` (or `\"auto\"` under v1 semantics), this constraint builder receives the network\u2019s MultiIndex rather than flat tuple labels, violating the criterion.\nNO"
-}

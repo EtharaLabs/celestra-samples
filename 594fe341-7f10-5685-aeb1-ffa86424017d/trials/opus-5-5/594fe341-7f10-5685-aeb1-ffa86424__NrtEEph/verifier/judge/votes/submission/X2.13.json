@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X2",
+ "trial": 13,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The public schema additions are optional: `interrupt(value)` still works, `Interrupt.response_schema` defaults to `None`, and the SDK field is `NotRequired`. The submission also preserves the old schema-less `Interrupt` representation and debug payloads.\n\nHowever, the LangGraph change is not minimal and additive:\n\n- It rewrites resume handling in `_algo.py` and `interrupt()`, separating mapped answers from previously accepted answers for **all interrupts**, including those without a schema.\n- It adds a **required** `mapped_resume` field to `PregelScratchpad`, with no default. Existing construction of that object must change.\n- It introduces a new exception and modifies runner aggregation and loop exception handling, rather than keeping the extension localized to the interrupt type, optional schema validation, and SDK declaration.\n\nIn particular, schema-less calls now participate in a changed resume-storage protocol rather than retaining the previous path unchanged. Preserving the displayed representation does not establish the required backwards compatibility. Although the public schema fields themselves are optional, the broader, mandatory runtime changes fail the criterion that the LangGraph change be minimal and backwards compatible.\n\nFAIL"
+}

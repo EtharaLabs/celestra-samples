@@ -1,8 +1,0 @@
-{
- "case": "jmorxdec-w1",
- "id": "J-MORX-DEC",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The morx state-table fields now use `MorphStateTable`, whose `read` method delegates to the original extended `STXHeader` reader and then reverses `table.PerGlyphLookups` for morx. A contextual morx table with at least two distinct per-glyph lookups therefore decodes into a different lookup ordering from the same bytes than before.\nYES"
-}

@@ -1,0 +1,8 @@
+{
+ "case": "jtr-leg-w3",
+ "id": "JTR-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The transmission inner function now passes `_normalized_weights(weights)` to time aggregation, whereas the base passes the raw generator snapshot weights. For a nonzero branch flow with two snapshots of unit weight and `groupby_time=\"sum\"`, this changes the result from the sum of the flows to half that sum, including under legacy semantics with the default or `\"multiindex\"` option.\nYES"
+}

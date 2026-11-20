@@ -1,0 +1,8 @@
+{
+ "case": "oracle",
+ "id": "J-MAL-STATE",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new `MorphStateTable` converter routes classic `mort` state tables to `StateHeader.read`, which computes `stateDataLength = entryTableOffset - stateArrayOffset`. If the state array starts after the entry table, this value is negative and the reader explicitly raises `ValueError(\"mort state-array offset follows its entry table\")`, so the requested layout still cannot decompile successfully.\nNO"
+}

@@ -1,8 +1,0 @@
-{
- "case": "unchanged-create-model",
- "id": "JAD-leg",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The new tuple-index handling in `_as_dynamic` is unconditional: a DataArray with tuple-valued snapshot labels now has those labels converted into a MultiIndex using the network\u2019s snapshot level names before building the frame. The base implementation did not do that conversion, so such an input can produce a differently indexed dynamic frame even under legacy semantics with the default, `\"auto\"`, or `\"multiindex\"` option.\nYES"
-}

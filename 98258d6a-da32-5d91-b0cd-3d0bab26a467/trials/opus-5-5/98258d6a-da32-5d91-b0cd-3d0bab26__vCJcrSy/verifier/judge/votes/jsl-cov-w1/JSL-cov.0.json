@@ -1,0 +1,8 @@
+{
+ "case": "jsl-cov-w1",
+ "id": "JSL-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The change replaces `c.da.s_max_pu.sel(snapshot=sns)` with `c.da.s_max_pu.sel(snapshot=n.snapshots)` in the secant loss constraints. Thus it reads this per-snapshot line data using the network\u2019s fixed snapshot index rather than the supplied `sns`; for a multi-period model with `optimization.model_snapshot_index = 'flat'`, these representations differ.\nYES"
+}

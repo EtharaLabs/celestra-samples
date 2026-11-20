@@ -1,8 +1,0 @@
-{
- "case": "oracle",
- "id": "JIC-leg",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The diff does not change `installed_capex` or its period-weighting calculation in `pypsa/statistics/expressions.py`. Under legacy semantics, `\"auto\"` and `\"multiindex\"` retain the MultiIndex representation, and the statistics aggregation change preserves the existing handling of pandas Series and DataFrames; the revised optimization-objective capex calculations do not change this statistic.\nNO"
-}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MORX-DEC",
+ "trial": 2,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new binary-reading behavior is specific to `mort`: the state-table reader invokes it only when `reader.tableTag == \"mort\"`, and the converter mapping changes only `MortSubtable`. The existing `morx` decoding path is unchanged; the added equality methods affect object comparison, not what is decoded from the bytes.\nNO"
+}

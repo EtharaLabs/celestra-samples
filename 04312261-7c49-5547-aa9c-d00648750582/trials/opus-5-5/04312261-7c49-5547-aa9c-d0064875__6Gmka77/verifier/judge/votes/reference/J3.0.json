@@ -1,0 +1,8 @@
+{
+ "case": "reference",
+ "id": "J3",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets the criterion.\n\n- Missing restart sensitivities are explicitly rejected with `pybamm.SolverError` by `_check_restart_sensitivities`, including sensitivities absent from the final segment.\n- Incompatible sensitivities when saving a step or continuing an experiment also raise `pybamm.SolverError`.\n- The `except pybamm.SolverError` block only restores the model\u2019s previous sensitivity configuration and immediately re-raises; it does not suppress the failure or continue with initial conditions.\n- Time-dependent, state-dependent, non-scalar, and non-positive Modulo periods are explicitly rejected with `pybamm.SolverError`, with input-dependent positivity checked at evaluation.\n- Restart and sensitivity-mapping operations are not wrapped in fallback handlers that reset the state or discard sensitivities. The non-CasADi mapping path performs name-based sensitivity mapping rather than silently dropping them.\n\nPASS"
+}

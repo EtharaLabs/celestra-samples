@@ -1,0 +1,8 @@
+{
+ "case": "approach-a",
+ "id": "JAD-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The new tuple-index normalization in `_as_dynamic` is unconditional: it converts tuple-valued snapshot labels into a MultiIndex and drops existing coordinates named after the network\u2019s snapshot levels. Thus a DataArray with flat tuple snapshot labels can produce a differently indexed dynamic frame than before, even under legacy semantics with `\"auto\"` or `\"multiindex\"` selected.\nYES"
+}

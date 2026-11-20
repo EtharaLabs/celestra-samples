@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J4",
- "trial": 15,
- "model": "gpt-6.1-sol",
- "label": "FAIL",
- "response": "The submission does not fully meet the documentation criterion.\n\n- **It conflates displayed schemas with enforced validation.** `InterruptMode` says each per-call answer is \u201cvalidated against that schema,\u201d referring to the published JSON Schema. But validation uses a Python type, and JSON-schema-only tool arguments are merely displayed and accepted as arbitrary argument objects. `_decision_schema` and `_ShownArgsSchema` explain parts of this distinction, but the public mode documentation remains misleading.\n- **It does not document how clients key per-call answers.** The new public documentation says each interrupt takes a single decision, but never explains that resume answers are keyed by **interrupt ID**, rather than tool-call ID or positional order. The `_decided` comment accurately describes an internal cache keyed by runtime identity, but that is not the client-facing resume contract.\n\nThe LangGraph `interrupt` parameter documentation does correctly distinguish unenforced JSON Schema dictionaries from validated Python types and explain that it returns the validated object. The invalid-answer documentation also explains that rejected answers are not recorded. Those correct portions do not resolve the public per-call documentation issues.\n\nFAIL"
-}

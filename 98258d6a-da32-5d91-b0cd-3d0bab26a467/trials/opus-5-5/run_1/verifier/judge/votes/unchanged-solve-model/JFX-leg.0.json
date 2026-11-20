@@ -1,8 +1,0 @@
-{
- "case": "unchanged-solve-model",
- "id": "JFX-leg",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The new tuple-index handling in `_from_xarray` is unconditional: it rebuilds a tuple-valued `snapshot` index as a MultiIndex using the component network\u2019s snapshot level names. Thus flat tuple-indexed input arrays can be converted differently from the base implementation even under legacy semantics with `\"auto\"` or `\"multiindex\"`; this change is not gated on the selected model layout.\nYES"
-}

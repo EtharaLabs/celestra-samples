@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JIT-leg",
+ "trial": 13,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not modify `optimization/abstract.py` or the iterative routine\u2019s snapshot selection and forwarding. Under legacy semantics, `\"auto\"` resolves to `\"multiindex\"`, preserving the existing snapshot representation; the other changes affect model construction and results, not which snapshots the routine passes to an iteration\u2019s optimisation.\nNO"
+}

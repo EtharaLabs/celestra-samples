@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J-MORX-DEC",
- "trial": 19,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The state-table decoding changes are gated on `reader.tableTag == \"mort\"`; `morx` continues through the unchanged decoding path. The other changes add classic `mort` support, XML handling, and value equality methods, none of which changes the objects decoded from extended `morx` bytes.\nNO"
-}

@@ -1,0 +1,8 @@
+{
+ "case": "unchanged-create-model",
+ "id": "JAD-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "Under legacy semantics, the default/`\"auto\"` layout resolves to `\"multiindex\"`, and explicit `\"multiindex\"` likewise does not enable flattening. The `_as_dynamic` addition only normalizes tuple-labelled snapshot arrays from the flat layout; it does not change how existing legacy-layout inputs build their dynamic frames.\nNO"
+}

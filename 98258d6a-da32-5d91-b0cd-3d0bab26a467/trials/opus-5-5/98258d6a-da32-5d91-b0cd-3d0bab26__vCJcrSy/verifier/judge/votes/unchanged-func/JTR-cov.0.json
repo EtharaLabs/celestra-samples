@@ -1,0 +1,8 @@
+{
+ "case": "unchanged-func",
+ "id": "JTR-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The transmission method\u2019s inner function is not updated to select and relabel its coefficients and weights using the flow variable\u2019s snapshot index. Although the new evaluation context can flatten port-efficiency data, snapshot weightings remain MultiIndexed, and transmission does not use `model_view` to align them with flat tuple labels. Thus the flat layout is not handled for every network and branch component.\nNO"
+}

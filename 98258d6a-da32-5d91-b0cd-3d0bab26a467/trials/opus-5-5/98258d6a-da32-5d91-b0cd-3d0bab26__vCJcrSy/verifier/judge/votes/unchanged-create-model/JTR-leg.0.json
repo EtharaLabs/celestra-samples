@@ -1,0 +1,8 @@
+{
+ "case": "unchanged-create-model",
+ "id": "JTR-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The transmission function changes the selected branch index\u2019s name from the component name (such as `\"Link\"`) to `\"name\"`. Pandas selection can preserve that index name in `efficiency[idx]`, which affects how linopy aligns or broadcasts the efficiency coefficients against the operational variable\u2019s `\"name\"` dimension. Thus, with multiple branches having different efficiencies, this can change the expression\u2019s value even under legacy semantics without flat snapshots.\nYES"
+}

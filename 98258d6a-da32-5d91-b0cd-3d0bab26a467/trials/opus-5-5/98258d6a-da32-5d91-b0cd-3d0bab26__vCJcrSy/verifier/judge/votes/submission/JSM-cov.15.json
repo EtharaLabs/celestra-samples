@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JSM-cov",
+ "trial": 15,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "`solve_model` still obtains callback snapshots from the current `n.snapshots`, and `_as_model_snapshots` only flattens a supplied MultiIndex; it does not recover the model\u2019s stored representation. For example, after building a flat multi-period model, changing the network snapshots to a DatetimeIndex causes `solve_model` to pass that DatetimeIndex unchanged, rather than the flat tuple index used to build the model.\n\nNO"
+}

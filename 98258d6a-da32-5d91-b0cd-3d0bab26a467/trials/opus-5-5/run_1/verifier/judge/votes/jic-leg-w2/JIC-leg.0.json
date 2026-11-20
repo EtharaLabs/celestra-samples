@@ -1,8 +1,0 @@
-{
- "case": "jic-leg-w2",
- "id": "JIC-leg",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The change directly switches `installed_capex` period weighting from `investment_period_weightings[\"objective\"]` to `[\"years\"]`. For a multi-period network where those weights differ and installed capex is nonzero, the reported weighted capex therefore differs from the base commit, regardless of legacy snapshot-index representation.\nYES"
-}

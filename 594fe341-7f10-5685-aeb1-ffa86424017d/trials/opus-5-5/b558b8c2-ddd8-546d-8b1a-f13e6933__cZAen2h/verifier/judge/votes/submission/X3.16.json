@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "X3",
- "trial": 16,
- "model": "gpt-6.1-sol",
- "label": "FAIL",
- "response": "The submission does not fully meet the criterion.\n\nIt correctly puts schema validation in LangGraph\u2019s `interrupt()` and has the middleware supply a typed decision schema. However, the two resume paths do not enforce the same persistence boundary:\n\n- For a new unkeyed resume value, it validates the value before appending it to `scratchpad.resume` and emitting the `RESUME` write.\n- For values already in `scratchpad.resume`, it validates only `scratchpad.resume[idx]` but then emits **the entire resume list**:\n  ```python\n  v = _validate_resume(adapter, scratchpad.resume[idx])\n  conf[CONFIG_KEY_SEND]([(RESUME, scratchpad.resume)])\n  ```\n\nThat write can include later answers that have not yet reached their corresponding interrupts and have not been validated. If a later answer fails validation, it may already have been persisted by an earlier interrupt\u2019s write. The reference prevents that by emitting only `scratchpad.resume[: idx + 1]`.\n\nThe added `InvalidResumeError` handling does not repair this: `_discard_null_resume()` retracts an unkeyed null-task resume, not an unvalidated suffix already emitted in a task\u2019s `RESUME` write.\n\nThus, although individual answers are checked before being returned, validation-before-storage is not consistently enforced across resume paths, including in plain graphs.\n\nFAIL"
-}

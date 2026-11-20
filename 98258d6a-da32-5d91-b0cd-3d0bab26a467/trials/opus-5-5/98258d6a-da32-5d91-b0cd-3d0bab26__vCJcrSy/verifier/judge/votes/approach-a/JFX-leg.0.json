@@ -1,0 +1,8 @@
+{
+ "case": "approach-a",
+ "id": "JFX-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The new `_from_xarray` branch converts a plain tuple-valued `snapshot` index into a pandas MultiIndex using the component\u2019s snapshot level names. This branch is unconditional with respect to linopy semantics and `optimization.model_snapshot_index`, so tuple-indexed input can now produce a differently indexed result even under legacy semantics with `\"auto\"` or `\"multiindex\"`.\nYES"
+}

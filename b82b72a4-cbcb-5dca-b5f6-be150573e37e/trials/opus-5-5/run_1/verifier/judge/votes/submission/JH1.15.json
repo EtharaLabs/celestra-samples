@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JH1",
- "trial": 15,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The URL parsing and attribute derivation are unchanged: legacy tracing retains `aws.request.url`, query, fragment, and method, while streaming tracing uses the same URL attributes and request-method key. The diff changes span ownership and lifecycle, not the names or values derived from a request; retry overwrites are explicitly excluded by the criterion.\nNO"
-}

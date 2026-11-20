@@ -1,0 +1,8 @@
+{
+ "case": "jmalstate-w3",
+ "id": "J-MAL-STATE",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The change routes classic `mort` state tables to the new `StateHeader` converter. When the state array starts after the entry table, `stateDataLength` is negative and the converter explicitly returns the table rather than attempting to decode transitions or raising an exception. The new subtable converter and lookup registrations make this path reachable during `mort` decompilation.\nYES"
+}

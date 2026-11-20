@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J4",
+ "trial": 10,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission does not fully meet the documentation criterion.\n\n- **Per-call answer keying is not explained to callers.** The middleware documentation says each interrupt is resumed with \u201ca single decision,\u201d but never explains that `Command(resume=...)` should map **interrupt IDs** to decisions\u2014not tool-call IDs or positional entries. The internal `mapped_resume` comment mentions interrupt IDs, but does not document the caller-facing answer format.\n- **Some schema claims overstate enforcement.** `_decision_schema` says an edit\u2019s arguments \u201cmust fit the tool\u2019s arguments as the model sees them,\u201d without qualifying that JSON-schema tool arguments are only shown, not enforced. The constructor similarly says a decision that does not fit the surfaced schema is rejected. These statements are broader than the implementation, which can display argument constraints without enforcing them.\n\nThe LangGraph `interrupt` documentation does correctly distinguish display-only JSON Schema dictionaries from validated Python types, explain that invalid answers are not kept, and describe returning the validated object. Those correct descriptions do not resolve the middleware documentation gaps.\n\nFAIL"
+}

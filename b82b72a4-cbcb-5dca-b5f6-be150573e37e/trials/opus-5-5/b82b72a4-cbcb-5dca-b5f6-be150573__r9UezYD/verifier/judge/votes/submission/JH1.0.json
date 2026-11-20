@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JH1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The change preserves the URL parsing and streaming-mode URL attribute helper, as well as the existing method keys and values in both tracing modes. In non-streaming mode, it writes the same URL, query, fragment, and method attributes through the breadcrumb dictionary instead of individual calls; moving them to the client-call span and overwriting them on retries are excluded by the criterion.\nNO"
+}

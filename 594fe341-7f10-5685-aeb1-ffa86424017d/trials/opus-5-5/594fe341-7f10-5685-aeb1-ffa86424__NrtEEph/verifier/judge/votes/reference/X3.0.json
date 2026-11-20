@@ -1,0 +1,8 @@
+{
+ "case": "reference",
+ "id": "X3",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets the criterion.\n\n- **Validation is owned by LangGraph.** The middleware supplies a typed `response_schema` to `interrupt()` and consumes the returned decision without adding a separate validation path.\n- **Both resume paths validate consistently.** Values already in `scratchpad.resume` (including interrupt-ID-keyed answers) and values obtained through `get_null_resume()` are checked with the same `TypeAdapter`.\n- **Storage and replay use the same representation.** The original submitted value is stored, while validation produces the value returned to the caller. Replay validates that original value again, so coercion does not depend on how the answer arrived.\n- **Invalid answers are not newly persisted by `interrupt()`.** Validation happens before appending a new value or emitting its resume write. Replay writes only the successfully validated prefix.\n- **Plain graphs and middleware share this behavior.** The middleware\u2019s edit wrapper preserves the submitted decision after checking it, and the provider applies the same boundary logic regardless of the caller.\n\nPASS"
+}

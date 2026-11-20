@@ -1,0 +1,8 @@
+{
+ "case": "oracle",
+ "id": "JTR-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "Under legacy semantics, both `\"auto\"` and `\"multiindex\"` retain the original snapshot representation. The transmission inner function still selects the same branches, multiplies their operational variables by the same port efficiencies, and aggregates using the same generator snapshot weights; the new helpers change how those inputs are represented and aligned, not their numerical values. The diff does not establish an input for which that inner expression reports a different value.\nNO"
+}

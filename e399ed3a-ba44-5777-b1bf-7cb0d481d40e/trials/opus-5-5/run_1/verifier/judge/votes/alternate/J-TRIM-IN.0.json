@@ -1,8 +1,0 @@
-{
- "case": "alternate",
- "id": "J-TRIM-IN",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The decoder bounds the glyph window for both negative and positive offsets, but `_readContextualLookups` excludes every replacement equal to zero with `if replacement != 0`. Thus an in-bounds word specifying glyph ID 0 is not retained as a replacement, so the criterion does not hold for every glyph.\n\nNO"
-}

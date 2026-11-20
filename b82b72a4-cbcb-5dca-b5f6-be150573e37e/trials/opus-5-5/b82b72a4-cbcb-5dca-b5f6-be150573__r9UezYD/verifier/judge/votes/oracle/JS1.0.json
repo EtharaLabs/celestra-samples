@@ -1,0 +1,8 @@
+{
+ "case": "oracle",
+ "id": "JS1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The patched `_make_api_call` starts an `OP.HTTP_CLIENT` span through `_start_client_span`. For a call using the instrumented stdlib HTTP transport, that transport also starts an `OP.HTTP_CLIENT` child span; the stdlib change only adjusts its activation, not whether it is created.\nYES"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-TRIM-IN",
+ "trial": 18,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The change bounds each classic `mort` subtable with its own reader and interprets substitution entry offsets as signed 16-bit word offsets. It then reads every glyph in the range satisfying both the substitution-table lower bound and the subtable\u2019s end bound, for negative and positive offsets alike.\n\nYES"
+}

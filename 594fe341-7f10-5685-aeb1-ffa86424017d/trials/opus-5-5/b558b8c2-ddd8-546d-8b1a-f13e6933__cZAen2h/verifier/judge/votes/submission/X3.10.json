@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "X3",
- "trial": 10,
- "model": "gpt-6.1-sol",
- "label": "FAIL",
- "response": "The submission does not fully meet the boundary criterion.\n\nIt correctly puts schema validation in LangGraph\u2019s `interrupt()`, and the middleware passes a Python decision schema to that provider rather than separately parsing the answer. Both resume branches also return the validated value while retaining the original input for replay.\n\nHowever, the existing-resume branch publishes more than it has validated:\n\n```python\nv = _validate_resume(adapter, scratchpad.resume[idx])\nconf[CONFIG_KEY_SEND]([(RESUME, scratchpad.resume)])\n```\n\nOnly the answer at `idx` has been checked, but the entire resume list is emitted for persistence. If that list contains answers for subsequent interrupts, those answers can be stored before their own schemas validate them. A later validation failure therefore does not guarantee that the invalid answer was left unsaved. The reference avoids this by emitting only `scratchpad.resume[: idx + 1]`.\n\nThe null-resume branch, used for a direct resume value, instead validates before appending and publishing that answer. Consequently, the submission does not preserve the required validation-and-storage equivalence between resume paths. Its additional error handling does not retract an unvalidated suffix already emitted by the existing-resume branch.\n\nFAIL"
-}

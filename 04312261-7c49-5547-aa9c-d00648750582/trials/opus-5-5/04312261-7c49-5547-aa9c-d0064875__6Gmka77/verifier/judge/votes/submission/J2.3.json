@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J2",
+ "trial": 3,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets this criterion: its restart logic is derived from solver state and model structure rather than from particular test cases.\n\n- It tracks an arbitrary number of input sets using `active` indices, independently removing sets that terminate.\n- Each restarted segment receives the preceding segment\u2019s final state and sensitivities selected by the requested parameter names.\n- Cross-model sensitivities are calculated using the mapper\u2019s chain rule, and algebraic sensitivities are made consistent by differentiating the algebraic equations.\n- Discontinuity handling discovers expressions from the model and computes modulo reset times from the actual integration window and evaluated period.\n- There are no branches keyed to particular models, parameter values, input names, input-set counts, or `t_eval` lengths.\n\nThe scalar-period and scalar-sensitivity checks are general mathematical/API restrictions, not accommodations for specific graded tests. Although this does not establish correctness in every numerical edge case, the submitted approach is general rather than test-special-cased.\n\nPASS"
+}

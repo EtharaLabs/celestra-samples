@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J2",
- "trial": 8,
- "model": "gpt-6.1-sol",
- "label": "FAIL",
- "response": "The submission makes substantial use of general solver semantics: it tracks an arbitrary number of active input sets, restarts each from its own final state, selects sensitivities by name, and applies chain-rule state mappings rather than recognizing particular models or input names.\n\nHowever, it does not meet the criterion for arbitrary discontinuity times. In `_set_up_events`, constant modulo periods for solvers without `t_eval` discontinuity support still use:\n\n```python\nelif tf is None:\n    num_events = 200\n```\n\nThose restart events are generated during setup, rather than expanded from the integration window on each solve or step. Consequently:\n\n- A stepping sequence can exceed the 200 generated resets and then miss subsequent discontinuities.\n- A solver initially set up for a short solve can be reused for a longer window without generating the additional constant-modulo restart events.\n\nThe dynamic, window-based handling added for other modulo cases does not cover this branch. Although there is no evident special-casing of test model names or parameters, the retained fixed event count and setup-dependent horizon prevent every restart from being derived generally for arbitrary requested times.\n\nFAIL"
-}

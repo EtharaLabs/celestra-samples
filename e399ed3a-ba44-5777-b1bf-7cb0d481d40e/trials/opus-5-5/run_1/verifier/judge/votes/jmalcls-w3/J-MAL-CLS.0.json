@@ -1,8 +1,0 @@
-{
- "case": "jmalcls-w3",
- "id": "J-MAL-CLS",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The change registers classic mort stateful subtable types and routes their state tables through `StateHeader` when the table tag is `\"mort\"`. Its `read` method returns an `AATStateTable` immediately when `GlyphClassCount == 0`, avoiding further parsing and division by the class count, so an appropriately formed mort table with such a subtable can decompile successfully.\nYES"
-}

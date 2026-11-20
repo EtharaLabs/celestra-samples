@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JSM-leg",
+ "trial": 7,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "Under legacy semantics, `\"auto\"` resolves to `\"multiindex\"`, so the callback helper leaves the supplied index unchanged. If `create_model` builds over a subset of network snapshots, `solve_model` still supplies `n.snapshots` to that helper, so `extra_functionality` receives the full network index rather than the model\u2019s subset.\n\nYES"
+}

@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J2",
- "trial": 7,
- "model": "gpt-6.1-sol",
- "label": "PASS",
- "response": "The submission meets this criterion: its restart logic is expressed in terms of solver state, events, input sets, and sensitivity metadata, rather than properties of particular tests.\n\n- `_integrate_segments` tracks an arbitrary collection of active input sets and stops restarting sets that terminate early.\n- `_restart_after_discontinuity` obtains each set\u2019s final state and requested state sensitivities from its own preceding solution, then performs consistent initialization.\n- Sensitivities are selected by parameter name from `model.calculate_sensitivities`, without hard-coded input names. Cross-model mappings use the chain rule, and the variable-based fallback differentiates state scaling and reference expressions.\n- Discontinuity handling examines expression-tree operators and evaluates their expressions using supplied inputs. There are no branches keyed to particular models, parameter values, input-set counts, or `t_eval` lengths.\n\nThere are potential general-correctness limitations\u2014for example, the retained 200-event fallback for constant modulo periods when no evaluation horizon is supplied. However, this is inherited solver behavior, not evidence of a test-specific restart mechanism. The submitted restart implementation is generic rather than tailored to the graded cases.\n\nPASS"
-}

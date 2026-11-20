@@ -1,0 +1,8 @@
+{
+ "case": "breadcrumb-dropped",
+ "id": "JH1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The change retains `parse_url(request.url, sanitize=False)` and the same URL-attribute derivation in both tracing modes. Legacy spans still receive `aws.request.url`, query, fragment, and `HTTP_METHOD`; streamed spans still receive `get_url_attributes(...)` and `HTTP_REQUEST_METHOD`, with the same method values and presence checks. Moving these attributes to the client span and overwriting them on retries are excluded by the criterion.\nNO"
+}

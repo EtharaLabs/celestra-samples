@@ -1,0 +1,8 @@
+{
+ "case": "oracle",
+ "id": "J-SHARE",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The change reuses the existing AATStateTable, AATState, and morph action classes for classic mort. Its new StateHeader handles legacy binary encoding, while MorphStateTable explicitly delegates XML reading and writing to the existing STXHeader implementation rather than copying that code.\nNO"
+}

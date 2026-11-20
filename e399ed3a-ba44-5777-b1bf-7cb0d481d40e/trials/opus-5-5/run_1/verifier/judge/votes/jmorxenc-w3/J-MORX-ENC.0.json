@@ -1,8 +1,0 @@
-{
- "case": "jmorxenc-w3",
- "id": "J-MORX-ENC",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The morph state-table fields now use `MorphStateTable`, whose `write` method removes empty dictionaries from `PerGlyphLookups` when compiling `morx`, before calling the existing extended-format writer. Thus a contextual morx table containing empty per-glyph lookups can compile with different lookup data and offsets than the same objects did in the base commit.\nYES"
-}

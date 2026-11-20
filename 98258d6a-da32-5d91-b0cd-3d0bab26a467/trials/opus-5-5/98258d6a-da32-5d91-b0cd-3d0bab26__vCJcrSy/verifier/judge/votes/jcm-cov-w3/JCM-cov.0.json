@@ -1,0 +1,8 @@
+{
+ "case": "jcm-cov-w3",
+ "id": "JCM-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "`create_model` calls `SnapshotWindow.build(n, sns, \"flat\")`, hard-coding the representation rather than reading `optimization.model_snapshot_index`. Consequently, multi-period snapshots passed to the builders and model parameters are flat even when `\"multiindex\"` is selected or `\"auto\"` should retain a MultiIndex under legacy semantics.\nNO"
+}

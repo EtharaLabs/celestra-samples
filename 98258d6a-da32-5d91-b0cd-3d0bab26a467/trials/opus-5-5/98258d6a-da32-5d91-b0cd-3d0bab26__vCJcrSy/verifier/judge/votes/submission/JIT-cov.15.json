@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JIT-cov",
+ "trial": 15,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not modify `pypsa/optimization/abstract.py` or add any fixed snapshot conversion to the iterative routine. The new model-building code selects the snapshot representation according to `optimization.model_snapshot_index`; it does not force the snapshots passed by an iteration into one fixed representation.\nNO"
+}

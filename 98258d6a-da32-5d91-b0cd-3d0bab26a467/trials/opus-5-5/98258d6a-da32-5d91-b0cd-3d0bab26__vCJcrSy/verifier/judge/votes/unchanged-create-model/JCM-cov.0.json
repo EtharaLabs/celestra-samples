@@ -1,0 +1,8 @@
+{
+ "case": "unchanged-create-model",
+ "id": "JCM-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new `as_index` branch accepts and preserves a flat tuple-label `pd.Index` for a network with MultiIndex snapshots. But `model_snapshots` only converts MultiIndex inputs to flat labels; with `\"multiindex\"` (or `\"auto\"` under legacy semantics), it leaves an already-flat input unchanged. Thus `create_model` can pass flat snapshots onward when the selected representation requires a MultiIndex, including with transmission losses disabled.\n\nNO"
+}

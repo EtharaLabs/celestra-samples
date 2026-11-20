@@ -1,0 +1,8 @@
+{
+ "case": "alternate",
+ "id": "J-MORX-DEC",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "For `morx`, the new `MorphStateTable` converter delegates binary reading to the same `STXHeader.read` implementation used before. The other changes affect legacy `mort` decoding or XML handling, not binary decompilation of extended `morx` tables, so the diff does not establish different decoded objects from the same bytes.\nNO"
+}

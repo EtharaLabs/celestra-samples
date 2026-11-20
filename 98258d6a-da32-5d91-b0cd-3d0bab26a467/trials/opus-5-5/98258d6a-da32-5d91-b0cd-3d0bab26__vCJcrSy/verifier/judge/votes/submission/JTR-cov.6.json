@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JTR-cov",
+ "trial": 6,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The snapshot selection and representation conversion work for ordinary snapshot-indexed data, but `_model_snapshot_array` assumes every efficiency DataFrame has a single component-name column dimension. In stochastic networks, efficiency columns can be a `(scenario, name)` MultiIndex; assigning that index directly to the `\"name\"` dimension does not preserve separate scenario and component dimensions, so the transmission expression is not correct for every network.\nNO"
+}

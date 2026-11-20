@@ -1,0 +1,8 @@
+{
+ "case": "jmorxdec-w1",
+ "id": "J-MORX-DEC",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The morx state-table fields now use `MorphStateTable` instead of `STXHeader`. Its `read` method uses the original extended decoder but then reverses `table.PerGlyphLookups` for morx, so a contextual morx subtable with distinct per-glyph lookups will decode into a differently ordered object list from the same bytes.\nYES"
+}

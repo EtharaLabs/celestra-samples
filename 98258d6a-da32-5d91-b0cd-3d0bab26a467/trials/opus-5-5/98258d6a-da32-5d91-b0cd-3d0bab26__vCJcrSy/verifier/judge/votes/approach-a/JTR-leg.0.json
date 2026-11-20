@@ -1,0 +1,8 @@
+{
+ "case": "approach-a",
+ "id": "JTR-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "Under legacy semantics, both `\"auto\"` and `\"multiindex\"` retain the original snapshot layout, so `model_view` performs the same `.loc[sns]` selection as before. Renaming the branch index to `\"name\"` does not change its labels or the selected efficiency and flow values, and the weighting calculation remains equivalent; the inner transmission function therefore reports no different value.\nNO"
+}

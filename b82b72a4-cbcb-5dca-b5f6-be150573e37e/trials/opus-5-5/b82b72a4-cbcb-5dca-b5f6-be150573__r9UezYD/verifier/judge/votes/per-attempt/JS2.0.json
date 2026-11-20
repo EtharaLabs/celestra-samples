@@ -1,0 +1,8 @@
+{
+ "case": "per-attempt",
+ "id": "JS2",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The change registers `_sentry_request_created` for botocore\u2019s `request-created` event, which fires for each request attempt, including retries. That handler calls `_start_client_span(AwsCallContext(operation_name))`, so it starts a client span from the per-attempt hook, in addition to the span started around `_make_api_call`.\nYES"
+}

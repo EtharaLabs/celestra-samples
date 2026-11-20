@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J2",
+ "trial": 1,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission implements restarts through general solver data and equations rather than test-specific cases:\n\n- It tracks an arbitrary list of active input sets, restarting each from its own final state and stopping sets independently when they terminate.\n- It selects state sensitivities by the requested input names, without hard-coding particular names or parameter values.\n- Cross-model sensitivity mapping uses the chain rule, including both state-mediated and direct parameter dependence.\n- DAE algebraic sensitivities are recomputed by differentiating the algebraic constraints.\n- Discontinuity handling is based on model expressions and the current integration window, rather than particular models, fixed event counts, or particular `t_eval` lengths.\n\nIts branches distinguish solver capabilities, expression types, termination status, and sensitivity availability\u2014all general solver concerns. There are potential numerical and edge-case correctness limitations, such as skipping discontinuities too close to segment boundaries, but these do not indicate tailoring to the graded tests. Judged against the requested general-semantics/no-special-casing criterion alone, the submission meets it.\n\nPASS"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J2",
+ "trial": 7,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets this criterion: its restart logic is based on solver state and model equations, not on recognizable test cases.\n\n- `_integrate_segments` tracks an arbitrary number of active input sets and independently stops restarting sets that terminate early.\n- `_restart_from_solutions` obtains each restart state from that input set\u2019s final solution and selects sensitivities using the model\u2019s requested sensitivity names.\n- State-mapping sensitivities follow the chain rule through the mapper, including its direct input dependence.\n- Algebraic sensitivity consistency is derived by differentiating the model\u2019s algebraic equations.\n- Modulo discontinuities are generated from the evaluated period and current integration window, rather than a fixed event count or particular `t_eval` length.\n\nThere are no new branches keyed to particular models, parameter values, input names, or numbers of input sets. Some numerical edge-case handling differs from the reference and may have correctness limitations, but those differences do not indicate test-specific restart logic.\n\nPASS"
+}

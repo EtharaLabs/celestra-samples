@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JTR-leg",
+ "trial": 7,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The inner `func` changes the transmission calculation from `var.loc[:, idx] * efficiency[idx]` to multiplication by **negative** efficiency. For a selected branch with nonzero flow and nonzero port efficiency, this reverses the reported sign for the same input, independently of snapshot-index flattening or v1 semantics.\nYES"
+}

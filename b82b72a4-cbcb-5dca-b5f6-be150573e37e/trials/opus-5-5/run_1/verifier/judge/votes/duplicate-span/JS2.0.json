@@ -1,8 +1,0 @@
-{
- "case": "duplicate-span",
- "id": "JS2",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The change starts client spans in the patched `BaseClient._make_api_call`, not in a per-attempt botocore hook. The `request-created` hook only enriches an existing span and stores it in the request context; it does not start a span.\nNO"
-}

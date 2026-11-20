@@ -1,0 +1,8 @@
+{
+ "case": "read-chunk-finish",
+ "id": "JF2",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "NO: The API-call exception path finishes the client span and immediately re-raises, while a successful non-streaming call finishes it once. Streaming responses defer finishing to a callback guarded by `finished`; if instrumentation fails, that guard is set before the caller finishes the client span, preventing later callbacks from finishing it again.\nNO"
+}

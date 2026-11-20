@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J1",
+ "trial": 5,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission does not meet the focused-scope criterion. While its LangChain changes stay within `human_in_the_loop.py`, the LangGraph changes extend substantially beyond `interrupt`, `Interrupt`, and the SDK interrupt type:\n\n- `_internal/_scratchpad.py` adds a new `mapped_resume` state field.\n- `pregel/_algo.py` changes how mapped resume values are staged.\n- `errors.py` introduces a new `ResumeRejected` exception.\n- `pregel/_runner.py` and `pregel/_loop.py` add exception aggregation and root-level handling for that exception.\n- `pregel/debug.py` introduces a serialization helper and rewrites existing interrupt rendering sites.\n\nThese are active changes to execution state, error propagation, and debug serialization, not merely incidental imports needed for the permitted changes. In particular, the submission implements a broader resume-rejection mechanism across the runtime instead of keeping validation handling within `interrupt`.\n\nThe middleware largely reuses existing decision and edit logic, and there is no obvious unused alternative builder. Nevertheless, the explicit confinement requirement is violated by the cross-cutting LangGraph runtime changes, regardless of whether those changes are useful or functionally correct.\n\nFAIL"
+}

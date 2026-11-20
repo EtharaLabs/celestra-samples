@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JTR-leg",
+ "trial": 4,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The transmission inner function changes from multiplying flow by `efficiency` to multiplying it by `-efficiency`, reversing the sign for a nonzero branch flow with nonzero port efficiency. This change is unconditional, so it also applies under legacy semantics with the default, `\"auto\"`, or `\"multiindex\"` snapshot setting.\nYES"
+}

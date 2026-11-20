@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X1",
+ "trial": 13,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission does put provider-side answer validation in LangGraph\u2019s `interrupt`: it creates a `TypeAdapter` for a Python response type and calls `validate_python` before accepting the answer. LangChain also passes its decision type through `response_schema`.\n\nHowever, LangChain\u2019s `_review` then passes the returned decision to `_process_decision`:\n\n```python\n_, tool_message = self._process_decision(decision, tool_call, config)\n```\n\nThat existing method checks whether the decision type is among `allowed_decisions` and raises for unexpected or disallowed decisions. Thus the per-call middleware repeats an answer-validity check after `interrupt` has already enforced the decision schema. It does not simply trust the provider-validated result and dispatch on its type.\n\nThis violates the criterion that answer checking live only in LangGraph\u2019s `interrupt`, with no returned-answer revalidation in the middleware.\n\nFAIL"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "jit-leg-w2",
+ "id": "JIT-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The change in `abstract.py` replaces `n.optimize(snapshots, **kwargs)` with `n.optimize(None, **kwargs)`. For a request specifying a proper subset of the network\u2019s snapshots, that call now defaults to all network snapshots instead of the requested subset; the legacy default/`auto`/`multiindex` representation does not undo this change.\nYES"
+}

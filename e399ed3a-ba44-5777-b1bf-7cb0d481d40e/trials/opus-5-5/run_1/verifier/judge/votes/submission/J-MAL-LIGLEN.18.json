@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J-MAL-LIGLEN",
- "trial": 18,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The new classic ligature decoding path calls `_readClassicLigComponents`, which explicitly raises `ValueError(\"'mort' component table has odd length\")` when `(ligatureOffset - componentOffset) % 2` is nonzero. Thus the change rejects the specified odd-byte-length component tables rather than allowing decompilation to return a table.\nNO"
-}

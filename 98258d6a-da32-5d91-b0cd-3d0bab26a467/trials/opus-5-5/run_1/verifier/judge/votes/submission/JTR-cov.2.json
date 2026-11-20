@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JTR-cov",
- "trial": 2,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The transmission function converts dynamic port efficiencies with `_to_model`, but leaves snapshot weights as `n.snapshot_weightings.generators.loc[sns]`. For flat tuple-labelled flow snapshots, selecting from that MultiIndex-backed Series does not flatten its index; the downstream conversion shown applies only to the `\"sum\"` aggregation path, so the required representation is not ensured universally.\nNO"
-}

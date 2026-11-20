@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JF2",
+ "trial": 9,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The call-error path finishes the client span once and re-raises, while a successful call either finishes it immediately or defers finishing to the streaming-body wrappers. Those wrappers share a `finished` guard, and instrumentation failure disables their finishing path before the caller finishes the client span, preventing duplicate finishes.\nNO"
+}

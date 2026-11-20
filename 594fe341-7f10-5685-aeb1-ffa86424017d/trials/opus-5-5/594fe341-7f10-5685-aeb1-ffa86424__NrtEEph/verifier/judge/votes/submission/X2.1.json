@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X2",
+ "trial": 1,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission does not meet the **minimal LangGraph change** requirement.\n\nThe SDK change is backwards compatible: `response_schema` is `NotRequired`, so existing interrupt dictionaries remain valid. The new parameters also default to `None`, and the submission takes care to preserve the old no-schema representation in `repr` and debug events.\n\nHowever, the LangGraph change goes substantially beyond adding optional schema support:\n- It changes resume-value routing in `_algo.py`, separating mapped answers from the existing resume list.\n- It adds a **required** `mapped_resume` field to `PregelScratchpad`, and `interrupt()` accesses that field even when no schema was supplied.\n- It introduces `ResumeRejected` and changes interrupt aggregation and root-loop exception handling in `_runner.py` and `_loop.py`.\n\nThus ordinary, schema-free interrupts are moved onto a revised resume-handling path, rather than retaining the existing path with optional validation added. The required scratchpad field also means the new plumbing is not optional everywhere. Preserving the SDK\u2019s required keys and the displayed representation does not compensate for this broader engine refactor under the stated minimality criterion.\n\nFAIL"
+}

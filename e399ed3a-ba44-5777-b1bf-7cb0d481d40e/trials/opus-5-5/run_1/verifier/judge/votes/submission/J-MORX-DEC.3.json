@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J-MORX-DEC",
- "trial": 3,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The added state-table decoding path is selected only when `reader.tableTag == \"mort\"`; for `\"morx\"`, the existing decoding logic remains unchanged. The shared object classes gain value-based equality, but that does not change the decoded types or field values, and the other changes concern mort handling or XML conversion.\nNO"
-}

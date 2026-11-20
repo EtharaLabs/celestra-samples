@@ -1,0 +1,8 @@
+{
+ "case": "jit-cov-w2",
+ "id": "JIT-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The changed iteration call in `abstract.py` explicitly converts snapshots to `pd.Index(..., tupleize_cols=False, name=\"snapshot\")` whenever linopy uses v1 semantics. For a network with MultiIndex snapshots and, for example, `optimization.model_snapshot_index = \"auto\"`, this forces flat tuple labels before passing them to `n.optimize`, rather than letting the representation-selection machinery handle the original snapshots.\nYES"
+}

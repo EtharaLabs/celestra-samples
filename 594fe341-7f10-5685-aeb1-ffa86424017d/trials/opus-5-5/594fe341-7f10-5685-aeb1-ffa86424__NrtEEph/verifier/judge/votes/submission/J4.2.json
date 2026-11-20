@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J4",
+ "trial": 2,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission does not fully meet the documentation criterion.\n\nIt correctly documents that raw JSON Schema dictionaries are surfaced without enforcement, that Python-type schemas validate resume values, that `interrupt` returns the validated object, and that invalid answers are not kept.\n\nHowever, the new per-call documentation only says that each interrupt is resumed with a single decision. It never explains that those decisions must be keyed by **interrupt ID**, rather than tool-call ID or list position. That is an explicit part of the criterion.\n\nThere is also an overstatement in `_decision_schema`: it says an edit\u2019s arguments \u201cmust fit the tool\u2019s arguments as the model sees them,\u201d without qualifying that JSON-schema-only tools merely display that schema and accept arbitrary objects. `_edited_args_type` documents this distinction more accurately, but that does not make the broader claim accurate.\n\nFAIL"
+}

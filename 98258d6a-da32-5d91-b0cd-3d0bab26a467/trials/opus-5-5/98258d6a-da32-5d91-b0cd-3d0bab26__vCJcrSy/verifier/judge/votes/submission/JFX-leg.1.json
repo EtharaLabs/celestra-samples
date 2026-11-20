@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JFX-leg",
+ "trial": 1,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "`_from_xarray` now unconditionally attempts to unflatten tuple-valued snapshot indexes whenever the component has a network, without checking semantics or `optimization.model_snapshot_index`. For an array with a flat object index of `(period, timestep)` tuples and matching auxiliary coordinates, this changes that index into a MultiIndex before conversion to pandas; base_commit leaves it flat. Thus the same input can produce a different result even under legacy semantics with the default or `\"multiindex\"` option.\n\nYES"
+}

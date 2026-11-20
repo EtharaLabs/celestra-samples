@@ -1,0 +1,8 @@
+{
+ "case": "propagation-dropped",
+ "id": "JP1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The change removes registration of the `_sentry_before_sign` handler from botocore clients without adding another registration. Although the header-injection function remains, it is no longer invoked by that hook, so eligible requests lose propagation headers that the base commit would have added.\nYES"
+}

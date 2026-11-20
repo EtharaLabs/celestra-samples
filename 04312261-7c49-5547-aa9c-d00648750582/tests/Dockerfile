@@ -24,8 +24,9 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ARG TARGETOS
 ARG TARGETARCH
 COPY binary.txt sdist.txt /req/
-RUN case "$TARGETARCH" in amd64) arch=x86_64 ;; arm64) arch=aarch64 ;; *) exit 1 ;; esac \
- && test "$TARGETOS" = linux \
+# Kaniko leaves TARGETARCH and TARGETOS empty and builds for its own platform, so fall back to that.
+RUN case "${TARGETARCH:-$(dpkg --print-architecture)}" in amd64) arch=x86_64 ;; arm64) arch=aarch64 ;; *) exit 1 ;; esac \
+ && test "${TARGETOS:-linux}" = linux \
  && pip download --no-cache-dir --require-hashes --only-binary=:all: --no-deps \
       --python-version 3.12 --implementation cp --abi cp312 --abi abi3 --abi none \
       --platform "manylinux_2_28_$arch" --platform "manylinux_2_17_$arch" \
@@ -70,16 +71,18 @@ RUN groupadd -g 10001 grader && useradd -u 10001 -g 10001 -m -d /home/grader gra
  && chage -d "$(date -u -d "@$SOURCE_DATE_EPOCH" +%F)" grader \
  && rm -rf /root/.cache
 COPY requirements.txt /tmp/req/
-RUN --mount=type=bind,from=wheels,source=/dist,target=/dist \
-    pip install --no-cache-dir --no-index --find-links /dist --require-hashes --no-build-isolation -r /tmp/req/requirements.txt \
+# Kaniko ignores RUN --mount, so these files are copied in and removed by the step that uses them.
+COPY --from=wheels /dist /dist
+RUN pip install --no-cache-dir --no-index --find-links /dist --require-hashes --no-build-isolation -r /tmp/req/requirements.txt \
  && rm -r /tmp/req \
- && rm -rf /root/.cache
+ && rm -rf /root/.cache /dist
 COPY --from=source /src /grading/repo
 RUN pip install --no-cache-dir --no-deps --no-build-isolation --no-index -e /grading/repo/packages/pybamm \
  && rm -rf /root/.cache
-RUN --mount=type=bind,from=solvers,source=/wheels,target=/built \
-    pip install --no-cache-dir --no-deps --no-index /built/*.whl \
- && rm -rf /root/.cache
+# Kaniko ignores RUN --mount, so these files are copied in and removed by the step that uses them.
+COPY --from=solvers /wheels /built
+RUN pip install --no-cache-dir --no-deps --no-index /built/*.whl \
+ && rm -rf /root/.cache /built
 COPY graded/ /tests/graded/
 # The glob also carries a wrapper's moved original (.trinity-bundle-test.sh), because Harbor
 # runs a verifier built from tests/Dockerfile as bundled and never uploads tests/ into it.
@@ -90,7 +93,8 @@ RUN chmod 0755 /tests/*.sh \
  && chown -R 10001:10001 /grading/repo /logs \
  && rm -rf /root/.cache
 WORKDIR /grading/repo
-USER 10001:10001
+# test.sh drops to uid 10001 itself; the image ends as root so Harbor's sandbox can start.
+USER root
 LABEL org.opencontainers.image.source="https://github.com/pybamm-team/PyBaMM" \
       org.opencontainers.image.revision="fe6784fb08d386950d546f75c95849a7edeb5fa8" \
       org.opencontainers.image.licenses="BSD-3-Clause" \

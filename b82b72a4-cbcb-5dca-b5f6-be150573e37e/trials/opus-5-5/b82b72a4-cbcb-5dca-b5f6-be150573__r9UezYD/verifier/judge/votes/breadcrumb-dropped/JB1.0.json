@@ -1,0 +1,8 @@
+{
+ "case": "breadcrumb-dropped",
+ "id": "JB1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The original `_sentry_request_created` calls `add_http_breadcrumb` for each request when the integration is enabled. The replacement no longer records that breadcrumb, and the new `_add_request_breadcrumb` helper is never called anywhere in the diff, so the original botocore breadcrumb is missing.\nYES"
+}

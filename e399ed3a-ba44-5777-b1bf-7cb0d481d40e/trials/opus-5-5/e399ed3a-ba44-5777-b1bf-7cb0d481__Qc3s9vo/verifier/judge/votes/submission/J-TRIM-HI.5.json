@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-TRIM-HI",
+ "trial": 5,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "`MortSubtableConverter` restricts decoding to the subtable\u2019s declared byte range. Contextual substitution decoding caps the glyph range using `size // 2`, and `_readClassicArray` rejects reads extending beyond that bounded data, so a replacement cannot come from a word ending past the subtable.\nYES"
+}

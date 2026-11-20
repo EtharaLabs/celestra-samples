@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JF2",
+ "trial": 7,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The API-call exception path finishes the client span once. On success, either the wrapper finishes it directly or the streaming-body handlers finish it under a shared `finished` guard; instrumentation failure leaves client-span finishing to the wrapper.\nNO"
+}

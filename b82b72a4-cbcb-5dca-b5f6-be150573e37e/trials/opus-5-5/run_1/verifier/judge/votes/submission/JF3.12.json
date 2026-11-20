@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JF3",
- "trial": 12,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "`_instrument_streaming_body` looks only for `parsed.get(\"Body\")`, so it misses streamed responses stored under other keys, such as the `Payload` returned by Lambda\u2019s `invoke`. For such a call, `_sentry_make_api_call` finishes the client span immediately after the method returns, even if that payload remains unread.\nYES"
-}

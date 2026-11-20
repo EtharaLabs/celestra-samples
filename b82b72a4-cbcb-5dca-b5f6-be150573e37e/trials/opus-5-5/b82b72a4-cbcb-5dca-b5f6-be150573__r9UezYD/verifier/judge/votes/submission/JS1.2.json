@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JS1",
+ "trial": 2,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "NO is supported because `_sentry_make_api_call` starts a client span once, before invoking the original call. Request-created events, including those from retries, reuse that span through `_client_span` rather than starting additional client spans.\nNO"
+}

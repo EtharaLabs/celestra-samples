@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MAL-STATE",
+ "trial": 9,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new `read` dispatch routes mort state tables to `_readClassic`, which explicitly raises `ValueError` when `stateArrayOffset > entryTableOffset`. Thus the change still rejects classic state tables whose state array starts after their entry table.\nNO"
+}

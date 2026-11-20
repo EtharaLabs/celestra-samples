@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JH1",
- "trial": 10,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The change preserves the URL parsing, attribute names, and values in both tracing modes: streaming uses the same URL attributes and request-method key, while non-streaming retains `aws.request.url`, query, fragment, and method data. The differences shown concern span placement and lifecycle, including retry overwrites, which the criterion excludes.\nNO"
-}

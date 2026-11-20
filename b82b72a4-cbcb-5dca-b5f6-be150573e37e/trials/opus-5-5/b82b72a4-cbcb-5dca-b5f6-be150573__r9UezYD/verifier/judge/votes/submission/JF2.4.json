@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JF2",
+ "trial": 4,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The call-error path finishes the client span and re-raises, so it cannot reach the normal completion path. On success, the span is either finished immediately or deferred to streaming-body handlers, whose shared `finished` guard prevents repeated finishing; instrumentation failure disables those handlers before the caller finishes the client span.\nNO"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "stream-client-span",
+ "id": "JS1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "For a streaming response with span streaming disabled, `_start_client_span` starts an `OP.HTTP_CLIENT` span for the API call. Then `_instrument_streaming_body` starts another span with `op=OP.HTTP_CLIENT` for that same call\u2019s response body, so more than one client span is started.\n\nYES"
+}

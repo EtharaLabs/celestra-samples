@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-TRIM-LO",
+ "trial": 5,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "`_readClassicSubstitutions` interprets entry offsets as signed and sets the first eligible glyph to `max(0, ceil(substOffset / 2) - offset)`. Thus every replacement word it reads starts at `2 * (offset + glyphID) >= substOffset`, for both negative and positive offsets; if no glyph qualifies, it reads nothing.\nYES"
+}

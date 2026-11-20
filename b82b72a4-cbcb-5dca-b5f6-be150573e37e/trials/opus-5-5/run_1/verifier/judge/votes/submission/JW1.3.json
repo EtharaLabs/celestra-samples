@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JW1",
- "trial": 3,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The client-call wrapper re-raises failures with a bare `raise`, preserving the original exception object. The streaming-body changes add span finalization but show no change that replaces a read exception; the diff therefore does not establish the stated behavior.\nNO"
-}

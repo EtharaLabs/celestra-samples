@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MAL-STATE",
+ "trial": 19,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new classic mort reader explicitly raises `ValueError` when `stateArrayOffset > entryTableOffset`. Thus, although the change adds classic state-table support, it rejects precisely the layout required by the criterion rather than returning a table for it.\nNO"
+}

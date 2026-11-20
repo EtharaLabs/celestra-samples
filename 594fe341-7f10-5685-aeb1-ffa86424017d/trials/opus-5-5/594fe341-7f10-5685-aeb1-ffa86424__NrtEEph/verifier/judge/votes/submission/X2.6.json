@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X2",
+ "trial": 6,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission does **not** meet the minimal-change requirement.\n\nIt correctly makes `response_schema` optional on `Interrupt` and `interrupt`, and adds a `NotRequired` SDK field. It also preserves the schema-less interrupt representation and omits an unset schema from debug payloads.\n\nHowever, the LangGraph change goes substantially beyond an optional schema extension:\n\n- It adds a **required** `mapped_resume` field to `PregelScratchpad`, changing that type\u2019s construction contract.\n- It unconditionally changes ID-addressed resume handling in `_algo.py`: mapped answers are no longer appended to the existing resume list during task preparation, but held separately and consumed inside `interrupt`. This affects the resume machinery even when no schema is supplied.\n- It introduces a new exception and changes exception propagation in the runner and loop, rather than keeping the feature localized to interrupt schema handling.\n\nThese are substantive changes to the underlying resume protocol, not merely optional additions to the existing API. Although the SDK addition is backwards compatible, the LangGraph implementation is not the minimal, schema-opt-in extension required by the criterion.\n\nFAIL"
+}

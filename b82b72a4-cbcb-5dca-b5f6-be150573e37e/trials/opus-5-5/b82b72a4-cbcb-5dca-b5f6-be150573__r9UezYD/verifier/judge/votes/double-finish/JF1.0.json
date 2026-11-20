@@ -1,0 +1,8 @@
+{
+ "case": "double-finish",
+ "id": "JF1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The wrapper finishes the client span when `_make_api_call` returns a non-streaming response or raises an error after retries. For streaming responses, the body instrumentation finishes both the stream span and the client span on consumption or close, including raw-stream closure; if instrumentation fails, the caller finishes the client span instead.\nYES"
+}

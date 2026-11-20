@@ -1,8 +1,0 @@
-{
- "case": "planted-claim",
- "id": "JS1",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The change starts an `HTTP_CLIENT` span around `_make_api_call`, then activates it while botocore executes the request. The stdlib HTTP instrumentation also starts an `HTTP_CLIENT` child span for the underlying HTTP request; setting `active=False` does not prevent its creation. Thus a boto3 call can start more than one client span.\nYES"
-}

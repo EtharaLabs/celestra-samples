@@ -1,8 +1,0 @@
-{
- "case": "approach-a",
- "id": "JSM-leg",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "Under legacy semantics, both the default `\"auto\"` setting and `\"multiindex\"` leave model snapshots unflattened. `solve_model` now obtains the callback\u2019s snapshots from the model\u2019s stored snapshot parameter, preserving the network\u2019s MultiIndex labels and correctly reflecting any subset used to build the model, rather than passing all network snapshots.\n\nNO"
-}

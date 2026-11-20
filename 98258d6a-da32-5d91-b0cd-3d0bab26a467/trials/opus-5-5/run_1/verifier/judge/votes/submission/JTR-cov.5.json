@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JTR-cov",
- "trial": 5,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The inner function converts dynamic port efficiencies with `_to_model`, but obtains weights directly from `n.snapshot_weightings.generators.loc[sns]`, which retains the network\u2019s MultiIndex even when the flow uses flat tuple labels. The later conversion in the sum aggregation path does not make the inner function consistently take both inputs in the required representation.\nNO"
-}

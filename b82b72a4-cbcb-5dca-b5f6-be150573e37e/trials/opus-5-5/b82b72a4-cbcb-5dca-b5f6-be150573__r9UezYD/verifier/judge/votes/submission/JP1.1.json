@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JP1",
+ "trial": 1,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The `before-sign` propagation handler and its registration order are unchanged, so the same propagation conditions and existing-header merging logic still apply. The change reorganizes span creation and lifetime, but differences in span or trace IDs alone do not satisfy the criterion.\nNO"
+}

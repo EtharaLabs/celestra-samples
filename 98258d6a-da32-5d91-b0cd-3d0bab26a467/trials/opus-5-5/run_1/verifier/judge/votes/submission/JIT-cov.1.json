@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JIT-cov",
- "trial": 1,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The diff does not modify `pypsa/optimization/abstract.py` or the snapshots passed by `optimize_transmission_expansion_iteratively`. Model creation resolves `optimization.model_snapshot_index` and conditionally converts snapshots to the selected representation, rather than imposing a fixed representation on an iteration\u2019s optimisation inputs.\nNO"
-}

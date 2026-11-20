@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JSM-cov",
+ "trial": 9,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "`solve_model` passes the current `n.snapshots` through `_as_model_snapshots`, which only converts MultiIndexes to flat indexes when the model is detected as flat. If a model is built with ordinary snapshots and the network\u2019s snapshots are subsequently changed to a MultiIndex before calling `solve_model`, the callback receives that MultiIndex unchanged, not the representation used to build the model.\nNO"
+}

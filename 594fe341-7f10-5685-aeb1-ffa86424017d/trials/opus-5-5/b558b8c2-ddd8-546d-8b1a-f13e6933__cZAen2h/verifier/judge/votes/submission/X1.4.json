@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "X1",
- "trial": 4,
- "model": "gpt-6.1-sol",
- "label": "FAIL",
- "response": "The submission does put resume validation in LangGraph: `interrupt()` creates a `TypeAdapter` and calls `_validate_resume()` before returning a resumed answer. LangChain also passes its decision type through `response_schema`.\n\nHowever, LangChain does not rely solely on that validation. After `_review()` returns the validated decision, `_resolve()` calls:\n\n```python\nself._process_decision(decision, request.tool_call, config)\n```\n\nThe existing `_process_decision()` checks whether the decision type is in the tool\u2019s `allowed_decisions` and raises for an unexpected or disallowed decision. Thus, the per-call path checks the returned decision\u2019s acceptability again, even though the type passed to `interrupt()` already restricts it to allowed decisions.\n\nThe criterion explicitly requires the middleware not to validate the returned answer again. Reusing the batched decision-checking method in the per-call path violates that requirement.\n\nFAIL"
-}

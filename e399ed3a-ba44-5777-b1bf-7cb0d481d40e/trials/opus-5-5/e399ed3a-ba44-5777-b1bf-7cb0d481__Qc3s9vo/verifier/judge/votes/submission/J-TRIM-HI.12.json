@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-TRIM-HI",
+ "trial": 12,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "`MortSubtableConverter.read` confines the reader to the subtable\u2019s declared bytes. For contextual substitutions, `_readClassicSubstitutions` limits glyph indices to less than `size // 2 - offset`, so each replacement word ends at or before the subtable end; `_readClassicArray` also checks the read against the reader\u2019s data length.\nYES"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X3",
+ "trial": 12,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets the boundary-consistency criterion.\n\n- **LangGraph owns schema validation.** `interrupt()` constructs the `TypeAdapter` and validates answers regardless of whether they come from a scalar resume, an interrupt-ID mapping, or an existing replay entry. The middleware supplies its decision schema rather than independently parsing the answer.\n- **The resume routes converge before storage.** ID-addressed answers are held separately in `mapped_resume` until `interrupt()` accepts them. Both mapped and scalar answers then follow the same validation-and-append path.\n- **Storage and replay use consistent representations.** The original answer is stored in `scratchpad.resume`, while the validated result is returned to the caller. Replay validates that same stored original answer, so normalization does not depend on how the answer arrived. This also applies to typed interrupts in plain graphs.\n- **Invalid answers are not accepted into resume history.** Validation occurs before appending a new answer. The rejection handling preserves a pending interrupt and ultimately surfaces the validation error.\n- **The middleware consumes the provider\u2019s result.** Its remaining decision dispatch does not introduce a separate schema-parsing or normalization path. Edited arguments are checked while retaining the reviewer\u2019s supplied arguments for tool execution.\n\nThe additional scratchpad and rejection-handling machinery differs from the reference, but preserves the required provider\u2013consumer agreement.\n\nPASS"
+}

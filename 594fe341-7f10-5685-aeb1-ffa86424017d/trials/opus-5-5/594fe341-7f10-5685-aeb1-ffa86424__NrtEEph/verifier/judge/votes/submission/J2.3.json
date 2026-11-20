@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J2",
+ "trial": 3,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets the criterion.\n\n- Per-call decision schemas are constructed from the configured allowed decisions, with duplicates removed and single-decision and discriminated-union cases handled generically.\n- Edit schemas pin the action name to the actual tool-call name and derive argument schemas from the supplied tool. There are no hard-coded application tool names or argument names.\n- The distinction for simple `Tool` instances without an explicit argument schema reflects their tool-schema representation, rather than targeting particular test fixtures. JSON-schema and missing-tool fallbacks are also constructed generically.\n- On the provider side, validation uses `TypeAdapter(response_schema)` for caller-supplied Python schemas, without restricting validation to particular model classes, decision shapes, or argument fields. JSON Schema dictionaries are surfaced without enforcement, consistent with the reference contract.\n- Both fresh resume values and previously recorded values pass through the same schema-driven validation path.\n\nThe implementation differs from the reference in structure and resume-error handling, but it does not substitute test-specific cases for general schema construction or validation.\n\nPASS"
+}

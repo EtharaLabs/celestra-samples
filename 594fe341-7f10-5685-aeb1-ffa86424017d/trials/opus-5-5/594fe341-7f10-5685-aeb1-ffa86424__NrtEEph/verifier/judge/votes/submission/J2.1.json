@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J2",
+ "trial": 1,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets the criterion. Its per-call decision schema is constructed dynamically from the configured allowed decisions, the current tool-call name, and the actual tool\u2019s argument schema. Edit decisions pin the name using `Literal[tool_name]`, rather than recognizing particular tool names, and argument validation does not hard-code argument names. Single-decision and multi-decision configurations are handled generically, with duplicates removed.\n\nThe tool-schema handling also uses general categories: Pydantic-backed arguments are validated through their schema, while other tool argument schemas are surfaced with object-shaped acceptance. The special handling of unstructured `Tool` instances is based on the tool\u2019s representation, not a test-specific name or argument layout.\n\nOn the provider side, `interrupt` uses `TypeAdapter` for any supplied Python schema it supports, and treats JSON Schema dictionaries as display-only. That same generic validation path applies to replayed, ID-mapped, and directly supplied resume values. There are no branches tied to particular decision sets, tool names, argument names, or specific response model classes.\n\nPASS"
+}

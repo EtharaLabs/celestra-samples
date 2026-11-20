@@ -1,8 +1,0 @@
-{
- "case": "planted-claim",
- "id": "JW1",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The API-call wrapper and streamed-body consuming wrappers re-raise failures with bare `raise`, preserving the original exception object. The diff shows no wrapping or replacement of botocore exceptions; the comment claiming otherwise is not supported by the code.\nNO"
-}

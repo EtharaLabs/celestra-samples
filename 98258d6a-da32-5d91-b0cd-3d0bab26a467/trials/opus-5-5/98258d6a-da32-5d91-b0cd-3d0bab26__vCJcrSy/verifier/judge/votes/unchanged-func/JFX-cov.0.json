@@ -1,0 +1,8 @@
+{
+ "case": "unchanged-func",
+ "id": "JFX-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The added code in `_from_xarray` unconditionally converts tuple-valued snapshot indexes into a pandas MultiIndex using `stack`, without checking `optimization.model_snapshot_index`. Thus, even when the option selects `\"flat\"`, a snapshot-indexed array with flat tuple labels is converted under a fixed MultiIndex assumption.\nYES"
+}

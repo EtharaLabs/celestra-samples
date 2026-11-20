@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JNL-cov",
+ "trial": 1,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not modify `optimize_and_run_non_linear_powerflow` or `abstract.py`. The new model-building code selects the snapshot representation using `optimization.model_snapshot_index`; it does not introduce a fixed-representation coercion in the named function.\nNO"
+}

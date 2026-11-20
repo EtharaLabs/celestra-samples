@@ -1,0 +1,8 @@
+{
+ "case": "unchanged-solve-model",
+ "id": "JAD-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not change `_as_dynamic` or its construction of dynamic frames for static attributes. The added output conversion is conditional on `flattening(self.n_save)`, whose state is set by `model_snapshots` according to the resolved option, rather than forcing a fixed snapshot representation.\nNO"
+}

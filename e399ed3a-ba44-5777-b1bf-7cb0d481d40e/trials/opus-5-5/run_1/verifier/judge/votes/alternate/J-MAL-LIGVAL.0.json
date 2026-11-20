@@ -1,8 +1,0 @@
-{
- "case": "alternate",
- "id": "J-MAL-LIGVAL",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The new classic ligature reader explicitly checks `if any(component % 2 for component in rawComponents)` and raises `ValueError(\"invalid mort ligature component value\")`. Thus a classic mort ligature subtable with an odd component-table value still cannot successfully decompile through this path.\nNO"
-}

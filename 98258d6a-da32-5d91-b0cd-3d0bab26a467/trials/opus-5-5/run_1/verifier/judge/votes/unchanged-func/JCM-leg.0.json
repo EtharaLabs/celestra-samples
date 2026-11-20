@@ -1,8 +1,0 @@
-{
- "case": "unchanged-func",
- "id": "JCM-leg",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The only added transformation of `sns` in `create_model` is `model_snapshots(n, sns)`. Under legacy semantics, default/`\"auto\"` resolves to `\"multiindex\"`, and explicit `\"multiindex\"` does likewise; in both cases that helper returns `sns` unchanged. Thus the variable and constraint builders receive the same snapshots as in base_commit, regardless of other changes to builder behavior.\nNO"
-}

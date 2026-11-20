@@ -1,8 +1,0 @@
-{
- "case": "jit-leg-w3",
- "id": "JIT-leg",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The iteration call in `optimization/abstract.py` changes from `n.optimize(snapshots, **kwargs)` to `n.optimize(n.snapshots, **kwargs)`. For a request specifying a proper subset of the network\u2019s snapshots, that iteration now passes all network snapshots instead of the requested subset; this change is independent of the snapshot-index option or linopy semantics.\nYES"
-}

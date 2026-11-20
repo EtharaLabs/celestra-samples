@@ -1,0 +1,8 @@
+{
+ "case": "reference",
+ "id": "J1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets the criterion. Its changes are confined to the relevant solver segment loop, discontinuity setup and handling, sensitivity initialisation and continuation, and Modulo discontinuity calculations, with corresponding simulation checks and documentation.\n\nThe implementation avoids duplicated logic by sharing `_integrate_segments` between `solve()` and `step()`, centralising restart sensitivity extraction, and using the same Modulo stop/restart helper for both discontinuity paths. It also reuses existing infrastructure such as `process`, input-stacking helpers, `_set_consistent_initialization`, and initial-event checks.\n\nThe added helpers are used, the removed code is replaced rather than retained alongside the new implementation, and there is no apparent dead code or unrelated refactor. The annotations, docstrings, logging, and error handling are consistent with the surrounding code.\n\nPASS"
+}

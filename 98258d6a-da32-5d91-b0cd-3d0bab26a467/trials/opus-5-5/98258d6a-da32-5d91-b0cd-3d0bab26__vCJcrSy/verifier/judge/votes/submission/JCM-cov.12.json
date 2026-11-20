@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JCM-cov",
+ "trial": 12,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "For MultiIndex snapshots with `\"flat\"` (or `\"auto\"` under v1 semantics), `create_model` flattens the snapshots stored in `n.model.parameters` but leaves `sns` unchanged. It therefore still passes a MultiIndex to the variable and constraint builders, including the loss builders; `_flat_snapshots_context` changes component data views, not the `sns` argument.\nNO"
+}

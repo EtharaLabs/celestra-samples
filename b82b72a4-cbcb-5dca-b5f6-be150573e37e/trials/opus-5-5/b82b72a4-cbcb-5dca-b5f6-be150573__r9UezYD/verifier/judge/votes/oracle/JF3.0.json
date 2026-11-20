@@ -1,0 +1,8 @@
+{
+ "case": "oracle",
+ "id": "JF3",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The wrapper for `body.readlines` unconditionally calls `finish_span()` after a successful return, which finishes both the streaming span and the client span. A `readlines(hint)` call can return only part of the body, so this can finish the client span while streamed content remains unread.\nYES"
+}

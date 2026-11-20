@@ -1,0 +1,8 @@
+{
+ "case": "wrapped-exception",
+ "id": "JF1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The patched API-call wrapper finishes the client span on non-streaming responses and on exceptions after retries. For streaming responses, the consumption and close wrappers finish both the stream span and the client span, with a guard against finishing twice; if instrumentation fails, the API-call wrapper finishes the client span instead.\nYES"
+}

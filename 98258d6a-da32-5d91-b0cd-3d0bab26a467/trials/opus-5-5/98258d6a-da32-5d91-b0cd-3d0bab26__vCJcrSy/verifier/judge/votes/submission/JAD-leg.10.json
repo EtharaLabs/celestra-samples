@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JAD-leg",
+ "trial": 10,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not change `_as_dynamic` or its dynamic-frame construction logic. Under legacy semantics, default/`\"auto\"` resolves to `\"multiindex\"`, so the added flattening context is inactive, and explicit `\"multiindex\"` likewise preserves the existing behavior.\nNO"
+}

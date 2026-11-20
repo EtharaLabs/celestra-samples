@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JP1",
+ "trial": 12,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The change keeps the same `_sentry_before_sign` handler registered last, with no changes to its header-selection or merging logic. The diff changes span creation, activation, and lifetime, but does not show a change to which propagation headers are added or how existing headers are merged; differences in span or trace IDs do not count.\nNO"
+}

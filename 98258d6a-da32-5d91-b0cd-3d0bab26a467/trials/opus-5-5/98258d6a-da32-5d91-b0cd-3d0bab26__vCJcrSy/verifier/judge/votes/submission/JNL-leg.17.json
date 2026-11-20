@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JNL-leg",
+ "trial": 17,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not change `optimize_and_run_non_linear_powerflow` or its snapshot-selection logic in `abstract.py`. Under legacy semantics, default/`\"auto\"` resolves to `\"multiindex\"`, preserving the existing snapshot representation, and the other changes do not alter which snapshots are passed to optimization or power flow.\nNO"
+}

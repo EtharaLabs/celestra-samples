@@ -1,0 +1,8 @@
+{
+ "case": "duplicated-validation-shim",
+ "id": "X1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission fails the criterion because the middleware validates the returned answer again. In `_resolve_per_call`, it passes the decision type to LangGraph correctly:\n\n```python\ndecision = interrupt(value, response_schema=response_schema)\n```\n\nBut then it repeats validation locally:\n\n```python\ndecision = TypeAdapter(response_schema).validate_python(decision)\n```\n\nLangGraph\u2019s `interrupt` already validates resumed answers against that schema. The additional middleware check means answer validation does not live solely in the provider, contrary to the criterion.\n\nFAIL"
+}

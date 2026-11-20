@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J4",
+ "trial": 14,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission does not fully meet the documentation criterion.\n\nIt correctly documents several important behaviors: `interrupt` distinguishes JSON Schema dictionaries (shown but not enforced) from Python types (validated), returns the validated object on resume, and does not keep an invalid answer.\n\nHowever, the middleware documentation is incomplete or misleading:\n\n- **Per-call answer keying is not explained.** The `interrupt_mode` documentation says a per-call pause is resumed with a single decision, but never tells callers to key that decision by the **interrupt ID**, rather than the tool-call ID or a positional `HITLResponse`. The internal scratchpad comment does not document that public usage.\n- **Some middleware docstrings overstate argument enforcement.** `_decision_schema` says edit arguments \u201cmust fit the tool's arguments as the model sees them,\u201d although `_edited_args_type` deliberately only displays the schema for non-Pydantic tools and accepts any object. Likewise, the constructor's blanket statement that a decision not fitting the displayed schema is rejected does not account for those display-only argument schemas.\n\nThus, the provider documentation is largely accurate, but the consumer documentation does not consistently describe which constraints are enforced and how per-call answers must be addressed.\n\nFAIL"
+}

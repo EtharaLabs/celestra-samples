@@ -1,0 +1,8 @@
+{
+ "case": "unchanged-solve-model",
+ "id": "JCM-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "Under legacy semantics, `chosen_layout()` resolves the default `\"auto\"` to `\"multiindex\"`, and explicitly selecting `\"multiindex\"` has the same effect. In both cases, `model_snapshots(n, sns)` returns `sns` unchanged, so the added assignment in `create_model` does not change the snapshots passed to the variable and constraint builders; changes inside those builders do not satisfy this criterion.\nNO"
+}

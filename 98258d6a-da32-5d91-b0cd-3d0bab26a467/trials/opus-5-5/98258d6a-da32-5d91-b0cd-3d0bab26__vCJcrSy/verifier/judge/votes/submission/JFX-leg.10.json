@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JFX-leg",
+ "trial": 10,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The new `_from_xarray` unconditionally attempts to unflatten snapshot coordinates whenever the component has a network, without checking linopy semantics or the snapshot-index option. For an array with a flat, tuple-valued snapshot index and suitable auxiliary coordinates, it now reconstructs a MultiIndex before conversion to pandas, whereas the base implementation leaves that index flat. Thus the same input can produce a different result even under legacy semantics with the default, `\"auto\"`, or `\"multiindex\"` setting.\nYES"
+}

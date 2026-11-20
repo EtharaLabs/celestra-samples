@@ -1,8 +1,0 @@
-{
- "case": "jfx-cov-w2",
- "id": "JFX-cov",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The change makes `_from_xarray` unconditionally replace the coordinates of every snapshot-indexed array with `c.n_save.snapshots[:da.sizes[\"snapshot\"]]`. For a multi-period network with `optimization.model_snapshot_index = \"flat\"`, this imposes the network\u2019s MultiIndex rather than respecting the selected flat representation; the retrieved `window` is not used to decide the conversion.\nYES"
-}

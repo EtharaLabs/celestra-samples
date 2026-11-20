@@ -1,0 +1,8 @@
+{
+ "case": "renamed",
+ "id": "JF1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The patched API-call wrapper finishes the client span immediately for non-streaming responses and when the call raises, including after retries. For streaming responses, the body wrappers finish both the streaming span and the client span when consumption completes or the body is closed, including closure through the raw stream; instrumentation failures fall back to finishing the client span immediately.\nYES"
+}

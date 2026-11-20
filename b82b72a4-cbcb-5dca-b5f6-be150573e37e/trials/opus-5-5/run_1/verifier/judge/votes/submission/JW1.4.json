@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JW1",
- "trial": 4,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "NO: The new client-call wrapper catches the exception, finishes the span, and uses a bare `raise`, which re-raises the same exception object. The diff shows no change that replaces an exception from a streamed-body read.\nNO"
-}

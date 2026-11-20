@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X3",
+ "trial": 11,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets the boundary criterion.\n\n- **LangGraph owns answer validation.** The middleware supplies a Python decision schema to `interrupt()` and consumes its return value; it does not separately run a Pydantic adapter. Plain graphs use the same validation path.\n- **Both resume forms converge before validation and storage.** Previously accepted answers, interrupt-ID-mapped answers, and unkeyed resume answers all reach the same `adapter.validate_python(v)` call. New answers are appended to the accepted resume list only after validation succeeds.\n- **Storage and replay are consistent.** LangGraph stores the submitted value `v`, not the potentially coerced `answer`, and validates that stored value again on replay. This behavior is independent of how the answer was addressed or whether middleware raised the interrupt.\n- **The consumer preserves reviewer arguments.** Its edit-argument wrapper checks the arguments while retaining their submitted representation, leaving execution-time tool validation to the tool.\n- **Invalid answers follow a common rejection path.** They are not appended as accepted answers, and `ResumeRejected` preserves the pending interrupt while surfacing the validation error at the root graph.\n\nThe submission differs from the reference in its scratchpad and error-handling implementation, but those differences do not establish a provider\u2013consumer disagreement under this criterion.\n\nPASS"
+}

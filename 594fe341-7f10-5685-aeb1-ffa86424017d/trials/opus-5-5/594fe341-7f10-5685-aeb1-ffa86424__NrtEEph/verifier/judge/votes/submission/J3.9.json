@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J3",
+ "trial": 9,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets the criterion:\n\n- **Unbuildable schemas fail loudly.** `TypeAdapter(response_schema)` and JSON-schema generation are not protected by a fallback that drops validation. Errors propagate.\n- **Invalid answers are not accepted unchecked.** Every supplied answer, including previously stored answers, goes through `adapter.validate_python(v)` before it is returned. A validation failure becomes `ResumeRejected`, and the runner preserves that rejection when combining interrupts. The root graph then raises the original `ValidationError` to the caller rather than returning a normal interrupt or choosing a default decision.\n- **Missing tool-call IDs raise.** For a gated per-call review, `_review` raises `ValueError` when the ID is absent or `None`, before requesting approval or running the tool.\n- **Middleware does not suppress these failures.** Both synchronous and asynchronous tool wrappers call `_review` without an exception handler that could auto-approve or silently skip review.\n\nThe internal exception conversion preserves the pending interrupt but still exposes the validation failure to the caller, which is consistent with the criterion.\n\nPASS"
+}

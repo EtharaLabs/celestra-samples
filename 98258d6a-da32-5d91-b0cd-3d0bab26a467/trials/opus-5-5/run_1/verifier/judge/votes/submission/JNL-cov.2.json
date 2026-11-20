@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JNL-cov",
- "trial": 2,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The diff does not touch `optimize_and_run_non_linear_powerflow` or `pypsa/optimization/abstract.py`. Snapshot conversion in model creation is conditional on the selected option and whether snapshots are a MultiIndex, rather than adding a fixed-representation coercion to that wrapper.\nNO"
-}

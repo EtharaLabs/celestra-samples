@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MAL-STATE",
+ "trial": 13,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new `read` path routes mort state tables to `_readClassic`, which explicitly raises `ValueError` whenever `stateArrayOffset > entryTableOffset`. Thus the change still rejects the exact table layout specified by the criterion.\nNO"
+}

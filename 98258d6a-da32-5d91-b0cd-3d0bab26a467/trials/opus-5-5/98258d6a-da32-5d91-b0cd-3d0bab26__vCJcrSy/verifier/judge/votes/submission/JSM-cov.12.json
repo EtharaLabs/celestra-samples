@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JSM-cov",
+ "trial": 12,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "`solve_model` still takes its callback snapshots from `n.snapshots`, rather than from the model\u2019s stored snapshots. `_as_model_snapshots` only converts toward flat representation; if a model was built with a MultiIndex and the network\u2019s snapshots subsequently become a plain index, it passes that plain index through unchanged. Thus the model\u2019s build-time representation is not guaranteed for every network and call path.\nNO"
+}

@@ -1,8 +1,0 @@
-{
- "case": "oracle",
- "id": "JF2",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The API-call exception path finishes the client span and re-raises, so it cannot reach the normal completion path. Successful calls either finish immediately or defer finishing to the streaming-body wrappers, whose shared `finished` flag prevents repeated finishes; instrumentation failure also disables those wrappers before the caller finishes the client span.\nNO"
-}

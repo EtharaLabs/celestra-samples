@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X2",
+ "trial": 4,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission makes `response_schema` optional on `interrupt`, `Interrupt`, `Interrupt.from_ns`, and the SDK\u2019s interrupt type. It also preserves the old `Interrupt` representation when no schema is supplied.\n\nHowever, the LangGraph change is not minimal or isolated to schema-aware callers. It redesigns resume handling across the scratchpad, task preparation, runner, and loop, introducing a required `mapped_resume` scratchpad field and a new `ResumeRejected` exception.\n\nCrucially, the resume-path changes apply even when no schema is passed. Previously, an ID-addressed resume value was appended to `task_resume_write` during task preparation; the submission holds it separately until an interrupt consumes it. Consequently, earlier replayed interrupts send different `RESUME` writes: the old implementation sends the already-appended mapped answer, whereas the submission does not include it until consumption. This changes resume bookkeeping and persistence behavior for existing, schema-free callers.\n\nThe optional public additions and SDK compatibility are satisfied, but the criterion also requires a minimal, backwards-compatible LangGraph change. The unconditional resume machinery redesign does not meet that requirement.\n\nFAIL"
+}

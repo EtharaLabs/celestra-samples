@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J-TRIM-LO",
- "trial": 7,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The contextual decoder converts entry offsets to signed values and passes them to `_readClassicSubstitutions`. That function starts at glyph index `max(0, ceil(substOffset / 2) - offset)`, ensuring every replacement word read at `2 * (offset + glyphIndex)` is at or after `substOffset`, regardless of the offset\u2019s sign.\nYES"
-}

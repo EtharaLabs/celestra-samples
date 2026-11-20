@@ -1,8 +1,0 @@
-{
- "case": "jtrimin-w3",
- "id": "J-TRIM-IN",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "`_readContextualLookups` computes `lastGlyph` as an inclusive upper bound, but reads only `lastGlyph - firstGlyph` replacement words instead of `lastGlyph - firstGlyph + 1`. Thus it omits the last eligible glyph\u2019s replacement (and reads nothing for a one-glyph window), for either negative or positive offsets.\nNO"
-}

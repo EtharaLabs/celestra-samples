@@ -1,8 +1,0 @@
-{
- "case": "jtrimlo-w2",
- "id": "J-TRIM-LO",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The lower bound in `_readContextualLookups` is off by one: `firstGlyph = max(0, substitutionTableOffset // 2 - offset - 1)` permits reading the word immediately before an even-aligned substitution table. If that word is nonzero, it is used as a replacement; this can occur with either negative or positive entry offsets.\nNO"
-}

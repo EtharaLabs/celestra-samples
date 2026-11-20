@@ -1,0 +1,8 @@
+{
+ "case": "oracle",
+ "id": "JAD-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not change `_as_dynamic` to use a fixed snapshot representation for static attributes. The added array conversion calls `window.flatten(res)`, whose behavior depends on the `SnapshotWindow` built using `optimization.model_snapshot_index`; it is a no-op when the selected representation is not flat.\nNO"
+}

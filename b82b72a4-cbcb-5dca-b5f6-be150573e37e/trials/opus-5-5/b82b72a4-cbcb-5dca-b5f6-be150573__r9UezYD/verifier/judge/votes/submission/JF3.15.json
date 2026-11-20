@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JF3",
+ "trial": 15,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "If streaming-body instrumentation raises, `capture_internal_exceptions()` suppresses the error and `body_instrumented` remains `False`, so `_sentry_make_api_call` immediately finishes the client span. The diff explicitly allows such a failure while installing body wrappers, so the client span can finish while the returned streaming body is still unread.\n\nYES"
+}

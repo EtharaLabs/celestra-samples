@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JIT-leg",
+ "trial": 5,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not change `optimization/abstract.py` or the iterative method\u2019s snapshot-selection logic. Under legacy semantics, both `\"auto\"` (the default) and `\"multiindex\"` retain the existing MultiIndex representation, so the added conversion helpers do not change which snapshots are passed to an iteration\u2019s optimisation.\nNO"
+}

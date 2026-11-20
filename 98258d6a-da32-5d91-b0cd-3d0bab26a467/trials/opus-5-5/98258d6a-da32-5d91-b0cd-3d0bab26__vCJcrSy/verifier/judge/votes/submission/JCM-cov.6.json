@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JCM-cov",
+ "trial": 6,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "`create_model` computes `flat_snapshots` and converts snapshots for `n.model.parameters`, but never converts `sns` itself. Thus, for multi-period networks with `\"flat\"` (or `\"auto\"` under v1 semantics), variable and constraint builders\u2014including the transmission-loss builders\u2014still receive a MultiIndex rather than flat tuple labels; the component-data context does not change that argument.\n\nNO"
+}

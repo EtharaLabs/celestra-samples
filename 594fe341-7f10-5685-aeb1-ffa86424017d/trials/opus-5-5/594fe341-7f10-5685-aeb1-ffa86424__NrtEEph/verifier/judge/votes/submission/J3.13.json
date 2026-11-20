@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J3",
+ "trial": 13,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets the criterion:\n\n- **Unbuildable schemas fail loudly.** `TypeAdapter(response_schema)` and JSON Schema generation are not wrapped in fallback handlers, so schema-construction errors propagate instead of disabling validation.\n- **Invalid answers fail loudly.** Answers are validated before being appended to the accepted resume list. A validation failure becomes `ResumeRejected`, which preserves the pending interrupt; the root graph then raises the original `pydantic.ValidationError` to the caller. The runner also preserves this failure when combining interrupts, rather than reducing it to an ordinary pause.\n- **Missing tool-call IDs fail loudly.** For a gated per-call review, `_review` explicitly raises `ValueError` when the call\u2019s ID is missing or `None`, before asking for approval or executing the tool.\n- **No unchecked fallback is introduced.** Neither the sync nor async middleware substitutes approval, an unchecked answer, or a silent skip when schema construction or answer validation fails.\n\nThe explicit exception handling for invalid answers changes how the interrupt remains pending, but does not suppress the error from the caller.\n\nPASS"
+}

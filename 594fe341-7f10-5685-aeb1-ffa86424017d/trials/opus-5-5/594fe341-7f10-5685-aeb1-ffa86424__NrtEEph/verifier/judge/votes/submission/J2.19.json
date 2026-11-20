@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J2",
+ "trial": 19,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets the generality criterion.\n\n- Per-call decision schemas are generated from the configured allowed decisions, with duplicates removed and single-decision and multi-decision cases handled generically.\n- Edit schemas bind the action name to the actual tool-call name and derive argument validation from the supplied tool\u2019s schema. There are no hard-coded tool names or argument names.\n- The distinction for schema-less `Tool` instances is based on tool capabilities, not on particular test tools. Other fallback schemas are derived from the tool\u2019s published parameters.\n- LangGraph uses `TypeAdapter` for non-dictionary response schemas, supporting arbitrary Pydantic-compatible types rather than enumerating particular schema kinds. JSON Schema dictionaries are surfaced unchanged without validation, consistent with the reference behavior.\n- Resume validation is applied through the shared interrupt path, rather than through special cases for particular decisions or payload shapes.\n\nThe structural differences from the reference do not introduce test-specific restrictions relevant to this criterion.\n\nPASS"
+}

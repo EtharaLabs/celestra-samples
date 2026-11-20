@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J-MAL-STATE",
- "trial": 6,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The new `read` method routes classic `mort` state tables to `_readClassic`, which explicitly raises `ValueError` when `stateOffset > entryOffset`. Thus, the change still rejects state arrays that start after their entry tables rather than returning a decoded table.\nNO"
-}

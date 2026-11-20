@@ -1,8 +1,0 @@
-{
- "case": "unchanged-create-model",
- "id": "JIC-leg",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The diff does not modify `installed_capex` in `pypsa/statistics/expressions.py`. Under legacy semantics, default/`\"auto\"` and `\"multiindex\"` retain MultiIndex snapshots, and the shared statistics weighting change still normalizes weights within the same investment periods; the changes to optimization expressions do not change this installed-capex calculation.\nNO"
-}

@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J2",
- "trial": 1,
- "model": "gpt-6.1-sol",
- "label": "FAIL",
- "response": "The submission does not meet the criterion because its JSON-schema rewriting is sensitive to argument names.\n\nIn `_rewrite_refs`, keys such as `\"enum\"`, `\"const\"`, `\"default\"`, and `\"examples\"` are always treated as containing data, so their values are never traversed. That is appropriate when those keys are JSON Schema keywords, but not when they are property names inside a `\"properties\"` mapping.\n\nFor example, a tool may legitimately provide this argument schema:\n\n```json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"enum\": {\"$ref\": \"#/definitions/Choice\"}\n  },\n  \"definitions\": {\n    \"Choice\": {\"type\": \"string\"}\n  }\n}\n```\n\n`_ShownArgsSchema` removes the original `\"definitions\"` and incorporates those definitions into Pydantic\u2019s generated schema. It therefore needs to rewrite the reference under the argument named `\"enum\"`. However, `_rewrite_refs` skips that entire property schema, leaving `#/definitions/Choice` pointing to a location that no longer exists. This can break schema generation or produce an unresolved reference.\n\nThus the per-call schema does not work independently of argument names and caller-provided schema structure. The provider\u2019s generic use of `TypeAdapter` does not remedy this consumer-side restriction.\n\nFAIL"
-}

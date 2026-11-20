@@ -1,8 +1,0 @@
-{
- "case": "attrs-dropped",
- "id": "JB1",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The change moves breadcrumb creation into `_add_request_breadcrumb`, still called once for each `request-created` event, including retries. It preserves the same URL, query, fragment, and method fields in both streaming and non-streaming modes; the span lifecycle changes do not add, remove, or alter those breadcrumbs.\nNO"
-}

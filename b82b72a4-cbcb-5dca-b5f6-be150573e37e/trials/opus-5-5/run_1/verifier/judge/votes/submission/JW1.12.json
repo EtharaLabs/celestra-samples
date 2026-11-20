@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JW1",
- "trial": 12,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The client-call wrapper catches the original exception and re-raises it with a bare `raise`, preserving its identity. The streamed-body changes add span finishing but do not change exception propagation or introduce a replacement exception.\nNO"
-}

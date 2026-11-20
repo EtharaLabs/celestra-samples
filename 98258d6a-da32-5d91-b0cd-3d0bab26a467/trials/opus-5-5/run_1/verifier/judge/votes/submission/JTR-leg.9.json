@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JTR-leg",
- "trial": 9,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The transmission inner function changes `p = var.loc[:, idx] * efficiency[idx]` to `p = -var.sel(name=idx) * efficiency[idx]`, introducing an unconditional sign reversal, including under legacy semantics. For a branch with nonzero flow, nonzero port efficiency, and nonzero snapshot weight, this produces a different aggregated transmission value; the snapshot-index option does not guard this change.\nYES"
-}

@@ -1,8 +1,0 @@
-{
- "case": "jmalstate-w2",
- "id": "J-MAL-STATE",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The change routes classic `mort` state tables to the new `StateHeader` reader. When the state array starts after the entry table, it clamps the negative state-data length to zero, allowing, for example, a rearrangement subtable to return with no states rather than raising an exception. The criterion requires only some such table to return, not that its states be decoded correctly.\nYES"
-}

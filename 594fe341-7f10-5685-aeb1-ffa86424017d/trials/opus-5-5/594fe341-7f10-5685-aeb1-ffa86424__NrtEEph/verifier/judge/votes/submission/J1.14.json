@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J1",
+ "trial": 14,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission does not meet the confinement requirement. In addition to `Interrupt`, `interrupt`, the SDK interrupt type, and `HumanInTheLoopMiddleware`, it modifies LangGraph\u2019s scratchpad, error hierarchy, Pregel task setup, loop, runner, and debug serialization.\n\nThese are substantive changes, not incidental adjustments:\n- It introduces `ResumeRejected` and propagates it through runner aggregation and root-loop exception handling.\n- It adds `mapped_resume` to the scratchpad and changes how task-specific resume values are staged.\n- It introduces `_interrupt_payload` and rewrites existing debug serialization to omit unset schemas.\n\nTogether, these establish a broader resume-rejection and serialization mechanism beyond the explicitly permitted scope. The middleware does reuse existing decision handling and shares its per-call review logic between sync and async wrappers, but that focus in LangChain does not offset the expanded LangGraph changes.\n\nFAIL"
+}

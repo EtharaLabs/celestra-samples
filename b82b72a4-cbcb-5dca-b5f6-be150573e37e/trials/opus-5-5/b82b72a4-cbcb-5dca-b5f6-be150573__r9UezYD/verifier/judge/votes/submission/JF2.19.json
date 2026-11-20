@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JF2",
+ "trial": 19,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "NO double-finishing path is shown: a failed API call finishes the client span in the exception handler, while a successful call either finishes it immediately or defers finishing to the streaming-body wrappers. Those wrappers share a `finished` guard, and instrumentation setup failure disables them before the caller finishes the client span.\nNO"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "jshare-w2",
+ "id": "J-SHARE",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The change adds `MortStateTable` and `MortState` as separate classic-mort versions of the shared state-table and state containers, and `StateHeader.read` instantiates them. Although it reuses the morph action classes and extended TTX methods, these separate containers satisfy the criterion.\nYES"
+}

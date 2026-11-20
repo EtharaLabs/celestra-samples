@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J3",
+ "trial": 6,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission does not preserve the required failure behaviour for invalid Modulo periods.\n\nIn `_modulo_reset_times`, it:\n- Applies `np.abs` to the evaluated period, silently converting a negative period into a positive one.\n- Returns an empty array when the period is zero or non-finite. In particular, zero and NaN periods therefore suppress discontinuity handling instead of raising `pybamm.SolverError`.\n\nAn infinite positive period can legitimately have no resets, but zero, negative, and NaN periods must not be silently accepted.\n\nThe submission does explicitly raise `pybamm.SolverError` for time- or state-dependent periods and for missing named state sensitivities. Those checks are appropriate, but they do not remedy the silent handling of other invalid periods.\n\nFAIL"
+}

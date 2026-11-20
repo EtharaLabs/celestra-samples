@@ -1,0 +1,8 @@
+{
+ "case": "reference",
+ "id": "J4",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets the criterion. Its added and edited documentation matches the implementation:\n\n- It distinguishes enforced Python-type schemas from JSON Schema dictionaries that are only shown to clients. For tool edits, it also explains that the tool-call Pydantic schema checks argument types and required fields, while tool validator methods run during execution.\n- It states that invalid answers raise `pydantic.ValidationError` and are not saved, allowing the same interrupt to be answered again. The implementation validates before appending or sending the resume value.\n- It documents that `interrupt` returns the validated object on resume when a validation-capable schema is supplied, and otherwise returns the supplied resume value.\n- It consistently describes per-call responses as single decisions keyed by interrupt ID, rather than tool-call ID or position, and demonstrates that mapping in the example.\n- The remaining added comments and docstrings accurately describe the per-call gate, pinned tool name, rejection/respond behavior, and middleware execution flow.\n\nPASS"
+}

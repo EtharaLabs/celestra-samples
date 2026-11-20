@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JFX-leg",
+ "trial": 17,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The new `_from_xarray` unconditionally calls `_unflatten_snapshots` for snapshot-indexed arrays attached to a network, without checking semantics or the option. For an array with a flat, tuple-valued snapshot index and suitable auxiliary level coordinates, this converts the index to a MultiIndex before pandas conversion, changing the returned index structure relative to the base implementation even under legacy semantics with `\"auto\"` or `\"multiindex\"`.\nYES"
+}

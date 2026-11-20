@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JP1",
+ "trial": 19,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff changes when client spans are created, activated, and finished, but leaves the trace-header injection and merging logic unchanged. It also preserves the `before-sign` handler\u2019s last-registration ordering, so existing headers are handled the same way; changes to span or trace IDs do not count under the criterion.\nNO"
+}

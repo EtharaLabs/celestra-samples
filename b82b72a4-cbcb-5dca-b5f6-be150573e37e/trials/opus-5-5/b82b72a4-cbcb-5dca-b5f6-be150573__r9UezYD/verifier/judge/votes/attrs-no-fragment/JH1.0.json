@@ -1,0 +1,8 @@
+{
+ "case": "attrs-no-fragment",
+ "id": "JH1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "In non-streaming tracing mode, the original code sets `SPANDATA.HTTP_FRAGMENT` on the span from `parsed_url.fragment`, but the new `_set_request_attributes` omits that attribute. Retaining it in the breadcrumb does not preserve the span attribute, so this is a missing HTTP attribute independent of span placement or retries.\nYES"
+}

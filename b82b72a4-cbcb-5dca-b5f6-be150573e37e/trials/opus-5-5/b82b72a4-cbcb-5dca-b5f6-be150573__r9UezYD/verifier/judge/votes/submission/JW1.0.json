@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JW1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The client-call wrapper and streamed-body read wrapper both use bare `raise` to re-raise the caught exception, preserving its identity. Span finalization is protected by `capture_internal_exceptions()`, so the diff does not show instrumentation errors replacing the botocore exception.\nNO"
+}

@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JSM-leg",
- "trial": 14,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "If a model is built over a strict subset of the network\u2019s snapshots, `solve_model` still calls the callback with `n.snapshots`, rather than `_model_snapshots(n)`. Under legacy semantics with the default/`\"auto\"` or `\"multiindex\"` setting, the context does not enable flattening and `_to_model` leaves that full index unchanged, so the callback receives more snapshots than the model was built over.\nYES"
-}

@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JB1",
- "trial": 13,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The change still registers one `request-created` handler, which records one HTTP breadcrumb using the same URL-derived fields and request method in both streaming and non-streaming modes. The changes move span creation and completion, but do not change the breadcrumb\u2019s data or when it is recorded.\nNO"
-}

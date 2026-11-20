@@ -1,0 +1,8 @@
+{
+ "case": "planted-claim",
+ "id": "JS1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The wrapper calls `_start_client_span` only once per `_make_api_call`. Retry request handlers enrich and reuse that span rather than starting new client spans; streaming-body instrumentation creates a separate stream span, not another boto3 client span.\n\nNO"
+}

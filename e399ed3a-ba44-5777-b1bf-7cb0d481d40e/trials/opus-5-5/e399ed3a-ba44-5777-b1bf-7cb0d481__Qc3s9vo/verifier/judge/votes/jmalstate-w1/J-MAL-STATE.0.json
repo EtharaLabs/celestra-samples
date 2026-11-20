@@ -1,0 +1,8 @@
+{
+ "case": "jmalstate-w1",
+ "id": "J-MAL-STATE",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The change dispatches classic `mort` state tables to the new `StateHeader` converter. When the state array starts after the entry table, `stateDataLength` and `numStates` are negative, so the state-reading loop is skipped rather than raising; for example, a rearrangement subtable can therefore return with an empty `States` list. The criterion requires returning a table, not correctly decoding its states.\nYES"
+}

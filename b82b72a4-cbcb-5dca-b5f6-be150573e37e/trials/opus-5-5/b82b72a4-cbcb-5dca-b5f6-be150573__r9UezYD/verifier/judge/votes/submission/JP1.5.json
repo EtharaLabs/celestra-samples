@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JP1",
+ "trial": 5,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The change moves span creation and lifetime management to the API-call wrapper, but leaves the trace-propagation header logic and the ordering of the `before-sign` handler unchanged. The diff does not establish any change to which propagation headers are present or how they merge with existing request headers; changes to span or trace IDs do not count.\nNO"
+}

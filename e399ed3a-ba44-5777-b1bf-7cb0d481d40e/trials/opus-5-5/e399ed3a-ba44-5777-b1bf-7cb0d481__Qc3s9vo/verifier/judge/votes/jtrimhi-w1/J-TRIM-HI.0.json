@@ -1,0 +1,8 @@
+{
+ "case": "jtrimhi-w1",
+ "id": "J-TRIM-HI",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "`MortSubtableConverter.read` copies only the subtable\u2019s payload into a separate reader, which is then used for contextual replacement reads. Although `_readContextualLookups` does not use `available` to cap its requested array length, that reader contains no bytes beyond the subtable, so an oversized read cannot obtain a replacement word extending past its end.\nYES"
+}

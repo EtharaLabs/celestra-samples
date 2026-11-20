@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MORX-ENC",
+ "trial": 7,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new state-table compilation path is selected only for `mort`; extended `morx` tables retain the existing write path. The other changes add object equality, adjust XML parsing, or update `StructLength` after compilation without changing the bytes written, so the diff does not establish different compiled bytes for the same `morx` objects.\nNO"
+}

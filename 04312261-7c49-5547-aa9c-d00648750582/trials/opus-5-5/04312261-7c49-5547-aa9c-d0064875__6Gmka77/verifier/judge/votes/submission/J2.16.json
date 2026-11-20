@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J2",
+ "trial": 16,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission derives restarts from general solver data rather than from test-specific cases:\n\n- It tracks an arbitrary number of active input sets and restarts each from its own preceding solution, removing sets that have terminated.\n- Restart states and sensitivities are extracted from the final state, with sensitivities selected by the requested input names.\n- Cross-model sensitivities use the state mapper and the chain rule, rather than formulas tied to particular models or parameters.\n- DAE algebraic sensitivities are derived from the differentiated algebraic equations.\n- Modulo reset times are calculated from the evaluated period and integration window; discontinuity segmentation does not depend on a fixed `t_eval` length or predetermined event count.\n\nThere are no added branches keyed to particular test models, parameter values, input names, or numbers of input sets. Although numerical edge-case correctness could be assessed separately, the implementation follows general solver semantics and does not exhibit the test-specific special-casing prohibited by this criterion.\n\nPASS"
+}

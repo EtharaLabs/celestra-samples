@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J-TRIM-HI",
- "trial": 8,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The new `MortSubtableConverter` restricts each subtable\u2019s reader to that subtable\u2019s declared bytes. `_readClassicSubstitutions` then limits glyph indices using `len(data) // 2 - offset`, ensuring that every replacement word read ends at or before the end of this bounded data, including when its length is odd.\nYES"
-}

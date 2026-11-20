@@ -1,0 +1,8 @@
+{
+ "case": "per-attempt",
+ "id": "JH1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The change still parses request URLs with `parse_url(..., sanitize=False)` and uses the same URL, query, fragment, and method attribute keys and values in each tracing mode. Moving those attributes to differently created spans does not count under the criterion, and the diff shows no change to their derivation.\nNO"
+}

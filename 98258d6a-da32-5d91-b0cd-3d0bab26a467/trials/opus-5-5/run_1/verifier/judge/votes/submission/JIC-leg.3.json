@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JIC-leg",
- "trial": 3,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The diff does not modify `pypsa/statistics/expressions.py` or its installed-capex calculation. The shared statistics filtering changes merely wrap the same `.loc[names]` selections in `_select_names`; the specialized overrides are in optimization expressions, so they do not change period-weighted installed capex reported by the statistics implementation under legacy semantics.\nNO"
-}

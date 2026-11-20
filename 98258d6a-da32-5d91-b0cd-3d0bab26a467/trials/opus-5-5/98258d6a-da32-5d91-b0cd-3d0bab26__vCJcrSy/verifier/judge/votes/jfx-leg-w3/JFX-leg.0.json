@@ -1,0 +1,8 @@
+{
+ "case": "jfx-leg-w3",
+ "id": "JFX-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The diff changes `_from_xarray`\u2019s two-dimensional auxiliary-dimension branch (such as `snapshot` and `cycle` for a GlobalConstraint) from `da.to_pandas()` to `da.to_pandas().T`. For a nonsymmetric result, this changes the returned DataFrame\u2019s orientation, and the change is unconditional on linopy semantics or `optimization.model_snapshot_index`.\nYES"
+}

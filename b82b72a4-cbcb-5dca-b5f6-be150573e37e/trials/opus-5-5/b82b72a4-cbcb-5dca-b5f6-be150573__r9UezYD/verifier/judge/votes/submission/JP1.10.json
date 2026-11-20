@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JP1",
+ "trial": 10,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff moves span creation and cleanup from request events to the API-call wrapper, but does not change the trace-header injection logic, its propagation checks, or its handling of existing headers. Sharing a span across requests may change header values, which the criterion explicitly excludes.\nNO"
+}

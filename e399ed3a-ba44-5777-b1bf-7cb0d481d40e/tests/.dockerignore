@@ -1,3 +1,4 @@
+# Kept a different size from other tasks' .dockerignore: concurrent Docker builds can swap same-named, same-sized files.
 *
 !binary.txt
 !combine.py

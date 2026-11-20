@@ -1,0 +1,8 @@
+{
+ "case": "unchanged-create-model",
+ "id": "JNL-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not modify `optimize_and_run_non_linear_powerflow` or `pypsa/optimization/abstract.py`. The new conversion at model creation uses `model_snapshots`, which consults the selected layout and flattens MultiIndex snapshots only when `\"flat\"` is chosen, rather than imposing a fixed representation regardless of the option.\nNO"
+}

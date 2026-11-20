@@ -1,0 +1,8 @@
+{
+ "case": "unchanged-solve-model",
+ "id": "JNL-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The change does not touch `optimize_and_run_non_linear_powerflow` or its snapshot-selection logic. Under legacy semantics, both `\"auto\"` and `\"multiindex\"` make `model_snapshots` return the supplied snapshots unchanged; the other changes alter model construction or result handling, not which snapshots are optimized or power-flowed.\n\nNO"
+}

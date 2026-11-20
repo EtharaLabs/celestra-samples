@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MORX-DEC",
+ "trial": 17,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The binary-reading changes in otConverters.py are restricted to `mort`: the new state-table reader is selected only when `reader.tableTag == \"mort\"`, and the new subtable converter is registered only for `MortSubtable`. The other changes affect compilation, XML handling, or object equality, not which objects or field values are decoded from extended `morx` bytes.\nNO"
+}

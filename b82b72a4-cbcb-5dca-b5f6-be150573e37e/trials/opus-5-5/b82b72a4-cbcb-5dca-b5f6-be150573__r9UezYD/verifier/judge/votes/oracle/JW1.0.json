@@ -1,0 +1,8 @@
+{
+ "case": "oracle",
+ "id": "JW1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "NO: The API-call wrapper and streamed-body consuming wrappers catch exceptions and use a bare `raise`, which preserves the original exception object rather than constructing a replacement. The diff does not establish a path that replaces or suppresses a botocore failure.\nNO"
+}

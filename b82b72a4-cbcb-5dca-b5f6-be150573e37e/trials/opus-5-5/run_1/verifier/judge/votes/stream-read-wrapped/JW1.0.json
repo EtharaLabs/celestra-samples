@@ -1,8 +1,0 @@
-{
- "case": "stream-read-wrapped",
- "id": "JW1",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The patched `sentry_streaming_body_read` catches the exception from `orig_read` and raises a new `RuntimeError(\"reading the AWS response body failed\")` chained from it. Thus, for a failing instrumented body read, the caller receives a different exception object rather than the original botocore exception.\nYES"
-}

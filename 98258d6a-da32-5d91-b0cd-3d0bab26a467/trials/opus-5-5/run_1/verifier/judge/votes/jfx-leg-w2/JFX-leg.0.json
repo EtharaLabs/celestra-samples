@@ -1,8 +1,0 @@
-{
- "case": "jfx-leg-w2",
- "id": "JFX-leg",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The diff changes the two-dimensional `{\"name\", \"snapshot\"}` branch from transposing to `(\"snapshot\", \"name\")` to transposing to `(\"name\", \"snapshot\")` before calling `to_pandas()`. Thus, for an array with both dimensions and a non-stochastic component with no active snapshot window, it returns a DataFrame with names as rows and snapshots as columns instead of the reverse, regardless of legacy semantics or the specified option.\nYES"
-}

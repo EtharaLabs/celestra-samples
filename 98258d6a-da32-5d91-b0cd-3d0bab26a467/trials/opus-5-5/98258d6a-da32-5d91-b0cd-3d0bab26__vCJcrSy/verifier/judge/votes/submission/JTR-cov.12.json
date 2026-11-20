@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JTR-cov",
+ "trial": 12,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The inner function derives `sns` from the flow variable\u2019s snapshot index, converts those labels to the network index for selecting dynamic port efficiency and snapshot weights, and converts the efficiency back using `_model_snapshot_array`. Weighted aggregation uses the same helper, which preserves a MultiIndex or produces flat tuple labels according to the model representation selected by the new option and its semantics-dependent `\"auto\"` resolution.\nYES"
+}

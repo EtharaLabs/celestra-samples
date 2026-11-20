@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J2",
+ "trial": 13,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets the criterion.\n\n- Per-call decision schemas are generated from the configured allowed decisions, deduplicated in order. Single-decision schemas and discriminated unions are handled generically, without hard-coded decision combinations.\n- The edit branch pins the name using `Literal[tool_name]`, so it works for arbitrary tool names rather than a fixed list.\n- Argument validation derives from the tool\u2019s own `tool_call_schema`, without assuming particular argument names. The fallback paths derive their displayed schemas from tool metadata rather than embedding test-specific schemas.\n- LangGraph uses `TypeAdapter(response_schema)` for non-dictionary schemas, both to generate JSON Schema and to validate resume values. This delegates support for different Python schema kinds to Pydantic instead of implementing only selected test cases.\n- Dictionary schemas are surfaced without validation, consistently with the reference\u2019s contract. Validation occurs before new answers are retained.\n\nThe distinction for schema-less `Tool` instances is a general tool-representation rule, not a special case for a test tool name or argument layout. The additional resume-handling changes likewise contain no test-specific conditions.\n\nPASS"
+}

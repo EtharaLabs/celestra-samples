@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "X1",
- "trial": 18,
- "model": "gpt-6.1-sol",
- "label": "FAIL",
- "response": "The submission does pass the decision type to LangGraph\u2019s `interrupt` through `response_schema=_decision_schema(...)`, and LangGraph validates resume values using its `TypeAdapter`.\n\nHowever, LangChain checks the returned decision again. In `_resolve`, the decision returned by `_review` is passed to:\n\n```python\nself._process_decision(decision, request.tool_call, config)\n```\n\nThat existing method checks the decision type against the configured allowed decisions and raises an error for an unexpected decision. Thus, the per-call path retains middleware-side answer validation after LangGraph has already validated the answer.\n\nThe criterion requires the middleware to rely on the provider\u2019s checking, not repeat it. Dispatching directly on the validated decision would meet that requirement; routing it through `_process_decision` does not.\n\nFAIL"
-}

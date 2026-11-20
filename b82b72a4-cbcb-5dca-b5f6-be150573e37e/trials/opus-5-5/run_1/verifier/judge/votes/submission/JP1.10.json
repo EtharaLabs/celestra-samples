@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JP1",
- "trial": 10,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The diff changes span creation, scope management, and completion, but leaves `_sentry_before_sign` and its registration order unchanged. It does not change which propagation headers are selected or how they merge with existing request headers; changes to span or trace IDs do not count.\nNO"
-}

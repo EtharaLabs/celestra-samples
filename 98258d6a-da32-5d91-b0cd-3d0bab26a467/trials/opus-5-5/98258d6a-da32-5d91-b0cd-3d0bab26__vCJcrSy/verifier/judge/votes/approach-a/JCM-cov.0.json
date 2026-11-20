@@ -1,0 +1,8 @@
+{
+ "case": "approach-a",
+ "id": "JCM-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The change calls `model_snapshots(n, sns)` unconditionally before assigning `n.model.parameters` and passing snapshots to the builders, so the choice is not dependent on `transmission_losses`. That helper flattens MultiIndex snapshots for `\"flat\"` and for `\"auto\"` under v1 semantics, while preserving the MultiIndex for `\"multiindex\"` and legacy `\"auto\"`.\n\nYES"
+}

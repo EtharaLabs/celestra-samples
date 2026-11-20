@@ -1,5 +1,0 @@
-{
-  "context_digest": "sha256:e4b121a5e8c355dc6dd0c207170b61f8e17386da1740335be26377dac99e27be",
-  "image": "celestra/pybamm-solver-restarts-verifier@sha256:4e5c314fcdd1826e79e2d1a5b9ff85516a72284af2dd895526aa5445c1ee6042",
-  "schema": "trinity.image-lock/v1"
-}

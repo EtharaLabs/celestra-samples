@@ -1,8 +1,0 @@
-{
- "case": "reference",
- "id": "J1",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "PASS",
- "response": "The submission meets the criterion. Changes are confined to LangGraph\u2019s `interrupt` and `Interrupt`, the SDK interrupt type, and LangChain\u2019s `HumanInTheLoopMiddleware` module, including the imports and types needed for those changes.\n\nThe added schema-building helpers are used by the per-call approval path. Both synchronous and asynchronous tool wrappers share `_resolve_per_call`, while `_answer_message` consolidates rejection and response handling across batched and per-call modes rather than duplicating it. Existing batched behavior is retained, with only focused integration and typing adjustments. There are no unused alternative builders, dead code, unrelated rewrites, or duplicated helpers evident in the diff.\n\nPASS"
-}

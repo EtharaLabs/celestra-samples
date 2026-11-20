@@ -1,0 +1,8 @@
+{
+ "case": "unchanged-create-model",
+ "id": "JSL-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not modify `define_secant_loss_constraints` or introduce a fixed-layout conversion for its per-snapshot line data. The shared component-array changes flatten data only when the network\u2019s model uses flat snapshots, and model snapshot selection follows `optimization.model_snapshot_index`, rather than imposing one fixed representation.\nNO"
+}

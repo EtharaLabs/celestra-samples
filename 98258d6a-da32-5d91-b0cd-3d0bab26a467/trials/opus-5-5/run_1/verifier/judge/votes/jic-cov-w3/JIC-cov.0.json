@@ -1,8 +1,0 @@
-{
- "case": "jic-cov-w3",
- "id": "JIC-cov",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The change makes `installed_capex` restrict investment-period weights using `n.model.parameters.snapshots.to_index().unique(level=\"period\")`, which assumes a MultiIndex with a named `period` level. With `optimization.model_snapshot_index=\"flat\"`, those snapshots instead have a flat tuple index, so this weighting code depends on a fixed MultiIndex representation rather than respecting the selected representation.\nYES"
-}

@@ -1,0 +1,8 @@
+{
+ "case": "oracle",
+ "id": "JCM-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The conversion to `window.model_index` occurs before model construction, but the unchanged transmission-loss handling can subsequently reselect `sns` in the network\u2019s original representation. Thus, on a flat multi-period build, not all builders necessarily receive the same flat tuple index stored in `n.model.parameters`.\nNO"
+}

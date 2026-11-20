@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J2",
+ "trial": 2,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets the generality criterion.\n\n- Per-call decision schemas are built from the configured `allowed_decisions`, with duplicates removed and both single-decision and discriminated-union cases handled dynamically.\n- The edit branch pins the action name using `Literal[tool_name]`, rather than recognizing particular tool names. Its argument schema is derived from the supplied tool, without hard-coded argument names.\n- Tool-schema handling is based on tool and schema capabilities, including Pydantic argument models and schema-display/object fallbacks. These are general branches, not branches keyed to test fixtures.\n- On the provider side, `interrupt` uses `TypeAdapter(response_schema)` for non-dictionary schemas. Schema generation and resume validation therefore apply to caller-supplied Pydantic-compatible types generally, rather than a fixed list of schema kinds or decision structures.\n- Dictionary JSON Schemas are surfaced without validation, consistently with the reference contract. Validation occurs before a newly supplied answer is retained.\n\nThere are implementation and API differences from the reference, but no test-specific tool names, argument names, decision combinations, or response-schema fixtures drive the implementation.\n\nPASS"
+}

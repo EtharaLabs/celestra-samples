@@ -1,0 +1,8 @@
+{
+ "case": "jad-cov-w2",
+ "id": "JAD-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The change replaces `index=sns` with `index=self.n_save.snapshots[: len(sns)]` when `_as_dynamic` broadcasts static values into a dynamic frame. For a multi-period component with `optimization.model_snapshot_index=\"flat\"`, this uses the network\u2019s MultiIndex rather than the selected flat snapshot representation.\nYES"
+}

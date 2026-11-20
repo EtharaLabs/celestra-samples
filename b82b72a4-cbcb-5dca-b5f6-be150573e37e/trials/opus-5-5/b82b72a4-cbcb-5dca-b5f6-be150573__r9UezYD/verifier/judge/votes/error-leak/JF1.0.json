@@ -1,0 +1,8 @@
+{
+ "case": "error-leak",
+ "id": "JF1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "If `_make_api_call` raises after retries, `sentry_patched_make_api_call` simply re-raises without calling `_finish_span`. `_activate_client_span` only restores the previous active span, and the old `after-call-error` handler is no longer registered, so this error path leaves the client span open.\nNO"
+}

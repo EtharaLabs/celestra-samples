@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X2",
+ "trial": 17,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission makes the new arguments optional and adds the SDK field with `NotRequired`, so existing SDK interrupt dictionaries remain valid. It also explicitly preserves the old `Interrupt` representation and omits an unset schema from debug payloads.\n\nHowever, the LangGraph change is not minimal or confined to schema-enabled interrupts. It introduces a required `mapped_resume` scratchpad field, changes how ID-addressed resume values are staged, adds a new exception, and modifies the runner and loop\u2019s exception handling.\n\nIn particular, the resume-staging change applies even when no schema is supplied. Previously, `_algo.py` appended an ID-addressed answer directly to the task\u2019s resume list before execution. The submission instead keeps it in a separate list until an interrupt consumes it. Consequently, replaying earlier interrupts can emit a different `RESUME` list than before, changing persistence behavior on the existing no-schema path.\n\nThus, although the public additions are optional and some visible representations are carefully preserved, the submission does not meet the requirement for a minimal change that leaves existing no-schema behavior unchanged.\n\nFAIL"
+}

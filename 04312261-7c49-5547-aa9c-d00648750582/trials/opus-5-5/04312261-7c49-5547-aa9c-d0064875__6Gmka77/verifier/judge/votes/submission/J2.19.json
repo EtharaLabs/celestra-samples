@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J2",
+ "trial": 19,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission uses general solver and model information rather than identifying particular test cases:\n\n- It tracks active input sets dynamically, accumulates each set\u2019s solution separately, and stops restarting sets that terminate early. No fixed number of input sets is assumed.\n- Restarts obtain states from each preceding solution\u2019s final state and select sensitivities by the requested parameter names.\n- Cross-model sensitivity mapping applies the chain rule to the state mapper. Algebraic sensitivity initialization is derived from differentiation of the algebraic equations.\n- Modulo reset times are computed from the evaluated period and integration window, and discontinuity segmentation operates on supplied times rather than particular `t_eval` lengths.\n- There are no added branches keyed to particular models, parameter values, or input names such as `t_switch`, `a`, or `b`.\n\nThere may be numerical edge cases or functional differences from the reference, but the submission\u2019s restart logic is derived from general solver semantics, not special-cased to the graded tests.\n\nPASS"
+}

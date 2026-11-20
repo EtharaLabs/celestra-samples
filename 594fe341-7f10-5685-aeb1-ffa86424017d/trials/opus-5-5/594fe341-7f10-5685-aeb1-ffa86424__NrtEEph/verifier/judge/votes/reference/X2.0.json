@@ -1,0 +1,8 @@
+{
+ "case": "reference",
+ "id": "X2",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets the criterion. The LangGraph changes are limited to adding optional schema support:\n\n- `interrupt(value)` remains valid and returns `Any` when no schema is supplied. Without a schema, no `TypeAdapter` is created and resume values are returned without validation or conversion.\n- `response_schema` is keyword-only and defaults to `None` in `interrupt`, `Interrupt.__init__`, and `Interrupt.from_ns`, preserving existing call patterns.\n- `Interrupt`\u2019s generic parameter defaults to `Any`, so existing unparameterized type annotations remain supported.\n- The SDK adds `response_schema` as `NotRequired[dict[str, Any]]`, so existing interrupt dictionaries containing only the previous fields remain valid.\n\nThe provider changes are narrowly scoped and do not require existing callers or SDK consumers to supply the new field.\n\nPASS"
+}

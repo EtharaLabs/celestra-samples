@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JS2",
+ "trial": 11,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The span starts in the wrapper around `BaseClient._make_api_call`, once per client method call, rather than in a hook that fires per request attempt. The `request-created` hook now retrieves the existing span and adds metadata instead of starting one.\nNO"
+}

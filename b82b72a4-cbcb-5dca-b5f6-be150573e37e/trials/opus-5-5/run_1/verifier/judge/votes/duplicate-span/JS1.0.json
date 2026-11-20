@@ -1,8 +1,0 @@
-{
- "case": "duplicate-span",
- "id": "JS1",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The patched `_make_api_call` invokes `_start_client_span(ctx)` once for `span` and again for `inner` before executing the same original API call. With the integration enabled and tracing configured, both invocations start an `HTTP_CLIENT` span, so a single boto3 call gets more than one client span.\nYES"
-}

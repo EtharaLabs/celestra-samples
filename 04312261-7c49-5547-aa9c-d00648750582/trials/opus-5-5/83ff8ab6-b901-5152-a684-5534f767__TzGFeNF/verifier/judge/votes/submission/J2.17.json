@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J2",
- "trial": 17,
- "model": "gpt-6.1-sol",
- "label": "FAIL",
- "response": "The submission implements broadly general restart machinery: it tracks an arbitrary number of active input sets, restarts each from its own final state, selects sensitivities by name, and applies chain-rule sensitivity mappings. It does not special-case particular models, input names, or `t_eval` lengths.\n\nHowever, it still imposes a fixed, setup-dependent discontinuity schedule for constant modulo periods on solvers without `t_eval` discontinuity support. In `_set_up_events`, it generates only `200` events when `t_eval is None`, or only events up to the setup call\u2019s final time otherwise. Those events are not expanded from the integration window on each subsequent solve or step.\n\nConsequently, a sufficiently long step\u2014or a later solve extending beyond the original setup window\u2014can cross modulo resets for which no restart is scheduled. This is a concrete restriction on the supported discontinuity times, rather than a restart derived from general solver semantics for every integration window. The otherwise generic state and sensitivity handling does not remove that restriction.\n\nFAIL"
-}

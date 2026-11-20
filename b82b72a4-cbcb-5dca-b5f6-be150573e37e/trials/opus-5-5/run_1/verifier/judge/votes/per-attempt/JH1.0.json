@@ -1,8 +1,0 @@
-{
- "case": "per-attempt",
- "id": "JH1",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The change still parses request URLs with `parse_url(..., sanitize=False)` and uses the same URL, query, fragment, and method attribute keys and values in each tracing mode. The refactoring changes span creation and attribute placement, but the diff does not establish a difference in the request-derived HTTP attributes under the criterion.\nNO"
-}

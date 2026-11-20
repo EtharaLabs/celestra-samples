@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JTR-cov",
- "trial": 9,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The transmission inner function converts dynamic efficiency with `_to_model`, but leaves snapshot weights as `n.snapshot_weightings.generators.loc[sns]`. For a network with MultiIndex snapshots, this still returns MultiIndex-indexed weights even when `sns` contains flat tuple labels, so the inner function does not consistently take both inputs in the selected representation.\n\nNO"
-}

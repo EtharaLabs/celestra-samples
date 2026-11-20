@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J-MORX-ENC",
- "trial": 17,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The change adds value-based equality to `AATAction` and `LigAction`, which are also used by extended `morx` tables. Distinct but equal action objects can therefore be deduplicated differently during compilation, changing entry/action indices and the emitted bytes even though the new classic-table branch is restricted to `mort`.\nYES"
-}

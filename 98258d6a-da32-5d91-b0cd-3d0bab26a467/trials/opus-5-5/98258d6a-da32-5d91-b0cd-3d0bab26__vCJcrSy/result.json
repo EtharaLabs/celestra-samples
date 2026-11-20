@@ -1,0 +1,151 @@
+{
+  "id": "5f1467b1-f117-4b9f-9f47-64559469e21c",
+  "task_name": "ethara/98258d6a-da32-5d91-b0cd-3d0bab26a467",
+  "trial_name": "98258d6a-da32-5d91-b0cd-3d0bab26__vCJcrSy",
+  "trial_uri": "file:///home/ec2-user/depmig-work/harness-third/output/2026-11-20__05-59-48/98258d6a-da32-5d91-b0cd-3d0bab26__vCJcrSy",
+  "task_id": {
+    "path": "/tmp/harbor_task.4dl57ehi/98258d6a-da32-5d91-b0cd-3d0bab26a467"
+  },
+  "source": null,
+  "task_checksum": "755d06a0a3992dddde38ad7848260a0b3793e8faf284a5661aae054f91395961",
+  "config": {
+    "task": {
+      "path": "/tmp/harbor_task.4dl57ehi/98258d6a-da32-5d91-b0cd-3d0bab26a467",
+      "git_url": null,
+      "git_commit_id": null,
+      "name": null,
+      "ref": null,
+      "overwrite": false,
+      "download_dir": null,
+      "source": null
+    },
+    "trial_name": "98258d6a-da32-5d91-b0cd-3d0bab26__vCJcrSy",
+    "trials_dir": "/home/ec2-user/depmig-work/harness-third/output/2026-11-20__05-59-48",
+    "install_only": false,
+    "timeout_multiplier": 1.0,
+    "agent_timeout_multiplier": null,
+    "verifier_timeout_multiplier": null,
+    "agent_setup_timeout_multiplier": null,
+    "environment_build_timeout_multiplier": 1.0,
+    "agent": {
+      "name": "crossrepo_harness.adapters.reasoning_openhands_sdk:ReasoningOpenHandsSDK",
+      "import_path": null,
+      "model_name": "anthropic/claude-opus-5-5",
+      "base_url": null,
+      "model_api_key_name": null,
+      "model_api_format": null,
+      "skip_model_parsing": false,
+      "n_concurrent": null,
+      "concurrency_group": null,
+      "skills": [],
+      "override_timeout_sec": null,
+      "override_setup_timeout_sec": null,
+      "max_timeout_sec": null,
+      "resume_trajectory": false,
+      "load_trajectory": null,
+      "extra_allowed_hosts": [
+        "cc-bridge-internal"
+      ],
+      "kwargs": {
+        "config": {
+          "log_completions": true,
+          "log_completions_folder": "/logs/agent/completions"
+        }
+      },
+      "env": {
+        "LLM_BASE_URL": "http://cc-bridge-internal:8765",
+        "LLM_API_KEY": "${LLM_API_KEY}",
+        "LLM_DROP_PARAMS": "true"
+      },
+      "mcp_servers": []
+    },
+    "user_agent": null,
+    "environment": {
+      "type": "docker",
+      "import_path": null,
+      "force_build": true,
+      "delete": false,
+      "stream": false,
+      "cpu_enforcement_policy": "auto",
+      "memory_enforcement_policy": "auto",
+      "override_cpus": null,
+      "override_memory_mb": null,
+      "override_storage_mb": null,
+      "override_gpus": null,
+      "override_tpu": null,
+      "mounts": null,
+      "extra_docker_compose": [],
+      "kwargs": {},
+      "extra_allowed_hosts": []
+    },
+    "verifier": {
+      "override_timeout_sec": null,
+      "max_timeout_sec": null,
+      "disable": false
+    },
+    "artifacts": [],
+    "extra_instruction_paths": [],
+    "extra_instructions": [],
+    "job_id": "0964c9d9-8ad4-4c2a-8945-8a1a674b546e",
+    "source_trial": null
+  },
+  "agent_info": {
+    "name": "openhands-sdk",
+    "version": "1.58.2",
+    "model_info": {
+      "name": "claude-opus-5-5",
+      "provider": "anthropic"
+    }
+  },
+  "agent_result": {
+    "n_input_tokens": 100831828,
+    "n_cache_tokens": 96361489,
+    "n_output_tokens": 274689,
+    "cost_usd": 47.11726079999998,
+    "model_usage": null,
+    "rollout_details": null,
+    "metadata": null
+  },
+  "verifier_result": {
+    "rewards": {
+      "reward": 0.7244
+    },
+    "assay": {
+      "score_deterministic": 1.0,
+      "gate": 0,
+      "if_score": null,
+      "if_status": "absent",
+      "verifier_mode": "separate",
+      "verifier_trusted": true
+    }
+  },
+  "verifier_environment_mode": "separate",
+  "exception_info": null,
+  "started_at": "2026-11-20T05:59:50.449602Z",
+  "finished_at": "2026-11-20T08:55:56.107714Z",
+  "environment_setup": {
+    "started_at": "2026-11-20T05:59:50.471097Z",
+    "finished_at": "2026-11-20T06:00:13.522713Z"
+  },
+  "agent_setup": {
+    "started_at": "2026-11-20T06:00:13.522762Z",
+    "finished_at": "2026-11-20T06:00:21.747224Z"
+  },
+  "agent_execution": {
+    "started_at": "2026-11-20T06:00:21.747459Z",
+    "finished_at": "2026-11-20T08:48:18.775372Z"
+  },
+  "verifier": {
+    "started_at": "2026-11-20T08:48:37.138052Z",
+    "finished_at": "2026-11-20T08:55:56.107700Z"
+  },
+  "step_results": null,
+  "assay": {
+    "score_deterministic": 1.0,
+    "gate": 0,
+    "if_score": null,
+    "if_status": "absent",
+    "verifier_mode": "separate",
+    "verifier_trusted": true
+  }
+}

@@ -1,8 +1,0 @@
-{
- "case": "unchanged-func",
- "id": "JIC-cov",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The diff does not change `installed_capex` or its investment-period weighting in `pypsa/statistics/expressions.py`; changes there only adapt dynamic port efficiencies to the evaluation context. The snapshot-layout machinery selects its representation using `optimization.model_snapshot_index`, and the diff shows no fixed-representation override for `installed_capex` weighting.\nNO"
-}

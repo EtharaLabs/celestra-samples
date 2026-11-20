@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JF2",
+ "trial": 5,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "NO: The call\u2019s error and non-streaming completion paths each finish the client span once. For streaming responses, completion is deferred to `finish_spans`, whose `finished` guard prevents repeated reads, closes, or errors from finishing it again; installation failure leaves client-span completion to the caller.\nNO"
+}

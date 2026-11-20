@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JS1",
+ "trial": 10,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The wrapper calls `_start_client_span` once per API call, and request-created events reuse that span through `_client_span` rather than starting new ones. Streaming-body handling may retain and finish that client span alongside a separate streaming span, but does not start another client span for the call.\nNO"
+}

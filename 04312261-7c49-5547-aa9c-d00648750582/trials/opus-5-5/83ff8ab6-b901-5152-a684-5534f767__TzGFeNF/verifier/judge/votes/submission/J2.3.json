@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J2",
- "trial": 3,
- "model": "gpt-6.1-sol",
- "label": "FAIL",
- "response": "The submission uses general mechanisms for much of the restart logic: it tracks active input sets dynamically, reads final states and sensitivities by name, and applies the chain rule to state mappings. It does not branch on particular models, input names, parameter sets, or `t_eval` lengths.\n\nHowever, discontinuity discovery is still not general for constant modulo periods on solvers that do not support `t_eval` discontinuities. In `_set_up_events`, it expands those discontinuities using:\n\n- `num_events = 200` when `t_eval` is absent, as during step setup; or\n- `num_events = int(tf // period)` using the setup-time integration horizon.\n\nThose events are not expanded again for each integration window. Consequently, a step extending beyond 200 periods, or a later solve extending beyond the original setup horizon, can miss modulo discontinuities and therefore omit required restarts. This is an arbitrary restriction on restart scheduling rather than deriving every restart from the current solver window and model semantics.\n\nThus, despite the broadly generic implementation and absence of obvious test-specific branches, it does not meet the criterion\u2019s requirement to derive restarts for arbitrary discontinuity times.\n\nFAIL"
-}

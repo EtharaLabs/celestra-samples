@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JSM-leg",
- "trial": 2,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "If a model is built over a proper subset of `n.snapshots`, `solve_model` still passes the full `n.snapshots` to the callback rather than `_model_snapshots(n)`. Under legacy semantics with `\"auto\"` or `\"multiindex\"`, `_to_model` leaves that index unchanged, so the callback receives snapshots outside those used to build the model.\nYES"
-}

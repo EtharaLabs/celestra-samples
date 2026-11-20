@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MORX-ENC",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new compilation branches apply only when `writer.tableTag == \"mort\"`; extended `morx` state tables retain the existing write path. The other changes add reading/XML behavior, object equality, or update `StructLength` after compilation without changing the serialized length bytes, so they do not establish different `morx` output for the same objects.\nNO"
+}

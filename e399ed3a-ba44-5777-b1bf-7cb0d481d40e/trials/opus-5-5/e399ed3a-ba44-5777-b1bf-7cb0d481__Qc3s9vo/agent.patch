@@ -1,0 +1,573 @@
+--- a/Lib/fontTools/ttLib/tables/otConverters.py
++++ b/Lib/fontTools/ttLib/tables/otConverters.py
+@@ -25,6 +25,7 @@
+     AATStateTable,
+     AATState,
+     AATAction,
++    RearrangementMorphAction,
+     ContextualMorphAction,
+     LigatureMorphAction,
+     InsertionMorphAction,
+@@ -36,6 +37,8 @@
+ from itertools import zip_longest, accumulate
+ from functools import partial
+ from types import SimpleNamespace
++import copy
++import itertools
+ import re
+ import struct
+ from typing import Optional
+@@ -700,6 +703,7 @@
+         value.StructLength = deadbeef
+         value.compile(writer, font)
+         length = writer.getDataLength() - before
++        value.StructLength = length
+         lengthWriter = writer.getSubWriter()
+         conv.write(lengthWriter, font, tableDict, length)
+         assert writer.items[lengthIndex] == b"\xde\xad\xbe\xef"[: conv.staticSize]
+@@ -1148,6 +1152,24 @@
+     def xmlWrite(self, xmlWriter, font, value, name, attrs):
+         lookup = AATLookup("DataOffsets", None, None, self.tableClass)
+         lookup.xmlWrite(xmlWriter, font, value, name, attrs)
++
++
++class MortSubtableConverter(StructWithLength):
++    # Classic state tables have arrays that extend to the end of their
++    # subtable, so each subtable is decompiled from a reader over just
++    # its own bytes.
++    def read(self, reader, font, tableDict):
++        pos = reader.pos
++        (length,) = struct.unpack(">H", reader.data[pos : pos + 2])
++        subReader = OTTableReader(
++            reader.data[pos : pos + length],
++            localState=reader.localState,
++            tableTag=reader.tableTag,
++        )
++        table = self.tableClass()
++        table.decompile(subReader, font)
++        reader.seek(pos + length)
++        return table
+ 
+ 
+ class MorxSubtableConverter(BaseConverter):
+@@ -1292,6 +1314,8 @@
+             self.perGlyphLookup = None
+ 
+     def read(self, reader, font, tableDict):
++        if reader.tableTag == "mort":
++            return self._readClassic(reader, font)
+         table = AATStateTable()
+         pos = reader.pos
+         classTableReader = reader.getSubReader(0)
+@@ -1376,6 +1400,9 @@
+         return lookups
+ 
+     def write(self, writer, font, tableDict, value, repeatIndex=None):
++        if writer.tableTag == "mort":
++            writer.writeData(self._compileClassic(font, value))
++            return
+         glyphClassWriter = OTTableWriter()
+         self.classLookup.write(
+             glyphClassWriter, font, tableDict, value.GlyphClasses, repeatIndex=None
+@@ -1524,6 +1551,14 @@
+                 xmlWriter.newline()
+             xmlWriter.endtag("LigComponents")
+             xmlWriter.newline()
++        if hasattr(value, "MortLigatureRebase"):
++            xmlWriter.begintag("MortLigatureRebase")
++            xmlWriter.newline()
++            for index in sorted(value.MortLigatureRebase):
++                xmlWriter.simpletag("Component", index=index)
++                xmlWriter.newline()
++            xmlWriter.endtag("MortLigatureRebase")
++            xmlWriter.newline()
+         self._xmlWriteLigatures(xmlWriter, font, value, name, attrs)
+         xmlWriter.endtag(name)
+         xmlWriter.newline()
+@@ -1556,10 +1591,422 @@
+                 table.LigComponents = self._xmlReadLigComponents(
+                     eltAttrs, eltContent, font
+                 )
++            elif eltName == "MortLigatureRebase":
++                table.MortLigatureRebase = {
++                    safeEval(a["index"])
++                    for n, a, _ in filter(istuple, eltContent)
++                    if n == "Component"
++                }
+             elif eltName == "Ligatures":
+                 table.Ligatures = self._xmlReadLigatures(eltAttrs, eltContent, font)
+-        table.GlyphClassCount = max(table.GlyphClasses.values()) + 1
++        table.GlyphClassCount = self._countGlyphClasses(table)
+         return table
++
++    @staticmethod
++    def _countGlyphClasses(table):
++        glyphClasses = set(table.GlyphClasses.values())
++        for state in table.States:
++            glyphClasses.update(state.Transitions)
++        return max(glyphClasses, default=-1) + 1
++
++    # Classic 'mort' state tables, see Apple's TrueType Reference Manual,
++    # chapter "The 'mort' table". All offsets are byte offsets from the
++    # start of the state table header, and new states are byte offsets
++    # of state array rows.
++
++    def _classicEntrySize(self):
++        if issubclass(self.tableClass, (ContextualMorphAction, InsertionMorphAction)):
++            return 8
++        return 4
++
++    def _classicHeaderSize(self):
++        if issubclass(self.tableClass, ContextualMorphAction):
++            return 10  # plus substitutionTable
++        if issubclass(self.tableClass, LigatureMorphAction):
++            return 14  # plus ligActionTable, componentTable, ligatureTable
++        return 8
++
++    @staticmethod
++    def _readClassicArray(reader, typecode, itemSize, count):
++        if count < 0 or reader.pos + count * itemSize > len(reader.data):
++            raise ValueError("'mort' state table is truncated")
++        return reader.readArray(typecode, itemSize, count)
++
++    def _readClassic(self, reader, font):
++        start = reader.pos
++        size = len(reader.data) - start
++
++        def readerAt(offset):
++            subReader = reader.getSubReader(0)
++            subReader.seek(start + offset)
++            return subReader
++
++        table = AATStateTable()
++        stateSize = reader.readUShort()
++        classTableOffset = reader.readUShort()
++        stateArrayOffset = reader.readUShort()
++        entryTableOffset = reader.readUShort()
++        if stateSize == 0:
++            raise ValueError("'mort' state table has no glyph classes")
++        if stateArrayOffset > entryTableOffset:
++            raise ValueError("'mort' state array starts after the entry table")
++        table.GlyphClassCount = stateSize
++
++        classReader = readerAt(classTableOffset)
++        firstGlyph = classReader.readUShort()
++        numGlyphs = classReader.readUShort()
++        classes = self._readClassicArray(classReader, "B", 1, numGlyphs)
++        glyphs = font.getGlyphNameMany(range(firstGlyph, firstGlyph + numGlyphs))
++        table.GlyphClasses = dict(zip(glyphs, classes))
++
++        componentOffset = 0
++        if issubclass(self.tableClass, ContextualMorphAction):
++            substitutionOffset = reader.readUShort()
++        elif issubclass(self.tableClass, LigatureMorphAction):
++            reader.readUShort()  # ligActionTable; entries locate their actions
++            componentOffset = reader.readUShort()
++            ligatureOffset = reader.readUShort()
++            self._readClassicLigatureTables(
++                table, font, readerAt, componentOffset, ligatureOffset, size
++            )
++
++        def readTransition(entryIndex):
++            entryOffset = entryTableOffset + entryIndex * self._classicEntrySize()
++            transition = self._readClassicEntry(
++                readerAt(entryOffset), font, readerAt, componentOffset
++            )
++            transition.NewState = (transition.NewState - stateArrayOffset) // stateSize
++            return transition
++
++        stateReader = readerAt(stateArrayOffset)
++        numStates = (entryTableOffset - stateArrayOffset) // stateSize
++        for _ in range(numStates):
++            state = AATState()
++            row = self._readClassicArray(stateReader, "B", 1, stateSize)
++            for glyphClass, entryIndex in enumerate(row):
++                state.Transitions[glyphClass] = readTransition(entryIndex)
++            table.States.append(state)
++
++        if issubclass(self.tableClass, ContextualMorphAction):
++            self._readClassicSubstitutions(
++                table, font, readerAt, substitutionOffset, size
++            )
++        return table
++
++    def _readClassicEntry(self, entryReader, font, readerAt, componentOffset):
++        transition = self.tableClass()
++        if issubclass(
++            self.tableClass, (RearrangementMorphAction, ContextualMorphAction)
++        ):
++            # Same layout as in 'morx'; NewState and the contextual
++            # substitution offsets are resolved by the caller.
++            transition.decompile(entryReader, font, None)
++        elif issubclass(self.tableClass, LigatureMorphAction):
++            transition.NewState = entryReader.readUShort()
++            flags = entryReader.readUShort()
++            transition.SetComponent = bool(flags & 0x8000)
++            transition.DontAdvance = bool(flags & 0x4000)
++            actionOffset = flags & 0x3FFF
++            if actionOffset:
++                transition.Actions = transition._decompileLigActions(
++                    readerAt(actionOffset), 0
++                )
++                # Classic actions hold word offsets from the state table
++                # start; 'morx' ones index the component table.
++                for action in transition.Actions:
++                    action.GlyphIndexDelta -= componentOffset // 2
++        else:
++            transition.NewState = entryReader.readUShort()
++            flags = entryReader.readUShort()
++            transition.SetMark = bool(flags & 0x8000)
++            transition.DontAdvance = bool(flags & 0x4000)
++            transition.CurrentIsKashidaLike = bool(flags & 0x2000)
++            transition.MarkedIsKashidaLike = bool(flags & 0x1000)
++            transition.CurrentInsertBefore = bool(flags & 0x0800)
++            transition.MarkedInsertBefore = bool(flags & 0x0400)
++            for attr, count in (
++                ("CurrentInsertionAction", (flags & 0x03E0) >> 5),
++                ("MarkedInsertionAction", flags & 0x001F),
++            ):
++                offset = entryReader.readUShort()
++                if count:
++                    glyphIDs = self._readClassicArray(readerAt(offset), "H", 2, count)
++                    setattr(transition, attr, font.getGlyphNameMany(glyphIDs))
++        return transition
++
++    def _readClassicLigatureTables(
++        self, table, font, readerAt, componentOffset, ligatureOffset, size
++    ):
++        if componentOffset > ligatureOffset:
++            raise ValueError("'mort' component table starts after the ligature table")
++        if (ligatureOffset - componentOffset) % 2 or componentOffset % 2:
++            raise ValueError("'mort' component table has an odd length or offset")
++        numComponents = (ligatureOffset - componentOffset) // 2
++        components = self._readClassicArray(
++            readerAt(componentOffset), "H", 2, numComponents
++        )
++        if any(c % 2 for c in components):
++            raise ValueError("'mort' component table holds an odd value")
++        # Classic components are byte offsets whose sum, for each ligature,
++        # includes the ligature table offset exactly once.
++        rebase = {i for i, c in enumerate(components) if c >= ligatureOffset}
++        table.LigComponents = [
++            (c - ligatureOffset if i in rebase else c) // 2
++            for i, c in enumerate(components)
++        ]
++        table.MortLigatureRebase = rebase
++        numLigatures = max(0, (size - ligatureOffset) // 2)
++        ligatures = self._readClassicArray(
++            readerAt(ligatureOffset), "H", 2, numLigatures
++        )
++        table.Ligatures = font.getGlyphNameMany(ligatures)
++
++    def _readClassicSubstitutions(self, table, font, readerAt, substOffset, size):
++        # Entries hold signed word offsets; offset + glyph ID is the word
++        # position of that glyph's replacement. Zero means no substitution.
++        # Lookups are numbered in order of first use.
++        lookupIndex = {}
++
++        def resolve(value):
++            if value == 0:
++                return 0xFFFF
++            offset = value - 0x10000 if value >= 0x8000 else value
++            return lookupIndex.setdefault(offset, len(lookupIndex))
++
++        for state in table.States:
++            for t in state.Transitions.values():
++                t.MarkIndex = resolve(t.MarkIndex)
++                t.CurrentIndex = resolve(t.CurrentIndex)
++        offsets = list(lookupIndex)
++        numGlyphs = len(font.getGlyphOrder())
++        table.PerGlyphLookups = []
++        for offset in offsets:
++            first = max(0, -(-substOffset // 2) - offset)
++            limit = min(numGlyphs, size // 2 - offset)
++            lookup = {}
++            if first < limit:
++                values = self._readClassicArray(
++                    readerAt(2 * (offset + first)), "H", 2, limit - first
++                )
++                glyphs = font.getGlyphNameMany(range(first, limit))
++                lookup = dict(zip(glyphs, font.getGlyphNameMany(values)))
++            table.PerGlyphLookups.append(lookup)
++
++    def _compileClassic(self, font, table):
++        stateSize = self._countGlyphClasses(table)
++        if not 0 < stateSize <= 256:
++            raise ValueError("'mort' state tables need 1 to 256 glyph classes")
++        headerSize = self._classicHeaderSize()
++
++        classTable = self._compileClassicClassTable(font, table.GlyphClasses)
++        stateArrayOffset = headerSize + len(classTable)
++        newStateOffset = lambda t: stateArrayOffset + t.NewState * stateSize
++
++        entryIndices, entryTransitions, stateArray = {}, [], bytearray()
++        for state in table.States:
++            for glyphClass in range(stateSize):
++                transition = state.Transitions[glyphClass]
++                key = self._classicEntryKey(transition, newStateOffset(transition))
++                entryIndex = entryIndices.get(key)
++                if entryIndex is None:
++                    entryIndex = entryIndices[key] = len(entryTransitions)
++                    entryTransitions.append(transition)
++                if entryIndex > 0xFF:
++                    raise ValueError("'mort' state tables allow at most 256 entries")
++                stateArray.append(entryIndex)
++        if stateSize > 1:  # padding must not look like another state
++            stateArray = pad(bytes(stateArray), 2)
++        entryTableOffset = stateArrayOffset + len(stateArray)
++        dataOffset = entryTableOffset + len(entryTransitions) * self._classicEntrySize()
++
++        header = struct.pack(
++            ">4H", stateSize, headerSize, stateArrayOffset, entryTableOffset
++        )
++        if issubclass(self.tableClass, ContextualMorphAction):
++            dataOffset += dataOffset % 2
++            extraHeader, entries, data = self._compileClassicContextual(
++                font, table, entryTransitions, newStateOffset, dataOffset
++            )
++        elif issubclass(self.tableClass, LigatureMorphAction):
++            dataOffset += -dataOffset % 4
++            extraHeader, entries, data = self._compileClassicLigature(
++                font, table, entryTransitions, newStateOffset, dataOffset
++            )
++        elif issubclass(self.tableClass, InsertionMorphAction):
++            dataOffset += dataOffset % 2
++            extraHeader, entries, data = self._compileClassicInsertion(
++                font, table, entryTransitions, newStateOffset, dataOffset
++            )
++        else:
++            extraHeader = data = b""
++            entries = [
++                self._compileWithFields(font, t, NewState=newStateOffset(t))
++                for t in entryTransitions
++            ]
++        result = bytesjoin([header, extraHeader, classTable, stateArray] + entries)
++        return result + b"\0" * (dataOffset - len(result)) + data
++
++    @staticmethod
++    def _compileClassicClassTable(font, glyphClasses):
++        if not glyphClasses:
++            return struct.pack(">HH", 0, 0)
++        classes = {font.getGlyphID(g): c for g, c in glyphClasses.items()}
++        firstGlyph = min(classes)
++        numGlyphs = max(classes) - firstGlyph + 1
++        classArray = bytes(classes.get(firstGlyph + i, 1) for i in range(numGlyphs))
++        return pad(struct.pack(">HH", firstGlyph, numGlyphs) + classArray, 2)
++
++    @staticmethod
++    def _compileWithFields(font, transition, actionIndex=None, **fields):
++        transition = copy.copy(transition)
++        transition.__dict__.update(fields)
++        writer = OTTableWriter()
++        transition.compile(writer, font, actionIndex)
++        return writer.getAllData()
++
++    def _classicEntryKey(self, transition, newStateOffset):
++        if issubclass(self.tableClass, LigatureMorphAction):
++            return (
++                newStateOffset,
++                transition.SetComponent,
++                transition.DontAdvance,
++                transition.ReservedFlags,
++                transition.compileLigActions(),
++            )
++        if issubclass(self.tableClass, InsertionMorphAction):
++            return (
++                newStateOffset,
++                tuple(getattr(transition, f) for f in transition._FLAGS),
++                transition.ReservedFlags,
++                tuple(transition.CurrentInsertionAction),
++                tuple(transition.MarkedInsertionAction),
++            )
++        if issubclass(self.tableClass, ContextualMorphAction):
++            return (
++                newStateOffset,
++                transition.SetMark,
++                transition.DontAdvance,
++                transition.ReservedFlags,
++                transition.MarkIndex,
++                transition.CurrentIndex,
++            )
++        return (
++            newStateOffset,
++            transition.MarkFirst,
++            transition.DontAdvance,
++            transition.MarkLast,
++            transition.ReservedFlags,
++            transition.Verb,
++        )
++
++    def _compileClassicContextual(
++        self, font, table, entryTransitions, newStateOffset, substOffset
++    ):
++        glyphOrder = font.getGlyphOrder()
++        numGlyphs = len(glyphOrder)
++        known = set(glyphOrder)
++        arrays, offsets = [], []
++        for lookup in table.PerGlyphLookups:
++            unknown = set(lookup) - known
++            if unknown:
++                raise ValueError(
++                    "unknown glyphs in PerGlyphLookup: %s" % sorted(unknown)
++                )
++            if lookup:
++                # A full per-glyph array; glyphs without substitution map to
++                # themselves.
++                offsets.append(substOffset // 2 + len(arrays) * numGlyphs)
++                values = font.getGlyphIDMany([lookup.get(g, g) for g in glyphOrder])
++                arrays.append(struct.pack(">%dH" % numGlyphs, *values))
++            else:
++                offsets.append(None)
++        # Empty lookups get distinct offsets that put every glyph's word
++        # before the substitution table.
++        emptyOffsets = itertools.count(min(substOffset // 2 - numGlyphs, -1), -1)
++        offsets = [next(emptyOffsets) if o is None else o for o in offsets]
++        if any(not -0x8000 <= o <= 0x7FFF for o in offsets):
++            raise ValueError("'mort' contextual substitution table is too large")
++
++        def offset(index):
++            return 0 if index == 0xFFFF else offsets[index] & 0xFFFF
++
++        entries = [
++            self._compileWithFields(
++                font,
++                t,
++                NewState=newStateOffset(t),
++                MarkIndex=offset(t.MarkIndex),
++                CurrentIndex=offset(t.CurrentIndex),
++            )
++            for t in entryTransitions
++        ]
++        return struct.pack(">H", substOffset), entries, bytesjoin(arrays)
++
++    def _compileClassicLigature(
++        self, font, table, entryTransitions, newStateOffset, actionOffset
++    ):
++        actionData, actionIndex = LigatureMorphAction.compileActions(
++            font, table.States
++        )
++        components = getattr(table, "LigComponents", [])
++        rebase = getattr(table, "MortLigatureRebase", set())
++        componentOffset = actionOffset + len(actionData)
++        ligatureOffset = componentOffset + 2 * len(components)
++
++        actions = []
++        for (value,) in struct.iter_unpack(">L", actionData):
++            delta = value & 0x3FFFFFFF
++            if delta >= 0x20000000:
++                delta -= 0x40000000
++            delta += componentOffset // 2
++            if not -0x20000000 <= delta < 0x20000000:
++                raise ValueError("'mort' ligature action offset out of range")
++            actions.append(struct.pack(">L", value & 0xC0000000 | delta & 0x3FFFFFFF))
++
++        entries = []
++        for t in entryTransitions:
++            if t.ReservedFlags:
++                raise ValueError("'mort' ligature entries have no reserved flags")
++            flags = (0x8000 if t.SetComponent else 0) | (0x4000 if t.DontAdvance else 0)
++            if t.Actions:
++                offset = actionOffset + 4 * actionIndex[t.compileLigActions()]
++                if offset > 0x3FFF:
++                    raise ValueError("'mort' ligature actions out of reach")
++                flags |= offset
++            entries.append(struct.pack(">HH", newStateOffset(t), flags))
++
++        componentData = struct.pack(
++            ">%dH" % len(components),
++            *(
++                2 * c + (ligatureOffset if i in rebase else 0)
++                for i, c in enumerate(components)
++            ),
++        )
++        ligatures = getattr(table, "Ligatures", [])
++        ligatureData = struct.pack(
++            ">%dH" % len(ligatures), *font.getGlyphIDMany(ligatures)
++        )
++        header = struct.pack(">3H", actionOffset, componentOffset, ligatureOffset)
++        return header, entries, bytesjoin(actions + [componentData, ligatureData])
++
++    def _compileClassicInsertion(
++        self, font, table, entryTransitions, newStateOffset, glyphOffset
++    ):
++        glyphData, actionIndex = InsertionMorphAction.compileActions(
++            font, table.States
++        )
++        offsets = {k: glyphOffset + 2 * v for k, v in actionIndex.items()}
++        entries = []
++        for t in entryTransitions:
++            entry = self._compileWithFields(
++                font, t, offsets, NewState=newStateOffset(t)
++            )
++            # Entries without glyphs to insert have offset 0, not 0xFFFF.
++            current, marked = struct.unpack(">HH", entry[4:])
++            current = current if t.CurrentInsertionAction else 0
++            marked = marked if t.MarkedInsertionAction else 0
++            entries.append(entry[:4] + struct.pack(">HH", current, marked))
++        return b"", entries, glyphData
+ 
+     def _xmlReadState(self, attrs, content, font):
+         state = AATState()
+@@ -2321,7 +2768,7 @@
+     "CIDGlyphMap": CIDGlyphMap,
+     "GlyphCIDMap": GlyphCIDMap,
+     "MortChain": StructWithLength,
+-    "MortSubtable": StructWithLength,
++    "MortSubtable": MortSubtableConverter,
+     "MorxChain": StructWithLength,
+     "MorxSubtable": MorxSubtableConverter,
+     # "Template" types
+--- a/Lib/fontTools/ttLib/tables/otTables.py
++++ b/Lib/fontTools/ttLib/tables/otTables.py
+@@ -437,19 +437,26 @@
+             self.components.append(component)
+ 
+ 
+-class AATStateTable(object):
++class _AATObject(object):
++    def __eq__(self, other):
++        if type(self) != type(other):
++            return NotImplemented
++        return self.__dict__ == other.__dict__
++
++
++class AATStateTable(_AATObject):
+     def __init__(self):
+         self.GlyphClasses = {}  # GlyphID --> GlyphClass
+         self.States = []  # List of AATState, indexed by state number
+         self.PerGlyphLookups = []  # [{GlyphID:GlyphID}, ...]
+ 
+ 
+-class AATState(object):
++class AATState(_AATObject):
+     def __init__(self):
+         self.Transitions = {}  # GlyphClass --> AATAction
+ 
+ 
+-class AATAction(object):
++class AATAction(_AATObject):
+     _FLAGS = None
+ 
+     @staticmethod
+@@ -620,7 +627,7 @@
+                 self.CurrentIndex = safeEval(eltAttrs["value"])
+ 
+ 
+-class LigAction(object):
++class LigAction(_AATObject):
+     def __init__(self):
+         self.Store = False
+         # GlyphIndexDelta is a (possibly negative) delta that gets
+@@ -2723,7 +2730,12 @@
+             9: ExtensionPos,
+         },
+         "mort": {
++            0: RearrangementMorph,
++            1: ContextualMorph,
++            2: LigatureMorph,
++            # 3: Reserved,
+             4: NoncontextualMorph,
++            5: InsertionMorph,
+         },
+         "morx": {
+             0: RearrangementMorph,

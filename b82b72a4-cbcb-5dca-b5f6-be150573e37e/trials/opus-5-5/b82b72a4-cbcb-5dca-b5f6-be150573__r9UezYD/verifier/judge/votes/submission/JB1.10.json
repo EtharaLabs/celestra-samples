@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JB1",
+ "trial": 10,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The breadcrumb is still added once per `request-created` event, with the same URL and HTTP-method data in both streaming and non-streaming modes. The changes move span creation and completion but do not change breadcrumb registration, construction, or emission.\nNO"
+}

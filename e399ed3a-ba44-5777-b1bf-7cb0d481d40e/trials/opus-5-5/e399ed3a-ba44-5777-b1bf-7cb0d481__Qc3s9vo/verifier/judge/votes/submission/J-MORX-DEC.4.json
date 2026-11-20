@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MORX-DEC",
+ "trial": 4,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new binary-reading logic is gated on `reader.tableTag == \"mort\"`, and only the mort subtable converter and mort type mappings change. For morx, the existing decoding path remains unchanged; the added equality methods affect object comparison, not the values decoded from bytes, and the other shared changes concern writing or XML input.\nNO"
+}

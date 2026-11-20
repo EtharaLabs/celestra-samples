@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JIT-cov",
+ "trial": 12,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not modify `optimize_transmission_expansion_iteratively` or `abstract.py`, so it adds no forced conversion of the snapshots passed by that function. Instead, model construction resolves `optimization.model_snapshot_index` and conditionally uses flat snapshots, while retaining MultiIndex snapshots otherwise.\n\nNO"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J2",
+ "trial": 2,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets this criterion: its restart logic is based on solver state and model semantics, not on particular test cases.\n\n- It handles input sets through dynamically sized solution lists and active-set indices, restarting each surviving input set from its own final state.\n- Restart sensitivities are selected using the model\u2019s requested sensitivity names rather than hard-coded parameter names or column positions.\n- Cross-model sensitivity mapping applies the chain rule to the state mapper, and algebraic sensitivity consistency is derived from the differentiated algebraic equations.\n- Modulo discontinuities are generated from the evaluated period and the current integration window, rather than a fixed event count or particular `t_eval` length.\n- There are no branches keyed to specific models, parameter values, input names, or test-sized batches.\n\nSome numerical edge cases and API limitations could merit separate correctness review, but the implementation does not specialize restart behavior to the graded tests.\n\nPASS"
+}

@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JFX-leg",
- "trial": 8,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The change unconditionally calls `unflatten_snapshots(da)` at the start of `_from_xarray`, without checking linopy semantics or `optimization.model_snapshot_index`. For an array with a flat, object-typed `snapshot` index of `(period, timestep)` tuples, this converts that index into a MultiIndex before the existing conversion logic, changing the returned snapshot indexing compared with the base commit even under legacy semantics and the specified option values.\nYES"
-}

@@ -1,0 +1,719 @@
+--- a/langchain/libs/langchain_v1/langchain/agents/middleware/human_in_the_loop.py
++++ b/langchain/libs/langchain_v1/langchain/agents/middleware/human_in_the_loop.py
+@@ -3,13 +3,19 @@
+ from __future__ import annotations
+ 
+ import json
++import operator
+ from dataclasses import replace
+-from typing import TYPE_CHECKING, Annotated, Any, Literal, Protocol, cast
++from functools import reduce
++from typing import TYPE_CHECKING, Annotated, Any, Literal, Protocol, cast, get_args
+ 
+ from langchain_core.messages import AIMessage, ToolCall, ToolMessage
++from langchain_core.tools import Tool
++from langchain_core.utils.function_calling import convert_to_openai_function
+ from langgraph.config import get_config
+ from langgraph.prebuilt.tool_node import ToolRuntime
++from langgraph.runtime import get_runtime
+ from langgraph.types import Command, interrupt
++from pydantic import BaseModel, ConfigDict, Field, WrapValidator, create_model
+ from typing_extensions import NotRequired, TypedDict
+ 
+ from langchain.agents.middleware.types import (
+@@ -23,9 +29,11 @@
+ )
+ 
+ if TYPE_CHECKING:
+-    from collections.abc import Awaitable, Callable
+-
++    from collections.abc import Awaitable, Callable, Sequence
++
++    from langchain_core.tools import BaseTool
+     from langgraph.runtime import Runtime
++    from pydantic import ValidationInfo, ValidatorFunctionWrapHandler
+ 
+ 
+ _EDITED_TOOL_CALLS_KEY = "hitl_edited_tool_calls"
+@@ -64,6 +72,15 @@
+ 
+ DecisionType = Literal["approve", "edit", "reject", "respond"]
+ 
++InterruptMode = Literal["batched", "per_call"]
++"""How `HumanInTheLoopMiddleware` pauses for review.
++
++- `'batched'`: one pause per model turn, reviewing all of its listed tool calls in a
++    single `HITLRequest`.
++- `'per_call'`: one pause per listed tool call, made just before that call runs, with a
++    `ToolApprovalRequest` and a `response_schema` for its answer.
++"""
++
+ 
+ class ReviewConfig(TypedDict):
+     """Policy for reviewing a HITL request."""
+@@ -146,6 +163,125 @@
+ 
+     decisions: list[Decision]
+     """The decisions made by the human."""
++
++
++class ToolApprovalRequest(TypedDict):
++    """Request for human review of a single tool call, made just before it runs."""
++
++    type: Literal["tool_approval"]
++    """Marks the request as the review of one tool call."""
++
++    tool_call_id: str
++    """ID of the tool call under review."""
++
++    name: str
++    """Name of the tool being called."""
++
++    args: dict[str, Any]
++    """Arguments the model called the tool with."""
++
++    description: str
++    """The description of the tool call to be reviewed."""
++
++
++def _keep_reviewer_args(
++    args: Any, handler: ValidatorFunctionWrapHandler, info: ValidationInfo
++) -> Any:
++    """Validate the reviewer's args, keeping them as given so the tool receives them.
++
++    Args of an action naming another tool are left unchecked, as they are not this
++    tool's: the name is the error.
++    """
++    if "name" in info.data:
++        handler(args)
++    return args
++
++
++def _edited_args_type(tool_name: str, tool: BaseTool | None) -> Any:
++    """Type of the args a reviewer may give `tool`, named after the tool.
++
++    When the model sees the tool's arguments as a pydantic model, the args are
++    validated against it. Otherwise the arguments the model sees are shown, if there is
++    a tool, and any object is accepted.
++    """
++    schema = tool.tool_call_schema if tool is not None else None
++    sees_schema = not (isinstance(tool, Tool) and not tool.args_schema)
++    if sees_schema and isinstance(schema, type) and issubclass(schema, BaseModel):
++        return Annotated[schema, WrapValidator(_keep_reviewer_args)]
++
++    shown: dict[str, Any] = {"title": tool_name, "type": "object"}
++    if tool is not None:
++        shown.update(convert_to_openai_function(tool)["parameters"])
++        if tool.description:
++            shown["description"] = tool.description
++
++    def show(json_schema: dict[str, Any], _: type[BaseModel]) -> None:
++        json_schema.clear()
++        json_schema.update(shown)
++
++    any_object = create_model(
++        tool_name, __config__=ConfigDict(extra="allow", json_schema_extra=show)
++    )
++    return Annotated[any_object, WrapValidator(_keep_reviewer_args)]
++
++
++def _edit_decision_type(tool_name: str, tool: BaseTool | None) -> Any:
++    """`EditDecision` whose action must call `tool_name`, with args fit for `tool`."""
++    # Called as a plain function: the fields are only known at runtime.
++    typed_dict = cast("Any", TypedDict)
++    edited_action = typed_dict(
++        "EditedAction",
++        {"name": Literal[tool_name], "args": _edited_args_type(tool_name, tool)},
++    )
++    edited_action.__doc__ = Action.__doc__
++    edit_decision = typed_dict(
++        "EditDecision", {"type": Literal["edit"], "edited_action": edited_action}
++    )
++    edit_decision.__doc__ = EditDecision.__doc__
++    return edit_decision
++
++
++def _decision_schema(
++    allowed_decisions: Sequence[DecisionType],
++    tool_name: str,
++    tool: BaseTool | None = None,
++) -> Any:
++    """Type of the answers a reviewer may give for a call to `tool_name`.
++
++    Each allowed decision is one member of a union tagged by `type`, in
++    `allowed_decisions` order. A single allowed decision is its own type. An `edit`
++    must name `tool_name`, and its args must fit the tool's arguments as the model sees
++    them; the args it carries are the reviewer's own, not the validated ones.
++
++    Args:
++        allowed_decisions: The decisions the reviewer may make.
++        tool_name: Name of the tool being called.
++        tool: The tool, whose arguments an `edit` is validated against.
++
++    Returns:
++        A type pydantic's `TypeAdapter` accepts.
++
++    Raises:
++        ValueError: If `allowed_decisions` is empty or names an unknown decision.
++    """
++    allowed = list(dict.fromkeys(allowed_decisions))
++    if not allowed or any(d not in get_args(DecisionType) for d in allowed):
++        msg = (
++            f"`allowed_decisions` for tool '{tool_name}' must be a non-empty list drawn "
++            f"from {list(get_args(DecisionType))}, got {list(allowed_decisions)!r}."
++        )
++        raise ValueError(msg)
++    decision_types: dict[str, Any] = {
++        "approve": ApproveDecision,
++        "reject": RejectDecision,
++        "respond": RespondDecision,
++    }
++    if "edit" in allowed:
++        decision_types["edit"] = _edit_decision_type(tool_name, tool)
++    members = tuple(decision_types[d] for d in allowed)
++    if len(members) == 1:
++        return members[0]
++    return Annotated[reduce(operator.or_, members), Field(discriminator="type")]
+ 
+ 
+ class _DescriptionFactory(Protocol):
+@@ -210,14 +346,17 @@
+     """Optional predicate controlling whether to interrupt for a given tool call.
+ 
+     Receives a `ToolCallRequest` and returns `True` to interrupt or `False` to
+-    auto-approve. The predicate is called during `after_model` before the tool
+-    call is added to the batched human-in-the-loop request.
+-
+-    The request is constructed with `tool=None` and a new `ToolRuntime`. The
+-    `ToolRuntime` copies `context`, `store`, `stream_writer`, `execution_info`,
+-    and `server_info` from the node-level `Runtime`, while `tool_call_id` is
+-    populated from the current tool call. The `tools` argument is not supplied,
+-    so it uses its default empty list.
++    auto-approve.
++
++    In `'batched'` mode, the predicate is called during `after_model` before the tool
++    call is added to the batched human-in-the-loop request. The request is
++    constructed with `tool=None` and a new `ToolRuntime`. The `ToolRuntime` copies
++    `context`, `store`, `stream_writer`, `execution_info`, and `server_info` from the
++    node-level `Runtime`, while `tool_call_id` is populated from the current tool
++    call. The `tools` argument is not supplied, so it uses its default empty list.
++
++    In `'per_call'` mode, the predicate is called just before the tool call runs, with
++    the request that is about to run it.
+ 
+     Example:
+         ```python
+@@ -246,6 +385,7 @@
+         self,
+         interrupt_on: dict[str, bool | InterruptOnConfig],
+         *,
++        interrupt_mode: InterruptMode = "batched",
+         description_prefix: str = "Tool execution requires approval",
+         edit_notice: str | None = _EDIT_NOTICE,
+     ) -> None:
+@@ -267,6 +407,20 @@
+ 
+                     A `when` predicate can also be provided to dynamically control
+                     whether a tool call triggers an interrupt.
++            interrupt_mode: How to pause for review.
++
++                * `'batched'` pauses once per model turn, after the model responds,
++                    with one `HITLRequest` for all of the turn's listed tool calls.
++                    The `HITLResponse` holds one decision per call, in order.
++                * `'per_call'` pauses for each listed tool call just before it runs,
++                    with a `ToolApprovalRequest`. The pause's `Interrupt` carries the
++                    JSON Schema of the decisions the call accepts as
++                    `response_schema`, and it is resumed with a single decision. A
++                    decision that does not fit the schema is not kept: the pause stays
++                    pending and the run raises `pydantic.ValidationError`, so the
++                    pause can be answered again. List this middleware before
++                    middleware that retries tool calls, so a retried call is not
++                    reviewed again.
+             description_prefix: The prefix to use when constructing action requests.
+ 
+                 This is used to provide context about the tool call and the action being
+@@ -277,12 +431,17 @@
+                 via an `edit` decision. Pass `None` to add nothing.
+ 
+         Raises:
++            ValueError: If `interrupt_mode` is not `'batched'` or `'per_call'`.
+             ValueError: If a tool's `InterruptOnConfig` does not have a non-empty
+                 `allowed_decisions` list (e.g. a misspelled key or an empty list).
+                 An interrupt config without decisions would otherwise be silently
+                 dropped, disabling the approval gate for that tool.
+         """
+         super().__init__()
++        if interrupt_mode not in get_args(InterruptMode):
++            msg = f"`interrupt_mode` must be 'batched' or 'per_call', got {interrupt_mode!r}."
++            raise ValueError(msg)
++        self.interrupt_mode = interrupt_mode
+         self.edit_notice = edit_notice
+         resolved_configs: dict[str, InterruptOnConfig] = {}
+         for tool_name, tool_config in interrupt_on.items():
+@@ -429,6 +588,9 @@
+     ) -> dict[str, Any] | None:
+         """Trigger interrupt flows for relevant tool calls after an `AIMessage`.
+ 
++        In `'per_call'` mode, tool calls are reviewed as they run instead, so this
++        does nothing.
++
+         Args:
+             state: The current agent state.
+             runtime: The runtime context.
+@@ -440,6 +602,9 @@
+             ValueError: If the number of human decisions does not match the number of
+                 interrupted tool calls.
+         """
++        if self.interrupt_mode == "per_call":
++            return None
++
+         messages = state["messages"]
+         if not messages:
+             return None
+@@ -537,6 +702,52 @@
+             Updated message with the revised tool calls.
+         """
+         return self.after_model(state, runtime)
++
++    def _review(self, request: ToolCallRequest) -> tuple[Action | None, ToolMessage | None]:
++        """Pause for a reviewer's decision on the call about to run, if it needs one.
++
++        Returns:
++            The reviewer's replacement for the call, if they edited it, and the tool
++                message to return without running the call, if they rejected it or
++                responded on behalf of the tool.
++
++        Raises:
++            ValueError: If the call has no ID.
++        """
++        tool_call = request.tool_call
++        config = self.interrupt_on.get(tool_call["name"])
++        if config is None:
++            return None, None
++        when = config.get("when")
++        if when is not None and not when(request):
++            return None, None
++        if tool_call.get("id") is None:
++            msg = (
++                f"Tool call `{tool_call['name']}` has no ID, so it cannot be reviewed "
++                "on its own and matched with its result."
++            )
++            raise ValueError(msg)
++
++        action_request, _ = self._create_action_and_config(
++            tool_call, config, request.state, get_runtime()
++        )
++        approval_request = ToolApprovalRequest(
++            type="tool_approval",
++            tool_call_id=cast("str", tool_call["id"]),
++            name=tool_call["name"],
++            args=tool_call["args"],
++            description=action_request["description"],
++        )
++        decision: Decision = interrupt(
++            approval_request,
++            response_schema=_decision_schema(
++                config["allowed_decisions"], tool_call["name"], request.tool
++            ),
++        )
++        _, tool_message = self._process_decision(decision, tool_call, config)
++        if decision["type"] == "edit":
++            return decision["edited_action"], tool_message
++        return None, tool_message
+ 
+     def _reviewer_edit(self, request: ToolCallRequest) -> Action | None:
+         """The reviewer's replacement for this call, if an `edit` decision replaced it."""
+@@ -646,7 +857,11 @@
+         request: ToolCallRequest,
+         handler: Callable[[ToolCallRequest], ToolMessage | Command[Any]],
+     ) -> ToolMessage | Command[Any]:
+-        """Prepend reviewer-edit guidance to the result of an edited tool call.
++        """Run the tool call as the reviewer decided.
++
++        In `'per_call'` mode, first pauses for the reviewer's decision on a listed call.
++        A call the reviewer rejected or responded for returns its tool message without
++        running.
+ 
+         Args:
+             request: The tool call request being executed.
+@@ -655,7 +870,12 @@
+         Returns:
+             The tool result, with a note prepended when a reviewer edited the call.
+         """
+-        executed = self._reviewer_edit(request)
++        if self.interrupt_mode == "per_call":
++            executed, tool_message = self._review(request)
++            if tool_message is not None:
++                return tool_message
++        else:
++            executed = self._reviewer_edit(request)
+         if executed is not None:
+             request = self._apply_edit(request, executed)
+         return self._annotate_edited_result(handler(request), request, executed)
+@@ -674,7 +894,12 @@
+         Returns:
+             The tool result, with a note prepended when a reviewer edited the call.
+         """
+-        executed = self._reviewer_edit(request)
++        if self.interrupt_mode == "per_call":
++            executed, tool_message = self._review(request)
++            if tool_message is not None:
++                return tool_message
++        else:
++            executed = self._reviewer_edit(request)
+         if executed is not None:
+             request = self._apply_edit(request, executed)
+         return self._annotate_edited_result(await handler(request), request, executed)
+--- a/langgraph/libs/langgraph/langgraph/_internal/_scratchpad.py
++++ b/langgraph/libs/langgraph/langgraph/_internal/_scratchpad.py
+@@ -14,6 +14,9 @@
+     # interrupt
+     interrupt_counter: Callable[[], int]
+     get_null_resume: Callable[[bool], Any]
++    # answers accepted by this task's interrupts, in order
+     resume: list[Any]
++    # answer addressed to this task by interrupt id, until an interrupt accepts it
++    mapped_resume: list[Any]
+     # subgraph
+     subgraph_counter: Callable[[], int]
+--- a/langgraph/libs/langgraph/langgraph/errors.py
++++ b/langgraph/libs/langgraph/langgraph/errors.py
+@@ -3,7 +3,7 @@
+ from collections.abc import Sequence
+ from dataclasses import dataclass
+ from enum import Enum
+-from typing import Any, Literal
++from typing import TYPE_CHECKING, Any, Literal
+ from warnings import warn
+ 
+ # EmptyChannelError is re-exported from langgraph.channels.base
+@@ -12,6 +12,9 @@
+ 
+ from langgraph.types import Command, Interrupt
+ from langgraph.warnings import LangGraphDeprecatedSinceV10
++
++if TYPE_CHECKING:
++    from pydantic import ValidationError
+ 
+ __all__ = (
+     "EmptyChannelError",
+@@ -105,6 +108,17 @@
+ 
+     def __init__(self, interrupts: Sequence[Interrupt] = ()) -> None:
+         super().__init__(interrupts)
++
++
++class ResumeRejected(GraphInterrupt):
++    """Raised by `interrupt` when its answer does not fit its `response_schema`.
++
++    The interrupt stays pending, and nothing of the answer is kept. The root graph
++    raises `error` instead of returning the interrupt."""
++
++    def __init__(self, interrupts: Sequence[Interrupt], error: ValidationError) -> None:
++        super().__init__(interrupts)
++        self.error = error
+ 
+ 
+ @deprecated(
+--- a/langgraph/libs/langgraph/langgraph/pregel/_algo.py
++++ b/langgraph/libs/langgraph/langgraph/pregel/_algo.py
+@@ -1309,13 +1309,16 @@
+         del w
+ 
+         # find namespace and task-specific resume value
+-        if resume_map and namespace_hash in resume_map:
+-            mapped_resume_write = resume_map[namespace_hash]
+-            task_resume_write.append(mapped_resume_write)
++        mapped_resume = (
++            [resume_map[namespace_hash]]
++            if resume_map and namespace_hash in resume_map
++            else []
++        )
+ 
+     else:
+         null_resume_write = None
+         task_resume_write = []
++        mapped_resume = []
+ 
+     def get_null_resume(consume: bool = False) -> Any:
+         if null_resume_write is None:
+@@ -1339,6 +1342,7 @@
+         # interrupt
+         interrupt_counter=LazyAtomicCounter(),
+         resume=task_resume_write,
++        mapped_resume=mapped_resume,
+         get_null_resume=get_null_resume,
+         # subgraph
+         subgraph_counter=LazyAtomicCounter(),
+--- a/langgraph/libs/langgraph/langgraph/pregel/_loop.py
++++ b/langgraph/libs/langgraph/langgraph/pregel/_loop.py
+@@ -77,6 +77,7 @@
+ from langgraph.errors import (
+     EmptyInputError,
+     GraphInterrupt,
++    ResumeRejected,
+ )
+ from langgraph.managed.base import (
+     ManagedValueMapping,
+@@ -1332,6 +1333,9 @@
+             self._put_exit_delta_writes()
+             self._put_checkpoint(self.checkpoint_metadata)
+             self._put_pending_writes()
++        # a rejected answer leaves its interrupt pending, and fails the run
++        if isinstance(exc_value, ResumeRejected) and not self.is_nested:
++            raise exc_value.error from None
+         # suppress interrupt
+         if isinstance(exc_value, GraphInterrupt) and not self.is_nested:
+             interrupt = exc_value
+--- a/langgraph/libs/langgraph/langgraph/pregel/_runner.py
++++ b/langgraph/libs/langgraph/langgraph/pregel/_runner.py
+@@ -41,7 +41,7 @@
+ from langgraph._internal._scratchpad import PregelScratchpad
+ from langgraph._internal._typing import MISSING
+ from langgraph.constants import TAG_HIDDEN
+-from langgraph.errors import GraphBubbleUp, GraphInterrupt
++from langgraph.errors import GraphBubbleUp, GraphInterrupt, ResumeRejected
+ from langgraph.pregel._algo import Call
+ from langgraph.pregel._executor import Submit
+ from langgraph.pregel._retry import arun_with_retry, run_with_retry
+@@ -687,7 +687,12 @@
+                     raise exc
+     # raise combined interrupts
+     if interrupts:
+-        raise GraphInterrupt(tuple(i for exc in interrupts for i in exc.args[0]))
++        combined = tuple(i for exc in interrupts for i in exc.args[0])
++        if rejected := next(
++            (exc for exc in interrupts if isinstance(exc, ResumeRejected)), None
++        ):
++            raise ResumeRejected(combined, rejected.error)
++        raise GraphInterrupt(combined)
+     if inflight:
+         # if we got here means we timed out
+         while inflight:
+--- a/langgraph/libs/langgraph/langgraph/pregel/debug.py
++++ b/langgraph/libs/langgraph/langgraph/pregel/debug.py
+@@ -28,6 +28,7 @@
+ from langgraph.pregel._io import read_channels
+ from langgraph.types import (
+     CheckpointPayload,
++    Interrupt,
+     PregelExecutableTask,
+     PregelTask,
+     StateSnapshot,
+@@ -120,12 +121,20 @@
+             [w for w in writes if w[0] in stream_channels_list or w[0] == RETURN]
+         ),
+         "interrupts": [
+-            asdict(v)
++            _interrupt_payload(v)
+             for w in writes
+             if w[0] == INTERRUPT
+             for v in (w[1] if isinstance(w[1], Sequence) else [w[1]])
+         ],
+     }
++
++
++def _interrupt_payload(interrupt: Interrupt) -> dict[str, Any]:
++    """Render an interrupt for a debug event, with `response_schema` only when set."""
++    payload = asdict(interrupt)
++    if payload["response_schema"] is None:
++        del payload["response_schema"]
++    return payload
+ 
+ 
+ def rm_pregel_keys(config: RunnableConfig | None) -> RunnableConfig | None:
+@@ -191,14 +200,14 @@
+                 "id": t.id,
+                 "name": t.name,
+                 "result": t.result,
+-                "interrupts": tuple(asdict(i) for i in t.interrupts),
++                "interrupts": tuple(_interrupt_payload(i) for i in t.interrupts),
+                 "state": t.state,
+             }
+             if t.result
+             else {
+                 "id": t.id,
+                 "name": t.name,
+-                "interrupts": tuple(asdict(i) for i in t.interrupts),
++                "interrupts": tuple(_interrupt_payload(i) for i in t.interrupts),
+                 "state": t.state,
+             }
+             for t in tasks_w_writes(tasks, pending_writes, task_states, output_keys)
+--- a/langgraph/libs/langgraph/langgraph/types.py
++++ b/langgraph/libs/langgraph/langgraph/types.py
+@@ -20,6 +20,7 @@
+ from langchain_core.messages import AnyMessage
+ from langchain_core.runnables import Runnable, RunnableConfig
+ from langgraph.checkpoint.base import BaseCheckpointSaver, CheckpointMetadata
++from pydantic import TypeAdapter, ValidationError
+ from typing_extensions import NotRequired, TypeAliasType, TypedDict, Unpack, deprecated
+ from xxhash import xxh3_128_hexdigest
+ 
+@@ -596,13 +597,18 @@
+     id: str
+     """The ID of the interrupt. Can be used to resume the interrupt directly."""
+ 
++    response_schema: dict[str, Any] | None = None
++    """JSON Schema of the answers the interrupt accepts, if it declared one."""
++
+     def __init__(
+         self,
+         value: Any,
+         id: str = _DEFAULT_INTERRUPT_ID,
++        response_schema: dict[str, Any] | None = None,
+         **deprecated_kwargs: Unpack[DeprecatedKwargs],
+     ) -> None:
+         self.value = value
++        self.response_schema = response_schema
+ 
+         if (
+             (ns := deprecated_kwargs.get("ns", MISSING)) is not MISSING
+@@ -613,9 +619,23 @@
+         else:
+             self.id = id
+ 
++    def __repr__(self) -> str:
++        schema = (
++            ""
++            if self.response_schema is None
++            else f", response_schema={self.response_schema!r}"
++        )
++        return f"Interrupt(value={self.value!r}, id={self.id!r}{schema})"
++
+     @classmethod
+-    def from_ns(cls, value: Any, ns: str) -> Interrupt:
+-        return cls(value=value, id=xxh3_128_hexdigest(ns.encode()))
++    def from_ns(
++        cls, value: Any, ns: str, response_schema: dict[str, Any] | None = None
++    ) -> Interrupt:
++        return cls(
++            value=value,
++            id=xxh3_128_hexdigest(ns.encode()),
++            response_schema=response_schema,
++        )
+ 
+     @property
+     @deprecated("`interrupt_id` is deprecated. Use `id` instead.", category=None)
+@@ -848,7 +868,7 @@
+     PARENT: ClassVar[Literal["__parent__"]] = "__parent__"
+ 
+ 
+-def interrupt(value: Any) -> Any:
++def interrupt(value: Any, response_schema: dict[str, Any] | Any | None = None) -> Any:
+     """Interrupt the graph with a resumable exception from within a node.
+ 
+     The `interrupt` function enables human-in-the-loop workflows by pausing graph
+@@ -869,6 +889,14 @@
+ 
+     To use an `interrupt`, you must enable a checkpointer, as the feature relies
+     on persisting the graph state.
++
++    Pass `response_schema` to declare the answers the interrupt accepts. The surfaced
++    `Interrupt` carries it as JSON Schema. A `dict` is taken to be JSON Schema: it is
++    surfaced unchanged and not enforced. Anything else is taken to be a type pydantic
++    can validate: its JSON Schema is surfaced, and each answer is validated against it
++    before it is kept, with `interrupt` returning the validated object. An answer that
++    fails validation is not kept: the interrupt stays pending, and the graph run raises
++    the `pydantic.ValidationError`, so the interrupt can be answered again.
+ 
+     !!! example
+ 
+@@ -931,12 +959,15 @@
+ 
+     Args:
+         value: The value to surface to the client when the graph is interrupted.
++        response_schema: The answers the interrupt accepts, as a JSON Schema `dict`
++            or as a type pydantic can validate.
+ 
+     Returns:
+-        Any: On subsequent invocations within the same node (same task to be precise), returns the value provided during the first invocation
++        Any: On subsequent invocations within the same node (same task to be precise), returns the value provided during the first invocation, validated against `response_schema` when it is a type.
+ 
+     Raises:
+         GraphInterrupt: On the first invocation within the node, halts execution and surfaces the provided value to the client.
++        GraphInterrupt: When the answer does not validate against a type `response_schema`, keeping the interrupt pending. The graph run then raises the `pydantic.ValidationError`.
+     """
+     from langgraph._internal._constants import (
+         CONFIG_KEY_CHECKPOINT_NS,
+@@ -945,33 +976,53 @@
+         RESUME,
+     )
+     from langgraph.config import get_config
+-    from langgraph.errors import GraphInterrupt
++    from langgraph.errors import GraphInterrupt, ResumeRejected
+ 
+     conf = get_config()["configurable"]
+     # track interrupt index
+     scratchpad = conf[CONFIG_KEY_SCRATCHPAD]
+     idx = scratchpad.interrupt_counter()
+-    # find previous resume values
+-    if scratchpad.resume:
+-        if idx < len(scratchpad.resume):
+-            conf[CONFIG_KEY_SEND]([(RESUME, scratchpad.resume)])
+-            return scratchpad.resume[idx]
+-    # find current resume value
+-    v = scratchpad.get_null_resume(True)
+-    if v is not None:
+-        assert len(scratchpad.resume) == idx, (scratchpad.resume, idx)
+-        scratchpad.resume.append(v)
+-        conf[CONFIG_KEY_SEND]([(RESUME, scratchpad.resume)])
+-        return v
+-    # no resume value found
+-    raise GraphInterrupt(
+-        (
++    adapter = (
++        None
++        if response_schema is None or isinstance(response_schema, dict)
++        else TypeAdapter(response_schema)
++    )
++
++    def pending() -> tuple[Interrupt]:
++        return (
+             Interrupt.from_ns(
+                 value=value,
+                 ns=conf[CONFIG_KEY_CHECKPOINT_NS],
++                response_schema=(
++                    response_schema if adapter is None else adapter.json_schema()
++                ),
+             ),
+         )
+-    )
++
++    # find previous resume values
++    if idx < len(scratchpad.resume):
++        v = scratchpad.resume[idx]
++    # find current resume value
++    elif idx == len(scratchpad.resume) and scratchpad.mapped_resume:
++        v = scratchpad.mapped_resume.pop()
++    elif (v := scratchpad.get_null_resume(True)) is not None:
++        assert len(scratchpad.resume) == idx, (scratchpad.resume, idx)
++    else:
++        # no resume value found
++        raise GraphInterrupt(pending())
++    # validate before keeping, so a rejected answer leaves its interrupt pending
++    try:
++        answer = v if adapter is None else adapter.validate_python(v)
++    except ValidationError as exc:
++        if idx < len(scratchpad.resume):
++            # answers match interrupts by position, so the ones after it go too
++            del scratchpad.resume[idx:]
++            conf[CONFIG_KEY_SEND]([(RESUME, scratchpad.resume)])
++        raise ResumeRejected(pending(), exc) from exc
++    if idx == len(scratchpad.resume):
++        scratchpad.resume.append(v)
++    conf[CONFIG_KEY_SEND]([(RESUME, scratchpad.resume)])
++    return answer
+ 
+ 
+ @dataclass(slots=True)
+--- a/langgraph/libs/sdk-py/langgraph_sdk/schema.py
++++ b/langgraph/libs/sdk-py/langgraph_sdk/schema.py
+@@ -295,6 +295,8 @@
+     """The value associated with the interrupt."""
+     id: str
+     """The ID of the interrupt. Can be used to resume the interrupt."""
++    response_schema: NotRequired[dict[str, Any] | None]
++    """JSON Schema of the answers the interrupt accepts, if it declared one."""
+ 
+ 
+ class Thread(TypedDict):

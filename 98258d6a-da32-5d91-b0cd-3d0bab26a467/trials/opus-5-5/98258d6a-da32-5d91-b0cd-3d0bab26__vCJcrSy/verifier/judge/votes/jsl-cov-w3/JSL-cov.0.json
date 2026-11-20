@@ -1,0 +1,8 @@
+{
+ "case": "jsl-cov-w3",
+ "id": "JSL-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The diff changes the secant-loss constraint\u2019s active-line data selection from `snapshot=sns` to `snapshot=n.snapshots`, fixing that read to the network\u2019s snapshot index rather than the supplied snapshots. For a multi-period network with `optimization.model_snapshot_index=\"flat\"`, the supplied snapshots use flat tuple labels while `n.snapshots` remains a MultiIndex, so the criterion is satisfied.\nYES"
+}

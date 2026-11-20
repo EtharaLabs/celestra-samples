@@ -1,0 +1,8 @@
+{
+ "case": "oracle",
+ "id": "JFX-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The change makes `_from_xarray` call the live model\u2019s `SnapshotWindow.recompose`, rather than hard-coding a snapshot representation. That window is built using `optimization.model_snapshot_index`; recomposition leaves existing MultiIndexes unchanged and restores flat snapshots to the network\u2019s index for pandas conversion. This does not impose a fixed model representation contrary to the option.\nNO"
+}

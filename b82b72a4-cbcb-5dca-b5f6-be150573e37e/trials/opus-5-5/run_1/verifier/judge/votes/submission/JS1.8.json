@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JS1",
- "trial": 8,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The wrapper starts one client-call span through `_start_client_span`, and request-created events reuse that span rather than starting new ones. Streaming-body instrumentation creates a separate span for reading the response body, not another client-call span.\nNO"
-}

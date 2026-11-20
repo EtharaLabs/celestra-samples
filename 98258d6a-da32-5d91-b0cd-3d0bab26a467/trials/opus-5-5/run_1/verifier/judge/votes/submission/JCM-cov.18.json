@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JCM-cov",
- "trial": 18,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "For MultiIndex snapshots with `\"flat\"` (or `\"auto\"` under v1 semantics), `create_model` flattens the snapshots stored in `n.model.parameters` but never converts `sns` itself. It still passes the original MultiIndex `sns` to the variable and constraint builders, including both transmission-loss builders; the context manager only changes component-data access, not those arguments. Thus the snapshots passed to the builders do not consistently have the selected representation.\nNO"
-}

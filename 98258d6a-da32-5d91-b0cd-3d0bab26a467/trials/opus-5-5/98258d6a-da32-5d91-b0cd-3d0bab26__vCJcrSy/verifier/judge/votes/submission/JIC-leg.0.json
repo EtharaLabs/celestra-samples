@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JIC-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff changes `pypsa/optimization/expressions.py`, not `pypsa/statistics/expressions.py`. Installed capex uses installed nominal capacities rather than optimized capacities, and the diff does not change its period-weighting calculation or its inputs under legacy MultiIndex semantics.\nNO"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J2",
+ "trial": 9,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets the criterion: its restart logic is based on solver state and model equations, rather than on recognizable test cases.\n\n- It tracks an arbitrary number of input sets using dynamically sized solution lists and active-set indices. Each continuing input set restarts from its own final state.\n- It selects state sensitivities by the requested parameter names, rather than hard-coding names or assuming a fixed sensitivity ordering.\n- For model transitions, it applies the chain rule through the state mapper, including both state-mediated and direct parameter dependence.\n- For DAE restarts, it derives consistent algebraic sensitivities by differentiating the algebraic equations.\n- It generates modulo reset times from the evaluated period and integration window, and constructs segments from discontinuity times without branching on particular models, parameter values, or `t_eval` lengths.\n\nThere are numerical and API edge cases that could warrant separate correctness review, but the change does not exhibit test-specific restart rules or hard-coded graded-test assumptions.\n\nPASS"
+}

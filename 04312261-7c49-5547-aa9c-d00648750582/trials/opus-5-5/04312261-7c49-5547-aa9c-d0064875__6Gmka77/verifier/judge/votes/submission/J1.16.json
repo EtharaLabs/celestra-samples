@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J1",
+ "trial": 16,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission does not meet the criterion. Although extracting a shared segment loop and selecting restart sensitivities by name are coherent changes, it introduces parallel implementations rather than keeping the fix aligned with the existing abstractions.\n\n- **Modulo discontinuity logic is duplicated and misplaced.** The new `BaseSolver._modulo_reset_times` and Modulo-specific branch in `_get_discontinuity_start_end_indices` bypass `Modulo._t_discon`. The existing expression-tree implementation remains unchanged, leaving two different mechanisms for calculating Modulo discontinuities and retaining the obsolete `num_events` tuple field.\n- **Sensitivity mapping reimplements function processing.** `_set_sens_initial_conditions_from` manually constructs CasADi symbols, stacks parameters, converts the mapper, and creates a `casadi.Function`, rather than using the module\u2019s existing processing machinery. `_mapped_state_sensitivities` then builds full Jacobians independently of the mapper-processing path.\n- **The `step` changes include avoidable structural churn.** The existing mapper/fallback block is reorganised into separate top-level branches alongside the functional changes. That makes the patch less minimal without being necessary to share the segment loop or initialise sensitivities.\n\nThe submission remains broadly within the relevant solver functionality, but that alone is insufficient: the duplicated Modulo mechanism and manually rebuilt processing path directly conflict with the criterion\u2019s requirements for helper reuse and no duplicated logic.\n\nFAIL"
+}

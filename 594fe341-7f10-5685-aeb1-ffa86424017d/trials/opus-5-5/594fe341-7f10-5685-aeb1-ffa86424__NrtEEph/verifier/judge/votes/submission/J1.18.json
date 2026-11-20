@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J1",
+ "trial": 18,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission does not meet the confinement requirement. Although its LangChain changes stay within `human_in_the_loop.py` and reuse existing decision-processing and edit helpers, its LangGraph changes extend well beyond `interrupt`, `Interrupt`, and the SDK interrupt type.\n\nSpecifically, it:\n- Adds `mapped_resume` state to `PregelScratchpad` and changes resume routing in `pregel/_algo.py`.\n- Introduces a new `ResumeRejected` exception in `errors.py`.\n- Modifies exception aggregation in `pregel/_runner.py` and root-loop error handling in `pregel/_loop.py`.\n- Adds a debug serialization helper and rewrites interrupt serialization sites in `pregel/debug.py`.\n\nThese are substantive changes to graph execution, resume bookkeeping, and serialization outside the explicitly permitted scope. They are used by the submission, rather than dead code, but that does not satisfy the criterion\u2019s requirement for a focused fix confined to the named components.\n\nFAIL"
+}

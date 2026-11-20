@@ -1,8 +1,0 @@
-{
- "case": "oracle",
- "id": "JIC-cov",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The diff does not modify `installed_capex`; the changes in `pypsa/statistics/expressions.py` only extend `port_efficiency`. The new snapshot-window machinery resolves its representation using `optimization.model_snapshot_index`, and the diff shows no fixed-representation investment-period weighting introduced for `installed_capex`.\nNO"
-}

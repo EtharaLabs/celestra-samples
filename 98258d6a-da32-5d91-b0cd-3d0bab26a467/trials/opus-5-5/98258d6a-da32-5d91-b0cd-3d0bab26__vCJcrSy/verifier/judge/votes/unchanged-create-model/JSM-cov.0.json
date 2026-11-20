@@ -1,0 +1,8 @@
+{
+ "case": "unchanged-create-model",
+ "id": "JSM-cov",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "Both callback sites in `optimize.py`, including `solve_model`, now obtain snapshots from `built_snapshots(n)`, which reads the current model\u2019s stored snapshot index rather than the network\u2019s snapshots or the current layout option. It preserves a model\u2019s MultiIndex representation and returns flat tuple labels for a model built with that representation, including when solving a previously built model.\nYES"
+}

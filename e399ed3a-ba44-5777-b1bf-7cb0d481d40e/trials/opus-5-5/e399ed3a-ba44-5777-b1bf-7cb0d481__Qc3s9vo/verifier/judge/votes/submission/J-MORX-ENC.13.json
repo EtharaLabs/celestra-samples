@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MORX-ENC",
+ "trial": 13,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new binary-writing logic is selected only for `mort`; the existing `morx` state-table writing path is unchanged. The XML glyph-class counting change affects objects constructed from XML, not compilation of the same objects, and updating `StructLength` after compilation does not change the length bytes already calculated for output. The added equality methods likewise introduce no demonstrated change to `morx` serialization.\nNO"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "unchanged-func",
+ "id": "JFX-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The new block in `_from_xarray` unconditionally converts a plain tuple-valued `snapshot` index into a pandas MultiIndex, using the component\u2019s snapshot level names and removing matching auxiliary coordinates. Such an input is therefore handled differently from the base version, even under legacy semantics with `\"auto\"` or `\"multiindex\"`, because this conversion is not gated by either setting.\nYES"
+}

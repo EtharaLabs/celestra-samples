@@ -1,8 +1,0 @@
-{
- "case": "jmalstate-w3",
- "id": "J-MAL-STATE",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "The change registers classic mort state-table types and routes their decoding to `StateHeader.read`. When the state array starts after the entry table, `stateDataLength` is negative and the reader explicitly returns the table instead of parsing transitions or raising an exception; a suitable rearrangement subtable can therefore decompile successfully.\nYES"
-}

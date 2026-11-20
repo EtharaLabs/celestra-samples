@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J4",
+ "trial": 1,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission does not fully meet the accuracy criterion.\n\nMuch of the documentation matches the implementation: `_integrate_segments` describes independent continuation of input sets, `_mapped_state_sensitivities` explains the chain-rule calculation across a model change, and the IDAKLU comments explain the algebraic-sensitivity consistency calculation.\n\nHowever, the discontinuity documentation contains concrete inaccuracies:\n\n- The comments describe skipping discontinuities and removing requested times \u201cwithin a float\u201d of a discontinuity. The implementation uses the wider interval formed by `dtime * (1 \u00b1 eps)` and `np.nextafter`. For example, at `dtime = 1.5`, the multiplicative bounds lie two representable floating-point steps away, not one.\n- `_modulo_reset_times` claims to return times at which the modulo resets, but returns uncorrected floating-point multiples of the period, including zero when the window spans it. CasADi\u2019s `fmod` is continuous at zero, and rounded multiples need not be the floats where it actually resets. The accompanying \u201cStop right before each reset and at it\u201d comment consequently does not accurately describe the modulo behavior being bracketed.\n- The general splitting docstring says every non-breakpoint discontinuity in the window ends one segment and starts another, whereas the implementation deliberately skips some discontinuities near segment or window boundaries.\n\nThese are documentation-versus-behavior mismatches, independently of whether the implementation otherwise solves the intended cases.\n\nFAIL"
+}

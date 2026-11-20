@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J1",
+ "trial": 19,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission fails the scope and focus requirement. Its LangGraph changes extend beyond `interrupt`, `Interrupt`, and the SDK interrupt type into:\n\n- `_internal/_scratchpad.py`, adding a separate `mapped_resume` mechanism.\n- `pregel/_algo.py`, changing how task-specific resume values are handled.\n- `errors.py`, introducing a new `ResumeRejected` exception.\n- `pregel/_runner.py` and `pregel/_loop.py`, adding exception aggregation and propagation behavior.\n- `pregel/debug.py`, introducing a serialization helper and changing existing debug output.\n\nThese are substantive changes to the execution engine and its surrounding machinery, rather than a fix confined to the explicitly permitted components. The debug serialization changes also add compatibility handling beyond the requested narrow scope.\n\nThe LangChain portion is confined to `HumanInTheLoopMiddleware`\u2019s module and generally reuses existing decision-processing and edit helpers. However, that does not offset the broader LangGraph rewrites. Regardless of whether the expanded implementation works, it does not meet this criterion\u2019s requirement for a focused, confined change.\n\nFAIL"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MAL-LIGLEN",
+ "trial": 1,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new classic ligature reader explicitly raises `ValueError` when `(ligatureOffset - componentOffset) % 2` is nonzero, identifying an odd component-table length. Thus, although the change adds classic `mort` ligature support, it does not let such an odd-length component table decompile successfully.\nNO"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JSM-leg",
+ "trial": 4,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "YES: build a model over a proper subset of `n.snapshots`, then call `solve_model(extra_functionality=...)`. Under legacy semantics with `\"auto\"` or `\"multiindex\"`, `_as_model_snapshots` leaves its argument unchanged, and `solve_model` supplies `n.snapshots` rather than the model\u2019s stored snapshots, so the callback receives the full network index instead of the modelled subset.\nYES"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-TRIM-HI",
+ "trial": 17,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "`MortSubtableConverter` confines decoding to the subtable\u2019s declared byte range. For contextual substitutions, the exclusive limit `size // 2 - offset` ensures that every replacement word ends at or before that range\u2019s end, including when the remaining length is odd.\nYES"
+}

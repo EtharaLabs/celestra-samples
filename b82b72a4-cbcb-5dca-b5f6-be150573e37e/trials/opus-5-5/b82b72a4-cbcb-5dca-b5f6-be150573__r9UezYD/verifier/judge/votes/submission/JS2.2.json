@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JS2",
+ "trial": 2,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The span is started by `_sentry_make_api_call`, invoked through a wrapper around `BaseClient._make_api_call`, rather than from a per-attempt botocore hook. The `request-created` hook now only retrieves the existing span and adds request data and a breadcrumb.\nNO"
+}

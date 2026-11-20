@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JB1",
- "trial": 1,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The breadcrumb is still recorded once per `request-created` event using the same URL, query, fragment, and HTTP-method data in each tracing mode. The changes move span creation and completion but do not change breadcrumb registration, emission, or data construction.\nNO"
-}

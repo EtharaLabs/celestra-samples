@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J2",
- "trial": 2,
- "model": "gpt-6.1-sol",
- "label": "PASS",
- "response": "The submission meets this criterion through generic schema construction and validation rather than test-specific cases.\n\n- Per-call decision schemas are derived from the configured allowed decisions, with duplicates removed. Both single-decision schemas and discriminated unions are supported.\n- Edit decisions dynamically constrain the tool name using `Literal[tool_name]`; no particular tool names or argument names are hard-coded.\n- Edit argument validation derives from the actual tool\u2019s `tool_call_schema`. Pydantic-backed schemas are validated while preserving the supplied argument values. JSON-schema-backed tools publish their schema while accepting argument objects without enforcing that JSON Schema, consistent with the reference\u2019s distinction.\n- The provider uses `TypeAdapter(response_schema)` for caller-supplied Python schemas, rather than selecting particular model classes, fields, or schema shapes. Both replayed and newly supplied resume values go through the same validation helper.\n- Raw JSON Schema dictionaries are surfaced without validation, and absent schemas leave resume values unrestricted. These are general API-level distinctions, not exceptions tailored to the tests.\n\nThe fixed decision tags represent the middleware\u2019s supported decision protocol; they are not special cases for particular tools or tested decision combinations.\n\nPASS"
-}

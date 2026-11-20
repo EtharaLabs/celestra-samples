@@ -1,0 +1,8 @@
+{
+ "case": "double-finish",
+ "id": "JF3",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "If streaming-body instrumentation raises\u2014for example, because a botocore `StreamingBody` lacks `readinto`\u2014the exception is suppressed and `streaming_body_instrumented` remains false. The patched client then calls `_finish_span(span)` before returning the response, even though its streaming body is still unread.\nYES"
+}

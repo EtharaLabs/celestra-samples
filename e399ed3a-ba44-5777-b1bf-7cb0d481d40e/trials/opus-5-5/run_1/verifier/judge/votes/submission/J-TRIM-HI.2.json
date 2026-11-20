@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J-TRIM-HI",
- "trial": 2,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "`MortSubtableConverter` confines each subtable\u2019s reader to its declared bytes. Classic contextual substitutions then cap their exclusive glyph limit at `len(data) // 2 - offset`, so every replacement word read ends at or before the end of that bounded data, including when its length is odd.\nYES"
-}

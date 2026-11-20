@@ -1,0 +1,8 @@
+{
+ "case": "double-finish",
+ "id": "JW1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The client-call wrapper and streamed-body consuming wrappers use bare `raise` after catching the original exception, preserving its identity. The diff shows no exception replacement or suppression on these failure paths.\nNO"
+}

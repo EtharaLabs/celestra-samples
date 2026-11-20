@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MAL-LIGORD",
+ "trial": 3,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new classic ligature reader explicitly raises `ValueError` when `componentOffset > ligatureOffset` in `_readClassicLigatureTables`. Thus, although the change adds classic `mort` state-table support, it rejects precisely the table ordering required by the criterion.\n\nNO"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MORX-DEC",
+ "trial": 13,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new decoding paths are restricted to `mort`: the state-table reader calls `_readClassic` only when `reader.tableTag == \"mort\"`, and the subtable converter and type mappings change only for `mort`. The `morx` binary-reading path remains unchanged; the other edits affect compilation, XML handling, or object equality, not what objects are decoded from the bytes.\nNO"
+}

@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "X3",
- "trial": 12,
- "model": "gpt-6.1-sol",
- "label": "FAIL",
- "response": "The submission centralizes schema validation in LangGraph, and the middleware supplies a Python decision schema to `interrupt()`. Both resume paths also return the validated value while retaining the original input for replay.\n\nHowever, the replay path publishes values that have not yet been validated during that execution:\n\n```python\nv = _validate_resume(adapter, scratchpad.resume[idx])\nconf[CONFIG_KEY_SEND]([(RESUME, scratchpad.resume)])\n```\n\nOnly the answer at `idx` has been checked, but the entire resume list\u2014including answers for later interrupts\u2014is written. A later interrupt can reject its answer after that answer has already been republished by an earlier interrupt. This matters, for example, when replay encounters a changed response schema or resume values originally recorded without validation.\n\nThe fresh-value path behaves differently: it validates the incoming answer before appending and publishing it. Consequently, validation does not consistently guard the persistence boundary across fresh answers and replay.\n\nThe reference\u2019s prefix write, `scratchpad.resume[: idx + 1]`, avoids publishing the unchecked suffix. The submission retains the full-list write, so it does not satisfy the criterion\u2019s storage-and-replay guarantee.\n\nFAIL"
-}

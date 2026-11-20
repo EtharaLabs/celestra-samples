@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "J-MORX-ENC",
- "trial": 6,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The new compilation path is used only when `writer.tableTag == \"mort\"`; extended `morx` tables continue through the unchanged write path. The other changes concern reading, XML conversion, and object equality, with no demonstrated change to the bytes compiled for the same `morx` objects.\nNO"
-}

@@ -1,0 +1,8 @@
+{
+ "case": "jnl-leg-w2",
+ "id": "JNL-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The change replaces `n.optimize(snapshots, **kwargs)` with `n.optimize(n.snapshots, **kwargs)` in `optimize_and_run_non_linear_powerflow`. Thus, for a network with multiple snapshots and a request selecting a proper subset, the submitted version optimizes all network snapshots instead of only the requested subset, including under legacy semantics with the default, `\"auto\"`, or `\"multiindex\"` setting.\nYES"
+}

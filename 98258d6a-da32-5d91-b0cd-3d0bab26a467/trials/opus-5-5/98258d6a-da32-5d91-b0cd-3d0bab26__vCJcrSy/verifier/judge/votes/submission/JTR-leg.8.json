@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JTR-leg",
+ "trial": 8,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The transmission inner function changes from multiplying flow by `efficiency` to multiplying it by `-efficiency`, without any semantics-dependent guard. Thus, for a selected branch and port with nonzero flow and efficiency, its reported expression changes sign even under legacy semantics with the default/`\"auto\"` or `\"multiindex\"` snapshot option.\nYES"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MAL-CLS",
+ "trial": 3,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "For `mort`, the converter now calls `_readClassic`, which explicitly raises `ValueError(\"'mort' state table has no glyph classes\")` when the glyph-class count (`stateSize`) is zero. Thus the change does not allow such a state table to decompile successfully.\nNO"
+}

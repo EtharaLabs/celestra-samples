@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JH1",
+ "trial": 5,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The URL parsing and URL-attribute helper are unchanged, and both tracing modes preserve the same attribute names, values, and conditions for recording URL, query, fragment, and method data. The change moves those attributes onto a client-call span and allows retries to overwrite them, both explicitly excluded by the criterion.\nNO"
+}

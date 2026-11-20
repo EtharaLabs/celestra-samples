@@ -1,0 +1,8 @@
+{
+ "case": "oracle",
+ "id": "JF2",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The API-call exception path finishes the client span and immediately re-raises; successful non-streaming calls finish it once after instrumentation. For streaming responses, the shared `finished` guard prevents repeated reads or closes from finishing the client span again, and instrumentation failure sets that guard before leaving client-span completion to the caller.\nNO"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "jtrimlo-w3",
+ "id": "J-TRIM-LO",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "`_readContextualLookups` receives `substitutionTableOffset` but never uses it to bound replacement reads. Instead, `firstGlyph = max(0, 5 - offset)` only ensures reads start at word 5 of the state table, which can precede the actual substitution table for either negative or positive entry offsets.\nNO"
+}

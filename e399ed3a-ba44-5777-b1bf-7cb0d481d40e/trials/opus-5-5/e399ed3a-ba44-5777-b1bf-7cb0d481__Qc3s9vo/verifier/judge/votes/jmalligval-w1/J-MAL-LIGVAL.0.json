@@ -1,0 +1,8 @@
+{
+ "case": "jmalligval-w1",
+ "id": "J-MAL-LIGVAL",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The change registers mort ligature subtables and routes their state tables to the new classic-format `StateHeader` reader. That reader accepts odd component values by applying `component // 2` without checking their parity, so an otherwise suitable subtable containing such a value can decompile successfully instead of raising an exception.\nYES"
+}

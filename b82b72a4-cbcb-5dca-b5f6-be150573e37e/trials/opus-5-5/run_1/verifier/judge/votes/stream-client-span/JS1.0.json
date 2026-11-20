@@ -1,8 +1,0 @@
-{
- "case": "stream-client-span",
- "id": "JS1",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "With span streaming disabled, `_start_client_span` starts an `OP.HTTP_CLIENT` span for the API call. If the response contains a `StreamingBody`, `_instrument_streaming_body` starts another span using `sentry_sdk.start_span(op=OP.HTTP_CLIENT, ...)`, so that call starts more than one client span.\n\nYES"
-}

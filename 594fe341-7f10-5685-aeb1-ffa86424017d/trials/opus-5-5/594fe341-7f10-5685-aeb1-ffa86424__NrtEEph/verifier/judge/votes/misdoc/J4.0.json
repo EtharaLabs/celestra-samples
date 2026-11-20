@@ -1,0 +1,8 @@
+{
+ "case": "misdoc",
+ "id": "J4",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission fails the criterion because added docstrings contradict the code in two important places:\n\n- In `HumanInTheLoopMiddleware.__init__`, the documentation says an invalid answer raises `ValidationError` **after it is saved**, so the interrupt cannot be answered again. The code validates before appending or saving the answer. An invalid answer is not saved, and the interrupt can be answered again.\n- In LangGraph\u2019s `interrupt` docstring, the documentation reverses which schemas are enforced. It claims JSON Schema dictionaries validate resume values while Python schemas are only shown to clients, and that `interrupt` returns the raw resume value. The code skips validation for dictionary schemas, uses `TypeAdapter` to validate Python schemas, and returns the validated result.\n\nThe per-call interrupt-ID keying is documented correctly, but these inaccurate descriptions are sufficient to violate the requirement that every added or edited docstring and comment describe the code\u2019s behavior.\n\nFAIL"
+}

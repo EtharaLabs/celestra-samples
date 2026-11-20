@@ -1,0 +1,8 @@
+{
+ "case": "alternate",
+ "id": "J-MAL-STATE",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The new `ClassicStateHeader.read` computes `stateDataLength = entryTableOffset - stateArrayOffset` and explicitly raises `ValueError` if it is negative. Since `mort` state tables are dispatched to this reader, a state array starting after its entry table still raises an exception.\nNO"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "J-MORX-DEC",
+ "trial": 19,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The binary-reading changes are specific to `mort`: the new state-table reader is selected only when `reader.tableTag == \"mort\"`, and the subtable converter mapping changes only for `MortSubtable`. The other changes affect compilation, XML handling, or object equality, not the contents decoded from extended `morx` bytes.\nNO"
+}

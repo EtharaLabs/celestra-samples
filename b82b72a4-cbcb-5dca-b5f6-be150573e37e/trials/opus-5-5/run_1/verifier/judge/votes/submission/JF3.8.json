@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JF3",
- "trial": 8,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The change no longer finishes the client span in the `after-call` handler. Instead, it instruments the returned streaming body and finishes the client span alongside the body-reading span when consumption completes; it finishes immediately only if no body instrumentation is installed or the call raises.\nNO"
-}

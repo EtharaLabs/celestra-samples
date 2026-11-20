@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JSL-leg",
+ "trial": 11,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "Under legacy semantics, the default/`\"auto\"` option resolves to `\"multiindex\"`, so the new flattening machinery does not change the snapshots or component arrays. The secant-function edits only select coefficient arrays by the loss variable\u2019s existing asset names; they do not change snapshot selection or the secant formulas, and legacy alignment already handles those asset labels. Thus the diff does not establish different secant constraints in the specified setting.\n\nNO"
+}

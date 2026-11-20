@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "X3",
- "trial": 17,
- "model": "gpt-6.1-sol",
- "label": "FAIL",
- "response": "The submission does not consistently validate answers before storing them across resume paths.\n\nIn `interrupt()`, the branch for an existing `scratchpad.resume` validates only the answer at the current interrupt index, but then publishes the **entire** resume list:\n\n```python\nv = _validate_resume(adapter, scratchpad.resume[idx])\nconf[CONFIG_KEY_SEND]([(RESUME, scratchpad.resume)])\n```\n\nFor a task with multiple interrupts, keyed resume answers can populate that list in advance. If the first answer is valid and a later answer is invalid, processing the first interrupt publishes the later, still-unvalidated answer too. The later validation failure therefore occurs after that answer has already been submitted for persistence.\n\nThe reference avoids this by publishing only `scratchpad.resume[: idx + 1]`: the prefix whose answers have actually passed validation. The submission\u2019s special error handling does not address this problem; `_discard_null_resume()` retracts only an unkeyed null-task resume, not an invalid answer included in a task\u2019s already-published resume list.\n\nThus the storage and replay behavior is not equivalent between direct and keyed resumes, including in plain graphs, so the boundary criterion is not met.\n\nFAIL"
-}

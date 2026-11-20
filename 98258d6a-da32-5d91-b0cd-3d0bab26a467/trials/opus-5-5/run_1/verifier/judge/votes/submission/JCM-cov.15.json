@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JCM-cov",
- "trial": 15,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "`create_model` computes `flat` and converts the snapshots stored in `n.model.parameters`, but never converts `sns` itself from the MultiIndex returned by `as_index`. Thus, with `\"flat\"` (or `\"auto\"` under v1 semantics), it still passes a MultiIndex to the variable and constraint builders, including the loss builders; the context manager only changes component-data access, not those arguments.\n\nNO"
-}

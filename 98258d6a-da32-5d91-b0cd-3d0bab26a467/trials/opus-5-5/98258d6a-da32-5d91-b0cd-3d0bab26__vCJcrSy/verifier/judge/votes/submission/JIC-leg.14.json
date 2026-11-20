@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JIC-leg",
+ "trial": 14,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff does not modify `pypsa/statistics/expressions.py`; the capex and period-aggregation changes are in `pypsa/optimization/expressions.py`, a different accessor. Under legacy semantics, default/`\"auto\"` resolves to `\"multiindex\"`, and the new component-array flattening is inactive, so the diff provides no change to the period-weighted installed-capex calculation in question.\nNO"
+}

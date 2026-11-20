@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X2",
+ "trial": 8,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission makes `response_schema` optional in `interrupt`, `Interrupt`, and the SDK\u2019s interrupt TypedDict. It also explicitly preserves the old representation and debug payload when no schema is supplied.\n\nHowever, the LangGraph change is **not minimal**, and the resume-processing changes are not isolated to schema-enabled calls:\n\n- It adds a required `mapped_resume` field to the internal scratchpad and changes `_algo.py` to hold ID-addressed answers there rather than append them to the existing resume list.\n- It replaces the existing resume-selection and recording logic in `interrupt` for **all callers**, including those passing no schema.\n- It introduces `ResumeRejected` and corresponding changes to exception aggregation and root-loop handling in `_runner.py` and `_loop.py`.\n\nThese are substantial changes to the general resume protocol, rather than a small optional schema extension. In particular, even schema-free ID-addressed resumes now follow a different storage and acceptance path. Preserving the old representation and keeping the public argument optional does not establish the required unchanged behavior for those callers.\n\nThe SDK addition satisfies the optional-field requirement, but the broader LangGraph changes fail the minimal, backwards-compatible criterion.\n\nFAIL"
+}

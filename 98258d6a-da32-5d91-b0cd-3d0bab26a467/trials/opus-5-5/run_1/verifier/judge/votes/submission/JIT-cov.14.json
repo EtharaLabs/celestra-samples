@@ -1,8 +1,0 @@
-{
- "case": "submission",
- "id": "JIT-cov",
- "trial": 14,
- "model": "gpt-6.1-sol",
- "label": "NO",
- "response": "The diff does not modify `optimize_transmission_expansion_iteratively` or its snapshot arguments. The new model-building code resolves `optimization.model_snapshot_index` and conditionally uses flat snapshots, rather than forcing the iterative routine\u2019s optimisation inputs into one fixed representation.\nNO"
-}

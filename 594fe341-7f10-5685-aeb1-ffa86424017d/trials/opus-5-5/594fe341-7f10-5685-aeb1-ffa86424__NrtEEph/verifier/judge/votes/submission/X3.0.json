@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X3",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets the criterion.\n\n- **Validation is owned by LangGraph.** The middleware constructs a decision type and passes it as `response_schema` to `interrupt()`. LangGraph\u2019s `TypeAdapter` validates the answer; the middleware does not independently parse it with another schema.\n- **Both resume routes converge before validation and storage.** Positional resume values and interrupt-ID-addressed values enter the same validation block. The separate `mapped_resume` staging prevents an ID-addressed answer from being treated as an already accepted answer.\n- **Storage and replay use the same representation.** For either route, the original submitted value is appended to `scratchpad.resume`, while the validated result is returned to the caller. Replay validates that stored original value against the same response type. This behavior applies to plain graphs as well as middleware-generated interrupts.\n- **Invalid answers are not accepted as resume history.** Validation precedes appending a new answer. The rejection machinery preserves the pending interrupt and exposes the validation error; if a previously stored answer fails revalidation, the submission removes it and the subsequent positional answers.\n- **Middleware edit arguments retain their submitted representation.** The argument wrap validator checks the tool\u2019s argument schema but returns the original arguments, leaving execution-time tool validation to the tool.\n\nThe additional rejection-handling machinery differs from the reference\u2019s structure, but does not introduce a conflicting provider\u2013consumer boundary.\n\nPASS"
+}

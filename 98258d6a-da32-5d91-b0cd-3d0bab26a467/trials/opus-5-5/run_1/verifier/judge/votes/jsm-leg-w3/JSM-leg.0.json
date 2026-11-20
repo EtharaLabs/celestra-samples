@@ -1,8 +1,0 @@
-{
- "case": "jsm-leg-w3",
- "id": "JSM-leg",
- "trial": 0,
- "model": "gpt-6.1-sol",
- "label": "YES",
- "response": "In `solve_model`, the callback now receives `n.snapshots.get_level_values(\"timestep\")` whenever the network has investment periods. Under legacy semantics with `\"auto\"` or `\"multiindex\"`, the model retains the network\u2019s `(period, timestep)` MultiIndex, so this callback argument loses the period labels even for a full-horizon build and also ignores any subset used to build the model.\nYES"
-}

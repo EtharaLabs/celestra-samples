@@ -1,0 +1,8 @@
+{
+ "case": "oracle",
+ "id": "JB1",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The breadcrumb is still recorded once by the `request-created` handler, using the same URL parsing, streaming-mode field selection, and HTTP method data as before. Recording it does not depend on creating or finding a span, so the span lifecycle changes do not remove or duplicate these breadcrumbs.\nNO"
+}

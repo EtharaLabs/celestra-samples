@@ -1,0 +1,8 @@
+{
+ "case": "jcm-leg-w1",
+ "id": "JCM-leg",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "The change makes `create_model` call `define_secant_loss_constraints(n, sns[1:], ...)` instead of passing the full `sns`. For a network using secant transmission-loss constraints with a nonempty snapshot horizon, that constraint builder now receives a horizon missing its first snapshot, including under legacy semantics with the default, `\"auto\"`, or `\"multiindex\"` setting.\nYES"
+}

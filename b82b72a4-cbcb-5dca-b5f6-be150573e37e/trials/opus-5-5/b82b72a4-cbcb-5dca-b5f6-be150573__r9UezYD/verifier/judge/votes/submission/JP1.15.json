@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JP1",
+ "trial": 15,
+ "model": "gpt-6.1-sol",
+ "label": "NO",
+ "response": "The diff changes when spans are created, activated, and finished, but does not change the trace-header propagation or existing-header merge logic. The `before-sign` handler remains registered last, and differences in the spans supplying header values do not count under the criterion.\nNO"
+}

@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JP1",
+ "trial": 6,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "Previously, every `request-created` event could create a span independently; now it obtains a span only from the `_make_api_call` wrapper\u2019s context. A request sent directly through a botocore endpoint, bypassing that wrapper, therefore has no request span and loses the propagation headers that the original request-created/signing path would add.\n\nYES"
+}

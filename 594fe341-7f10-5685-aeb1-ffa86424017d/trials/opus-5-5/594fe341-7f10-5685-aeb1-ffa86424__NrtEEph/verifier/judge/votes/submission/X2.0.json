@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X2",
+ "trial": 0,
+ "model": "gpt-6.1-sol",
+ "label": "FAIL",
+ "response": "The submission makes the public additions optional: `interrupt` and `Interrupt` default `response_schema` to `None`, and the SDK field is `NotRequired`. It also preserves the old interrupt representation and debug payload when no schema is supplied.\n\nHowever, the LangGraph change is not minimal or isolated to schema-enabled callers. It introduces a required `mapped_resume` scratchpad field, changes how ID-addressed resume values are staged and consumed for **all** interrupts, and adds a new exception with special handling in the runner and loop. These are changes to the shared resume machinery, not merely optional schema metadata and validation. In particular, no-schema calls now use the rewritten resume path rather than retaining the existing behavior.\n\nThus, although the public field and parameter are optional, the submission does not satisfy the criterion\u2019s minimal, backwards-compatible LangGraph change requirement.\n\nFAIL"
+}

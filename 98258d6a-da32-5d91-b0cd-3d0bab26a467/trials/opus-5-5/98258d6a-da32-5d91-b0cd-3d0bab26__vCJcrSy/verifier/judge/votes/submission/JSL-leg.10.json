@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "JSL-leg",
+ "trial": 10,
+ "model": "gpt-6.1-sol",
+ "label": "YES",
+ "response": "YES: the secant function now restricts `upper_limit`, `slope`, and `offset` to the names present in the loss variable. For a network containing branches excluded from that variable (such as inactive branches), this changes the label alignment and resulting constraint domain compared with the base code\u2019s unrestricted arrays, even under legacy semantics with the MultiIndex representation.\nYES"
+}

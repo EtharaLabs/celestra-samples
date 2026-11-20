@@ -1,0 +1,8 @@
+{
+ "case": "submission",
+ "id": "X3",
+ "trial": 10,
+ "model": "gpt-6.1-sol",
+ "label": "PASS",
+ "response": "The submission meets the boundary-consistency criterion.\n\n- **Validation is owned by LangGraph.** The middleware constructs a tool-specific decision type and passes it to `interrupt(response_schema=...)`. It does not separately parse the answer with Pydantic. Its subsequent decision processing dispatches the already-validated decision.\n- **Both resume forms reach the same validation path.** Prior answers, newly supplied ID-keyed answers, and unkeyed resume values all converge on the same `adapter.validate_python(v)` call before a new answer is appended to the task\u2019s accepted resume history.\n- **Storage and replay use a consistent representation.** LangGraph stores the original supplied value, rather than the potentially coerced validation result. On replay, it validates that original value again and returns the validated object. This applies equally to plain graphs and middleware interrupts.\n- **Rejected answers do not become accepted history.** ID-keyed answers are kept separately in `mapped_resume` until validation succeeds. Validation failures preserve a pending interrupt and are propagated as `ValidationError` at the root graph.\n- **Reviewer edit arguments remain as supplied.** The middleware\u2019s wrap validator checks tool arguments while retaining their original representation, leaving execution-time tool validation to the tool.\n\nThe additional rejection machinery differs from the reference implementation, but it preserves the required provider\u2013consumer agreement.\n\nPASS"
+}
