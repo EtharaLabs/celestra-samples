@@ -44,3 +44,14 @@ cpus = 2
 memory_mb = 8192
 storage_mb = 20480
 gpus = 0
+
+[upstream_provenance]
+origin = "original"
+provenance_date = "2026-09-10"
+source_kind = "public_repository"
+
+[upstream_provenance.source]
+canonical_repo = "https://github.com/langchain-ai/langchain"
+fork_ancestry_digest = "sha256:a1d8076ca8b252b8a0da56f5a94b74de766109552d56d9d4a7d370da05264d37"
+base_commit = "f295bfef22e9aeb02ad0f79b49883f4b446e4641"
+event_timestamp = "2026-10-02T21:57:37Z"
