@@ -642,11 +642,11 @@ class TestCustomDetector:
         # Custom regex for API keys
         middleware = PIIMiddleware(
             "api_key",
-            detector=r"sk-[a-zA-Z0-9]{32}",
+            detector=r"demo-[a-z0-9]{32}",
             strategy="redact",
         )
 
-        state = AgentState[Any](messages=[HumanMessage("Key: sk-abcdefghijklmnopqrstuvwxyz123456")])
+        state = AgentState[Any](messages=[HumanMessage("Key: demo-abcdefghijklmnopqrstuvwxyz123456")])
         result = middleware.before_model(state, Runtime())
 
         assert result is not None
