@@ -4,7 +4,7 @@
 
 <p align="center"><b>The celestra samples lane: 5 of 5 Harbor task bundles.</b></p>
 
-<p align="center"><a href="#task-overview"><img src="https://img.shields.io/badge/bundles-5_of_5-845EF7" alt="bundles: 5 of 5"></a> <a href="#task-overview"><img src="https://img.shields.io/badge/sealed-2-845EF7" alt="sealed: 2"></a> <a href="#task-overview"><img src="https://img.shields.io/badge/measured-0_of_5-845EF7" alt="measured: 0 of 5"></a></p>
+<p align="center"><a href="#task-overview"><img src="https://img.shields.io/badge/bundles-5_of_5-845EF7" alt="bundles: 5 of 5"></a> <a href="#task-overview"><img src="https://img.shields.io/badge/sealed-2-845EF7" alt="sealed: 2"></a> <a href="#task-overview"><img src="https://img.shields.io/badge/measured-5_of_5-845EF7" alt="measured: 5 of 5"></a></p>
 
 <p align="center"><sub><a href="#research-paper">Research paper</a> | <a href="#research-problem-statement">Research problem statement</a> | <a href="#research-experimentation-design">Research experimentation design</a> | <a href="#task-overview">Task overview</a> | <a href="#harbor-format-walkthrough">Harbor format walkthrough</a> | <a href="#contact">Contact</a></sub></p>
 
@@ -38,11 +38,19 @@ Pass rates are measured by the trials recorded in each bundle, not by a signed p
 
 | Bundle | Model | Trials | Successes | pass@1 | pass@5 |
 | --- | --- | --- | --- | --- | --- |
-| 594fe341-7f10-5685-aeb1-ffa86424017d | not yet measured | - | - | - | - |
-| b82b72a4-cbcb-5dca-b5f6-be150573e37e | not yet measured | - | - | - | - |
-| e399ed3a-ba44-5777-b1bf-7cb0d481d40e | not yet measured | - | - | - | - |
-| 98258d6a-da32-5d91-b0cd-3d0bab26a467 | not yet measured | - | - | - | - |
-| 04312261-7c49-5547-aa9c-d00648750582 | not yet measured | - | - | - | - |
+| 594fe341-7f10-5685-aeb1-ffa86424017d | claude-opus-5-5 | 1 | 0 | 0.00 | - |
+| b82b72a4-cbcb-5dca-b5f6-be150573e37e | claude-opus-5-5 | 1 | 0 | 0.00 | - |
+| e399ed3a-ba44-5777-b1bf-7cb0d481d40e | claude-opus-5-5 | 1 | 0 | 0.00 | - |
+| 98258d6a-da32-5d91-b0cd-3d0bab26a467 | claude-opus-5-5 | 1 | 0 | 0.00 | - |
+| 04312261-7c49-5547-aa9c-d00648750582 | claude-opus-5-5 | 1 | 0 | 0.00 | - |
+
+```mermaid
+%%{init: {"theme":"base","themeVariables":{"primaryColor":"#131a33","primaryTextColor":"#e8ecff","primaryBorderColor":"#845EF7","lineColor":"#22d3ee","fontFamily":"monospace"}}}%%
+xychart-beta
+    x-axis ["claude-opus-5-5"]
+    y-axis "pass@1" 0 --> 1
+    bar [0.00]
+```
 
 ```mermaid
 %%{init: {"theme":"base","themeVariables":{"primaryColor":"#131a33","primaryTextColor":"#e8ecff","primaryBorderColor":"#845EF7","lineColor":"#22d3ee","fontFamily":"monospace"}}}%%
@@ -110,6 +118,7 @@ The verdict is the audit outcome recorded at the sealed digest, and `none` means
 | `environment/` | agent sandbox image |
 | `tests/` | verifier, hidden from the agent |
 | `solution/` | private oracle |
+| `solution/trials/` | recorded trial outputs, hidden from the solver |
 
 ```mermaid
 %%{init: {"theme":"base","themeVariables":{"primaryColor":"#131a33","primaryTextColor":"#e8ecff","primaryBorderColor":"#845EF7","lineColor":"#22d3ee","fontFamily":"monospace"}}}%%
