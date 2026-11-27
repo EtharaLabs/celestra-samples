@@ -79,6 +79,7 @@ COPY --from=solvers /wheels /built
 RUN pip install --no-cache-dir --no-deps --no-index /built/*.whl \
  && rm -rf /root/.cache /built
 WORKDIR /app/pybamm
+USER 10001:10001
 LABEL org.opencontainers.image.source="https://github.com/pybamm-team/PyBaMM" \
       org.opencontainers.image.revision="fe6784fb08d386950d546f75c95849a7edeb5fa8" \
       org.opencontainers.image.licenses="BSD-3-Clause" \

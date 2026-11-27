@@ -93,8 +93,9 @@ RUN chmod 0755 /tests/*.sh \
  && chown -R 10001:10001 /grading/repo /logs \
  && rm -rf /root/.cache
 WORKDIR /grading/repo
-# test.sh drops to uid 10001 itself; the image ends as root so Harbor's sandbox can start.
-USER root
+# The image ends as the grader. Harbor starts the verifier as root through [verifier] user in
+# task.toml, and test.sh drops to uid 10001 with setpriv before anything submitted runs.
+USER 10001:10001
 LABEL org.opencontainers.image.source="https://github.com/pybamm-team/PyBaMM" \
       org.opencontainers.image.revision="fe6784fb08d386950d546f75c95849a7edeb5fa8" \
       org.opencontainers.image.licenses="BSD-3-Clause" \
