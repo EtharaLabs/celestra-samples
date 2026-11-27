@@ -78,8 +78,7 @@ RUN chmod 0755 /tests/*.sh /tests/combine.py \
  && chown -R 10001:10001 /grading/repo /logs \
  && rm -rf /root/.cache
 WORKDIR /grading/repo
-# test.sh drops to uid 10001 itself; the image ends as root so Harbor's sandbox can start.
-USER root
+USER 10001:10001
 LABEL org.opencontainers.image.source="https://github.com/PyPSA/PyPSA" \
       org.opencontainers.image.revision="6d1da8049b3346969bc8f2b97f7835dc0b7c6fbe" \
       org.opencontainers.image.licenses="MIT" \

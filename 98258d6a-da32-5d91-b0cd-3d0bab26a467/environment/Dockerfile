@@ -93,8 +93,7 @@ RUN printf 'deb [check-valid-until=no] http://snapshot.debian.org/archive/debian
  && rm -r /tmp/agent \
  && rm -rf /root/.cache /agentdist
 WORKDIR /app/pypsa
-# The agent runs as uid 10001 through [agent].user; the image ends as root so Harbor's sandbox can start.
-USER root
+USER 10001:10001
 LABEL org.opencontainers.image.source="https://github.com/PyPSA/PyPSA" \
       org.opencontainers.image.revision="6d1da8049b3346969bc8f2b97f7835dc0b7c6fbe" \
       org.opencontainers.image.licenses="MIT" \
